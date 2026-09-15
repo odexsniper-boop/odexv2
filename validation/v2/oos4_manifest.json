@@ -1,0 +1,481 @@
+{
+  "seal_name": "OOS4_FROZEN_VALIDATION_SEAL",
+  "sealed_at": "2026-09-10T21:47:19.678Z",
+  "dataset_file": "replay/raw_txs_oos4_final.json",
+  "dataset_sha256": "81ae37d0efaaa4d8d0a8d1c147dde58f2c1fe82cce1aab290f6ccf3ae60c778e",
+  "total_transactions": 958,
+  "total_tokens": 44,
+  "token_list": [
+    "C6tws1s4uzBVLHbQE4ydTYD97Xa4YvidcNUNcc1Vpump",
+    "DSjmhusNGbq9QxCW79r6w6WgooijpVrnYdGciCTupump",
+    "7YMFUV9c6LSEAKrQGJ1Nho6xyRzJACbFXz1ktgynpump",
+    "8gJozwvsza4RkcBJF8ncVGDhQF1mUgamfK92sJPXpump",
+    "6MWYo6vS6Vy2ZSfhkhE4vaBh5QA5xyUPpWvD8dappump",
+    "GLkJfp2ctAG9uKyR4YBittDnZmqnsxVfmitYNajKpump",
+    "F44RSGMmAjci9MPoYdEocYgfyev92pLCosC1ZWN4pump",
+    "9twmqL95QRawyA1AeLCYEyReMjfeXFUtJpCKVF6Bpump",
+    "Hh3qjHE8dexqrAa7XHGv2uysRfK8VEm7n6DR5nW8pump",
+    "1gvdnrgfu6wWnXGbLaAS1K8TE1o9EPMwgTQm3m1pump",
+    "VEhG5bgvbsYPLCCYCDcskdLTVTS7cAwMMNvH57opump",
+    "CiwW4n17Gg4qzkfsrjBGbgQGzKzvPdaCwJRbyEYJpump",
+    "FNDaFpNRBqm97RfVSzFXJEbbtpD36xjp4ehyDD8cpump",
+    "G4A9EfGazNapWPixVxLTBesqMDLySQyZkgrZv3ypump",
+    "3PjNgB57ZTcSLhtySBtScXa6YxCoFBRJCgFnVE7Bpump",
+    "AZgGspLnygETHnn9xj6VyBW6mmEL693PdS1Ln2Lkpump",
+    "6GWQpoPyXEkUdqui7Y1gGVJvdRYGxgBXgQv9X3zSpump",
+    "25sXNKF3fHJkDJvvGTLGgTD45R2vg3F9EmXdMKzvpump",
+    "AvhgKuH5U1rUJ2ikk6vj33Bdx788EcL7kmTRZgP4pump",
+    "9S5MTMHFB3qUVtNFP5Yq32r9arJ6cGf754Lpw8oPpump",
+    "7BPyztu8dhGaTpwLSLonBfNgq5zv7ftfg2mu8Zqwpump",
+    "ECEjeja5G2Kf9cneQdm7KJxG7fb8RALtZB6mnMJypump",
+    "7ik7JP2RFmC4aboKqzXpdSfCtJjsrhAYhy8t8kG9pump",
+    "Ho1J6Hy88aBPosRyKfqbs1Tff747F4QEz3319byZpump",
+    "H9R98CQTQX8ES6dy2J7htkZCCYXRiVPh1N2RSV9Lpump",
+    "8eKeSZkMGhBjgyUeHBUkDuwi5fsqwxGQ6ho9KddJpump",
+    "3yVTs5ksE3idYTZXdG7qJ9sUBvaikrpNCDmYGvXYpump",
+    "DFyaVt3aQZVWNq82vJoJirYaNFWPRybkCP9DcC1Npump",
+    "DXKusiRLErhuk6sgW829sg2VxTo6KV7yMX59dABmpump",
+    "FwCEJYTUtY6QFMtNyJBbvhLES31kxG67Q51cJNXNpump",
+    "4zWjZDtiuVBqGEgUZXRuXziSVvU27kAMEQ72SDecpump",
+    "2VumHKhXS21spiD6o6xUUdjutZYtAX2mGrB3DhaMpump",
+    "2AmdbJvatgdBQakgqsmKHqn9A2PCuSUvrDmEpEibpump",
+    "6CPQBYydfYpeBMKMTdZLGxFaNQCNKrVAjDUz4iaGpump",
+    "Fx4kTnMrvF8Bq26bs7L18uHbpvxmGXFgGwTyRHzUpump",
+    "CHJVWyoaxzB1F15Ekw9K85pTWcjcjLApLsBigxjApump",
+    "A2irTh7jSMmmGuKXfaj1vkiy5T4MLAgtU8XuyQVXpump",
+    "ASkqd3mHgMTG1QnRArosjDeaQhJME6giwtjAX7LJpump",
+    "4eeMvBwBjvSsKqBF5qSJ7wNcQdnG5YTGfemQxgRhpump",
+    "ERxNijWrDHqxUoB3TZVBzpPQo7YvwaHSW5bcFaUdpump",
+    "GnsxSCGTqTNtFDMtEKcxcU2bXTZhqhr1jm4iYPywpump",
+    "8BvSs9T2ksTvXjUgu1htCFRXWmZV6dBPguz28i95pump",
+    "8n7uEpig9bktzx7H9BZGDLvLcMfVqZWtEges85Hmpump",
+    "3tdKWREMNpznXjyDvGM5puwuMjZ6EiXJ1JbSfX1Xpump"
+  ],
+  "contamination_audit": {
+    "overlap_dev35": 0,
+    "overlap_oos1": 0,
+    "overlap_oos2": 0,
+    "overlap_oos3": 0,
+    "status": "CLEAN_ZERO_CONTAMINATION"
+  },
+  "data_integrity": {
+    "chronological_ordering": "PASS",
+    "duplicate_signatures": 0,
+    "unique_tokens": 44,
+    "status": "VALID_INTEGRITY"
+  },
+  "frozen_strategy": {
+    "name": "KO V3 V2.3 (Adaptive Momentum Harvest + Relative Flow Normalization)",
+    "strategy_version": "V2.3",
+    "opportunity_engine_hash": "e984896bb24b185e6a08762050006eea8ae6e3c0a5eb8bd1ead0f27abc6e75fe",
+    "coordination_engine_hash": "7e2a021a75905508c8f8799ba7f69412d6e3a6e582309d549f985346457a6107",
+    "thesis_engine_hash": "8cb80b74191f722a4cc4df5522cd3d08d37cbdc34075fb005f3631258733ed01",
+    "position_manager_hash": "7bdcdc141ef9b6991079b74895551c7a40d03801a7c3b948d732afa283291dae",
+    "orchestrator_hash": "8f6632af0ac4cce83786c186ddbcb1a45060c620436a73981c5a43b984b38e4f",
+    "probe_size_sol": 0.025,
+    "standard_size_sol": 0.1,
+    "defensive_tp_threshold": 0.12,
+    "momentum_tp_threshold": 0.3,
+    "breakeven_arm_threshold": 0.12,
+    "breakeven_stop_loss": -0.01,
+    "tightened_trailing_stop": 0.1,
+    "hard_safety_gates": "FROZEN_ABSOLUTE_PRIORITY"
+  },
+  "token_metadata": [
+    {
+      "mint": "C6tws1s4uzBVLHbQE4ydTYD97Xa4YvidcNUNcc1Vpump",
+      "source": "V1_EXECUTED_TRADE",
+      "name": "The Toad Cat",
+      "symbol": "TOAD",
+      "v1PnlPct": 12.451040999999996,
+      "v1Sol": 0.012451040999999996,
+      "v1Reason": "MANUAL_SELL"
+    },
+    {
+      "mint": "DSjmhusNGbq9QxCW79r6w6WgooijpVrnYdGciCTupump",
+      "source": "V1_EXECUTED_TRADE",
+      "name": "The Memecoin Factory",
+      "symbol": "MEMEFACTORY",
+      "v1PnlPct": -32.46423300000001,
+      "v1Sol": -0.03246423300000001,
+      "v1Reason": "STOP_LOSS"
+    },
+    {
+      "mint": "7YMFUV9c6LSEAKrQGJ1Nho6xyRzJACbFXz1ktgynpump",
+      "source": "V1_EXECUTED_TRADE",
+      "name": "The Roaring Kitty",
+      "symbol": "Luci",
+      "v1PnlPct": 32.87385299999998,
+      "v1Sol": 0.03287385299999998,
+      "v1Reason": "TRAILING_STOP"
+    },
+    {
+      "mint": "8gJozwvsza4RkcBJF8ncVGDhQF1mUgamfK92sJPXpump",
+      "source": "V1_EXECUTED_TRADE",
+      "name": "nniiki",
+      "symbol": " iko",
+      "v1PnlPct": 56.16018526529376,
+      "v1Reason": "STALE_TIMEOUT"
+    },
+    {
+      "mint": "6MWYo6vS6Vy2ZSfhkhE4vaBh5QA5xyUPpWvD8dappump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "The Reddit Moderatoor",
+      "symbol": "Moderatoor",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "GLkJfp2ctAG9uKyR4YBittDnZmqnsxVfmitYNajKpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "pear",
+      "symbol": "pear",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "F44RSGMmAjci9MPoYdEocYgfyev92pLCosC1ZWN4pump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "Pink Tree",
+      "symbol": "$PNK",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "9twmqL95QRawyA1AeLCYEyReMjfeXFUtJpCKVF6Bpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "the chinese cat",
+      "symbol": "$tcc",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "Hh3qjHE8dexqrAa7XHGv2uysRfK8VEm7n6DR5nW8pump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "PAXGOLD",
+      "symbol": "PAXGOLD",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "1gvdnrgfu6wWnXGbLaAS1K8TE1o9EPMwgTQm3m1pump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "batonWifStocks",
+      "symbol": "batonWIF",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "VEhG5bgvbsYPLCCYCDcskdLTVTS7cAwMMNvH57opump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "South Park Sucks Now",
+      "symbol": "SPSN",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "CiwW4n17Gg4qzkfsrjBGbgQGzKzvPdaCwJRbyEYJpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "MINETRADE",
+      "symbol": "MINETRADE",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "FNDaFpNRBqm97RfVSzFXJEbbtpD36xjp4ehyDD8cpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "Doomed Rocket",
+      "symbol": "DOOROC",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "G4A9EfGazNapWPixVxLTBesqMDLySQyZkgrZv3ypump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "AUTOCAT Investment in crypto",
+      "symbol": "AUTOCAT",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "3PjNgB57ZTcSLhtySBtScXa6YxCoFBRJCgFnVE7Bpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "Elon Stank",
+      "symbol": "ElonStank",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "AZgGspLnygETHnn9xj6VyBW6mmEL693PdS1Ln2Lkpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "NESTLE",
+      "symbol": "NESTLE",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "6GWQpoPyXEkUdqui7Y1gGVJvdRYGxgBXgQv9X3zSpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "404 Token Not Found",
+      "symbol": "404",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "25sXNKF3fHJkDJvvGTLGgTD45R2vg3F9EmXdMKzvpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "baton",
+      "symbol": "baton",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "AvhgKuH5U1rUJ2ikk6vj33Bdx788EcL7kmTRZgP4pump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "Freaky ah",
+      "symbol": "kittylick",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "9S5MTMHFB3qUVtNFP5Yq32r9arJ6cGf754Lpw8oPpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "escape",
+      "symbol": "escape",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "7BPyztu8dhGaTpwLSLonBfNgq5zv7ftfg2mu8Zqwpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "The Five Orangutans",
+      "symbol": "5",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "ECEjeja5G2Kf9cneQdm7KJxG7fb8RALtZB6mnMJypump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "JugJak",
+      "symbol": "JUGJAK",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "7ik7JP2RFmC4aboKqzXpdSfCtJjsrhAYhy8t8kG9pump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "HE ENDORSED!!!",
+      "symbol": "MINETRADE",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "Ho1J6Hy88aBPosRyKfqbs1Tff747F4QEz3319byZpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "HE ENDORSED!!!",
+      "symbol": "MINETRADE",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "H9R98CQTQX8ES6dy2J7htkZCCYXRiVPh1N2RSV9Lpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "Doomed Rocket",
+      "symbol": "DOOROC",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "8eKeSZkMGhBjgyUeHBUkDuwi5fsqwxGQ6ho9KddJpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "HE ENDORSED!!!",
+      "symbol": "MINETRADE",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "3yVTs5ksE3idYTZXdG7qJ9sUBvaikrpNCDmYGvXYpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "HE ENDORSED!!!",
+      "symbol": "MINETRADE",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "DFyaVt3aQZVWNq82vJoJirYaNFWPRybkCP9DcC1Npump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "HE ENDORSED!!!",
+      "symbol": "MINETRADE",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "DXKusiRLErhuk6sgW829sg2VxTo6KV7yMX59dABmpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "GOLD NUTS",
+      "symbol": "NUTS",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "FwCEJYTUtY6QFMtNyJBbvhLES31kxG67Q51cJNXNpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "HE ENDORSED!!!",
+      "symbol": "MINETRADE",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "4zWjZDtiuVBqGEgUZXRuXziSVvU27kAMEQ72SDecpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "MUSKRAT",
+      "symbol": "MUSKRAT",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "2VumHKhXS21spiD6o6xUUdjutZYtAX2mGrB3DhaMpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "Pumpfun Pepe",
+      "symbol": "PFP",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "2AmdbJvatgdBQakgqsmKHqn9A2PCuSUvrDmEpEibpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "The Memecoin Factory",
+      "symbol": "MEMEFACTORY",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "6CPQBYydfYpeBMKMTdZLGxFaNQCNKrVAjDUz4iaGpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "DOG CAT",
+      "symbol": "DOCAT",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "Fx4kTnMrvF8Bq26bs7L18uHbpvxmGXFgGwTyRHzUpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "ALPHA STONK TEK PLAY",
+      "symbol": "DEV PREV 5M",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "CHJVWyoaxzB1F15Ekw9K85pTWcjcjLApLsBigxjApump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "ALPHA STONK TEK PLAY",
+      "symbol": "DEV PREV 5M",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "A2irTh7jSMmmGuKXfaj1vkiy5T4MLAgtU8XuyQVXpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "ALPHA STONK TEK PLAY",
+      "symbol": "DEV PREV 5M",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "ASkqd3mHgMTG1QnRArosjDeaQhJME6giwtjAX7LJpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "Legacy Lives On",
+      "symbol": "Legacy",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "4eeMvBwBjvSsKqBF5qSJ7wNcQdnG5YTGfemQxgRhpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "escape",
+      "symbol": "escape",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "ERxNijWrDHqxUoB3TZVBzpPQo7YvwaHSW5bcFaUdpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "f",
+      "symbol": "fa",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "GnsxSCGTqTNtFDMtEKcxcU2bXTZhqhr1jm4iYPywpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "The Memecoin Factory",
+      "symbol": "MEMEFACTORY",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "8BvSs9T2ksTvXjUgu1htCFRXWmZV6dBPguz28i95pump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "Spycat",
+      "symbol": "SPY",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "8n7uEpig9bktzx7H9BZGDLvLcMfVqZWtEges85Hmpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "ALPHA STONK TEK PLAY",
+      "symbol": "DEVDID 5M TE",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    },
+    {
+      "mint": "3tdKWREMNpznXjyDvGM5puwuMjZ6EiXJ1JbSfX1Xpump",
+      "source": "MARKET_DETECTED_TOKEN",
+      "name": "ALPHA STONK TEK PLAY",
+      "symbol": "DEVDID 5M TEK",
+      "v1PnlPct": null,
+      "v1Sol": null,
+      "v1Reason": null
+    }
+  ]
+}

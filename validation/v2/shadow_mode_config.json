@@ -1,0 +1,52 @@
+{
+  "system": "KO_V3",
+  "strategy_version": "V2.3",
+  "mode": "V2_SHADOW",
+  "execution_mode": "SHADOW_SIMULATED",
+  "execution_enabled": false,
+  "signing_enabled": false,
+  "wallet_routing_enabled": false,
+  "kill_switch_active": false,
+  "kill_switch_path": "validation/v2/shadow_kill_switch.flag",
+  "data_pipeline": {
+    "primary_stream": "Helius Enhanced WebSocket & RPC",
+    "pump_program_id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+    "canonical_classifier": "EconomicEventClassifierV2",
+    "poll_interval_ms": 1000,
+    "max_active_tokens": 100
+  },
+  "frozen_parameters": {
+    "standardSizeSol": 0.10,
+    "probeSizeSol": 0.025,
+    "adaptiveDefensiveProfitTargetPct": 0.12,
+    "adaptiveFastProfitTargetPct": 0.30,
+    "partialExitFraction": 0.50,
+    "breakevenArmMfePct": 0.12,
+    "breakevenStopLossPct": -0.01,
+    "maxHardLossPct": -0.20,
+    "flowLossThresholdPct": -0.05,
+    "runnerTrailingPctStrong": 0.12,
+    "runnerTrailingPctWeak": 0.08,
+    "coordinationExtremeCutoff": 75,
+    "coordinationHighCutoff": 50,
+    "opportunityMinScore": 55,
+    "confidenceMinScore": 65
+  },
+  "execution_assumptions": {
+    "estimated_tx_fee_sol": 0.000005,
+    "estimated_priority_fee_sol": 0.001,
+    "simulated_slippage_bps": 150,
+    "simulated_latency_ms": 250
+  },
+  "safety_priorities": [
+    "1. EMERGENCY",
+    "2. HARD_SAFETY",
+    "3. THESIS_BROKEN",
+    "4. FLOW_LIQUIDITY_FAILURE",
+    "5. BREAKEVEN_PROTECTION",
+    "6. TIME_DECAY",
+    "7. PROFIT_HARVEST",
+    "8. RUNNER_TRAILING",
+    "9. NORMAL_HOLD"
+  ]
+}

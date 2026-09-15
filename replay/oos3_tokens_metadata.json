@@ -1,0 +1,288 @@
+[
+  {
+    "mint": "5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump",
+    "source": "V1_EXECUTED_TRADE",
+    "name": "HAPPY DOG",
+    "symbol": "HAPPYDOG",
+    "v1PnlPct": 22.336472999999994,
+    "v1Sol": 0.022336472999999996,
+    "v1Reason": "MANUAL_SELL"
+  },
+  {
+    "mint": "BLQ9yGeco8ga1f6MaNHy1RwedA278tkBMMpHAZFSpump",
+    "source": "V1_EXECUTED_TRADE",
+    "name": "Psyop Dog",
+    "symbol": "PSYOP",
+    "v1PnlPct": -18.270663000000006,
+    "v1Sol": -0.018270663000000006,
+    "v1Reason": "STOP_LOSS"
+  },
+  {
+    "mint": "GGXV8egpjAwUw2WSphGRtNasamniz8YD7hujckxqpump",
+    "source": "V1_EXECUTED_TRADE",
+    "name": "Amy",
+    "symbol": "Amy",
+    "v1PnlPct": -31.199222,
+    "v1Sol": -0.031199222,
+    "v1Reason": "STOP_LOSS"
+  },
+  {
+    "mint": "2d1SzSR8STSFCVqHd8gCxhEHRLbwEAquU66435Tqpump",
+    "source": "V1_EXECUTED_TRADE",
+    "name": "Adam Sandler",
+    "symbol": "SANDLER",
+    "v1PnlPct": -77.32804100000001,
+    "v1Sol": -0.07732804100000001,
+    "v1Reason": "STOP_LOSS"
+  },
+  {
+    "mint": "7mDEhMF2EC7GysG41GzgL27R7SZLxGGaiAS1xHcgpump",
+    "source": "V1_EXECUTED_TRADE",
+    "name": "Adam Sandler",
+    "symbol": "SANDLER",
+    "v1PnlPct": -70.53665094611303,
+    "v1Reason": "STALE_TIMEOUT"
+  },
+  {
+    "mint": "F184iCgWJ4zhWwqP2ADNuVXC2RSQeniPpEiN6SnRpump",
+    "source": "V1_EXECUTED_TRADE",
+    "name": "PUMP.TRUMP",
+    "symbol": "$TRUMP",
+    "v1PnlPct": -61.835682999999996,
+    "v1Sol": -0.061835683,
+    "v1Reason": "STOP_LOSS"
+  },
+  {
+    "mint": "4rLL1jNABtg6z6P9gJNQTk2jkbVwU514VHtf2xXopump",
+    "source": "V1_EXECUTED_TRADE",
+    "name": "Nicolas Cage",
+    "symbol": "CAGE",
+    "v1PnlPct": 71.17374399999999,
+    "v1Sol": 0.07117374399999998,
+    "v1Reason": "TAKE_PROFIT_2X"
+  },
+  {
+    "mint": "HnXNrq6kim73QzLLQziqDuTmDQTJRRomkYEj5CDApump",
+    "source": "V1_EXECUTED_TRADE",
+    "name": "pump frog",
+    "symbol": "prog",
+    "v1PnlPct": -33.37009900000002,
+    "v1Sol": -0.033370099000000014,
+    "v1Reason": "STOP_LOSS"
+  },
+  {
+    "mint": "6SvqUYW8MEDqtWhimnM114MxCqgpPgi7vADNNQpfpump",
+    "source": "V1_EXECUTED_TRADE",
+    "name": "ODD",
+    "symbol": "ODD",
+    "v1PnlPct": -44.5971055,
+    "v1Sol": -0.08919421100000001,
+    "v1Reason": "STOP_LOSS"
+  },
+  {
+    "mint": "CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump",
+    "source": "V1_EXECUTED_TRADE",
+    "name": "AICat",
+    "symbol": "AICat",
+    "v1PnlPct": 8.093136341702877,
+    "v1Reason": "STALE_TIMEOUT"
+  },
+  {
+    "mint": "2TdW4wHwr5h6ZHTzgjfKJWgdEdA7nZx7upMaqZD7pump",
+    "source": "V1_EXECUTED_TRADE",
+    "name": "Stealth Ninja Doge",
+    "symbol": "SHINOBI",
+    "v1PnlPct": 15.234559999999995,
+    "v1Sol": 0.03046911999999999,
+    "v1Reason": "TRAILING_STOP"
+  },
+  {
+    "mint": "HXM9yMucR3W73ts8kK7MZNG8rr9Ef65o6z2ZxaKopump",
+    "source": "V1_EXECUTED_TRADE",
+    "name": "The man rescued from Nepal",
+    "symbol": "Miracle",
+    "v1PnlPct": 36.07698549999999,
+    "v1Sol": 0.07215397099999998,
+    "v1Reason": "TRAILING_STOP"
+  },
+  {
+    "mint": "3wYcGxjGiJdR8TKGwW996YunrvE1MPQcavcsNupJpump",
+    "source": "V1_EXECUTED_TRADE",
+    "name": "🪙 $CRYBABY",
+    "symbol": "CRYBABY",
+    "v1PnlPct": -20.0548195,
+    "v1Sol": -0.040109639,
+    "v1Reason": "TRAILING_STOP"
+  },
+  {
+    "mint": "BPdHr1Rqr8R3HAYhx15N4HpEzciv166mb2SDuatFpump",
+    "source": "V1_EXECUTED_TRADE",
+    "name": "Justice For Nono",
+    "symbol": "Nono",
+    "v1PnlPct": 18.291882999999995,
+    "v1Sol": 0.018291882999999995,
+    "v1Reason": "STOP_LOSS"
+  },
+  {
+    "mint": "A6dE2ENRwFxfqasPfJzrpnwEL5E6RoYu5AfbzFwXpump",
+    "source": "V1_EXECUTED_TRADE",
+    "name": "Get Lit",
+    "symbol": "Lit",
+    "v1PnlPct": 23.551317999999988,
+    "v1Sol": 0.023551317999999988,
+    "v1Reason": "TRAILING_STOP"
+  },
+  {
+    "mint": "K12EDVNnsyZwFYTQQZK7QcaufzDshvQwHeNtzhopump",
+    "source": "V1_EXECUTED_TRADE",
+    "name": "Buddy",
+    "symbol": "BUDDY",
+    "v1PnlPct": -9.547022000000016,
+    "v1Sol": -0.009547022000000016,
+    "v1Reason": "STOP_LOSS"
+  },
+  {
+    "mint": "AwUhmv8qSJWXhQUrBtWjW1dCAopoeZP8SRcxLthypump",
+    "source": "MARKET_DETECTED_TOKEN",
+    "name": "DOOBIE",
+    "symbol": "DOOB",
+    "v1PnlPct": null,
+    "v1Sol": null,
+    "v1Reason": null
+  },
+  {
+    "mint": "VycYoU6PhFW87kz7AeYALRCCGaZSg81zr25ZP38pump",
+    "source": "MARKET_DETECTED_TOKEN",
+    "name": "Cloud Cat",
+    "symbol": "CCAT",
+    "v1PnlPct": null,
+    "v1Sol": null,
+    "v1Reason": null
+  },
+  {
+    "mint": "9chU3PLspShG4oQAatySWdbyp2Eaa9RaeD7mtYnYpump",
+    "source": "MARKET_DETECTED_TOKEN",
+    "name": "Memeler baş kaldırmış",
+    "symbol": "KALDIRMAK",
+    "v1PnlPct": null,
+    "v1Sol": null,
+    "v1Reason": null
+  },
+  {
+    "mint": "9Y55eKs1PrD9CwkRoGZBwGc6d2bR3kpXQT5CzvXtpump",
+    "source": "MARKET_DETECTED_TOKEN",
+    "name": "kunafa coin ",
+    "symbol": "kunfa",
+    "v1PnlPct": null,
+    "v1Sol": null,
+    "v1Reason": null
+  },
+  {
+    "mint": "79VJf6rnewgyGQ1QwesLC1aEnCxwZcnsob6ZLM51pump",
+    "source": "MARKET_DETECTED_TOKEN",
+    "name": "RETARDO",
+    "symbol": "re",
+    "v1PnlPct": null,
+    "v1Sol": null,
+    "v1Reason": null
+  },
+  {
+    "mint": "4QUs2issEiaYf4fY6GiZXmnF7xeWazKTrsCUD6j2pump",
+    "source": "MARKET_DETECTED_TOKEN",
+    "name": "IRL WOZNIAK",
+    "symbol": "WOZNIAK",
+    "v1PnlPct": null,
+    "v1Sol": null,
+    "v1Reason": null
+  },
+  {
+    "mint": "BiyrRrHrAeGKtMyHnrKA79sTSiGDH1YJpS4ZupKDpump",
+    "source": "MARKET_DETECTED_TOKEN",
+    "name": "Grand theft auto",
+    "symbol": "GTA VI",
+    "v1PnlPct": null,
+    "v1Sol": null,
+    "v1Reason": null
+  },
+  {
+    "mint": "qyadYJMf1kx3BgLRmvyccbCWUBnNJQJaAvPmgQypump",
+    "source": "MARKET_DETECTED_TOKEN",
+    "name": "paired",
+    "symbol": "paired",
+    "v1PnlPct": null,
+    "v1Sol": null,
+    "v1Reason": null
+  },
+  {
+    "mint": "8WeBqBXM7PM3uY49cDvKBB56xaE7QyZwjwFcWFApump",
+    "source": "MARKET_DETECTED_TOKEN",
+    "name": "El Gran Eclipse",
+    "symbol": "Eclipse",
+    "v1PnlPct": null,
+    "v1Sol": null,
+    "v1Reason": null
+  },
+  {
+    "mint": "74k9kTMx6DsLBskAbpYoxye4Xe66m6vp5bsMbe6Qpump",
+    "source": "MARKET_DETECTED_TOKEN",
+    "name": "PEPECRAFT",
+    "symbol": "PEPECRAFT",
+    "v1PnlPct": null,
+    "v1Sol": null,
+    "v1Reason": null
+  },
+  {
+    "mint": "2iBbW1DvxxmXk3P1C7B31fJ5EHPBqojQLbT3JjiNpump",
+    "source": "MARKET_DETECTED_TOKEN",
+    "name": "Only Up!",
+    "symbol": "Up!",
+    "v1PnlPct": null,
+    "v1Sol": null,
+    "v1Reason": null
+  },
+  {
+    "mint": "6H768XQwP4Uadybuw8oPeQZdUnErD8zPmYmw8K8Mpump",
+    "source": "MARKET_DETECTED_TOKEN",
+    "name": "LMAO",
+    "symbol": "LMAO",
+    "v1PnlPct": null,
+    "v1Sol": null,
+    "v1Reason": null
+  },
+  {
+    "mint": "Hu9hA1gf6ccE54HSheyLCMs1PQzsYRVRvQmRLfSMpump",
+    "source": "MARKET_DETECTED_TOKEN",
+    "name": "Wolf GiGi",
+    "symbol": "WFG",
+    "v1PnlPct": null,
+    "v1Sol": null,
+    "v1Reason": null
+  },
+  {
+    "mint": "He7qAdj6PKikdK3wuWEshVy95PVmvaVzBhzzXLWypump",
+    "source": "MARKET_DETECTED_TOKEN",
+    "name": "PixelDoge",
+    "symbol": "PiDoge",
+    "v1PnlPct": null,
+    "v1Sol": null,
+    "v1Reason": null
+  },
+  {
+    "mint": "A8UGxtbASDy9yvhc3YUdpvG4FmhubBShaw8MF6yupump",
+    "source": "MARKET_DETECTED_TOKEN",
+    "name": "MUSKRAT",
+    "symbol": "MUSKRAT",
+    "v1PnlPct": null,
+    "v1Sol": null,
+    "v1Reason": null
+  },
+  {
+    "mint": "3HenEiz2QrYouX2HLiF7w3ZBJhVTstymUVcZoakMpump",
+    "source": "MARKET_DETECTED_TOKEN",
+    "name": "Snowwhite",
+    "symbol": "Snowwhite",
+    "v1PnlPct": null,
+    "v1Sol": null,
+    "v1Reason": null
+  }
+]

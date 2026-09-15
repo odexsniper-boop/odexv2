@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <!-- ========== Meta Tags ========== -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="IssamWebmaster">
+    <meta name="description" content="LeaderLED — vente, location et installation d'écrans LED au Maroc. Écrans géants intérieurs/extérieurs, panneaux publicitaires, totems digitaux. 487+ installations, 31 villes. Devis gratuit : 06 19 36 02 91.">
+    <meta name="keywords" content="Led maroc, ecran led, affichage dynamique, leaderled ">
+
+    <meta property="og:title" content="Écran géant LED au Maroc | LeaderLED">
+    <meta property="og:description" content="Découvrez des solutions visuelles innovantes et de haute qualité avec LeaderLED, spécialiste en affichage dynamique et écrans géants LED d'extérieur et d'intérieur au Maroc. Transformez votre communication visuelle, profitez d'une visibilité exceptionnelle et bénéficiez d'un service personnalisé pour captiver votre audience et maximiser l'impact de vos messages.">
+    <meta property="og:image" content="https://www.leaderled.ma/assets/imgs/leaderled-ecran-geant-led-maroc.jpg">
+    <meta property="og:url" content="https://www.leaderled.ma/">
+    <meta property="og:site_name" content="Leader LED">
+
+    <meta name="og:email" content="hi@leaderled.ma"/>
+    <meta name="og:phone_number" content="+212619360291"/>
+
+    <!-- ======== Page title ============ -->
+    <title>Écran géant LED au Maroc | Leaderled</title>
+
+    <!-- ========== [PERF] Preconnects / DNS anticipé ==========
+         Reduit la latence de connexion vers les domaines tiers utilises plus bas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://connect.facebook.net">
+    <link rel="dns-prefetch" href="https://connect.facebook.net">
+    <link rel="dns-prefetch" href="https://www.facebook.com">
+
+    <!-- ========== Favicon Icon ========== -->
+    <link rel="shortcut icon" href="assets/imgs/favicon.png">
+
+    <!-- ========== [PERF] Preload de l'image LCP (1ere slide du hero) ==========
+         CORRECTIF : le JS en bas de page remplace le fond du hero par la version
+         "-mobile.jpg" sur petit ecran. Sans ce media query, le navigateur mobile
+         preloadait la mauvaise image (desktop) et Lighthouse ne detectait pas
+         la ressource LCP comme prechargee. Les deux variantes sont donc ciblees
+         par taille d'ecran ici.
+         IMPORTANT : quand tu convertiras ces images en WebP/AVIF, mets a jour
+         les deux href avec les memes noms de fichiers que dans le hero plus bas. -->
+    <link rel="preload" as="image" href="assets/imgs/leaderled-ecran-geant-led-salle-reunion-mobile.jpg" fetchpriority="high" media="(max-width: 767px)">
+    <link rel="preload" as="image" href="assets/imgs/leaderled-ecran-geant-led-salle-reunion.jpg" fetchpriority="high" media="(min-width: 768px)">
+
+    <!-- ===========  All Stylesheet ================= -->
+    <!-- CSS critique : necessaire au rendu du hero (owl-carousel) et a la mise en page generale -->
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/owl.theme.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=1.8">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- [PERF] CSS non-critique : chargement differe pour ne plus bloquer le rendu initial
+         (technique preload+onload avec fallback noscript) -->
+    <link rel="preload" href="assets/css/icons.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/icons.css"></noscript>
+
+    <link rel="preload" href="assets/css/animate.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/animate.css"></noscript>
+
+    <link rel="preload" href="assets/css/magnific-popup.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/magnific-popup.css"></noscript>
+
+    <link rel="preload" href="assets/css/metismenu.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/metismenu.css"></noscript>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.leaderled.ma/#organization","name":"Leader LED Maroc","alternateName":"LeaderLED","url":"https://www.leaderled.ma","logo":{"@type":"ImageObject","url":"https://www.leaderled.ma/assets/imgs/logo-leaderled.png"},"image":"https://www.leaderled.ma/assets/imgs/ecran-led-leaderled.webp","email":"hi@leaderled.ma","telephone":"+212 619 36 02 91","sameAs":["https://web.facebook.com/profile.php?id=100089647475033&mibextid=ZbWKwL&_rdc=1&_rdr","https://www.instagram.com/leader_led1","https://www.linkedin.com/company/leaderled-maroc"]},{"@type":"WebSite","@id":"https://www.leaderled.ma/#website","url":"https://www.leaderled.ma","name":"Leader LED Maroc","alternateName":"LeaderLED","publisher":{"@id":"https://www.leaderled.ma/#organization"},"inLanguage":"fr-MA","potentialAction":{"@type":"SearchAction","target":"https://www.leaderled.ma/recherche?q={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"LocalBusiness","@id":"https://www.leaderled.ma/#localbusiness","name":"Leader LED Maroc","url":"https://www.leaderled.ma","logo":"https://www.leaderled.ma/assets/imgs/logo-leaderled.png","image":"https://www.leaderled.ma/assets/imgs/ecran-led-leaderled.webp","description":"Spécialiste au Maroc de l’affichage numérique et des écrans géants LED, LeaderLed propose des solutions sur mesure pour la location, la vente et l’installation d’écrans professionnels adaptés aux commerces, événements et façades publicitaires.","telephone":"+212 619 36 02 91","email":"hi@leaderled.ma","priceRange":"$$","address":{"@type":"PostalAddress","addressCountry":"MA","addressRegion":"Souss-Massa","addressLocality":"Agadir","postalCode":"80070","streetAddress":"Avenue Bir Anzarane 83, Inezgane Ait Melloul"},"sameAs":["https://web.facebook.com/profile.php?id=100089647475033&mibextid=ZbWKwL&_rdc=1&_rdr","https://www.instagram.com/leader_led1"],"areaServed":{"@type":"Country","name":"Morocco"},"openingHours":"Mo-Fr 09:00-18:00, Sa 09:00-12:00","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"09:00","closes":"12:00"}],"parentOrganization":{"@id":"https://www.leaderled.ma/#organization"}}]}</script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const backgrounds = document.querySelectorAll('.background');
+        let currentIndex = 0;
+
+        function changeBackground() {
+            backgrounds[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % backgrounds.length;
+            backgrounds[currentIndex].classList.add('active');
+        }
+
+        backgrounds[currentIndex].classList.add('active');
+        setInterval(changeBackground, 5000);
+    });
+    </script>
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1438021387334716');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1438021387334716&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <!-- Google tag (gtag.js) — UN SEUL script GA conserve (les doublons ont ete supprimes) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B5JKDK05VW"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-B5JKDK05VW');
+    </script>
+</head>
+
+<body class="body-wrapper">
+
+    <!-- preloader -->
+    <!-- <div id="preloader" class="preloader">
+        <div class="animation-preloader">
+            <div class="spinner"></div>
+            <div class="txt-loading">
+                <span data-text-preloader="L" class="letters-loading">L</span>
+                <span data-text-preloader="E" class="letters-loading">E</span>
+                <span data-text-preloader="A" class="letters-loading">A</span>
+                <span data-text-preloader="D" class="letters-loading">D</span>
+                <span data-text-preloader="E" class="letters-loading">E</span>
+                <span data-text-preloader="R" class="letters-loading">R</span>
+                <span data-text-preloader="L" class="letters-loading">L</span>
+                <span data-text-preloader="E" class="letters-loading">E</span>
+                <span data-text-preloader="D" class="letters-loading">D</span>
+            </div>
+            <p class="text-center">Let's Bright</p>
+        </div>
+        <div class="loader">
+            <div class="row">
+                <div class="col-3 loader-section section-left"><div class="bg"></div></div>
+                <div class="col-3 loader-section section-left"><div class="bg"></div></div>
+                <div class="col-3 loader-section section-right"><div class="bg"></div></div>
+                <div class="col-3 loader-section section-right"><div class="bg"></div></div>
+            </div>
+        </div>
+    </div> -->
+
+<!-- welcome content start from here -->
+
+    <header class="header-wrap header-2">
+
+        <div class="header-top-bar text-white d-none d-sm-block">
+
+            <div class="container-fluid">
+
+                <div class="row">
+
+                    <div class="col-lg-9 col-sm-9">
+
+                        <ul class="top-left-content">
+
+                            <li><i class="fa fa-envelope"></i> <a href="/cdn-cgi/l/email-protection#fe9697be929b9f9a9b8c929b9ad0939f"><span class="__cf_email__" data-cfemail="a4cccde4c8c1c5c0c1d6c8c1c08ac9c5">[email&#160;protected]</span></a></li>
+
+                            <li><i class="fa fa-phone"></i> <a href="tel:0619360291">+212 619 36 02 91</a></li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="col-lg-3 col-sm-3 text-end">
+
+                        <div class="top-social-icons">
+
+                            <a href="https://www.facebook.com/profile.php?id=100089647475033&mibextid=ZbWKwL" target="_blank" aria-label="Facebook LeaderLED"><img src="assets/imgs/facebook.png" alt="Facebook" width="25"></a>
+
+                            <a href="https://www.instagram.com/leader_led1/" target="_blank" aria-label="Instagram LeaderLED"><img src="assets/imgs/instagram.png" alt="Instagram" width="25"></a>
+
+                            <a href="https://pin.it/XwkLrgJt0" target="_blank" aria-label="Pinterest LeaderLED"><img src="assets/imgs/pinterest.png" alt="Pinterest" width="25"></a>
+
+                            <a href="https://www.youtube.com/@LEADERLED" target="_blank" aria-label="YouTube LeaderLED"><img src="assets/imgs/youtube.png" alt="YouTube" width="25"></a>
+
+                            <a href="https://www.linkedin.com/company/leaderled-maroc/" target="_blank" aria-label="LinkedIn LeaderLED"><img src="assets/imgs/linkedin.png" alt="LinkedIn" width="25"></a>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="main-header-wrapper">
+
+            <div class="container-fluid align-items-center justify-content-between d-flex">
+
+                <div class="logo">  
+
+                    <a href="/"><img src="assets/imgs/logo.webp" alt="LeaderLED - écrans LED au Maroc" height="80" width="160"></a>
+
+                </div>
+
+                <div class="main-menu d-none d-lg-block">
+
+                    <ul>
+
+                        <li><a href="/">Accueil</a></li>
+
+                        <li><a href="societe-affichage-led-maroc.html">À propos de nous</a></li>
+
+                        <li ><a href="solutions-led.html">Solutions LED <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
+                            <ul class="sub-menu">
+                                <li><a href="ecran-geant-led-exterieur-maroc.html">Écrans LED extérieurs</a></li>
+                                        <li><a href="ecran-gean-led-interieur-maroc.html">Écrans LED intérieurs</a></li>
+                                        <li><a href="affichage-dynamique-maroc.html">Affichage dynamique</a></li>
+                                        <li><a href="ecrans-led-courbes-flexibles-maroc.html">Écrans LED Flexibles</a></li>
+                                        <li><a href="ecran-led-vitrine-maroc.html">Écrans LED vitrine</a></li>
+                                        <li><a href="panneau-led-maroc.html">Panneaux LED</a></li>
+                                        <li><a href="panneau-publicitaire-maroc.html">Panneaux publicitaires</a></li>
+                                        <li><a href="affichage-led.html">Affichage LED</a></li>
+                                        <li><a href="totem-publicitaire-led-maroc.html">Totem publicitaire LED</a></li>
+                                        <li><a href="totem-led-exterieur-maroc.html">Totem LED extérieur</a></li>
+                                        <li><a href="ecran-led-mobile-maroc.html">Écrans LED mobiles</a></li>
+                                        <li><a href="camion-led-publicitaire.html">Camions LED publicitaires</a></li>
+                                        <li><a href="installation-ecran-geant-led.html">Installation d'écran géant LED</a></li>
+                                        <li><a href="panneau-led-programmable.html">Panneau LED programmable</a></li>
+                                        <li><a href="ecran-led-p1-p3.html">Écran LED P1 & P3</a></li>
+                                        <li><a href="ecran-led-mural.html">Écran LED mural</a></li>
+                                        <li><a href="bandeau-led-maroc.html">Bandeau LED</a></li>
+                                        <li><a href="ecran-led-gitex-2026-maroc.html">Écran LED pour GITEX Africa 2026</a></li>
+                                        <li><a href="ecran-led-coupe-du-monde-2026-maroc.html">Écran LED pour la coupe du monde 2026</a></li>
+                                        <li><a href="maintenance-ecran-led-maroc.html">Maintenance Écran LED</a></li>
+                            </ul>
+                        
+                        
+                        </li>
+                        <li><a href="#">Location <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
+                            <ul class="sub-menu">
+                                 <li><a href="location-ecran-led-coupe-afrique-2025-maroc.html">Location écran LED Coupe d'Afrique 2025 Maroc</a></li>
+                                <li><a href="location-ecran-geant-maroc.html">Location écran géant LED</a></li>
+                                <li><a href="location-ecran-geant-exterieur.html">Location écran géant extérieur</a></li>
+                                <li><a href="location-ecran-geant-interieur.html">Location écran géant intérieur</a></li>
+                                <li><a href="prix-location-ecran-geant-led.html">Prix location écran LED</a></li>
+                                <li><a href="tarifs-location-ecran-geant-led-maroc.html">Catalogue et tarifs de location</a></li> 
+                                <li><a href="location-panneau-publicitaire.html">Location panneau publicitaire LED</a></li>  
+                                <li><a href="location-totem-publicitaire-led.html">Location totem publicitaire LED</a></li> 
+                                <li><a href="location-ecran-led-flexible-maroc.html">Location écran LED flexible</a></li>        
+                                <li><a href="location-ecran-led-courbe.html">Location écran LED courbe</a></li> 
+                                <li><a href="location-ecran-plat-maroc.html">Location écran plat</a></li> 
+                            </ul>   
+                        
+                        </li>
+                        <li><a href="#"><span class="yellow-mustard">Réalisations <i class="fas fa-star" aria-hidden="true"></i> <i class="fas fa-chevron-down" aria-hidden="true"></i></span> </a>
+                            <ul class="sub-menu">
+                                <li><a href="realisations-led.html">Nos réalisations</a></li>
+                                <li><a href="videotheque.html">Vidéothèque</a></li>
+                            </ul>
+                        
+                        </li>
+                        <li><a href="#">Références <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
+                            <ul class="sub-menu">
+                                <li><a href="references.html">Références clients</a></li>
+                                <li><a href="secteurs-clients.html">Nos secteurs d'activité</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="blog.html">Blog</a></li>
+
+                        <li><a href="contact.html">Devis gratuit</a></li>
+
+                     
+
+                     
+
+                    </ul>
+
+                </div>
+
+                <div class="d-flex d-lg-none align-items-center">
+
+                    <div id="phone">
+
+                        <a href="tel:+212619360291" aria-label="Appeler LeaderLED"><img src="assets/imgs/tel.png" alt="Téléphone"/></a>
+
+                    </div>
+
+                    <div class="mobile-nav-wrap">                    
+
+                        <div id="hamburger" role="button" tabindex="0" aria-label="Ouvrir le menu">
+
+                            <i class="fal fa-bars" aria-hidden="true"></i>
+
+                        </div>
+
+                        <!-- mobile menu - responsive menu  -->
+
+                        <div class="mobile-nav">
+
+                            <button type="button" class="close-nav" aria-label="Fermer le menu">
+
+                                <i class="fal fa-times-circle" aria-hidden="true"></i>
+
+                            </button>
+
+                            <nav class="sidebar-nav">
+
+                                <ul class="metismenu" id="mobile-menu">
+
+                                    <li><a href="/">Accueil</a></li>
+
+                                <li><a href="societe-affichage-led-maroc.html">À propos de nous</a></li>
+
+                                <li><a href="solutions-led.html">Solutions LED <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
+                                    <ul class="sub-menu">
+                                        <li><a href="ecran-gean-led-interieur-maroc.html">Écrans LED intérieurs</a></li>
+                                        <li><a href="affichage-dynamique-maroc.html">Affichage dynamique</a></li>
+                                        <li><a href="ecrans-led-courbes-flexibles-maroc.html">Écrans LED Flexibles</a></li>
+                                        <li><a href="ecran-led-vitrine-maroc.html">Écrans LED vitrine</a></li>
+                                        <li><a href="panneau-led-maroc.html">Panneaux LED</a></li>
+                                        <li><a href="panneau-publicitaire-maroc.html">Panneaux publicitaires</a></li>
+                                        <li><a href="affichage-led.html">Affichage LED</a></li>
+                                        <li><a href="totem-publicitaire-led-maroc.html">Totem publicitaire LED</a></li>
+                                        <li><a href="totem-led-exterieur-maroc.html">Totem LED extérieur</a></li>
+                                        <li><a href="ecran-led-mobile-maroc.html">Écrans LED mobiles</a></li>
+                                        <li><a href="camion-led-publicitaire.html">Camions LED publicitaires</a></li>
+                                        <li><a href="installation-ecran-geant-led.html">Installation d'écran géant LED</a></li>
+                                        <li><a href="mur-led-evenementiel.html">Mur LED événementiel</a></li>
+                                        <li><a href="panneau-led-programmable.html">Panneau LED programmable</a></li>
+        
+                                    </ul>
+                                
+                                
+                                </li>
+
+                                <li><a href="#">Location <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
+                                    <ul class="sub-menu">
+                                     <li><a href="location-ecran-led-coupe-afrique-2025-maroc.html">Location écran LED Coupe d'Afrique 2025 Maroc</a></li>
+                                        <li><a href="location-ecran-geant-maroc.html">Location écran géant LED</a></li>
+                                        <li><a href="location-ecran-geant-exterieur.html">Location écran géant extérieur</a></li>
+                                        <li><a href="location-ecran-geant-interieur.html">Location écran géant intérieur</a></li>
+                                        <li><a href="prix-location-ecran-geant-led.html">Prix location écran LED</a></li>
+                                        <li><a href="tarifs-location-ecran-geant-led-maroc.html">Catalogue et tarifs de location</a></li> 
+                                        <li><a href="location-panneau-publicitaire.html">Location panneau publicitaire LED</a></li>  
+                                        <li><a href="location-totem-publicitaire-led.html">Location totem publicitaire LED</a></li> 
+                                        <li><a href="location-ecran-led-flexible-maroc.html">Location écran LED flexible</a></li>        
+                                        <li><a href="location-ecran-led-courbe.html">Location écran LED courbe</a></li>       
+        
+                                    </ul>   
+                                
+                                </li>
+
+                                <li><a href="#"><span class="yellow-text">Réalisations <i class="fas fa-star" aria-hidden="true"></i> <i class="fas fa-chevron-down" aria-hidden="true"></i></span> </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="realisations-led.html">Nos réalisations</a></li>
+                                        <li><a href="videotheque.html">Vidéothèque</a></li>
+                                    </ul>
+                                
+                                </li>
+                                <li><a href="#">Références <i class="fas fa-chevron-down" aria-hidden="true"></i></a>
+                                    <ul class="sub-menu">
+                                        <li><a href="references.html">Références clients</a></li>
+                                        <li><a href="secteurs-clients.html">Nos secteurs d'activité</a></li>
+                                    </ul>
+                                    
+                                </li>
+                                <li><a href="blog.html">Blog</a></li>
+
+                                <li><a href="contact.html">Devis gratuit</a></li>
+
+                                </ul>
+
+                            </nav>
+
+    
+
+                            <div class="action-bar">
+
+                                <a href="hi@leaderled.ma"><i class="fal fa-envelope" aria-hidden="true"></i><span class="__cf_email__" data-cfemail="640c0d240801050001160801004a0905">[email&#160;protected]</span></a>
+
+                                <a href="tel:+212619360291"><i class="fal fa-phone" aria-hidden="true"></i>+212 619 36 02 91</a>
+
+                                <a href="contact.html" class="d-btn theme-btn">Devis gratuit</a>
+
+                            </div>
+
+                        </div>                            
+
+                    </div>
+
+                    <div class="overlay"></div>
+
+                </div>
+
+                <div class="right-elements d-none d-xl-flex d-flex align-items-center">
+
+                    
+
+                    <div class="call-action">
+
+                        <span>Tél. / WhatAapp</span>
+
+                       <a href="whatsapp-verify.php"><p>06 19 36 02 91</p></a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+    <!-- [ACCESSIBILITE] Repere <main> ajoute : Lighthouse signalait
+         "Le document ne contient pas de repere principal". -->
+    <main>
+
+    <!-- ========== HERO (contient l'image LCP - pas de lazy-load ici) ========== -->
+    <section class="hero-wrapper hero-2">
+        <div class="hero-slider-2 owl-carousel owl-theme">
+            <div class="single-slide bg-cover" style="background-image: url('assets/imgs/leaderled-ecran-geant-led-salle-reunion.jpg')" data-bg-mobile="assets/imgs/leaderled-ecran-geant-led-salle-reunion-mobile.jpg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 pe-lg-9 col-xxl-9 col-lg-9">
+                            <div class="hero-contents">
+                                <h1 class="wow fadeInLeft animated" data-wow-duration="1.3s" data-wow-delay=".2s">
+                                    Réalisateur du <br/>
+                                    <span style="font-weight:700;">Plus Grand Écran<br/>LED Géant d'Afrique</span>
+                                </h1>
+                                <p class="pe-lg-5 wow fadeInLeft animated" data-wow-duration="1.3s" data-wow-delay=".5s">
+                                    LeaderLED a conçu, fabriqué et installé le plus grand écran LED géant<br/>
+                                    jamais réalisé en Afrique. Un exploit technique et une fierté nationale,<br/>
+                                    au service de votre visibilité maximale.
+                                </p>
+                                <a href="contact.html" class="theme-btn me-sm-4 wow fadeInLeft" data-wow-duration="1.2s" data-wow-delay="1s">Devis Gratuit</a>
+                                <a href="realisations.html" class="theme-btn wow fadeInLeft" data-wow-duration="1.2s" data-wow-delay=".8s">Nos réalisations</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="single-slide bg-cover" style="background-image: url('assets/imgs/realisation-leaderled-ecran-led-diffusion-match.jpg')" data-bg-mobile="assets/imgs/realisation-leaderled-ecran-led-diffusion-match-mobile.jpg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 pe-lg-9 col-xxl-9 col-lg-9">
+                            <div class="hero-contents">
+                                <h1 class="wow fadeInLeft animated" data-wow-duration="1.3s" data-wow-delay=".2s">
+                                    Diffusion de <br/>
+                                    <span style="font-weight:700;">matchs &amp; évènements<br/>sur écran LED</span>
+                                </h1>
+                                <p class="pe-lg-5 wow fadeInLeft animated" data-wow-duration="1.3s" data-wow-delay=".5s">
+                                    Transformez vos espaces en arènes sportives avec nos panneaux LED haute luminosité.
+                                    Cafés, restaurants, stades, plages — vivez le match en grand.
+                                </p>
+                                <a href="contact.html" class="theme-btn me-sm-4 wow fadeInLeft" data-wow-duration="1.2s" data-wow-delay="1s">Devis Gratuit</a>
+                                <a href="ecran-led-coupe-du-monde-2026-maroc.html" class="theme-btn wow fadeInLeft" data-wow-duration="1.2s" data-wow-delay=".6s">En savoir plus</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="single-slide bg-cover" style="background-image: url('assets/imgs/leader-panneaux-affichage-led-dynamique.jpg')" data-bg-mobile="assets/imgs/leader-panneaux-affichage-led-mobile.jpg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 pe-lg-9 col-xxl-9 col-lg-9">
+                            <div class="hero-contents">
+                                <h1 class="wow fadeInLeft animated" data-wow-duration="1.3s">Leader des panneaux <br/><span style="font-weight: 600;">d'affichage dynamique</span></h1>
+                                <p class="pe-lg-5 wow fadeInLeft animated" data-wow-duration="1.3s" data-wow-delay=".4s">Vente et location des panneaux d'affichage dynamique au Maroc.<br/>
+                                    Nos écrans et panneaux LED indoor et outdoor modernisent votre image de marque.</p>
+                                <a href="contact.html" class="theme-btn me-sm-4 wow fadeInLeft" data-wow-duration="1.2s" data-wow-delay=".8s">Devis Gratuit</a>
+                                <a href="affichage-dynamique-maroc.html" class="theme-btn wow fadeInLeft" data-wow-duration="1.2s" data-wow-delay=".6s">En savoir plus</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="single-slide bg-cover" style="background-image: url('assets/imgs/leader-affichage-led-maroc.jpg')" data-bg-mobile="assets/imgs/leader-affichage-led-maroc-mobile.jpg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 pe-lg-7 col-xxl-7 col-lg-9">
+                            <div class="hero-contents">
+                                <h1 class="wow fadeInLeft animated" data-wow-duration="1.3s">Écran géant LED <br/><span style="font-weight: 600;">au Maroc</span></h1>
+                                <p class="pe-lg-5 wow fadeInLeft animated" data-wow-duration="1.3s" data-wow-delay=".4s">Des solutions d'affichage LED personnalisées adaptées à vos besoins pour tous types de projets et d'entreprises au Maroc.</p>
+                                <a href="contact.html" class="theme-btn me-sm-4 wow fadeInLeft" data-wow-duration="1.2s" data-wow-delay=".8s">Devis Gratuit</a>
+                                <a href="solutions-led.html" class="theme-btn wow fadeInLeft" data-wow-duration="1.2s" data-wow-delay=".6s">Solutions LED</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="single-slide bg-cover" style="background-image: url('assets/imgs/leaderled-realisateur-ecran-geant-led-exterieur.jpg')" data-bg-mobile="assets/imgs/leaderled-realisateur-ecran-geant-led-exterieur-mobile.jpg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 pe-lg-7 col-xxl-7 col-lg-9">
+                            <div class="hero-contents">
+                                <h1 class="wow fadeInLeft animated" data-wow-duration="1.3s">Écran géant led <br/><span style="font-weight: 600;">extérieur outdoor</span></h1>
+                                <p class="pe-lg-5 wow fadeInLeft animated" data-wow-duration="1.3s" data-wow-delay=".4s">Découvrez notre offre en écran géant extérieur LED. Des solutions d'écrans visibles en plein soleil et conçus pour résister aux intempéries.</p>
+                                <a href="contact.html" class="theme-btn me-sm-4 wow fadeInLeft" data-wow-duration="1.2s" data-wow-delay=".8s">Devis Gratuit</a>
+                                <a href="ecran-geant-led-exterieur-maroc.html" class="theme-btn wow fadeInLeft" data-wow-duration="1.2s" data-wow-delay=".6s">En savoir plus</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="single-slide bg-cover" style="background-image: url('assets/imgs/entreprise-location-ecran-geant-led.jpg')" data-bg-mobile="assets/imgs/entreprise-location-ecran-geant-led-mobile.jpg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 pe-lg-7 col-xxl-7 col-lg-9">
+                            <div class="hero-contents">
+                                <h1 class="wow fadeInLeft animated" data-wow-duration="1.3s">LOCATION D'ÉCRANS <br/><span style="font-weight: 600;">LED AU MAROC</span></h1>
+                                <p class="pe-lg-5 wow fadeInLeft animated" data-wow-duration="1.3s" data-wow-delay=".4s">Louez un écran LED indoor ou extérieur pour vos événements partout au Maroc. Fan zones, salons, concerts et conférences.</p>
+                                <a href="contact.html" class="theme-btn me-sm-4 wow fadeInLeft" data-wow-duration="1.2s" data-wow-delay=".8s">Devis Gratuit</a>
+                                <a href="location-ecran-geant-maroc.html" class="theme-btn wow fadeInLeft" data-wow-duration="1.2s" data-wow-delay=".6s">En savoir plus</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ABOUT (probablement visible pres du haut sur desktop, mais deja apres le fold sur mobile -> lazy ok) ========== -->
+    <section class="about-section section-padding">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-6 col-12 pe-xl-0">
+                    <div class="about-cover-bg bg-cover me-xl-5" style="background-image: url('assets/imgs/ecran-led-leaderled-maroc.jpg')">
+                        <div class="our-experience-years">
+                            <div class="year-outline"><h2>14</h2></div>
+                            <p><span>Ans d'expérience</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 mt-5 mt-lg-0 col-12">
+                    <div class="block-contents">
+                        <div class="section-title">
+                            <span>À propos de nous</span>
+                            <h2>Vente des écrans géants LED publicitaires au Maroc</h2>
+                        </div>
+                        <p>Leader LED , n°1 des services d'ecrans geants dans les régions d'Agadir et du Maroc, est spécialisé dans <a href="affichage-dynamique-maroc.html">l'affichage dynamique LED</a>, plus précisément dans l'importation et la commercialisation des produits et composants LED. </p>
+                        <p>Nous fournissons des écrans à LED selon vos besoins, ainsi que des solutions techniques LED AU MAROC.</p>
+                        <blockquote>Nous concevons des solutions d'affichage dynamique LED uniques et fiables en fonction des besoins spécifiques de votre entreprise.</blockquote>
+                    </div>
+                    <a href="tel:0619360291" class="theme-btn mt-35">Appelez-nous maintenant</a>
+                </div>
+            </div>
+        </div>
+        <h2 class="section-rotate-title d-none d-xxl-block">ABOUT</h2>
+    </section>
+
+    <!-- ========== [PERF] CAROUSEL LOGOS : ~150 images, toutes en lazy-load ==========
+         A envisager en plus : reduire le nombre de logos affiches (ex: garder les 30 plus parlants)
+         pour alleger encore le DOM (2485 elements actuellement, tres eleve). -->
+    <section class="our-brand-showcase section-padding pt-0">
+        <div class="container text-center">
+            <h2 style="color: #001041;">Nos références</h2>
+            <div class="brand-carousel-2 mt-5 owl-carousel">
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/cdg.jpg" alt="CDG" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/ueme.jpg" alt="UEME" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/um6p.png" alt="UM6P" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/al-akhawayn.png" alt="AL AKHAWYAN UNIVERSITY" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/dufry.png" alt="Dufry" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/hilton.png" alt="HILTON" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/credit-agricole.png" alt="Credit agricole" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/cih-bank.png" alt="CIH BANK" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/toyota.png" alt="toyota" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/al-majlis-al-ala-li-soulta-qadaiya.png" alt="Conseil Supérieur du Pouvoir Judiciaire" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/sanlam.png" alt="SANLAM" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/asta.png" alt="ASTA" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/winxo.png" alt="WINXO" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/byd.png" alt="BYD" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/auto-nejma.png" alt="AUTO NEJMA" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/renault-dacia.png" alt="RENAULT DACIA" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/jobintech.png" alt="JOBINTECH" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/richbond.jpg" alt="RICHBOND" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/roche-bobois.png" alt="ROCHE BOBOIS PARIS" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/bibliotheque-nationale-du-royaume-maroc.png" alt="bibliotheque nationale du royaume au maroc" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/academie-regionale-des-metiers-educations-casa-settat.png" alt="ACADEMIE RAGIONALE DES METIERS ET EDUCATIONS CASA SETTAT" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/tikida-thalasso-and-spa.png" alt="TIKIDA THALASSO & SPA" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/wycon.png" alt="WYCON" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/quick.png" alt="QUICK" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/mobo.png" alt="MOBO elhouceima" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/centre-russe.png" alt="centre russe de la science et de la culture à rabat" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/villa-sahrai.png" alt="VILLA SAHRAI" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/casa-harris.jpg" alt="CASA HARRIS" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/agirh.png" alt="AGIRH" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/neonovia.png" alt="NEONOVIA" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/turkish-airlines.png" alt="TURKISH AIRLINES" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/alcott.png" alt="ALCOTT" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/jti.png" alt="JTI" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/sofalim.png" alt="SOFALIM" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/gdiragri.png" alt="GDIRAGRI" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/digital-garden-agency.png" alt="digital garden agency" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/m-automativ.png" alt="M AUTOMATIV" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/konouz-immobilier.png" alt="KONOUZ IMMOBILIER" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/eurolux.png" alt="EURoLUX" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/forces-auxilieres.png" alt="FORCES AUXILIAIRES" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/cadi-ayyad.png" alt="CADI AYYAD" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/premium-barbershop.png" alt="premium barbershop" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/forces-armees-royales-maroc.png" alt="Forces armées royales" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/bouskoura-meeting.png" alt="bouskoura meeting" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/aarabia-voyage.png" alt="aarabia voyage" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/star-aydoor.png" alt="star-aydoor" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/samavi.jpg" alt="SAMAVI" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/eagle-hills.jpg" alt="EAGLES HILLS MOROCCO" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/mgpap.png" alt="Mgpap" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/polo-assn.png" alt="POLO ASSN" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/arena-ville-verte.png" alt="ARENA VILLE VERTE" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/copag.png" alt="COPAG" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/carrera.jpg" alt="carrera" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/buropa.jpg" alt="buropa" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/terranova.png" alt="TERRANOVA" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/phova-technology.png" alt="Phova TECHNOLOGY" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/frmt.png" alt="FRMT" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/idou-malabata.png" alt="IDOU MALABATA" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/yoom.png" alt="YOOM" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/swissport.png" alt="swissport" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/ministere-de-linterieur.png" alt="ministere de l'interieur" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/sillage.png" alt="SILLAGE" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/groupe-scolaire-les-quatre-temps.png" alt="Groupe scolaire les quatre temps" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/sntm.png" alt="SNTM" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/baristas-groupe.png" alt="BARISTAS" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/forges.png" alt="forges" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/fatim-haute-couture.png" alt="Fatim haute couture" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/residence-intouriste.png" alt="Residence intouriste" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/commune-urbaine-kenitra.png" alt="Commune urbaine Kenitra" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/smaef.png" alt="SMAEF" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/aeronautica-militaire.png" alt="Aeronautica Militaire" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/province-eljadida.png" alt="Province eljadida" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/dream-donuts.png" alt="DREAM DONUTS" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/aspen-com.png" alt="ASPEN COM" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/french-food.png" alt="French food" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/scasco.png" alt="SCASCO ASSURANCE" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/graphics-africa.png" alt="Graphic's africa" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/mio.png" alt="MIO" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/enosis.png" alt="ENOSIS GROUP" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/vox-cinemas.png" alt="VOX CINEMAS" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/ama-innovation.png" alt="ama innovation" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/indo.png" alt="INDO" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/strapex.png" alt="GROUPE STRAPEX MAROC" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/faculte-science-rabat.png" alt="FACULTE SCIENCE RABAT" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/unfm.png" alt="UNFM" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/agro-expertise.png" alt="AGRO EXPERTISE" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/benmsik.png" alt="Arrondissement Ben msik" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/mifa-group.png" alt="MIFA group" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/mastercard.png" alt="MatserCard" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/horti-sud.png" alt="Horti Sud" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/hbs-huilerie.png" alt="HBS huilerie" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/boxcom.png" alt="BOXCOM" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/tikamed.png" alt="Tikamed" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/desjoyeux-piscines.png" alt="Desjoyeux piscines" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/yamaha.png" alt="yamaha" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/carre-dor.png" alt="carré d'or" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/agadir-bowling-lounge.png" alt="Bowling lounge agadir" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/dxc-technology.png" alt="DXC TECHNOLOGY" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/marriott-casablanca.png" alt="Marriott Casablanca" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/agadir-ville.png" alt="Agadir ville" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/geo5lux.png" alt="Geo5lux" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/laboratoire-gilbert.png" alt="laboratoire gilbert" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/argana.png" alt="Argana" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/arabian-oud.png" alt="Arabian oud" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/avolta.png" alt="Avolta" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/majouri-fragrance.png" alt="Majouri Frangrance" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/oceanatlanticview.png" alt="Ocean Atlantic View" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/tp-link.png" alt="TP Link" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/maamoura.png" alt="Relais de Maamoura" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/almoggar.png" alt="Hotel Almoggar" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/producom.png" alt="Agence Producom" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/maxyes.png" alt="Maxyes" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/promotherme.png" alt="Promotherme" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/sama-immo.png" alt="SAMA Immobilier" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/aipub.png" alt="AI PUB" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/hotel-atlantic.png" alt="Hotel Atlantic" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/mabrouk.png" alt="Mabrouk Hotel & Suits" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/hamilton.png" alt="Hotel HAMILTON AGADIR" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/casino-atlantic.png" alt="CASINO ATLANTIQUE AGADIR" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/venezia.png" alt="VENEZIA" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/kenzi-europa-hotel.png" alt="Kenzi europa hotel" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/hotel-prestige-agadir.png" alt="Hotel prestige agadir" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/agadir-beach-club-hotel.png" alt="Agadir Beach Club Hotel" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/james-webb-academy.png" alt="james webb Academy" loading="lazy" decoding="async"></div>
+                <div class="single-brand-logo"><img src="/assets/imgs/logos/adam-park-marrakech-hotel.png" alt="Adam park Marrakech Hotel" loading="lazy" decoding="async"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-wrapper style-2 cta-theme-bg">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8 col-xl-7 offset-xl-1 col-12">
+                    <div class="cta-text align-items-center d-md-flex text-center text-md-start">
+                        <i class="flaticon-email"></i>
+                        <h2>Nous voulons en savoir plus sur vous et votre projet LED</h2>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <a href="contact.html" class="theme-btn text-center">Discutons de votre projet</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-choice-us section-padding">
+        <div class="why-choice-bg bg-cover d-none d-xl-block">
+            <div class="backgrounds">
+                <div class="background" style="background-image: url('assets/imgs/ecran-led-geant-leaderled.webp');"></div>
+                <div class="background" style="background-image: url('assets/imgs/ecran-led-maroc-leaderled.webp');"></div>
+                <div class="background" style="background-image: url('assets/imgs/ecran-led-cdg.png');"></div>
+                <div class="background" style="background-image: url('assets/imgs/ecran-led-pour-interieur.jpg');"></div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="offset-xl-6 offset-lg-4 col-lg-8 col-xl-6 col-12">
+                    <div class="block-contents">
+                        <div class="section-title">
+                            <span>Pourquoi choisir LeaderLED ?</span>
+                            <h2>Nous concevons des systèmes d'affichage LED uniques et fiables</h2>
+                        </div>
+                    </div>
+                    <div class="single-icon-circle-item">
+                        <div class="icon">
+                            <img src="assets/imgs/garantie-2-ans.jpg" alt="2 ans de garantie" title="2 ans de garantie dans tous nos produits et écrans LED." loading="lazy" decoding="async"/>
+                        </div>
+                        <div class="contents">
+                            <h3>2 à 3 ans de garantie dans tous nos produits et écrans LED publicitaires.</h3>
+                            <p>En raison de la haute qualité de nos luminaires LED, Nous offrons jusqu'à 2 ans de garantie.</p>
+                        </div>
+                    </div>
+                    <div class="single-icon-circle-item">
+                        <div class="icon">
+                            <img src="assets/imgs/qualite.png" alt="Produits LED de qualité" title="Ecrans LED de haute qualité" loading="lazy" decoding="async"/>
+                        </div>
+                        <div class="contents">
+                            <h3>Produits LED de qualité</h3>
+                            <p>Nous avons une grande variété d'écrans LED de haute qualité, qui fournissent des images claires et détaillées.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="project-carousel-wrapper bg-cover section-padding" style="background-image: url('assets/img/project-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-8 col-lg-8">
+                    <div class="block-contents">
+                        <div class="section-title">
+                            <h5 class="textleft text-white">Projets</h5>
+                            <span>Réalisations</span>
+                            <h2 class="text-white">Certains de nos ecrans LED installés dans tout le Maroc</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="project-carousel-card-active owl-carousel text-white">
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/leaderled-ecran-geant-interieur.webp')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="ecran-geant-led-interieur-maroc.html">Écran LED intérieur</a></h3><p>Casablanca</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/ecran-geant-led-indoor-toyota.jpg')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="ecran-geant-led-interieur-maroc.html">Écran LED intérieur</a></h3><p>Casablanca</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/realisation-leaderled-panneau-led-publicitaire-exterieur.jpg')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="panneau-publicitaire-led-exterieur.html">Panneau LED extérieur</a></h3><p>Ifrane</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/totem-led-publicitaire-outdoor-winxo.jpg')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="totem-led-exterieur-maroc.html">Totem LED extérieur</a></h3><p>Casablanca</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/realisation-led-interieur-2.jpg')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="ecran-geant-led-interieur-maroc.html">Écran LED intérieur</a></h3><p>Agadir</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/ecran-led-indoor-premium-barber-shop.jpg')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="ecran-geant-led-interieur-maroc.html">Écran LED intérieur</a></h3><p>Casablanca</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/ecran-led-outdoor-strapex.jpg')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="ecran-geant-led-exterieur-maroc.html">Écran LED extérieur</a></h3><p>Mall STRAPEX Mediouna</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/realisation-led-interieur-1.jpg')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="ecran-geant-led-interieur-maroc.html">Écran LED intérieur</a></h3><p>Casablanca</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/realisation-led-exterieur-1.jpg')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="ecran-geant-led-exterieur-maroc.html">Écran LED extérieur</a></h3><p>Agadir</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/ecran-led-leaderled-realisation-dufry.webp')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="ecran-geant-led-interieur-maroc.html">Écran LED intérieur</a></h3><p>DUFRY - Agadir</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/leaderled-ecran-led-interieur-hall-hotel.jpg')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="ecran-geant-led-interieur-maroc.html">Écran LED intérieur</a></h3><p>Hall d'hotel - Marrakech</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/ecran-led-exterieur-kounouz-immobilier.jpg')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="ecran-geant-led-exterieur-maroc.html">Écran LED extérieur</a></h3><p>Konouz Immobilier - Agadir</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/ecran-led-indoor-hbs.jpg')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="ecran-geant-led-interieur-maroc.html">Écran LED intérieur</a></h3><p>Les Huileries du Souss Belhassan - Agadir</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/ecran-led-interieur-alcott.jpg')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="ecran-geant-led-interieur-maroc.html">Écran LED intérieur</a></h3><p>ALCOTT - Casablanca</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/ecran-led-exterieur-aarabia-voyage.jpg')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="ecran-geant-led-exterieur-maroc.html">Écran LED extérieur</a></h3><p>Al aarabia Voyages et Tourisme - Témara</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/ecran-led-exterieur-maroc.webp')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="">Écran LED extérieur <small>354cm x 196cm</small></a></h3><p>Hotel HAMILTON - AGADIR</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/ecran-bande-dufry.webp')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et installation</span><h3><a href="">Écran bande</a></h3><p>DUFRY - AGADIR</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="ecran-geant-led-exterieur.html" class="project-thumb bg-cover" style="background-image: url('assets/imgs/led-exterieur-maroc.webp')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et Installation</span><h3><a href="">Écran LED extérieur</a></h3><p>Hotel HAMILTON - AGADIR</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="" class="project-thumb bg-cover" style="background-image: url('assets/imgs/led-interieur-maroc-prix.webp')"></a>
+                <div class="contents"><div class="project-details"><span>Réparation</span><h3><a href="ecran-geant-led-interieur-maroc.html">Écran LED intérieur</a></h3><p>MAESTRO CLUB - AGADIR</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="ecran-geant-led-exterieur.html" class="project-thumb bg-cover" style="background-image: url('assets/imgs/led-exterieur-maroc-prix.webp')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et installation</span><h3><a href="">Écran LED extérieur</a></h3><p>Client : Gerding Development</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="ecran-geant-led-interieur-maroc.html" class="project-thumb bg-cover" style="background-image: url('assets/imgs/ecran-led-interieur-gitex.webp')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et installation</span><h3><a href="ecran-geant-led-interieur-maroc.html">Écran LED intérieur</a></h3><p>GITEX MARRAKECH 2024</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="ecran-geant-led-interieur-maroc.html" class="project-thumb bg-cover" style="background-image: url('assets/imgs/led-interieur-salle-fete-marrakech.webp')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et installation</span><h3><a href="ecran-geant-led-interieur-maroc.html">Écran LED intérieur</a></h3><p>SALLE DES FÊTES - MARRAKECH</p></div></div>
+            </div>
+            <div class="single-project-card"><a href="ecran-geant-led-interieur-maroc.html" class="project-thumb bg-cover" style="background-image: url('assets/imgs/led-interieur-dufry.webp')"></a>
+                <div class="contents"><div class="project-details"><span>Construction et installation</span><h3><a href="ecran-geant-led-interieur-maroc.html">Écran LED intérieur</a></h3><p>DUFRY - CASABLANCA</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="fun-fact-wrapper pt-70 pb-30 text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mt-30 col-12"><div class="single-fun-fact"><h2><span>487</span>+</h2><h3>Écrans LED installés</h3></div></div>
+                <div class="col-lg-3 col-md-6 mt-30 col-12"><div class="single-fun-fact"><h2><span>467</span></h2><h3>Clients satisfaits</h3></div></div>
+                <div class="col-lg-3 col-md-6 mt-30 col-12"><div class="single-fun-fact"><h2><span>19</span>+</h2><h3>Employés qualifiés</h3></div></div>
+                <div class="col-lg-3 col-md-6 mt-30 col-12"><div class="single-fun-fact"><h2><span>31</span></h2><h3>Villes au Maroc</h3></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-5 col-12">
+                    <div class="img-block-pop-video">
+                        <img src="assets/imgs/affichage-dynamique-led-par-leaderled.jpg" alt="Affichage dynamique au Maroc" title="Affichage dynamique" loading="lazy" decoding="async">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-7 col-md-10 col-12">
+                    <div class="block-contents">
+                        <div class="section-title">
+                            <span>Affichage dynamique au Maroc</span>
+                            <h2>Vos Panneaux d'affichage publicitaire 100% sur mesure</h2>
+                        </div>
+                        <p>Chez Leader LED, nous comprenons l'importance de se démarquer dans le paysage publicitaire dynamique du Maroc. C'est pourquoi nous proposons des solutions de panneaux d'affichage publicitaire entièrement personnalisées, conçues pour captiver et engager votre audience cible.</p>
+                        <p>Nos panneaux LED offrent une visibilité exceptionnelle, de jour comme de nuit, et sont conçus pour résister aux conditions climatiques locales, garantissant ainsi une performance durable et fiable.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-30 ">
+                <div class="col-md-12 text-center block-contents">
+                    <p><strong>Que vous cherchiez à promouvoir un événement, lancer un produit ou renforcer la notoriété de votre marque, LeaderLED est votre partenaire idéal pour créer une campagne publicitaire visuellement impressionnante et efficace.<br/>
+                        Découvrez comment nous pouvons transformer vos idées en une réalité lumineuse et impactante.</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-7 col-md-10 col-12">
+                    <div class="block-contents">
+                        <div class="section-title"><h2>Location écran géant LED publicitaire au Maroc</h2></div>
+                        <p>Vous organisez un événement, un salon professionnel, un concert, une campagne publicitaire ou une inauguration ?</p>
+                        <p> LeaderLED vous propose un service de <strong>location d'écrans géant LED</strong> clés en main, partout au <strong>Maroc : Casablanca, Marrakech, Agadir, Rabat, Tanger,</strong> etc.</p>
+                        <h3 class="mt-30">Nos écrans LED en location sont parfaits pour :</h3>
+                        <ul>
+                            <li>Événements publics ou privés (mariages, conférences, galas…)</li>
+                            <li>Salons professionnels, foires commerciales et expositions</li>
+                            <li>Concerts, festivals et shows en extérieur</li>
+                            <li>Campagnes publicitaires mobiles (camions LED, écrans autonomes)</li>
+                            <li>Projections en direct (live, retransmissions sportives, etc.)</li>
+                        </ul>
+                        <p>Grâce à notre expertise et notre large stock, nous assurons une solution fiable, esthétique et impactante, avec un accompagnement technique complet. Consultez nos <a href="tarifs-ecran-led-maroc.html">tarifs écran LED</a> pour mieux estimer votre budget, ou contactez-nous directement pour un devis personnalisé.</p>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-5 col-12">
+                    <div class="img-block-pop-video">
+                        <img src="assets/imgs/location-ecran-led-maroc.jpg" alt="Service de location d'écrans LED au Maroc" title="Location d'écran LED" loading="lazy" decoding="async">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="our-service-wrapper section-padding bg-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-50">
+                    <div class="block-contents">
+                        <div class="section-title">
+                            <h5>Secteurs d'activité</h5>
+                            <span>Secteurs d'activité</span>
+                            <h2>Des solutions LED adaptées à votre secteur</h2>
+                        </div>
+                        <p class="mt-3" style="color: white;">
+                            Chaque activité a ses contraintes. LeaderLED conçoit des solutions d'affichage LED sur mesure,
+                            adaptées à votre environnement, votre audience et vos objectifs (visibilité, vente, information).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mtm-30">
+                <div class="col-md-6 col-12 col-lg-4 mt-30">
+                    <a href="ecran-led-magasin.html" class="sector-card-link" aria-label="Retail & Boutiques - Écrans LED vitrine">
+                        <div class="single-service-box style-1">
+                            <div class="sector-thumb"><img src="assets/imgs/ecran-led-pour-magasin-retail.jpg" alt="Installation écran LED vitrine magasin Casablanca" loading="lazy" decoding="async"></div>
+                            <div class="contents text-center"><h4><span>Retail & Boutiques</span></h4><span class="sector-voir-plus">Voir plus<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-12 col-lg-4 mt-30">
+                    <a href="ecran-led-mariage-maroc.html" class="sector-card-link" aria-label="Mariage & Fête - Écrans LED événementiel">
+                        <div class="single-service-box style-1">
+                            <div class="sector-thumb"><img src="assets/imgs/ecran-led-pour-mariage-fete.jpg" alt="Écran LED mariage fête événementiel Maroc" loading="lazy" decoding="async"></div>
+                            <div class="contents text-center"><h4><span>Mariage & Fête</span></h4><span class="sector-voir-plus">Voir plus<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-12 col-lg-4 mt-30">
+                    <a href="ecran-led-cafe-restaurant.html" class="sector-card-link" aria-label="Hôtellerie & Restauration - Murs LED et menu boards dynamiques">
+                        <div class="single-service-box style-1">
+                            <div class="sector-thumb"><img src="assets/imgs/ecran-led-pour-restaurant.jpg" alt="Installation mur LED hall hôtel Maroc" loading="lazy" decoding="async"></div>
+                            <div class="contents text-center"><h4><span>Hôtellerie & Restauration</span></h4><span class="sector-voir-plus">Voir plus<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-12 col-lg-4 mt-30">
+                    <a href="ecran-led-salle-de-sport.html" class="sector-card-link" aria-label="Salle de Sport - Écrans LED">
+                        <div class="single-service-box style-1">
+                            <div class="sector-thumb"><img src="assets/imgs/ecran-led-pour-salle-de-sport.jpg" alt="Scoreboard LED et écran géant pour fan zone au Maroc" loading="lazy" decoding="async"></div>
+                            <div class="contents text-center"><h4><span>Salle de Sport</span></h4><span class="sector-voir-plus">Voir plus<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-12 col-lg-4 mt-30">
+                    <a href="ecran-led-bureau-entreprise.html" class="sector-card-link" aria-label="Corporate & Bureaux - Affichage dynamique pour entreprise">
+                        <div class="single-service-box style-1">
+                            <div class="sector-thumb"><img src="assets/imgs/ecran-led-pour-bureaux.jpg" alt="Affichage dynamique entreprise salle de réunion Maroc" loading="lazy" decoding="async"></div>
+                            <div class="contents text-center"><h4><span>Salles de réunion et bureaux</span></h4><span class="sector-voir-plus">Voir plus<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-12 col-lg-4 mt-30">
+                    <a href="ecran-led-ecole-universite.html" class="sector-card-link" aria-label="Écoles & Universités - Affichage dynamique moderne">
+                        <div class="single-service-box style-1">
+                            <div class="sector-thumb"><img src="assets/imgs/ecran-led-pour-ecole-universite.jpg" alt="Écran LED affichage dynamique école université Maroc" loading="lazy" decoding="async"></div>
+                            <div class="contents text-center"><h4><span>Écoles & Universités</span></h4><span class="sector-voir-plus">Voir plus<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-12 col-lg-4 mt-30">
+                    <a href="ecran-led-showroom-hall.html" class="sector-card-link" aria-label="Hall & Showroom - Affichage dynamique LED">
+                        <div class="single-service-box style-1">
+                            <div class="sector-thumb"><img src="assets/imgs/ecran-led-pour-hall-showroom.jpg" alt="Écran LED affichage dynamique hall et showroom Maroc" loading="lazy" decoding="async"></div>
+                            <div class="contents text-center"><h4><span>Hall & Showroom</span></h4><span class="sector-voir-plus">Voir plus<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-12 col-lg-4 mt-30">
+                    <a href="location-ecran-led-coupe-afrique-2025-maroc.html" class="sector-card-link" aria-label="Football & Cinéma - Affichage dynamique moderne">
+                        <div class="single-service-box style-1">
+                            <div class="sector-thumb"><img src="assets/imgs/ecran-led-pour-cinema-football.jpg" alt="Écran LED affichage dynamique cinema et football Maroc" loading="lazy" decoding="async"></div>
+                            <div class="contents text-center"><h4><span>Football & Cinéma</span></h4><span class="sector-voir-plus">Voir plus<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-12 col-lg-4 mt-30">
+                    <a href="ecran-geant-led-exterieur-maroc.html" class="sector-card-link" aria-label="Affichage publicitaire extérieur">
+                        <div class="single-service-box style-1">
+                            <div class="sector-thumb"><img src="assets/imgs/affichage-publicitaire-exterieur.jpg" alt="Écran LED affichage dynamique outdoor Maroc" loading="lazy" decoding="async"></div>
+                            <div class="contents text-center"><h4><span>Affichage publicitaire extérieur</span></h4><span class="sector-voir-plus">Voir plus<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row mt-50">
+                <div class="col-12 text-center">
+                    <p class="mb-20" style="color: white;">
+                        <strong>Quelle que soit votre activité, nous concevons votre écran sur-mesure (dimensions, résolution, luminosité).</strong>
+                    </p>
+                    <a href="contact.html" class="theme-btn">Demander une étude gratuite</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing-cta-wrapper text-white bg-cover bg-center section-padding" style="background-image: url('assets/imgs/led-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 ps-xl-0 pe-xl-0">
+                    <div class="pricing-contents">
+                        <h1>Vous êtes intéressé par acheter ou louer un <span style="color: #FDF24E !important;">écran LED ?</span></h1>
+                        <div class="btn-wrapper d-flex align-items-end justify-content-center">
+                            <a href="contact.html" class="theme-btn">Discutons de votre projet</a>
+                            <div class="btn-cta">
+                                <div class="icon"><i class="flaticon-24-hours"></i></div>
+                                <div class="content">
+                                    <span class="text-star">Tél. / WhatsApp</span>
+                                    <h3>(+212) 06 19 36 02 91</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <div class="container">
+            <div class="row mt-30 ">
+                <div class="col-md-12 text-center block-contents">
+                    <p><a href="affichage-dynamique-casablanca.html">Affichage dynamique à Casablanca</a> ● <a href="ecran-led-agadir.html">Affichage dynamique à Agadir</a> ● <a href="affichage-dynamique-marrakech.html">Affichage dynamique à Marrakech</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonial-wrapper section-padding pt-60 pb-60">
+        <div class="container">
+            <div class="col-12 col-xl-12 text-center">
+                <div class="block-contents mb-50">
+                    <div class="section-title">
+                        <h5>Avis</h5>
+                        <h2>Témoignages clients</h2>
+                        <span>Nous plaçons la satisfaction client au centre de notre métier.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-xl-8 pe-xl-5 col-lg-6 mt-5 mt-lg-0 order-2 order-lg-1">
+                    <div class="testimonial-carousel-list owl-carousel me-xl-5">
+                        <div class="single-testimonial-carousel">
+                            <div class="icon"><img src="assets/imgs/quotes1.png" alt="Icône citation" loading="lazy" decoding="async"></div>
+                            <p>J'ai eu une excellente expérience avec LeaderLED. Leur équipe est professionnelle et à l'écoute, et les écrans LED qu'ils proposent sont de haute qualité. Depuis l'installation, la visibilité de mon entreprise s'est nettement améliorée. Je recommande vivement leurs services.</p>
+                            <span>Abdelkarim LATIF</span>
+                        </div>
+                        <div class="single-testimonial-carousel">
+                            <div class="icon"><img src="assets/imgs/quotes1.png" alt="Icône citation" loading="lazy" decoding="async"></div>
+                            <p>Nous utilisons les écrans LED Leader LED pour nos événements en plein air et en salle. Faciles à démonter et à reprogrammer, ils s'adaptent à toutes nos configurations. Très pratiques pour un usage itinérant</p>
+                            <span>Jaouad En Nessah</span>
+                        </div>
+                        <div class="single-testimonial-carousel">
+                            <div class="icon"><img src="assets/imgs/quotes1.png" alt="Icône citation" loading="lazy" decoding="async"></div>
+                            <p>Nous avons utilisé un écran géant LeaderLED pour diffuser des matchs en extérieur pendant la Coupe d'Europe. L'image était parfaite, même en plein jour, et les spectateurs étaient ravis. Une vraie réussite</p>
+                            <span>Nouhaila Elbchir</span>
+                        </div>
+                        <div class="single-testimonial-carousel">
+                            <div class="icon"><img src="assets/imgs/quotes1.png" alt="Icône citation" loading="lazy" decoding="async"></div>
+                            <p>Pour un produit aussi performant, le prix est très raisonnable. Leader LED offre une qualité professionnelle à un coût compétitif. Nous allons sûrement en commander d'autres pour nos autres sites</p>
+                            <span>Fatiha Fatih</span>
+                        </div>
+                        <div class="single-testimonial-carousel">
+                            <div class="icon"><img src="assets/imgs/quotes1.png" alt="Icône citation" loading="lazy" decoding="async"></div>
+                            <p>Dans notre hall d'accueil, nous avons installé un écran Leader LED pour diffuser les actualités internes, les messages RH, et nos résultats. Les salariés sont plus informés, et c'est bien plus engageant qu'un simple email</p>
+                            <span>Youssef Ouberi</span>
+                        </div>
+                        <div class="single-testimonial-carousel">
+                            <div class="icon"><img src="assets/imgs/quotes1.png" alt="Icône citation" loading="lazy" decoding="async"></div>
+                            <p>Nous utilisons un écran Leader LED pour nos événements sportifs, et la visibilité à plusieurs dizaines de mètres est parfaite. Aucun pixel apparent, même de près. Impressionnant</p>
+                            <span>moha b.f.s</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 order-1 order-lg-2">
+                    <div class="testimonial-img-right">
+                        <img src="assets/imgs/avis.png" alt="Avis clients LeaderLED" loading="lazy" decoding="async">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="news-wrapper section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-12 text-center">
+                    <div class="block-contents">
+                        <div class="section-title">
+                            <h5>blog</h5>
+                            <span>Nos Articles de Blog</span>
+                            <h2>Derniers Articles</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-4 col-md-6 col-12">
+                    <div class="single-blog-card style-1">
+                        <div class="blog-featured-img bg-cover bg-center" style="background-image: url('assets/imgs/autorisation-panneau-publicitaire-maroc.jpg')"></div>
+                        <div class="contents">
+                            <div class="post-metabar d-flex justify-content-between align-items-center">
+                                <div class="post-author">
+                                    <div class="author-img bg-cover bg-center" style="background-image: url('assets/imgs/logoblog.png')"></div>
+                                    <a href="#">LeaderLED</a>
+                                </div>
+                                <div class="post-date"><i class="fal fa-calendar-alt"></i><a href="#">19 Juin 2026</a></div>
+                            </div>
+                            <h3><a href="autorisation-panneau-publicitaire-maroc.html">Autorisation panneau publicitaire au Maroc : démarches et règles</a></h3>
+                            <a href="autorisation-panneau-publicitaire-maroc.html" class="read-more-link">En savoir plus</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-6 col-12">
+                    <div class="single-blog-card style-1">
+                        <div class="blog-featured-img bg-cover bg-center" style="background-image: url('assets/imgs/pas-de-pixel-led-maroc.jpg')"></div>
+                        <div class="contents">
+                            <div class="post-metabar d-flex justify-content-between align-items-center">
+                                <div class="post-author">
+                                    <div class="author-img bg-cover bg-center" style="background-image: url('assets/imgs/logoblog.png')"></div>
+                                    <a href="#">LeaderLED</a>
+                                </div>
+                                <div class="post-date"><i class="fal fa-calendar-alt"></i><a href="#">17 Juin 2026</a></div>
+                            </div>
+                            <h3><a href="pas-de-pixel-led-maroc.html">Pas de pixel LED : P2, P3, P4, P5 — lequel choisir ?</a></h3>
+                            <a href="pas-de-pixel-led-maroc.html" class="read-more-link">En savoir plus</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-6 col-12">
+                    <div class="single-blog-card style-1">
+                        <div class="blog-featured-img bg-cover bg-center" style="background-image: url('assets/imgs/mur-led-evenementiel.jpg')"></div>
+                        <div class="contents">
+                            <div class="post-metabar d-flex justify-content-between align-items-center">
+                                <div class="post-author">
+                                    <div class="author-img bg-cover bg-center" style="background-image: url('assets/imgs/logoblog.png')"></div>
+                                    <a href="#">LeaderLED</a>
+                                </div>
+                                <div class="post-date"><i class="fal fa-calendar-alt"></i><a href="#">14 Octobre 2025</a></div>
+                            </div>
+                            <h3><a href="mur-led-evenementiel.html">Mur LED Événementiel </a></h3>
+                            <a href="mur-led-evenementiel.html" class="read-more-link">En savoir plus</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-wrapper section-padding pb-60">
+        <div class="container">
+            <div class="col-12 col-xl-12 text-center">
+                <div class="block-contents mb-50">
+                    <div class="section-title">
+                        <h5>FAQ</h5>
+                        <h2>Questions fréquentes</h2>
+                        <span>Sur nos écrans LED publicitaires</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row equal">
+                <div class="col-lg-7 col-12 col-xl-8">
+                    <div class="faq-accordion">
+                        <div class="accordion no-border me-lg-5" id="accordion">
+                            <div class="accordion-item">
+                              <h4 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="false" aria-controls="faq1">
+                                    Pourquoi choisir un écran LED plutôt qu'un panneau publicitaire classique ?
+                                </button>
+                              </h4>
+                              <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                                <div class="accordion-body">Les écrans LED attirent beaucoup plus l'attention grâce à l'animation et la luminosité. Ils permettent de diffuser plusieurs messages à la fois et d'actualiser votre communication en temps réel, sans coûts d'impression ni délais.</div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h4 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="true" aria-controls="faq2">
+                                    Est-ce que vous proposez la vente et la location d'écrans LED ?
+                                </button>
+                              </h4>
+                              <div id="faq2" class="accordion-collapse collapse show" data-bs-parent="#accordion">
+                                <div class="accordion-body">Oui, LeaderLED propose la vente, la location courte durée (pour événements) et la location longue durée pour les enseignes commerciales ou institutions. Vous bénéficiez toujours d'un accompagnement technique complet.</div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h4 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
+                                    Dans quelles villes intervenez-vous ?
+                                </button>
+                              </h4>
+                              <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                                <div class="accordion-body">Nous livrons et installons partout au Maroc, notamment à Casablanca, Agadir, Marrakech, Rabat, Tanger, etc. Notre réseau couvre les grandes villes ainsi que les zones industrielles et commerciales.</div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h4 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
+                                    Faut-il une autorisation pour installer un panneau LED extérieur ?
+                                </button>
+                              </h4>
+                              <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                                <div class="accordion-body">Dans la plupart des cas, oui. Rassurez-vous, notre équipe vous accompagne dans toutes les démarches administratives nécessaires à l'installation de votre écran LED publicitaire.</div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h4 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5" aria-expanded="false">
+                                    Est-ce que les écrans LED consomment beaucoup d'énergie ?
+                                </button>
+                              </h4>
+                              <div id="faq5" class="accordion-collapse collapse" aria-labelledby="faq5" data-bs-parent="#accordion">
+                                <div class="accordion-body">Nos écrans LED sont conçus pour être économes en énergie, avec une gestion intelligente de la luminosité. Ils consomment beaucoup moins que les anciens systèmes d'affichage lumineux traditionnels.</div>
+                              </div>
+                            </div>
+                            <div class="accordion-item">
+                              <h4 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6" aria-expanded="false">
+                                    Qui s'occupe de l'installation et du contenu affiché ?
+                                </button>
+                              </h4>
+                              <div id="faq6" class="accordion-collapse collapse" aria-labelledby="faq6" data-bs-parent="#accordion">
+                                <div class="accordion-body">LeaderLED s'occupe de l'installation complète, de la configuration technique et vous forme à l'utilisation. Vous pouvez ensuite modifier les contenus librement, ou nous confier leur gestion.</div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 mt-5 mt-lg-0 col-lg-5 col-12">
+                    <div class="faq-sidebar">
+                        <div class="icon mb-4"><img src="assets/img/newbie.png" alt="Icône assistance" loading="lazy" decoding="async"></div>
+                        <h3>Vous avez encore des questions ?</h3>
+                        <p>Notre équipe est à votre écoute ! N'hésitez pas à nous contacter pour toute demande d'information, devis personnalisé ou accompagnement sur votre projet d'écran LED.</p>
+                        <a href="/contact.html"><i class="fas fa-phone-square"></i> Contactez-nous</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+<footer class="footer-5">
+
+    <!-- Section CTA (Inchangée) -->
+    <div class="footer-cta-wrapper">
+        <div class="container">
+            <div class="footer-cta-bg-wrapper">
+                <div class="row justify-content-around align-items-center p-0">
+                    <div class="col-lg-7 col-md-7 col-12">
+                        <div class="footer-middle-text text-white">
+                            <h5>Leaderled, n°1 des services LED au MAROC</h5>
+                            <h2>Vos animations et photos en direct live !</h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 ps-lg-0 col-12">
+                        <div class="footer-btn d-flex justify-content-end align-items-center">
+                            <div class="btn-wepper">
+                                <a href="contact.html" class="theme-btn">Demande de devis</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-widgets-wrapper text-white">
+        <div class="container">
+            
+            <!-- RANGÉE 1 : Informations & Contact -->
+            <div class="row mb-5">
+                <!-- Colonne Info Entreprise -->
+                <div class="col-lg-6 col-md-12 col-12 mb-4 mb-lg-0">
+                    <div class="footer-site-info">
+                        <a href="/"><img src="./assets/imgs/logo.webp" alt="LeaderLED" style="max-width: 200px;"></a>
+                        <p class="pt-3 pb-3">Leaderled, n°1 des services d'écrans géants dans les régions d'Agadir et du Maroc, est spécialisé dans l'affichage dynamique LED, plus précisément dans l'importation et la commercialisation des produits et composants LED.</p>
+                        <a href="https://g.page/r/CevsbO86KRdzEAE/review/" target="_blank">
+                            <img src="assets/imgs/google_review_button.png" height="60" alt="Avis Google"/>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Colonne Coordonnées & Réseaux -->
+                <div class="col-lg-6 col-md-12 col-12">
+                    <div class="single-footer-contact single-footer-wid newsletter_widget style-2">
+                        <div class="wid-title">
+                            <h3>Nos coordonnées & Réseaux</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="contant-footer">
+                                    <div class="call d-flex align-items-center mb-3">
+                                        <div class="icon"><img src="./assets/imgs/call.svg" alt="Téléphone" style="width:20px;"></div>
+                                        <div class="ms-3 call-num">
+                                            <p class="mb-0"><a href="tel:0619360291" class="text-white">+212 619 36 02 91</a></p>
+                                        </div>
+                                    </div>
+                                    <div class="email d-flex align-items-center mb-3">
+                                        <div class="icon"><i class="fal fa-envelope"></i></div>
+                                        <div class="ms-3 call-num">
+                                            <p class="mb-0"><a href="/cdn-cgi/l/email-protection#19717059757c787d7c6b757c7d377478" class="text-white"><span class="__cf_email__" data-cfemail="5a32331a363f3b3e3f28363f3e74373b">[email&#160;protected]</span></a></p>
+                                        </div>
+                                    </div>
+                                    <div class="email d-flex align-items-center mb-3">
+                                        <div class="icon"><i class="fab fa-whatsapp"></i></div>
+                                        <div class="ms-3 call-num">
+                                            <a href="whatsapp-verify.php" class="text-white">+212 619 36 02 91</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12 d-flex align-items-center">
+                                <div class="footer-site-info w-100">
+                                    <div class="footer-social-icon mt-3 mt-md-0">
+                                        <a href="https://www.facebook.com/profile.php?id=100089647475033&mibextid=ZbWKwL" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                        <a href="https://www.instagram.com/leader_led1/" target="_blank"><i class="fab fa-instagram"></i></a>
+                                        <a href="https://pin.it/XwkLrgJt0" target="_blank"><i class="fab fa-pinterest"></i></a>
+                                        <a href="https://www.youtube.com/@LEADERLED" target="_blank"><i class="fab fa-youtube"></i></a>
+                                        <a href="https://www.linkedin.com/company/leaderled-maroc/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr style="border-color: rgba(255,255,255,0.1);">
+
+            <!-- RANGÉE 2 : Les liens (Répartis en 4 colonnes pour réduire la hauteur) -->
+            <div class="row mt-4">
+                <div class="col-12 mb-3">
+                    <h3 style="font-size: 20px; color: #fff; font-weight: 600;">
+                        Solutions LED & Zones d’intervention
+                    </h3>
+                </div>
+
+                <!-- Colonne 1 : Solutions LED -->
+                <div class="col-xl-3 col-md-6 col-12">
+                    <div class="single-footer-wid">
+                        <ul>
+                            <li><a href="ecran-geant-led-maroc.html">Écrans géants LED au Maroc</a></li>
+                            <li><a href="affichage-dynamique-maroc.html">Affichage dynamique professionnel</a></li>
+                            <li><a href="ecrans-led-courbes-flexibles-maroc.html">Écrans LED flexibles et courbes</a></li>
+                            <li><a href="ecran-led-vitrine-maroc.html">Écrans LED pour vitrines</a></li>
+                            <li><a href="ecran-geant-led-interieur-maroc.html">Écrans LED intérieurs</a></li>
+                            <li><a href="ecran-geant-led-exterieur-maroc.html">Écrans LED extérieurs</a></li>
+                            <li><a href="ecran-led-p1-p3.html">Écran LED P1 & P3</a></li>
+                            <li><a href="installation-ecran-geant-led.html">Installation d’écrans géants LED</a></li>
+                            <li><a href="panneau-led-maroc.html">Panneaux LED professionnels</a></li>
+                            <li><a href="panneau-publicitaire-maroc.html">Panneaux publicitaires LED</a></li>
+                            <li><a href="affichage-led.html">Affichage LED haute visibilité</a></li>
+                            <li><a href="totem-publicitaire-led-maroc.html">Totems publicitaires LED</a></li>
+                            <li><a href="ecran-geant-led-outdoor-maroc.html">Écran géant LED outdoor</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Colonne 2 : Supports publicitaires -->
+                <div class="col-xl-3 col-md-6 col-12">
+                    <div class="single-footer-wid">
+                        <ul>
+                            <li><a href="totem-publicitaire.html">Totems publicitaires</a></li>
+                            <li><a href="ecran-led-mobile-maroc.html">Écrans LED mobiles</a></li>
+                            <li><a href="camion-led-publicitaire.html">Camions publicitaires LED</a></li>
+                            <li><a href="panneau-publicitaire-led-exterieur.html">Panneaux LED extérieurs</a></li>
+                            <li><a href="panneau-led-publicitaire.html">Panneaux LED publicitaires</a></li>
+                            <li><a href="ecran-led-maroc.html">Écrans LED au Maroc</a></li>
+                            <li><a href="affichage-dynamique-led-maroc.html">Affichage dynamique LED</a></li>
+                            <li><a href="ecran-geant-publicitaire-maroc.html">Écrans géants publicitaires</a></li>
+                            <li><a href="panneau-publicitaire-led-maroc.html">Panneaux publicitaires LED Maroc</a></li>
+                            <li><a href="ecran-vitrine-maroc.html">Écrans LED pour vitrines commerciales</a></li>
+                            <li><a href="ecran-led-publicitaire.html">Écrans LED publicitaires</a></li>
+                            <li><a href="panneau-publicitaire-magasin.html">Panneaux publicitaires pour magasins</a></li>
+                            <li><a href="ecran-led-hotel.html">Écran LED pour hôtel</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Colonne 3 : Secteurs d’activité -->
+                <div class="col-xl-3 col-md-6 col-12">
+                    <div class="single-footer-wid">
+                        <ul>
+                            <li><a href="solutions-led-salons-evenements.html">Salons professionnels & événements</a></li>
+                            <li><a href="ecran-led-evenementiel.html">Écrans LED événementiels</a></li>
+                            <li><a href="ecran-led-centre-commercial.html">Écrans LED pour centres commerciaux & malls</a></li>
+                            <li><a href="ecran-led-salle-conference-amphitheatre.html">Écrans LED pour conférences & amphithéâtres</a></li>
+                            <li><a href="ecran-led-seminaire.html">Écrans LED pour séminaires</a></li>
+                            <li><a href="ecran-led-salle-de-sport.html">Écrans LED pour salles de sport</a></li>
+                            <li><a href="ecran-led-salle-fete.html">Écrans LED pour salles de fêtes</a></li>
+                            <li><a href="ecran-led-bureau-entreprise.html">Écrans LED pour bureaux & entreprises</a></li>
+                            <li><a href="ecran-led-stade.html">Écrans LED pour stades</a></li>
+                            <li><a href="ecran-led-magasin.html">Écrans LED pour magasins </a></li>
+                            <li><a href="ecran-led-aeroport.html">Écrans LED pour aéroports</a></li>
+                            <li><a href="ecran-led-cafe-restaurant.html">Écrans LED pour cafés & restaurants</a></li>
+                            <li><a href="ecran-led-showroom-hall.html">Écrans LED Showroom & Hall</a></li>
+                            <li><a href="ecran-led-ecole-universite.html">Écrans LED pour écoles & universités</a></li>
+                            <li><a href="ecran-led-gitex-2026-maroc.html">Écran LED pour GITEX Africa 2026</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Colonne 4 : Villes & zones -->
+                <div class="col-xl-3 col-md-6 col-12">
+                    <div class="single-footer-wid">
+                        <ul>
+                            
+                            <li><a href="ecran-led-casablanca.html">Écrans LED à Casablanca</a></li>
+                            <li><a href="panneau-publicitaire-tanger.html">Panneaux publicitaires à Tanger</a></li>
+                            <li><a href="ecran-led-tanger.html">Écrans LED à Tanger</a></li>
+                            <li><a href="ecran-geant-led-interieur-casablanca.html">Écrans géants LED intérieurs à Casablanca</a></li>
+                            <li><a href="ecran-geant-led-interieur-marrakech.html">Écrans géants LED intérieurs à Marrakech</a></li>
+                            <li><a href="totem-publicitaire-led-casablanca.html">Totems publicitaires LED à Casablanca</a></li>
+                            <li><a href="affichage-dynamique-casablanca.html">Affichage dynamique à Casablanca</a></li>
+                            <li><a href="affichage-dynamique-marrakech.html">Affichage dynamique à Marrakech</a></li>
+                            <li><a href="affichage-dynamique-rabat.html">Affichage dynamique à Rabat</a></li>
+                            <li><a href="ecran-led-rabat.html">Écrans LED à Rabat</a></li>
+                            <li><a href="panneau-led-marrakech.html">Panneaux LED à Marrakech</a></li>
+                            <li><a href="panneau-publicitaire-rabat.html">Panneaux publicitaires à Rabat</a></li>
+                            <li><a href="panneau-led-publicitaire-fes.html">Panneaux LED publicitaire à Fès</a></li>
+                            <li><a href="totem-digital-casablanca.html">Totem Digital Casablanca</a></li>
+                            <li><a href="installation-ecran-evenementiel-maroc.html">Installation Écran Événementiel</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fin des liens -->
+
+        </div>
+    </div>
+
+    <!-- Footer Bottom (Inchangé) -->
+    <div class="footer-bottom">
+        <div class="container">
+            <hr>
+            <div class="row align-items-center py-4">
+                <div class="col-md-6 col-12 text-center text-md-start">
+                    <div class="copyright-info">
+                        <p>© <strong>LeaderLED</strong> - Tous droits réservés. Développé par <a href="https://www.issamwebmaster.com/" target="_blank" style="color: #1B84E4;" rel="noopener noreferrer"><strong>Issam Webmaster</strong></a> </p>                            
+                    </div>
+                </div>
+                <div class="col-md-6 col-12 text-center">
+                    <div class="footer-menu footer-menu-3 mt-3 mt-md-0 text-md-end">
+                        <ul>
+                            <li><a href="mentions-legales.html">Mentions légales</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bouton Instagram -->
+        <div id="instagram-button" style="position:fixed; bottom:95px; right:25px; z-index:9999;">
+            <a href="https://www.instagram.com/leader_led1/" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur Instagram">
+                <img src="assets/imgs/instagram.png"
+                    alt="Instagram" style="width:55px; height:55px; border-radius:14px;">
+            </a>
+        </div>
+
+        <!-- Bouton WhatsApp -->
+        <div id="whatsapp-button" style="position:fixed; bottom:25px; right:25px; z-index:9999;">
+            <a href="whatsapp-verify.php" aria-label="Contactez-nous sur WhatsApp">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                    alt="WhatsApp" style="width:60px; height:60px;">
+            </a>
+        </div>
+
+
+</footer>
+    <!--  ALl JS Plugins ====================================== -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/modernizr.min.js"></script>
+    <script src="assets/js/jquery.easing.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/isotope.pkgd.min.js"></script>
+    <script src="assets/js/imageload.min.js"></script>
+    <script src="assets/js/scrollUp.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <script src="assets/js/magnific-popup.min.js"></script>
+    <script src="assets/js/counterup.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/metismenu.js"></script>
+    <script src="assets/js/ajax-mail.js"></script>
+    <script src="assets/js/active.js?v=1.3"></script>
+<!-- Script mobile backgrounds -->
+<script>
+  function applyMobileBackgrounds() {
+    var isMobile = window.innerWidth <= 767;
+    document.querySelectorAll('.single-slide[data-bg-mobile]').forEach(function(el) {
+      if (isMobile) {
+        el.style.backgroundImage = "url('" + el.dataset.bgMobile + "')";
+      } else {
+        var bgDesktop = el.dataset.bgDesktop;
+        if (bgDesktop) {
+          el.style.backgroundImage = "url('" + bgDesktop + "')";
+        }
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.single-slide[data-bg-mobile]').forEach(function(el) {
+      var current = el.style.backgroundImage;
+      var match = current.match(/url\(['"]?([^'"]+)['"]?\)/);
+      if (match) {
+        el.dataset.bgDesktop = match[1];
+      }
+    });
+    applyMobileBackgrounds();
+  });
+
+  window.addEventListener('resize', applyMobileBackgrounds);
+</script>
+
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a351d8c17f61cc00',t:'MTc4ODQwODAxOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v3d52b47920f24c319d37e2661827c42b1787588026925" integrity="sha512-d9sL6GJLXn6fInD1+TVXhTcQOsmxeHfmHAvwGDIxp5TO+uo1fiWW7mHomMj4MLRlCsJDTqXzWLHJFFlPCEIj/A==" data-cf-beacon='{"version":"2024.11.0","token":"2e63b09800554f358d9c84076a31fc59","r":1}' crossorigin="anonymous"></script>
+</body>
+</html>

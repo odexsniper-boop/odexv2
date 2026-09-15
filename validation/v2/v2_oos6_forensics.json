@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "validation_name": "OOS-6 FORENSICS & TRADE-BY-TRADE AUDIT",
+    "timestamp": "2026-09-11T03:10:39.830Z",
+    "dataset_file": "replay/raw_txs_oos6_final.json"
+  },
+  "catastrophic_forensics": [],
+  "winner_forensics": [],
+  "trade_by_trade_comparison": [
+    {
+      "index": 1,
+      "token": "BRB2wCpRbBtxAtAntgc5psWyNNm8SCVy3wkHNT9Dpump",
+      "timestamp": 1789095077,
+      "tier": "C",
+      "opportunity": 50,
+      "confidence": 70,
+      "confluence": "CONFLICTING",
+      "v2_4": {
+        "size": 0.025,
+        "pnlSol": 0,
+        "pnlPct": 0,
+        "execPnlSol": -0.00076
+      },
+      "v2_7": {
+        "size": 0.05,
+        "pnlSol": 0,
+        "pnlPct": 0,
+        "execPnlSol": -0.00151
+      },
+      "deltaPnlSol": 0,
+      "maePct": -9.365629766737744,
+      "mfePct": 50.41149681197826
+    },
+    {
+      "index": 2,
+      "token": "DJJRredkywqbRh9uJ7MeJH2qjgUD8VouyJsPUjNgpump",
+      "timestamp": 1789095078,
+      "tier": "C",
+      "opportunity": 60,
+      "confidence": 70,
+      "confluence": "CONFLICTING",
+      "v2_4": {
+        "size": 0.025,
+        "pnlSol": -0.001994999047703303,
+        "pnlPct": -7.979996190813211,
+        "execPnlSol": -0.0027250740619877535
+      },
+      "v2_7": {
+        "size": 0.05,
+        "pnlSol": -0.003989998095406606,
+        "pnlPct": -7.979996190813211,
+        "execPnlSol": -0.0054401481239755075
+      },
+      "deltaPnlSol": -0.001994999047703303,
+      "exitReason": "FLOW_FAILURE",
+      "maePct": -7.979996190813211,
+      "mfePct": 0
+    },
+    {
+      "index": 3,
+      "token": "Bhgqi4gNL4Vy5Kifkdkftf3ZE6GFLFdobWXZnwGLpump",
+      "timestamp": 1789095092,
+      "tier": "B",
+      "opportunity": 80,
+      "confidence": 70,
+      "confluence": "MEDIUM",
+      "v2_4": {
+        "size": 0.1,
+        "pnlSol": -0.009334085909070072,
+        "pnlPct": -9.33408590907007,
+        "execPnlSol": -0.01220407462043402
+      },
+      "v2_7": {
+        "size": 0.025,
+        "pnlSol": -0.002333521477267518,
+        "pnlPct": -9.33408590907007,
+        "execPnlSol": -0.0030585186551085053
+      },
+      "deltaPnlSol": 0.007000564431802554,
+      "exitReason": "FLOW_FAILURE",
+      "maePct": -9.33408590907007,
+      "mfePct": 0
+    }
+  ]
+}

@@ -1,0 +1,907 @@
+{
+  "seal_name": "OOS7_FROZEN_VALIDATION_SEAL",
+  "sealed_at": "2026-09-11T03:17:57.853Z",
+  "dataset_file": "replay/raw_txs_oos7_final.json",
+  "dataset_sha256": "d02ca47791366cae011cd86dc70ce3b510c02d2c5b621fa0cacf014d761f3478",
+  "total_transactions": 2719,
+  "total_tokens": 75,
+  "token_list": [
+    "ADyVyD1Ga4uDjssmiRZ9NbWv4kLtGVxhba4DVnbdpump",
+    "55jwtj5Ut7DTAsa3BHzk74RQLermVNMVX3DpkRZepump",
+    "5qT1JzLL2c5oxND24v8MuZoGBSuuLhoxH8zU6Vmzpump",
+    "EWgtXSBvBuVHVnUykdnHxmL4RLiweHe8cUU6obfwpump",
+    "7CnjUdy2sDn5g8wZbesr76e5prQFHif2ekhu2xGupump",
+    "25snwN8X3H8DiNvtRC6rQb1vphdP5QA3kqosvGHTpump",
+    "BWZdVgpmaNd7QqicBxyXsTbCJUiCBNhbW5Uedrdrpump",
+    "EZniv7vvYM2UbjBvsyVDpkHpPQtdVvmJqchA4KE7pump",
+    "6xVY1VqPjS7LD8F5MKVCj6SXFhDPbRE3KwspkqgZpump",
+    "BQUC1LEf7z56PxhEn2oGERm2Jfr1iQMaS1guS9G5pump",
+    "6WH5DMDdfrWyYWwWZkvJVGuZ1pBDUfBTi6A43eiXpump",
+    "6tR4yawSSFHkorbCMbU7qWNPseNXue2MKDhrZqHxpump",
+    "EsGcUEHGdr32fbk9U73tZhFuuy7cEU1Za3RyxXhkpump",
+    "9N1NFSX4vubdwxsJYg2EkqHUsXzYJkfHVmMYaYxgpump",
+    "25soKxya8LpvPzgifFRpSK4VGAxDZ1vK12z12L5Fpump",
+    "5VLfAopyLwsefi8giD2td5KbNjhsitRFXq79xiC5pump",
+    "72kAyS3YWqnT6yfqY93wuir3jyS5KWxQNPcsMthvpump",
+    "3RCGnEFgLCSHbmdBwfFfkeZPtpwgd5wLkcdC1QwYpump",
+    "Csm4dZUmrfu73zWM7BBWwhhJ3dhFkxApzy4P4Lfypump",
+    "83FYF2Hdi5SNCEBC1LKem7q8v6fvrUHx382AFop6pump",
+    "7McDVafqH1QzeqwuadCPMdsJ71uxRiqicBps81MRpump",
+    "7TojjCTq2ifo37v3HfaGDJdPv4LTQHr1ER66UTApump",
+    "25spZpAFPLG9yESWC28m4L3mpzsM4djtj5NLkj4spump",
+    "25soizMMgWNtUN9vBcCE6neEN5DzFAwGD5d7nEQWpump",
+    "CX7tAXtbbZ7NTyBNjE8UF3KNMLdaNVZTzC8mXNzopump",
+    "7ZXXff82qKGPRsP287R7NKpsui7R8nixScwRYVFSpump",
+    "AbNpbwiiMbZ1PT2z3KzkxeJmkDGSpTzfdKpoP3vypump",
+    "25sqE2Jxa9vN4GcDFTJQZKFX2TmHfSNNniZCgjzfpump",
+    "CB6MrSi3FNdZBvJFCcV4EH5s7MnFRe2JpY5dL3Dnpump",
+    "8caLgBfP9j2nBepFyryev4LgZxQ663nV5tjrfDRTpump",
+    "25sqLFssodrDHJsdnJLgfzD1rFvupVfWhgPYRxVvpump",
+    "DcH4duH8eomoFqNoVHhG8KmbYHNu3XDJgkGoWPZ3pump",
+    "89uYArVseMMzjMBgi27GtLU6aszwibovbE9SHSRvpump",
+    "HLfhSJNafPZ3chVQ8SCndL8UYgC6kqi4T1Ka7d1opump",
+    "GFWuEyMZc4LfWKX8D2xd4DxAHb69onbZQhnVirGxpump",
+    "25sqbitwFBWW8KjK2uJHsJoGTVHJjoxh8hxYj2r5pump",
+    "4WwV2zj1u6fqfnuudwrZw9na6HJKZ2KRfdfkGtndpump",
+    "6vNpzsrwLz6XzpqqHVtv3qm2AorSB8eP6Bq7kh42pump",
+    "25sr71Rb2oQNEyYkEygSijtowLcnHNDG1vKQsZPJpump",
+    "FcJB3svADUD8L8dBEswX8bpBuB8kHhNBJ2Q2JoE3pump",
+    "5vhg4jRzALntHxasMGQzZnUc8dSq3GiGGgpaEJL7pump",
+    "Au4VGXzJoBrDXtJNzDCCpSDqB7yqVjmsX6jRaJhypump",
+    "D7bncM9sASgPTDDv2rsY6wN73dyLjQCBtDsbFuVBpump",
+    "3cJAH2ewnyQYBxmgncfxa9xAtLE6xfkZLM9uy8Vtpump",
+    "77bi9PL23wsex8uBc2ynnD8vFwozeLMrJvX5vujjpump",
+    "8S38hwHxYj9qF5WBNgTrMe5QD84HeYCXdwTRhCwopump",
+    "QVxBWDfQhSyHDcQei2ci64XG2pfPv4dpEoUnLvWpump",
+    "84T6PuXgq8fRTqvUzkLCZrcENj7XLdrVkJshApCLpump",
+    "2mgWgR9tkctRqZ2Vsiiqh8CeXUUN2LensV1a2wj8pump",
+    "6fQZaTevNX4MPr7WpCHwXxrBvP3EkiJPNT7Es7Jipump",
+    "Ad9MmBqQefTJ474SgjnvnB3EyrkoDYounjR3Dn4Dpump",
+    "8LnL9fXfgMJ83pSFCsVjcsGJeQL5M1Qrerd7SVGNpump",
+    "Hd4UJjuWE3chZpNySgrxcaoNKd1rNZvvmcZXaXsapump",
+    "25srJirUUDKuZxLwYtZJqST9KzD4NGfL5gGUhz4kpump",
+    "HkPbBpoeYtKRRGBkKkRdEShrz9yTM3tUa9STjfTFpump",
+    "FHnD9BTNCwqPdHDtVSgdsBsVyF4hAdiF3w74GLxhpump",
+    "2UiAJLLhoeSwa6edfJsX9EZUpaNprzGSdtJvxG8ipump",
+    "6SekmKe9mpU96tihXr8LnF37QMUYSuFTHBwZV9rZpump",
+    "9z4eWWYUJjSZvWrhFm1p2KwGExSpJfjkf6WbB7Jzpump",
+    "J4ZjPunrxZwGRt6qdGCj5k99Ct3jS3zqFUGqtnjhpump",
+    "HoEwL9bSLWoafneNkxXFjwhjiNjUhYVJ9VpYxBLZpump",
+    "25srd1MTK7MbvaWpMBWjQ4eHSqb94jM7ZMWut88Gpump",
+    "FHkWTCKFTP5nfTZuk7zw9fpBSqedTscSnzGNi1dHpump",
+    "9GZUk8Vudbt1Y8HCU9SFD2Ndqc6KYQ7qpdYg3H2Epump",
+    "7CnBhurKiv5zDSQB7mmDbJESCo5xNsgk3mtakhhbpump",
+    "6zmPxtpbNeqNWRdbLyJc3QaG1KPYdmtknojjKCoMpump",
+    "D11MCTeaWrj5vyFR7WfbjSnbN6aw71H9EAfxnXAZpump",
+    "7DfLdxBHwsrWvrewZWvmS6Sth7SJJS2zRrDwVWTUpump",
+    "9ow85WWjEEre8e4zq2M4Jp9B5mMD9uH8QcTcjrFBpump",
+    "Cre35eVJy5WziPQTsmbWUqZ5nHqNuHmd3bSzjxhpump",
+    "Gkb56zBwFX1cov5oFKS29o8zGJRfdAZJAiFsXs4cpump",
+    "yBuVU3wfRLd7mxNTUkUuz38STXUQQr39PWfD54gpump",
+    "mq8AnvRcQ4wSQNztXa6fjt2xDKdaoKfYwtgTuhKpump",
+    "AokuVDgue6fYR8BgHsqas9V2mjqJ9oAWGuQfgqWvpump",
+    "Aa5Rk3QoWyecU1fL2par4sWzNhwVoSVoWdzGhxkapump"
+  ],
+  "chronological_window": {
+    "start": "1789095411288.0",
+    "end": "1789094594969.0",
+    "sampling_rule": "Contiguous descending chronological slice from tokens_detected in data/bot.db, excluding prior datasets"
+  },
+  "contamination_audit": {
+    "overlap_dev35": 0,
+    "overlap_oos1": 0,
+    "overlap_oos2": 0,
+    "overlap_oos3": 0,
+    "overlap_oos4": 0,
+    "overlap_oos5": 0,
+    "overlap_oos6": 0,
+    "signature_overlap": 0,
+    "status": "CLEAN_ZERO_CONTAMINATION"
+  },
+  "data_integrity": {
+    "chronological_ordering": "PASS",
+    "unique_tokens": 75,
+    "status": "VALID_INTEGRITY"
+  },
+  "predefined_acceptance_gates": {
+    "primary": {
+      "expectancy": "> 0",
+      "profit_factor": "> 1.05",
+      "zero_lookahead": "0 violations",
+      "zero_contamination": "0 overlap",
+      "zero_hard_safety_violations": "0 violations"
+    },
+    "generalization": {
+      "min_closed_trades": ">= 5",
+      "not_dependent_on_single_winner": "PASS",
+      "not_dependent_on_single_loser": "PASS"
+    }
+  },
+  "frozen_strategies": {
+    "v2_4_baseline": {
+      "name": "KO V3 V2.4 (Frozen Baseline)",
+      "strategy_version": "V2.4",
+      "orchestrator_hash": "fa5101fa28ddf1c91aaba711daed3160dbb925b013c52511a032c530e5c22331",
+      "config": {
+        "standardSizeSol": 0.1,
+        "probeSizeSol": 0.025
+      }
+    },
+    "v2_7_candidate": {
+      "name": "KO V3 V2.7 (Frozen Position-Sizing Candidate - Profile C)",
+      "strategy_version": "V2.7",
+      "orchestrator_hash": "33ec3fb10a134566c67ac35aba4863bb46d5a15c4f0786736720d543ffc746bc",
+      "config": {
+        "tierSizes": {
+          "A+": 0.05,
+          "A": 0.025,
+          "B": 0.025,
+          "C": 0.05
+        }
+      }
+    }
+  },
+  "strategy_hashes": {
+    "engines/v2/strategyOrchestratorV2_4.js": "fa5101fa28ddf1c91aaba711daed3160dbb925b013c52511a032c530e5c22331",
+    "engines/v2/strategyOrchestratorV2_7.js": "33ec3fb10a134566c67ac35aba4863bb46d5a15c4f0786736720d543ffc746bc",
+    "engines/v2/positionSizingAnalyzerV2_7.js": "22dea937f430b852ec7c59b12e4470216f7528a43a1f664ef189f80b3247a27d",
+    "engines/v2/reentryGuardV2_4.js": "03429c3252a05d66241dedb88388d8d8423ffba87c2e50929346f48ad5c95499",
+    "engines/v2/tokenExposureManagerV2_4.js": "ec1acd88d3e2fb5afad78bbe49e35520952dd9991a93435b6c3994e428368514",
+    "engines/v2/opportunityScoreV2_2.js": "e984896bb24b185e6a08762050006eea8ae6e3c0a5eb8bd1ead0f27abc6e75fe",
+    "engines/v2/positionManagerV2_3.js": "7bdcdc141ef9b6991079b74895551c7a40d03801a7c3b948d732afa283291dae",
+    "engines/v2/coordinationRiskV2_1.js": "7e2a021a75905508c8f8799ba7f69412d6e3a6e582309d549f985346457a6107",
+    "engines/v2/economicEventClassifierV2.js": "406d95ec525a061c429e5a5d6fc0c10bc4293708047d83c068a6604b6936d599"
+  },
+  "token_metadata": [
+    {
+      "mint": "7DfLdxBHwsrWvrewZWvmS6Sth7SJJS2zRrDwVWTUpump",
+      "name": "Solana is King",
+      "symbol": "👑👑👑",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095283981.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "7CnBhurKiv5zDSQB7mmDbJESCo5xNsgk3mtakhhbpump",
+      "name": "Solana is King",
+      "symbol": "👑",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095283128.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 15
+    },
+    {
+      "mint": "FHkWTCKFTP5nfTZuk7zw9fpBSqedTscSnzGNi1dHpump",
+      "name": "Haaland Hair",
+      "symbol": "HALH",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095259413.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 23
+    },
+    {
+      "mint": "25srd1MTK7MbvaWpMBWjQ4eHSqb94jM7ZMWut88Gpump",
+      "name": "SCOOBY JONES",
+      "symbol": "SCOOBY",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095243466.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 24
+    },
+    {
+      "mint": "HoEwL9bSLWoafneNkxXFjwhjiNjUhYVJ9VpYxBLZpump",
+      "name": "Demon",
+      "symbol": "DVL",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095225319.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 6
+    },
+    {
+      "mint": "6zmPxtpbNeqNWRdbLyJc3QaG1KPYdmtknojjKCoMpump",
+      "name": "Da Loser",
+      "symbol": "Da Loser",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095211274.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "9z4eWWYUJjSZvWrhFm1p2KwGExSpJfjkf6WbB7Jzpump",
+      "name": "Flyhard",
+      "symbol": "Flyhard",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095155258.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "D11MCTeaWrj5vyFR7WfbjSnbN6aw71H9EAfxnXAZpump",
+      "name": "Voice Chat Memes",
+      "symbol": "VOICECHAT",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095152964.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 49
+    },
+    {
+      "mint": "9ow85WWjEEre8e4zq2M4Jp9B5mMD9uH8QcTcjrFBpump",
+      "name": "Veyra",
+      "symbol": "Veyra",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095143397.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "6SekmKe9mpU96tihXr8LnF37QMUYSuFTHBwZV9rZpump",
+      "name": "Long Dong Silvers ",
+      "symbol": "LONGDONG",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095141743.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 22
+    },
+    {
+      "mint": "FHnD9BTNCwqPdHDtVSgdsBsVyF4hAdiF3w74GLxhpump",
+      "name": "STEREO",
+      "symbol": "STEREO",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095111333.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 20
+    },
+    {
+      "mint": "HkPbBpoeYtKRRGBkKkRdEShrz9yTM3tUa9STjfTFpump",
+      "name": "VRL",
+      "symbol": "vrl",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095105071.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 23
+    },
+    {
+      "mint": "25srJirUUDKuZxLwYtZJqST9KzD4NGfL5gGUhz4kpump",
+      "name": "SCOOBY JONES",
+      "symbol": "SCOOBY",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095099415.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "Hd4UJjuWE3chZpNySgrxcaoNKd1rNZvvmcZXaXsapump",
+      "name": "Long Dong Silvers",
+      "symbol": "LONGDONG",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095080297.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "8LnL9fXfgMJ83pSFCsVjcsGJeQL5M1Qrerd7SVGNpump",
+      "name": "LONG DONG SILVERS",
+      "symbol": "LONGDONG",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095068399.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "2mgWgR9tkctRqZ2Vsiiqh8CeXUUN2LensV1a2wj8pump",
+      "name": "Bitcoin Maneki Neko",
+      "symbol": "NEKO",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095061170.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "2UiAJLLhoeSwa6edfJsX9EZUpaNprzGSdtJvxG8ipump",
+      "name": "PIXELCAT",
+      "symbol": "$PIXELCAT",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095056407.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "mq8AnvRcQ4wSQNztXa6fjt2xDKdaoKfYwtgTuhKpump",
+      "name": "Mayhem",
+      "symbol": "MAYHEM",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095052009.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "77bi9PL23wsex8uBc2ynnD8vFwozeLMrJvX5vujjpump",
+      "name": "🚀",
+      "symbol": "🚀",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095033992.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "3cJAH2ewnyQYBxmgncfxa9xAtLE6xfkZLM9uy8Vtpump",
+      "name": "TeslaSpaceXAI",
+      "symbol": "MUSK",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095022517.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "8S38hwHxYj9qF5WBNgTrMe5QD84HeYCXdwTRhCwopump",
+      "name": "IMAN GOTCHA!",
+      "symbol": "$IMANG",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095019487.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "Au4VGXzJoBrDXtJNzDCCpSDqB7yqVjmsX6jRaJhypump",
+      "name": "Long Dong Silvers",
+      "symbol": "LONGDONG",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095012086.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 27
+    },
+    {
+      "mint": "5vhg4jRzALntHxasMGQzZnUc8dSq3GiGGgpaEJL7pump",
+      "name": "KirkX",
+      "symbol": "kirk",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789095010895.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 24
+    },
+    {
+      "mint": "FcJB3svADUD8L8dBEswX8bpBuB8kHhNBJ2Q2JoE3pump",
+      "name": "no thesis",
+      "symbol": "blindape",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094994664.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "25sr71Rb2oQNEyYkEygSijtowLcnHNDG1vKQsZPJpump",
+      "name": "SCOOBY JONES",
+      "symbol": "SCOOBY",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094993823.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 19
+    },
+    {
+      "mint": "6fQZaTevNX4MPr7WpCHwXxrBvP3EkiJPNT7Es7Jipump",
+      "name": "Screaming Vandal",
+      "symbol": "SCRVAN",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094978840.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "84T6PuXgq8fRTqvUzkLCZrcENj7XLdrVkJshApCLpump",
+      "name": "Chichen Nuggest",
+      "symbol": "ChichNug",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094970219.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "4WwV2zj1u6fqfnuudwrZw9na6HJKZ2KRfdfkGtndpump",
+      "name": "COOK",
+      "symbol": "COOK",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094958097.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "25sqbitwFBWW8KjK2uJHsJoGTVHJjoxh8hxYj2r5pump",
+      "name": "PAPU THE DOG",
+      "symbol": "PAPU",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094953146.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 36
+    },
+    {
+      "mint": "D7bncM9sASgPTDDv2rsY6wN73dyLjQCBtDsbFuVBpump",
+      "name": "DesktopFly",
+      "symbol": "DesktopFly",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094946328.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 49
+    },
+    {
+      "mint": "HLfhSJNafPZ3chVQ8SCndL8UYgC6kqi4T1Ka7d1opump",
+      "name": "Lindsey Got Bandz",
+      "symbol": "LINDSEY",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094946199.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 7
+    },
+    {
+      "mint": "GFWuEyMZc4LfWKX8D2xd4DxAHb69onbZQhnVirGxpump",
+      "name": "Fartcoin",
+      "symbol": "Fartcoin",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094943787.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "89uYArVseMMzjMBgi27GtLU6aszwibovbE9SHSRvpump",
+      "name": "flick.rip",
+      "symbol": "flick",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094943550.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 27
+    },
+    {
+      "mint": "25sqLFssodrDHJsdnJLgfzD1rFvupVfWhgPYRxVvpump",
+      "name": "dr scooby",
+      "symbol": "scooby",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094937821.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 43
+    },
+    {
+      "mint": "25sqE2Jxa9vN4GcDFTJQZKFX2TmHfSNNniZCgjzfpump",
+      "name": "dr scooby",
+      "symbol": "scooby",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094914899.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 9
+    },
+    {
+      "mint": "AbNpbwiiMbZ1PT2z3KzkxeJmkDGSpTzfdKpoP3vypump",
+      "name": "SolBros",
+      "symbol": "SolBros",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094913043.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 5
+    },
+    {
+      "mint": "Ad9MmBqQefTJ474SgjnvnB3EyrkoDYounjR3Dn4Dpump",
+      "name": "Trump promise",
+      "symbol": "TRUM",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094912027.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "7ZXXff82qKGPRsP287R7NKpsui7R8nixScwRYVFSpump",
+      "name": "Messi",
+      "symbol": "Messi",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094904043.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 40
+    },
+    {
+      "mint": "AokuVDgue6fYR8BgHsqas9V2mjqJ9oAWGuQfgqWvpump",
+      "name": "Bitcoin Maneki Neko 招き猫",
+      "symbol": "NEKO",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094903600.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "25spZpAFPLG9yESWC28m4L3mpzsM4djtj5NLkj4spump",
+      "name": "Cringe PEPE",
+      "symbol": "PEPECRINGE",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094899617.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 7
+    },
+    {
+      "mint": "25soizMMgWNtUN9vBcCE6neEN5DzFAwGD5d7nEQWpump",
+      "name": "dr scooby",
+      "symbol": "scooby",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094899273.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 9
+    },
+    {
+      "mint": "7TojjCTq2ifo37v3HfaGDJdPv4LTQHr1ER66UTApump",
+      "name": "JEWRUMP",
+      "symbol": "JWRMP",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094886251.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 6
+    },
+    {
+      "mint": "DcH4duH8eomoFqNoVHhG8KmbYHNu3XDJgkGoWPZ3pump",
+      "name": "LMAO",
+      "symbol": "LMAO",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094878393.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "9GZUk8Vudbt1Y8HCU9SFD2Ndqc6KYQ7qpdYg3H2Epump",
+      "name": "Cash cat",
+      "symbol": "$Cashcat",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094878298.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "7McDVafqH1QzeqwuadCPMdsJ71uxRiqicBps81MRpump",
+      "name": "buy if you;re horny",
+      "symbol": "horny",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094877053.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 46
+    },
+    {
+      "mint": "Csm4dZUmrfu73zWM7BBWwhhJ3dhFkxApzy4P4Lfypump",
+      "name": "Gucci Rick",
+      "symbol": "RICK",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094864814.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 9
+    },
+    {
+      "mint": "CB6MrSi3FNdZBvJFCcV4EH5s7MnFRe2JpY5dL3Dnpump",
+      "name": "MOWERR",
+      "symbol": "MOWERR",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094847066.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "3RCGnEFgLCSHbmdBwfFfkeZPtpwgd5wLkcdC1QwYpump",
+      "name": "GTA VI Memes",
+      "symbol": "Memes",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094838782.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "72kAyS3YWqnT6yfqY93wuir3jyS5KWxQNPcsMthvpump",
+      "name": "KitCoin",
+      "symbol": "kitcoin",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094837833.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 6
+    },
+    {
+      "mint": "5VLfAopyLwsefi8giD2td5KbNjhsitRFXq79xiC5pump",
+      "name": "kirkaverasry",
+      "symbol": "1afterkirk",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094825056.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 14
+    },
+    {
+      "mint": "83FYF2Hdi5SNCEBC1LKem7q8v6fvrUHx382AFop6pump",
+      "name": "Feral Specter",
+      "symbol": "FERSPE",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094821118.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "9N1NFSX4vubdwxsJYg2EkqHUsXzYJkfHVmMYaYxgpump",
+      "name": "Mayham Menace ",
+      "symbol": "hammenace",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094819982.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 49
+    },
+    {
+      "mint": "QVxBWDfQhSyHDcQei2ci64XG2pfPv4dpEoUnLvWpump",
+      "name": "imdbot",
+      "symbol": "IMD",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094810097.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "CX7tAXtbbZ7NTyBNjE8UF3KNMLdaNVZTzC8mXNzopump",
+      "name": "DERPCAT",
+      "symbol": "DERP",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094809265.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "EsGcUEHGdr32fbk9U73tZhFuuy7cEU1Za3RyxXhkpump",
+      "name": "kim",
+      "symbol": "KIM",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094806259.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 26
+    },
+    {
+      "mint": "6tR4yawSSFHkorbCMbU7qWNPseNXue2MKDhrZqHxpump",
+      "name": "MEOWCOIN",
+      "symbol": "$MEOW",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094802835.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 7
+    },
+    {
+      "mint": "6WH5DMDdfrWyYWwWZkvJVGuZ1pBDUfBTi6A43eiXpump",
+      "name": "poki",
+      "symbol": "poki",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094793249.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 5
+    },
+    {
+      "mint": "Cre35eVJy5WziPQTsmbWUqZ5nHqNuHmd3bSzjxhpump",
+      "name": "Commodity Market Exchange",
+      "symbol": "CME",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094789242.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "25soKxya8LpvPzgifFRpSK4VGAxDZ1vK12z12L5Fpump",
+      "name": "dr scooby",
+      "symbol": "scooby",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094783814.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "BQUC1LEf7z56PxhEn2oGERm2Jfr1iQMaS1guS9G5pump",
+      "name": "dog wif cap",
+      "symbol": "cap",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094783154.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 38
+    },
+    {
+      "mint": "EZniv7vvYM2UbjBvsyVDpkHpPQtdVvmJqchA4KE7pump",
+      "name": "BAWSDAQ Owner",
+      "symbol": "BAWSDAQOG",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094772888.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 30
+    },
+    {
+      "mint": "yBuVU3wfRLd7mxNTUkUuz38STXUQQr39PWfD54gpump",
+      "name": "SuerMarioBrosCoin",
+      "symbol": "MARIO",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094772335.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "BWZdVgpmaNd7QqicBxyXsTbCJUiCBNhbW5Uedrdrpump",
+      "name": "The Toad Cat",
+      "symbol": "TOAD",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094771902.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 11
+    },
+    {
+      "mint": "25snwN8X3H8DiNvtRC6rQb1vphdP5QA3kqosvGHTpump",
+      "name": "dr scooby",
+      "symbol": "scooby",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094769035.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 7
+    },
+    {
+      "mint": "8caLgBfP9j2nBepFyryev4LgZxQ663nV5tjrfDRTpump",
+      "name": "Mayhem",
+      "symbol": "MAYHEM",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094767843.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "J4ZjPunrxZwGRt6qdGCj5k99Ct3jS3zqFUGqtnjhpump",
+      "name": "DINO",
+      "symbol": "DINO",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094766356.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "6xVY1VqPjS7LD8F5MKVCj6SXFhDPbRE3KwspkqgZpump",
+      "name": "Buy And Hold",
+      "symbol": "BAH",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094765352.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "EWgtXSBvBuVHVnUykdnHxmL4RLiweHe8cUU6obfwpump",
+      "name": "The Twin Towers",
+      "symbol": "TTT",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094755077.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 6
+    },
+    {
+      "mint": "6vNpzsrwLz6XzpqqHVtv3qm2AorSB8eP6Bq7kh42pump",
+      "name": "The Toad Cat",
+      "symbol": "TOAD",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094734942.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "Aa5Rk3QoWyecU1fL2par4sWzNhwVoSVoWdzGhxkapump",
+      "name": "CHIEFQUEEF",
+      "symbol": "CHefQueef",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094733634.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "55jwtj5Ut7DTAsa3BHzk74RQLermVNMVX3DpkRZepump",
+      "name": "SOLWIFCAT",
+      "symbol": "SWC",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094721935.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 25
+    },
+    {
+      "mint": "5qT1JzLL2c5oxND24v8MuZoGBSuuLhoxH8zU6Vmzpump",
+      "name": "MMM Tokens",
+      "symbol": "MMM",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094713574.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "Gkb56zBwFX1cov5oFKS29o8zGJRfdAZJAiFsXs4cpump",
+      "name": "The White Whale",
+      "symbol": "WhiteWhale",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094705395.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "7CnjUdy2sDn5g8wZbesr76e5prQFHif2ekhu2xGupump",
+      "name": "DERPCAT",
+      "symbol": "DERP",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094699835.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    },
+    {
+      "mint": "ADyVyD1Ga4uDjssmiRZ9NbWv4kLtGVxhba4DVnbdpump",
+      "name": "AURACOIN",
+      "symbol": "$AURA",
+      "compositeScore": 0,
+      "liquidity": 0,
+      "detectedAt": "1789094699199.0",
+      "source": "MARKET_DETECTED_TOKEN",
+      "txCount": 50
+    }
+  ]
+}

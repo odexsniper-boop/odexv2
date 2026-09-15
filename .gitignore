@@ -1,0 +1,29 @@
+﻿# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database and SQLite runtime files
+data/*.db
+data/*.db-wal
+data/*.db-shm
+data/*.db-journal
+data/*.sqlite
+
+# Large dataset dumps (>25MB)
+replay/raw_txs_*.json
+
+# Archives
+*.zip
+*.tar.gz
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+*.log

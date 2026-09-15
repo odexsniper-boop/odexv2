@@ -1,0 +1,650 @@
+{
+  "meta": {
+    "dataset": "replay/raw_txs_oos5_final.json",
+    "generated_at": "2026-09-11T01:35:12.379Z"
+  },
+  "anti_churn_summary": {
+    "v2_3_total_trades": 172,
+    "v2_4_total_trades": 42,
+    "churn_reduction_pct": "75.6%",
+    "v2_3_max_trades_per_token": 15,
+    "v2_4_max_trades_per_token": 3,
+    "v2_3_max_consecutive_losses": 11,
+    "v2_4_max_consecutive_losses": 2,
+    "blocked_reentries_count": 526,
+    "avoided_gross_loss_sol": 6.997403526632445,
+    "missed_gross_profit_sol": 3.5354387449187237,
+    "net_reentry_alpha_sol": 3.461964781713721,
+    "toxic_reentry_blocking_rate_pct": 64.56310679611651,
+    "profitable_reentry_blocking_rate_pct": 29.36893203883495
+  },
+  "blocked_reentry_classification_counts": {
+    "would_have_lost": 266,
+    "would_have_won": 2,
+    "runner_opportunity_lost": 119,
+    "marginal": 25,
+    "insufficient_evidence": 114
+  },
+  "top_concentration_comparison": [
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "v2_3_trades": 15,
+      "v2_4_trades": 2,
+      "reductionPct": "86.7%",
+      "v2_3_pnlSol": -0.28022991601703795,
+      "v2_4_pnlSol": -0.01730468961821428,
+      "capitalPreservedSol": 0.26292522639882365
+    },
+    {
+      "token": "3sFftzhiggcAAJHPNgVFQrhfTSJQWwmJa8meThwtpump",
+      "v2_3_trades": 15,
+      "v2_4_trades": 1,
+      "reductionPct": "93.3%",
+      "v2_3_pnlSol": -0.33274222663778835,
+      "v2_4_pnlSol": -0.02176039322849455,
+      "capitalPreservedSol": 0.3109818334092938
+    },
+    {
+      "token": "2gbBUmXPRcE7Eq3iUxfKcCwmsw44fUDTDbuYG7Evpump",
+      "v2_3_trades": 14,
+      "v2_4_trades": 2,
+      "reductionPct": "85.7%",
+      "v2_3_pnlSol": -0.25971772539743787,
+      "v2_4_pnlSol": 0.00306058083561404,
+      "capitalPreservedSol": 0.26277830623305193
+    },
+    {
+      "token": "Asw9HcfxaVRTrFKacrF8xGL2ZGfonoatr9xmdwsLpump",
+      "v2_3_trades": 14,
+      "v2_4_trades": 1,
+      "reductionPct": "92.9%",
+      "v2_3_pnlSol": -0.26743906407961854,
+      "v2_4_pnlSol": -0.03598895542544996,
+      "capitalPreservedSol": 0.23145010865416857
+    },
+    {
+      "token": "BJAnh3mxtveQdwfweLuX4bdSdQjMEqJtRE53fWR8pump",
+      "v2_3_trades": 11,
+      "v2_4_trades": 3,
+      "reductionPct": "72.7%",
+      "v2_3_pnlSol": -0.05200772816117034,
+      "v2_4_pnlSol": 0.02725778713186653,
+      "capitalPreservedSol": 0.07926551529303687
+    },
+    {
+      "token": "BLTqJb7Bn2BzP9381EmK4Fy3vJs4z8EdXHevVA1Fpump",
+      "v2_3_trades": 11,
+      "v2_4_trades": 1,
+      "reductionPct": "90.9%",
+      "v2_3_pnlSol": -0.23068243578219977,
+      "v2_4_pnlSol": -0.05928360347341784,
+      "capitalPreservedSol": 0.17139883230878195
+    },
+    {
+      "token": "4bumXR9P5oJbpQYRDLvfEg16SsJVpRV1zFCMwip8pump",
+      "v2_3_trades": 10,
+      "v2_4_trades": 1,
+      "reductionPct": "90.0%",
+      "v2_3_pnlSol": -0.15789840462157892,
+      "v2_4_pnlSol": -0.025462192720416887,
+      "capitalPreservedSol": 0.13243621190116203
+    },
+    {
+      "token": "5HHQF9TiuUTDV3UQ3k5nSaFSXYcK3u6rKyWPoEvLpump",
+      "v2_3_trades": 9,
+      "v2_4_trades": 1,
+      "reductionPct": "88.9%",
+      "v2_3_pnlSol": -0.030573388123799113,
+      "v2_4_pnlSol": -0.022429402815510237,
+      "capitalPreservedSol": 0.008143985308288876
+    },
+    {
+      "token": "A2bGzbv5vdTfDYKsmh8QCHKaXPvqvAeiL9KV2XbNpump",
+      "v2_3_trades": 8,
+      "v2_4_trades": 1,
+      "reductionPct": "87.5%",
+      "v2_3_pnlSol": 0.06899627928759879,
+      "v2_4_pnlSol": -0.03182214131394232,
+      "capitalPreservedSol": -0.10081842060154111
+    },
+    {
+      "token": "BDJnky7fhLyDtphDU1yACr2bqGAJw3qxPxkfHbrpump",
+      "v2_3_trades": 8,
+      "v2_4_trades": 3,
+      "reductionPct": "62.5%",
+      "v2_3_pnlSol": 0.17581128972741844,
+      "v2_4_pnlSol": 0.035415584878808054,
+      "capitalPreservedSol": -0.1403957048486104
+    }
+  ],
+  "token_sequences": [
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "totalTrades": 2,
+      "sequence": [
+        {
+          "tradeIndex": 1,
+          "positionId": "v2_4_6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump_1789090090",
+          "entryTime": 1789090090,
+          "exitTime": 1789090092,
+          "size": 0.1,
+          "pnlSol": 0.028257896128745377,
+          "pnlPct": 9.182308020000526,
+          "exitReason": "TRAILING_EXIT",
+          "cumulativeExposureSol": 0.1,
+          "cumulativeTokenPnlSol": 0.028257896128745377,
+          "holdTimeSeconds": 2
+        },
+        {
+          "tradeIndex": 2,
+          "positionId": "v2_4_6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump_1789090097",
+          "entryTime": 1789090097,
+          "exitTime": 1789090098,
+          "size": 0.1,
+          "pnlSol": -0.045562585746959657,
+          "pnlPct": -45.562585746959655,
+          "exitReason": "HARD_SAFETY",
+          "cumulativeExposureSol": 0.2,
+          "cumulativeTokenPnlSol": -0.01730468961821428,
+          "holdTimeSeconds": 1
+        }
+      ],
+      "netPnlSol": -0.01730468961821428
+    },
+    {
+      "token": "2gbBUmXPRcE7Eq3iUxfKcCwmsw44fUDTDbuYG7Evpump",
+      "totalTrades": 2,
+      "sequence": [
+        {
+          "tradeIndex": 1,
+          "positionId": "v2_4_2gbBUmXPRcE7Eq3iUxfKcCwmsw44fUDTDbuYG7Evpump_1789090108",
+          "entryTime": 1789090108,
+          "exitTime": 1789090109,
+          "size": 0.1,
+          "pnlSol": 0.02590269372100903,
+          "pnlPct": 13.76739656436744,
+          "exitReason": "TRAILING_EXIT",
+          "cumulativeExposureSol": 0.1,
+          "cumulativeTokenPnlSol": 0.02590269372100903,
+          "holdTimeSeconds": 1
+        },
+        {
+          "tradeIndex": 2,
+          "positionId": "v2_4_2gbBUmXPRcE7Eq3iUxfKcCwmsw44fUDTDbuYG7Evpump_1789090114",
+          "entryTime": 1789090114,
+          "exitTime": 1789090114,
+          "size": 0.1,
+          "pnlSol": -0.02284211288539499,
+          "pnlPct": -22.84211288539499,
+          "exitReason": "HARD_SAFETY",
+          "cumulativeExposureSol": 0.2,
+          "cumulativeTokenPnlSol": 0.00306058083561404,
+          "holdTimeSeconds": 0
+        }
+      ],
+      "netPnlSol": 0.00306058083561404
+    },
+    {
+      "token": "BJAnh3mxtveQdwfweLuX4bdSdQjMEqJtRE53fWR8pump",
+      "totalTrades": 3,
+      "sequence": [
+        {
+          "tradeIndex": 1,
+          "positionId": "v2_4_BJAnh3mxtveQdwfweLuX4bdSdQjMEqJtRE53fWR8pump_1789090112",
+          "entryTime": 1789090112,
+          "exitTime": 1789090114,
+          "size": 0.1,
+          "pnlSol": 0.0204923526041965,
+          "pnlPct": 6.452835789640525,
+          "exitReason": "TRAILING_EXIT",
+          "cumulativeExposureSol": 0.1,
+          "cumulativeTokenPnlSol": 0.0204923526041965,
+          "holdTimeSeconds": 2
+        },
+        {
+          "tradeIndex": 2,
+          "positionId": "v2_4_BJAnh3mxtveQdwfweLuX4bdSdQjMEqJtRE53fWR8pump_1789090120",
+          "entryTime": 1789090120,
+          "exitTime": 1789090121,
+          "size": 0.1,
+          "pnlSol": 0.00676543452767003,
+          "pnlPct": -42.18485362663565,
+          "exitReason": "HARD_SAFETY",
+          "cumulativeExposureSol": 0.2,
+          "cumulativeTokenPnlSol": 0.02725778713186653,
+          "holdTimeSeconds": 1
+        },
+        {
+          "tradeIndex": 3,
+          "positionId": "v2_4_BJAnh3mxtveQdwfweLuX4bdSdQjMEqJtRE53fWR8pump_1789090187",
+          "entryTime": 1789090187,
+          "size": 0.1,
+          "pnlSol": 0,
+          "pnlPct": 0,
+          "cumulativeExposureSol": 0.30000000000000004,
+          "cumulativeTokenPnlSol": 0.02725778713186653,
+          "holdTimeSeconds": 0
+        }
+      ],
+      "netPnlSol": 0.02725778713186653
+    },
+    {
+      "token": "HSwRsEVRW3TRiVyVQaPQu7C4rX3RBLtZ7tSFwkz7pump",
+      "totalTrades": 2,
+      "sequence": [
+        {
+          "tradeIndex": 1,
+          "positionId": "v2_4_HSwRsEVRW3TRiVyVQaPQu7C4rX3RBLtZ7tSFwkz7pump_1789090153",
+          "entryTime": 1789090153,
+          "exitTime": 1789090155,
+          "size": 0.1,
+          "pnlSol": 0.03984486600185297,
+          "pnlPct": 24.94065903567469,
+          "exitReason": "TRAILING_EXIT",
+          "cumulativeExposureSol": 0.1,
+          "cumulativeTokenPnlSol": 0.03984486600185297,
+          "holdTimeSeconds": 2
+        },
+        {
+          "tradeIndex": 2,
+          "positionId": "v2_4_HSwRsEVRW3TRiVyVQaPQu7C4rX3RBLtZ7tSFwkz7pump_1789090160",
+          "entryTime": 1789090160,
+          "exitTime": 1789090161,
+          "size": 0.1,
+          "pnlSol": 0.03216393417623591,
+          "pnlPct": 31.200871778068446,
+          "exitReason": "TRAILING_EXIT",
+          "cumulativeExposureSol": 0.2,
+          "cumulativeTokenPnlSol": 0.07200880017808889,
+          "holdTimeSeconds": 1
+        }
+      ],
+      "netPnlSol": 0.07200880017808889
+    },
+    {
+      "token": "BDJnky7fhLyDtphDU1yACr2bqGAJw3qxPxkfHbrpump",
+      "totalTrades": 3,
+      "sequence": [
+        {
+          "tradeIndex": 1,
+          "positionId": "v2_4_BDJnky7fhLyDtphDU1yACr2bqGAJw3qxPxkfHbrpump_1789090174",
+          "entryTime": 1789090174,
+          "exitTime": 1789090177,
+          "size": 0.1,
+          "pnlSol": 0.05800177961516213,
+          "pnlPct": 79.74157453540015,
+          "exitReason": "TRAILING_EXIT",
+          "cumulativeExposureSol": 0.1,
+          "cumulativeTokenPnlSol": 0.05800177961516213,
+          "holdTimeSeconds": 3
+        },
+        {
+          "tradeIndex": 2,
+          "positionId": "v2_4_BDJnky7fhLyDtphDU1yACr2bqGAJw3qxPxkfHbrpump_1789090182",
+          "entryTime": 1789090182,
+          "exitTime": 1789090183,
+          "size": 0.1,
+          "pnlSol": -0.02258619473635408,
+          "pnlPct": -22.586194736354077,
+          "exitReason": "HARD_SAFETY",
+          "cumulativeExposureSol": 0.2,
+          "cumulativeTokenPnlSol": 0.035415584878808054,
+          "holdTimeSeconds": 1
+        },
+        {
+          "tradeIndex": 3,
+          "positionId": "v2_4_BDJnky7fhLyDtphDU1yACr2bqGAJw3qxPxkfHbrpump_1789090295",
+          "entryTime": 1789090295,
+          "size": 0.1,
+          "pnlSol": 0,
+          "pnlPct": 0,
+          "cumulativeExposureSol": 0.30000000000000004,
+          "cumulativeTokenPnlSol": 0.035415584878808054,
+          "holdTimeSeconds": 0
+        }
+      ],
+      "netPnlSol": 0.035415584878808054
+    },
+    {
+      "token": "2uUQ55KyZKKuzK5wQjzdQet2HwRrX56Egfjy5eJjpump",
+      "totalTrades": 2,
+      "sequence": [
+        {
+          "tradeIndex": 1,
+          "positionId": "v2_4_2uUQ55KyZKKuzK5wQjzdQet2HwRrX56Egfjy5eJjpump_1789090210",
+          "entryTime": 1789090210,
+          "exitTime": 1789090211,
+          "size": 0.1,
+          "pnlSol": -0.027498692700129293,
+          "pnlPct": -27.49869270012929,
+          "exitReason": "HARD_SAFETY",
+          "cumulativeExposureSol": 0.1,
+          "cumulativeTokenPnlSol": -0.027498692700129293,
+          "holdTimeSeconds": 1
+        },
+        {
+          "tradeIndex": 2,
+          "positionId": "v2_4_2uUQ55KyZKKuzK5wQjzdQet2HwRrX56Egfjy5eJjpump_1789090286",
+          "entryTime": 1789090286,
+          "exitTime": 1789090294,
+          "size": 0.1,
+          "pnlSol": -0.043005516493347676,
+          "pnlPct": -43.00551649334767,
+          "exitReason": "HARD_SAFETY",
+          "cumulativeExposureSol": 0.2,
+          "cumulativeTokenPnlSol": -0.07050420919347697,
+          "holdTimeSeconds": 8
+        }
+      ],
+      "netPnlSol": -0.07050420919347697
+    },
+    {
+      "token": "4sMX1B62AHHxHLaWqBC6vERM93ei1oL9BPsr34uapump",
+      "totalTrades": 2,
+      "sequence": [
+        {
+          "tradeIndex": 1,
+          "positionId": "v2_4_4sMX1B62AHHxHLaWqBC6vERM93ei1oL9BPsr34uapump_1789090222",
+          "entryTime": 1789090222,
+          "exitTime": 1789090224,
+          "size": 0.1,
+          "pnlSol": -0.015261400680598653,
+          "pnlPct": -15.261400680598653,
+          "exitReason": "BREAKEVEN_PROTECTION",
+          "cumulativeExposureSol": 0.1,
+          "cumulativeTokenPnlSol": -0.015261400680598653,
+          "holdTimeSeconds": 2
+        },
+        {
+          "tradeIndex": 2,
+          "positionId": "v2_4_4sMX1B62AHHxHLaWqBC6vERM93ei1oL9BPsr34uapump_1789090245",
+          "entryTime": 1789090245,
+          "exitTime": 1789090246,
+          "size": 0.1,
+          "pnlSol": -0.026873801813406296,
+          "pnlPct": -26.873801813406295,
+          "exitReason": "HARD_SAFETY",
+          "cumulativeExposureSol": 0.2,
+          "cumulativeTokenPnlSol": -0.04213520249400495,
+          "holdTimeSeconds": 1
+        }
+      ],
+      "netPnlSol": -0.04213520249400495
+    },
+    {
+      "token": "4MoCUWgPwdtzroYyTcpdytfvhy3bsDwDgGwE7L1zpump",
+      "totalTrades": 2,
+      "sequence": [
+        {
+          "tradeIndex": 1,
+          "positionId": "v2_4_4MoCUWgPwdtzroYyTcpdytfvhy3bsDwDgGwE7L1zpump_1789090223",
+          "entryTime": 1789090223,
+          "exitTime": 1789090225,
+          "size": 0.1,
+          "pnlSol": 0.03248418240719318,
+          "pnlPct": 18.730150918602885,
+          "exitReason": "TRAILING_EXIT",
+          "cumulativeExposureSol": 0.1,
+          "cumulativeTokenPnlSol": 0.03248418240719318,
+          "holdTimeSeconds": 2
+        },
+        {
+          "tradeIndex": 2,
+          "positionId": "v2_4_4MoCUWgPwdtzroYyTcpdytfvhy3bsDwDgGwE7L1zpump_1789090232",
+          "entryTime": 1789090232,
+          "exitTime": 1789090232,
+          "size": 0.025,
+          "pnlSol": -0.0056790195697776,
+          "pnlPct": -22.7160782791104,
+          "exitReason": "HARD_SAFETY",
+          "cumulativeExposureSol": 0.125,
+          "cumulativeTokenPnlSol": 0.026805162837415582,
+          "holdTimeSeconds": 0
+        }
+      ],
+      "netPnlSol": 0.026805162837415582
+    }
+  ],
+  "sample_blocked_reentries": [
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090092,
+      "reason": "IN_COOLDOWN (5s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.02178510179929194,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090093,
+      "reason": "IN_COOLDOWN (4s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.02178510179929194,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090093,
+      "reason": "IN_COOLDOWN (4s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.02178510179929194,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090094,
+      "reason": "IN_COOLDOWN (3s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.04735789674992747,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090094,
+      "reason": "IN_COOLDOWN (3s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.04735789674992747,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090095,
+      "reason": "IN_COOLDOWN (2s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.04877916997200295,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090095,
+      "reason": "IN_COOLDOWN (2s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.04877916997200295,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090096,
+      "reason": "IN_COOLDOWN (1s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.04877916997200295,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090096,
+      "reason": "IN_COOLDOWN (1s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.04877916997200295,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090098,
+      "reason": "IMMEDIATE_TICK_DEBOUNCE (0.0s < 2s)",
+      "classification": "RUNNER_OPPORTUNITY_LOST",
+      "hypotheticalPnl": 0.020830499968121304,
+      "hypotheticalMfe": 56.02179725175844
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090098,
+      "reason": "IMMEDIATE_TICK_DEBOUNCE (0.0s < 2s)",
+      "classification": "RUNNER_OPPORTUNITY_LOST",
+      "hypotheticalPnl": 0.020830499968121304,
+      "hypotheticalMfe": 56.02179725175844
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090099,
+      "reason": "IMMEDIATE_TICK_DEBOUNCE (1.0s < 2s)",
+      "classification": "RUNNER_OPPORTUNITY_LOST",
+      "hypotheticalPnl": 0.020830499968121304,
+      "hypotheticalMfe": 56.02179725175844
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090099,
+      "reason": "IMMEDIATE_TICK_DEBOUNCE (1.0s < 2s)",
+      "classification": "RUNNER_OPPORTUNITY_LOST",
+      "hypotheticalPnl": 0.020830499968121304,
+      "hypotheticalMfe": 56.02179725175844
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090100,
+      "reason": "IN_COOLDOWN (58s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.011537097200396213,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090100,
+      "reason": "IN_COOLDOWN (58s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.011537097200396213,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090100,
+      "reason": "IN_COOLDOWN (58s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.011537097200396213,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090101,
+      "reason": "IN_COOLDOWN (57s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.009476825946439758,
+      "hypotheticalMfe": 0.20720158692931817
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090101,
+      "reason": "IN_COOLDOWN (57s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.009476825946439758,
+      "hypotheticalMfe": 0.20720158692931817
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090102,
+      "reason": "IN_COOLDOWN (56s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.010400864496858264,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090102,
+      "reason": "IN_COOLDOWN (56s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.010400864496858264,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090104,
+      "reason": "IN_COOLDOWN (54s remaining)",
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "hypotheticalPnl": 0,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090104,
+      "reason": "IN_COOLDOWN (54s remaining)",
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "hypotheticalPnl": 0,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090104,
+      "reason": "IN_COOLDOWN (54s remaining)",
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "hypotheticalPnl": 0,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090105,
+      "reason": "IN_COOLDOWN (53s remaining)",
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "hypotheticalPnl": 0,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090105,
+      "reason": "IN_COOLDOWN (53s remaining)",
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "hypotheticalPnl": 0,
+      "hypotheticalMfe": 0
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090106,
+      "reason": "IN_COOLDOWN (52s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.012046245311682646,
+      "hypotheticalMfe": 15.7006560211232
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090107,
+      "reason": "IN_COOLDOWN (51s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.012046245311682646,
+      "hypotheticalMfe": 15.7006560211232
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090107,
+      "reason": "IN_COOLDOWN (51s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.012046245311682646,
+      "hypotheticalMfe": 15.7006560211232
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090108,
+      "reason": "IN_COOLDOWN (50s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.012046245311682646,
+      "hypotheticalMfe": 15.7006560211232
+    },
+    {
+      "token": "6VTLxDJeTjtKneCRCZDhW5acTo2h1qBpGZKNpHa3pump",
+      "timestamp": 1789090108,
+      "reason": "IN_COOLDOWN (50s remaining)",
+      "classification": "WOULD_HAVE_LOST",
+      "hypotheticalPnl": -0.012046245311682646,
+      "hypotheticalMfe": 15.7006560211232
+    }
+  ]
+}

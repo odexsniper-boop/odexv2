@@ -1,0 +1,259 @@
+{
+  "meta": {
+    "dataset": "replay/raw_txs_expanded_35.json",
+    "generated_at": "2026-09-11T01:59:11.959Z",
+    "total_dev_txs": 1782,
+    "unique_tokens": 35,
+    "lookahead_violations": 0
+  },
+  "tier_c_summary": {
+    "total": 12,
+    "winners": 3,
+    "losers": 5,
+    "neutrals": 4
+  },
+  "feature_separation": [
+    {
+      "feature": "uniqueBuyers",
+      "winnerMedian": 3,
+      "loserMedian": 6,
+      "winnerMean": 3.3333333333333335,
+      "loserMean": 6,
+      "separationStrength": "STRONG",
+      "separationDelta": 3
+    },
+    {
+      "feature": "uniqueSellers",
+      "winnerMedian": 1,
+      "loserMedian": 24,
+      "winnerMean": 7.333333333333333,
+      "loserMean": 20.2,
+      "separationStrength": "STRONG",
+      "separationDelta": 23
+    },
+    {
+      "feature": "buyerSellerRatio",
+      "winnerMedian": 0.35,
+      "loserMedian": 0.23333333333333334,
+      "winnerMean": 1.1166666666666667,
+      "loserMean": 0.6976470588235294,
+      "separationStrength": "STRONG",
+      "separationDelta": 0.11666666666666664
+    },
+    {
+      "feature": "buyVolume",
+      "winnerMedian": 0.024032919,
+      "loserMedian": 0.6660599460000001,
+      "winnerMean": 0.8427763119999999,
+      "loserMean": 0.5388279888,
+      "separationStrength": "STRONG",
+      "separationDelta": 0.642027027
+    },
+    {
+      "feature": "sellVolume",
+      "winnerMedian": 0.023700706,
+      "loserMedian": 1.697717757,
+      "winnerMean": 1.0899434870000002,
+      "loserMean": 2.9726499274,
+      "separationStrength": "STRONG",
+      "separationDelta": 1.6740170509999999
+    },
+    {
+      "feature": "netFlow",
+      "winnerMedian": -0.023700706,
+      "loserMedian": -0.8124711769999999,
+      "winnerMean": -0.24716717500000032,
+      "loserMean": -2.4338219386000004,
+      "separationStrength": "STRONG",
+      "separationDelta": 0.788770471
+    },
+    {
+      "feature": "netRatio",
+      "winnerMedian": -0.289541257933487,
+      "loserMedian": -0.9177908114595595,
+      "winnerMean": -0.32864977962204817,
+      "loserMean": -3.2161034182345247,
+      "separationStrength": "STRONG",
+      "separationDelta": 0.6282495535260726
+    },
+    {
+      "feature": "largestBuyerShare",
+      "winnerMedian": 0.3904401757470032,
+      "loserMedian": 0.5494295586975854,
+      "winnerMean": 0.3356261900336714,
+      "loserMean": 0.5137323194727353,
+      "separationStrength": "STRONG",
+      "separationDelta": 0.15898938295058218
+    },
+    {
+      "feature": "top5BuyerShare",
+      "winnerMedian": 0.9948098340165192,
+      "loserMedian": 0.970491666526364,
+      "winnerMean": 0.6649366113388397,
+      "loserMean": 0.9593983446111107,
+      "separationStrength": "WEAK",
+      "separationDelta": 0.02431816749015525
+    },
+    {
+      "feature": "tradeFlowHerfindahlIndex",
+      "winnerMedian": 2565.010080178709,
+      "loserMedian": 3469.475445912752,
+      "winnerMean": 2371.8609051696617,
+      "loserMean": 3576.733173308619,
+      "separationStrength": "STRONG",
+      "separationDelta": 904.4653657340432
+    },
+    {
+      "feature": "medianTradeSize",
+      "winnerMedian": 0.005267488,
+      "loserMedian": 0.097340279,
+      "winnerMean": 0.12897872266666666,
+      "loserMean": 0.0952407657,
+      "separationStrength": "STRONG",
+      "separationDelta": 0.092072791
+    },
+    {
+      "feature": "meanTradeSize",
+      "winnerMedian": 0.008010973,
+      "loserMedian": 0.07400666066666667,
+      "winnerMean": 0.1219225156190476,
+      "loserMean": 0.11985560858939395,
+      "separationStrength": "STRONG",
+      "separationDelta": 0.06599568766666666
+    },
+    {
+      "feature": "tradeSizeCv",
+      "winnerMedian": 0.6042944568660898,
+      "loserMedian": 0.9120560545270522,
+      "winnerMean": 0.49873549316782206,
+      "loserMean": 0.8436416087583115,
+      "separationStrength": "STRONG",
+      "separationDelta": 0.30776159766096234
+    },
+    {
+      "feature": "repeatBuyerRatio",
+      "winnerMedian": 0,
+      "loserMedian": 0,
+      "winnerMean": 0,
+      "loserMean": 0.29714285714285715,
+      "separationStrength": "WEAK",
+      "separationDelta": 0
+    },
+    {
+      "feature": "tokenAgeSeconds",
+      "winnerMedian": 0,
+      "loserMedian": 19306,
+      "winnerMean": 3836.3333333333335,
+      "loserMean": 15537.8,
+      "separationStrength": "STRONG",
+      "separationDelta": 19306
+    },
+    {
+      "feature": "lifetimeBuyers",
+      "winnerMedian": 3,
+      "loserMedian": 6,
+      "winnerMean": 3.3333333333333335,
+      "loserMean": 6,
+      "separationStrength": "STRONG",
+      "separationDelta": 3
+    },
+    {
+      "feature": "lifetimeSellers",
+      "winnerMedian": 1,
+      "loserMedian": 24,
+      "winnerMean": 7.333333333333333,
+      "loserMean": 20.2,
+      "separationStrength": "STRONG",
+      "separationDelta": 23
+    },
+    {
+      "feature": "lifetimeNetFlow",
+      "winnerMedian": -0.023700706,
+      "loserMedian": -0.8124711769999999,
+      "winnerMean": -0.24716717500000032,
+      "loserMean": -2.4338219386000004,
+      "separationStrength": "STRONG",
+      "separationDelta": 0.788770471
+    }
+  ],
+  "ablation_profiles": [
+    {
+      "name": "Profile A: V2.4 Baseline (No Entry-Quality Filter)",
+      "totalTrades": 17,
+      "tierCTrades": 12,
+      "wins": 3,
+      "losses": 14,
+      "winRatePct": 17.647058823529413,
+      "netPnlSol": -0.061548207630697974,
+      "profitFactor": 0.31588528366734364,
+      "expectancySol": -0.0036204828018057632
+    },
+    {
+      "name": "Profile B: Buyer Depth Only (uB30 >= 2)",
+      "totalTrades": 15,
+      "tierCTrades": 10,
+      "wins": 2,
+      "losses": 13,
+      "winRatePct": 13.333333333333334,
+      "netPnlSol": -0.06342945264863739,
+      "profitFactor": 0.29497505002541474,
+      "expectancySol": -0.004228630176575826
+    },
+    {
+      "name": "Profile C: Flow Persistence Only (NetFlow30 > 0)",
+      "totalTrades": 13,
+      "tierCTrades": 3,
+      "wins": 1,
+      "losses": 12,
+      "winRatePct": 7.6923076923076925,
+      "netPnlSol": -0.06308348453274183,
+      "profitFactor": 0.2820435065629389,
+      "expectancySol": -0.004852575733287833
+    },
+    {
+      "name": "Profile D: Buyer Depth + Flow Persistence (uB30 >= 2 & NetFlow30 > 0)",
+      "totalTrades": 12,
+      "tierCTrades": 2,
+      "wins": 1,
+      "losses": 11,
+      "winRatePct": 8.333333333333332,
+      "netPnlSol": -0.06308348453274183,
+      "profitFactor": 0.2820435065629389,
+      "expectancySol": -0.005256957044395153
+    },
+    {
+      "name": "Profile E: Buyer Depth + Concentration (uB30 >= 2 & Top1 <= 70%)",
+      "totalTrades": 15,
+      "tierCTrades": 10,
+      "wins": 2,
+      "losses": 13,
+      "winRatePct": 13.333333333333334,
+      "netPnlSol": -0.06369297606185945,
+      "profitFactor": 0.29411356489687746,
+      "expectancySol": -0.004246198404123963
+    },
+    {
+      "name": "Profile F: Full Entry Quality Model (Depth >= 2, NetFlow > 0, Top1 <= 70%, Trigger is BUY)",
+      "totalTrades": 12,
+      "tierCTrades": 2,
+      "wins": 1,
+      "losses": 11,
+      "winRatePct": 8.333333333333332,
+      "netPnlSol": -0.06308348453274183,
+      "profitFactor": 0.2820435065629389,
+      "expectancySol": -0.005256957044395153
+    }
+  ],
+  "opportunity_cost": {
+    "baselineTradesCount": 17,
+    "fullModelTradesCount": 12,
+    "blockedTradesCount": 5,
+    "avoidedLossesCount": 4,
+    "avoidedLossPnlSol": 0.0030889683702164466,
+    "missedWinnersCount": 2,
+    "missedWinnerPnlSol": 0.0036376173302725347,
+    "missedRunnersCount": 0,
+    "netOpportunityCostSol": -0.0005486489600560881
+  },
+  "final_verdict": "NO ROBUST ENTRY-QUALITY SIGNAL — RETURN TO DEVELOPMENT RESEARCH"
+}

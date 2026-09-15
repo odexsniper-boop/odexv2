@@ -1,0 +1,2353 @@
+{
+  "v2_2_trades": [
+    {
+      "positionId": "v2_2_5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump_1788903669",
+      "token": "5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump",
+      "tier": "C",
+      "size": 0.025,
+      "entryPrice": 4.279887002444256e-8,
+      "exitPrice": 4.1302700005718015e-8,
+      "opportunity": 50,
+      "confidence": 70,
+      "pnlSol": -0.0008739541592278487,
+      "pnlPct": -3.4958166369113948,
+      "exitReason": "FLOW_FAILURE",
+      "maePct": -3.4958166369113948,
+      "mfePct": 10.489996841889306,
+      "thesisState": "THESIS_STRONG",
+      "holdTimeSeconds": 588,
+      "wasV1Winner": true
+    },
+    {
+      "positionId": "v2_2_5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump_1788904257",
+      "token": "5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump",
+      "tier": "C",
+      "size": 0.025,
+      "entryPrice": 3.9595084321575614e-8,
+      "exitPrice": 3.796837598419731e-8,
+      "opportunity": 60,
+      "confidence": 70,
+      "pnlSol": -0.0010270898302468694,
+      "pnlPct": -4.108359320987478,
+      "exitReason": "FLOW_FAILURE",
+      "maePct": -4.108359320987478,
+      "mfePct": 0,
+      "thesisState": "THESIS_STRONG",
+      "holdTimeSeconds": 13,
+      "wasV1Winner": true
+    },
+    {
+      "positionId": "v2_2_GGXV8egpjAwUw2WSphGRtNasamniz8YD7hujckxqpump_1788905143",
+      "token": "GGXV8egpjAwUw2WSphGRtNasamniz8YD7hujckxqpump",
+      "tier": "C",
+      "size": 0.025,
+      "entryPrice": 3.4779112251179315e-8,
+      "exitPrice": 2.955435071082726e-8,
+      "opportunity": 53,
+      "confidence": 70,
+      "pnlSol": -0.00375567488800328,
+      "pnlPct": -15.022699552013119,
+      "exitReason": "FLOW_FAILURE",
+      "maePct": -16.54554719904016,
+      "mfePct": 29.49798985339766,
+      "thesisState": "THESIS_STRONG",
+      "holdTimeSeconds": 103,
+      "wasV1Winner": false
+    },
+    {
+      "positionId": "v2_2_7mDEhMF2EC7GysG41GzgL27R7SZLxGGaiAS1xHcgpump_1788918329",
+      "token": "7mDEhMF2EC7GysG41GzgL27R7SZLxGGaiAS1xHcgpump",
+      "tier": "C",
+      "size": 0.025,
+      "entryPrice": 2.8112433881466818e-8,
+      "exitPrice": 2.804395326145638e-8,
+      "opportunity": 60,
+      "confidence": 70,
+      "pnlSol": -0.00006089887156264989,
+      "pnlPct": -0.24359548625059957,
+      "exitReason": "FLOW_FAILURE",
+      "maePct": -0.24359548625059957,
+      "mfePct": 0,
+      "thesisState": "THESIS_STRONG",
+      "holdTimeSeconds": 9532,
+      "wasV1Winner": false
+    },
+    {
+      "positionId": "v2_2_5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump_1788921198",
+      "token": "5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump",
+      "tier": "C",
+      "size": 0.025,
+      "entryPrice": 3.023702209010522e-8,
+      "exitPrice": 3.0204758965298044e-8,
+      "opportunity": 60,
+      "confidence": 70,
+      "pnlSol": -0.000026675183745803496,
+      "pnlPct": -0.10670073498321399,
+      "exitReason": "FLOW_FAILURE",
+      "maePct": -0.10670073498321399,
+      "mfePct": 0,
+      "thesisState": "THESIS_STRONG",
+      "holdTimeSeconds": 16655,
+      "wasV1Winner": true
+    },
+    {
+      "positionId": "v2_2_CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump_1788924610",
+      "token": "CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump",
+      "tier": "C",
+      "size": 0.025,
+      "entryPrice": 4.518244308565033e-8,
+      "exitPrice": 4.3467225613969956e-8,
+      "opportunity": 60,
+      "confidence": 65,
+      "pnlSol": -0.0009490508671857967,
+      "pnlPct": -3.7962034687431867,
+      "exitReason": "FLOW_FAILURE",
+      "maePct": -3.7962034687431867,
+      "mfePct": 0,
+      "thesisState": "THESIS_STRONG",
+      "holdTimeSeconds": 18,
+      "wasV1Winner": true
+    },
+    {
+      "positionId": "v2_2_CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump_1788924643",
+      "token": "CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump",
+      "tier": "C",
+      "size": 0.025,
+      "entryPrice": 4.13240994624923e-8,
+      "exitPrice": 3.894542315602597e-8,
+      "opportunity": 60,
+      "confidence": 65,
+      "pnlSol": -0.0014390369889520076,
+      "pnlPct": -5.75614795580803,
+      "exitReason": "FLOW_FAILURE",
+      "maePct": -5.75614795580803,
+      "mfePct": 0,
+      "thesisState": "THESIS_STRONG",
+      "holdTimeSeconds": 24,
+      "wasV1Winner": true
+    },
+    {
+      "positionId": "v2_2_CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump_1788938291",
+      "token": "CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump",
+      "tier": "C",
+      "size": 0.025,
+      "entryPrice": 3.036243151123519e-8,
+      "opportunity": 60,
+      "confidence": 85,
+      "pnlSol": 0,
+      "pnlPct": 0,
+      "maePct": 0,
+      "mfePct": 0,
+      "holdTimeSeconds": 0,
+      "wasV1Winner": true
+    }
+  ],
+  "v2_2_rejections": {
+    "totalEvaluations": 710,
+    "hardSafetyRejections": 281,
+    "coordinationRejections": 0,
+    "insufficientOpp": 404,
+    "insufficientConf": 42,
+    "confluenceConflicts": 1,
+    "tierAPlus": 0,
+    "tierA": 0,
+    "tierB": 0,
+    "tierC": 8
+  },
+  "v2_2_telemetry_sample": [
+    {
+      "token": "unknown",
+      "timestamp": 1788903652,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 50,
+      "conf": 35,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_confidence"
+      ],
+      "flow": {
+        "buyVol": 0,
+        "netFlow": -0.346689194,
+        "liquidity": 29.653310806,
+        "acceleration": 0,
+        "uniqueBuyers": 0
+      },
+      "coordinationRisk": 0,
+      "distributionRisk": 0
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788903653,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 50,
+      "conf": 35,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_confidence"
+      ],
+      "flow": {
+        "buyVol": 0,
+        "netFlow": -0.451326903,
+        "liquidity": 29.548673097,
+        "acceleration": 0,
+        "uniqueBuyers": 0
+      },
+      "coordinationRisk": 0,
+      "distributionRisk": 0
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788903669,
+      "decision": "BUY",
+      "tier": "C",
+      "opp": 50,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "CONFLICTING",
+      "reasons": [],
+      "flow": {
+        "buyVol": 0.855497305,
+        "netFlow": 0.404170402,
+        "liquidity": 30.404170402000002,
+        "acceleration": 0,
+        "uniqueBuyers": 1
+      },
+      "coordinationRisk": 0,
+      "distributionRisk": 0
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788904257,
+      "decision": "BUY",
+      "tier": "C",
+      "opp": 60,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [],
+      "flow": {
+        "buyVol": 2.3878067190000003,
+        "netFlow": -1.8527744319999995,
+        "liquidity": 28.147225567999993,
+        "acceleration": 0,
+        "uniqueBuyers": 11
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 0
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788904270,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 2.3878067190000003,
+        "netFlow": -3.039422748999999,
+        "liquidity": 26.960577250999993,
+        "acceleration": 0,
+        "uniqueBuyers": 11
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788904270,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 2.3878067190000003,
+        "netFlow": -3.489339018999999,
+        "liquidity": 26.510660980999994,
+        "acceleration": 0,
+        "uniqueBuyers": 11
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788904346,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 2.3878067190000003,
+        "netFlow": -4.178240503999999,
+        "liquidity": 25.821759495999995,
+        "acceleration": 0,
+        "uniqueBuyers": 11
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788904456,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 2.4355811760000003,
+        "netFlow": -4.130466046999999,
+        "liquidity": 25.869533952999994,
+        "acceleration": 0,
+        "uniqueBuyers": 12
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788904462,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 2.6321243850000005,
+        "netFlow": -3.9339228379999986,
+        "liquidity": 26.066077161999996,
+        "acceleration": 0,
+        "uniqueBuyers": 13
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788904462,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 2.8821243850000005,
+        "netFlow": -3.6839228379999986,
+        "liquidity": 26.316077161999996,
+        "acceleration": 0,
+        "uniqueBuyers": 14
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905122,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 3.6296176360000003,
+        "netFlow": -2.936429586999999,
+        "liquidity": 27.063570412999997,
+        "acceleration": 0,
+        "uniqueBuyers": 15
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905122,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 4.089481084,
+        "netFlow": -2.476566138999999,
+        "liquidity": 27.523433860999997,
+        "acceleration": 0,
+        "uniqueBuyers": 16
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905122,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 5.077135404,
+        "netFlow": -1.4889118189999992,
+        "liquidity": 28.511088180999998,
+        "acceleration": 0,
+        "uniqueBuyers": 17
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905136,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 5.175900836,
+        "netFlow": -1.3901463869999988,
+        "liquidity": 28.609853613,
+        "acceleration": 0,
+        "uniqueBuyers": 18
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905137,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 5.274666268000001,
+        "netFlow": -1.2913809549999984,
+        "liquidity": 28.708619045,
+        "acceleration": 0,
+        "uniqueBuyers": 19
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905139,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 5.521579848000001,
+        "netFlow": -1.0444673749999982,
+        "liquidity": 28.955532625,
+        "acceleration": 0,
+        "uniqueBuyers": 20
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905140,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 5.620345280000001,
+        "netFlow": -0.9457019429999978,
+        "liquidity": 29.054298057,
+        "acceleration": 0,
+        "uniqueBuyers": 21
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905141,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 6.114172440000002,
+        "netFlow": -0.4518747829999974,
+        "liquidity": 29.548125217,
+        "acceleration": 0,
+        "uniqueBuyers": 21
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905143,
+      "decision": "BUY",
+      "tier": "C",
+      "opp": 53,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "MEDIUM",
+      "reasons": [],
+      "flow": {
+        "buyVol": 6.570677721000002,
+        "netFlow": 0.004630498000002703,
+        "liquidity": 30.004630497999997,
+        "acceleration": 0,
+        "uniqueBuyers": 22
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905246,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.450373608,
+        "netFlow": -1.0626820289999976,
+        "liquidity": 28.937317970999985,
+        "acceleration": 0,
+        "uniqueBuyers": 29
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905246,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.450373608,
+        "netFlow": -2.0360948569999984,
+        "liquidity": 27.963905142999984,
+        "acceleration": 0,
+        "uniqueBuyers": 29
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905246,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.450373608,
+        "netFlow": -2.4209513599999983,
+        "liquidity": 27.579048639999982,
+        "acceleration": 0,
+        "uniqueBuyers": 29
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905246,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.450373608,
+        "netFlow": -2.9480969539999986,
+        "liquidity": 27.051903045999982,
+        "acceleration": 0,
+        "uniqueBuyers": 29
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905246,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.450373608,
+        "netFlow": -3.1639630379999986,
+        "liquidity": 26.83603696199998,
+        "acceleration": 0,
+        "uniqueBuyers": 29
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905246,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.450373608,
+        "netFlow": -3.6006648809999984,
+        "liquidity": 26.39933511899998,
+        "acceleration": 0,
+        "uniqueBuyers": 29
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905247,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.482493461999999,
+        "netFlow": -3.568545026999999,
+        "liquidity": 26.43145497299998,
+        "acceleration": 0,
+        "uniqueBuyers": 30
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905250,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.482493461999999,
+        "netFlow": -3.6451372689999992,
+        "liquidity": 26.35486273099998,
+        "acceleration": 0,
+        "uniqueBuyers": 30
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905331,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.482493461999999,
+        "netFlow": -4.105068038999999,
+        "liquidity": 25.89493196099998,
+        "acceleration": 0,
+        "uniqueBuyers": 30
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -3.6263156449999983,
+        "liquidity": 26.37368435499998,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -3.7778150079999975,
+        "liquidity": 26.22218499199998,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -4.021977863999998,
+        "liquidity": 25.978022135999982,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -4.0251810259999985,
+        "liquidity": 25.974818973999984,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -4.035802544999999,
+        "liquidity": 25.964197454999983,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -4.0424227340000005,
+        "liquidity": 25.957577265999983,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -4.215598819000002,
+        "liquidity": 25.784401180999982,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -4.421743229000002,
+        "liquidity": 25.57825677099998,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -4.481381772000001,
+        "liquidity": 25.518618227999983,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -4.525415154999999,
+        "liquidity": 25.474584844999985,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -4.8380840759999995,
+        "liquidity": 25.161915923999985,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -5.0219656100000005,
+        "liquidity": 24.978034389999983,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -5.230691402,
+        "liquidity": 24.769308597999984,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -5.545179056,
+        "liquidity": 24.454820943999984,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -6.412683905,
+        "liquidity": 23.587316094999984,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -7.106226422000001,
+        "liquidity": 22.893773577999983,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -8.004560029000002,
+        "liquidity": 21.995439970999982,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -8.411359504000002,
+        "liquidity": 21.588640495999982,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -9.151685329000001,
+        "liquidity": 20.848314670999983,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -10.154512865000003,
+        "liquidity": 19.84548713499998,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -10.169247319000002,
+        "liquidity": 19.830752680999982,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -10.502284458000004,
+        "liquidity": 19.49771554199998,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -10.727307475000005,
+        "liquidity": 19.27269252499998,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -10.757273250000006,
+        "liquidity": 19.242726749999978,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -10.914622590000006,
+        "liquidity": 19.08537740999998,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905332,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -10.990281525000006,
+        "liquidity": 19.00971847499998,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905333,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -11.020353215000005,
+        "liquidity": 18.97964678499998,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905333,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -11.060435146000005,
+        "liquidity": 18.93956485399998,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905333,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -11.111839631000004,
+        "liquidity": 18.88816036899998,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905333,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -11.111842485000006,
+        "liquidity": 18.88815751499998,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905334,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -11.120376726000005,
+        "liquidity": 18.87962327399998,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905337,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -11.168259292000004,
+        "liquidity": 18.83174070799998,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905337,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -11.185985383000004,
+        "liquidity": 18.81401461699998,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905338,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 11.961245856,
+        "netFlow": -11.215627172000003,
+        "liquidity": 18.78437282799998,
+        "acceleration": 0,
+        "uniqueBuyers": 31
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905346,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 13.183468078,
+        "netFlow": -9.993404950000002,
+        "liquidity": 20.00659504999998,
+        "acceleration": 0,
+        "uniqueBuyers": 32
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905346,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 13.183468078,
+        "netFlow": -10.029331715000001,
+        "liquidity": 19.97066828499998,
+        "acceleration": 0,
+        "uniqueBuyers": 32
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905349,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 13.183468078,
+        "netFlow": -10.051957673,
+        "liquidity": 19.948042326999982,
+        "acceleration": 0,
+        "uniqueBuyers": 32
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905349,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 13.231343317,
+        "netFlow": -10.004082434,
+        "liquidity": 19.99591756599998,
+        "acceleration": 0,
+        "uniqueBuyers": 33
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905355,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 13.231343317,
+        "netFlow": -10.006334996,
+        "liquidity": 19.993665003999983,
+        "acceleration": 0,
+        "uniqueBuyers": 33
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905366,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 13.237090290000001,
+        "netFlow": -10.000588022999999,
+        "liquidity": 19.999411976999983,
+        "acceleration": 0,
+        "uniqueBuyers": 34
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905371,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 13.296647809000001,
+        "netFlow": -9.941030503999999,
+        "liquidity": 20.058969495999982,
+        "acceleration": 0,
+        "uniqueBuyers": 35
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905375,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 13.296647809000001,
+        "netFlow": -10.027280347,
+        "liquidity": 19.97271965299998,
+        "acceleration": 0,
+        "uniqueBuyers": 35
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905384,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 13.296647809000001,
+        "netFlow": -10.043559513,
+        "liquidity": 19.95644048699998,
+        "acceleration": 0,
+        "uniqueBuyers": 35
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905402,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 13.296647809000001,
+        "netFlow": -10.559043678,
+        "liquidity": 19.44095632199998,
+        "acceleration": 0,
+        "uniqueBuyers": 35
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905412,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 13.296647809000001,
+        "netFlow": -10.644445877,
+        "liquidity": 19.35555412299998,
+        "acceleration": 0,
+        "uniqueBuyers": 35
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905412,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 13.296647809000001,
+        "netFlow": -10.666298041,
+        "liquidity": 19.33370195899998,
+        "acceleration": 0,
+        "uniqueBuyers": 35
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905414,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 14.017635462000001,
+        "netFlow": -9.945310388,
+        "liquidity": 20.054689611999983,
+        "acceleration": 0,
+        "uniqueBuyers": 36
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905414,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 14.388679169000001,
+        "netFlow": -9.574266681,
+        "liquidity": 20.42573331899998,
+        "acceleration": 0,
+        "uniqueBuyers": 37
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905414,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.855345835000001,
+        "netFlow": -8.107600015,
+        "liquidity": 21.892399984999983,
+        "acceleration": 0,
+        "uniqueBuyers": 38
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905417,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.855345835000001,
+        "netFlow": -8.270510471999998,
+        "liquidity": 21.729489527999984,
+        "acceleration": 0,
+        "uniqueBuyers": 38
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905419,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.855345835000001,
+        "netFlow": -8.372799179999998,
+        "liquidity": 21.627200819999985,
+        "acceleration": 0,
+        "uniqueBuyers": 38
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905421,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.855345835000001,
+        "netFlow": -8.738162284999998,
+        "liquidity": 21.261837714999984,
+        "acceleration": 0,
+        "uniqueBuyers": 38
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905431,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.855345835000001,
+        "netFlow": -8.738503900999998,
+        "liquidity": 21.261496098999984,
+        "acceleration": 0,
+        "uniqueBuyers": 38
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905436,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.855345835000001,
+        "netFlow": -10.065132170999998,
+        "liquidity": 19.934867828999984,
+        "acceleration": 0,
+        "uniqueBuyers": 38
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905436,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.855345835000001,
+        "netFlow": -10.720970918999999,
+        "liquidity": 19.279029080999983,
+        "acceleration": 0,
+        "uniqueBuyers": 38
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905443,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.904481636000002,
+        "netFlow": -10.671835117999999,
+        "liquidity": 19.32816488199998,
+        "acceleration": 0,
+        "uniqueBuyers": 39
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905494,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.904481636000002,
+        "netFlow": -10.722146659999998,
+        "liquidity": 19.277853339999982,
+        "acceleration": 0,
+        "uniqueBuyers": 39
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905497,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.909370524000002,
+        "netFlow": -10.717257771999998,
+        "liquidity": 19.282742227999982,
+        "acceleration": 0,
+        "uniqueBuyers": 40
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905533,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.909370524000002,
+        "netFlow": -10.753397454999996,
+        "liquidity": 19.246602544999984,
+        "acceleration": 0,
+        "uniqueBuyers": 40
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905534,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.909370524000002,
+        "netFlow": -10.765731270999998,
+        "liquidity": 19.234268728999982,
+        "acceleration": 0,
+        "uniqueBuyers": 40
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905543,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.909370524000002,
+        "netFlow": -10.770620157999998,
+        "liquidity": 19.229379841999982,
+        "acceleration": 0,
+        "uniqueBuyers": 40
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905608,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.909370524000002,
+        "netFlow": -10.778440954999999,
+        "liquidity": 19.22155904499998,
+        "acceleration": 0,
+        "uniqueBuyers": 40
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905616,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.909370524000002,
+        "netFlow": -10.783600632999997,
+        "liquidity": 19.216399366999983,
+        "acceleration": 0,
+        "uniqueBuyers": 40
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905617,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.909370524000002,
+        "netFlow": -10.801765546999997,
+        "liquidity": 19.198234452999984,
+        "acceleration": 0,
+        "uniqueBuyers": 40
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905617,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.909370524000002,
+        "netFlow": -10.844357555999997,
+        "liquidity": 19.155642443999984,
+        "acceleration": 0,
+        "uniqueBuyers": 40
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905622,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.909370524000002,
+        "netFlow": -10.929727301999998,
+        "liquidity": 19.070272697999982,
+        "acceleration": 0,
+        "uniqueBuyers": 40
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905648,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.909370524000002,
+        "netFlow": -12.055818702999998,
+        "liquidity": 17.944181296999982,
+        "acceleration": 0,
+        "uniqueBuyers": 40
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905652,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.909370524000002,
+        "netFlow": -12.074050569999999,
+        "liquidity": 17.92594942999998,
+        "acceleration": 0,
+        "uniqueBuyers": 40
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905669,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.909370524000002,
+        "netFlow": -12.108437801,
+        "liquidity": 17.89156219899998,
+        "acceleration": 0,
+        "uniqueBuyers": 40
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905680,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.909370524000002,
+        "netFlow": -12.166444976,
+        "liquidity": 17.83355502399998,
+        "acceleration": 0,
+        "uniqueBuyers": 40
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905762,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.909370524000002,
+        "netFlow": -12.813240277,
+        "liquidity": 17.18675972299998,
+        "acceleration": 0,
+        "uniqueBuyers": 40
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    },
+    {
+      "token": "unknown",
+      "timestamp": 1788905762,
+      "decision": "REJECT",
+      "tier": "REJECT",
+      "opp": 48,
+      "conf": 70,
+      "safety": "PASS",
+      "confluence": "LOW",
+      "reasons": [
+        "insufficient_opportunity"
+      ],
+      "flow": {
+        "buyVol": 15.909370524000002,
+        "netFlow": -13.315027557999999,
+        "liquidity": 16.68497244199998,
+        "acceleration": 0,
+        "uniqueBuyers": 40
+      },
+      "coordinationRisk": 9,
+      "distributionRisk": 40
+    }
+  ]
+}

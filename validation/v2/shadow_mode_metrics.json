@@ -1,0 +1,48 @@
+{
+  "shadow_status": "HALTED",
+  "strategy_mode": "V2_SHADOW",
+  "execution_mode": "SHADOW",
+  "session_duration_seconds": 122,
+  "tokens_observed_count": 99,
+  "candidates_evaluated_count": 421,
+  "buys_generated_count": 186,
+  "hypothetical_entries_count": 186,
+  "hypothetical_exits_count": 112,
+  "open_positions_count": 74,
+  "hard_safety_rejections": 0,
+  "coordination_rejections": 0,
+  "latency": {
+    "samples_count": 0,
+    "mean_ms": 0,
+    "median_ms": 0,
+    "p95_ms": 0,
+    "p99_ms": 0,
+    "worst_ms": 0
+  },
+  "data_integrity": {
+    "duplicate_events_count": 0,
+    "dropped_events_count": 0,
+    "integrity_incidents_count": 0,
+    "incidents": []
+  },
+  "market_signal_performance": {
+    "closed_trades": 112,
+    "wins": 29,
+    "losses": 83,
+    "win_rate_pct": 25.892857142857146,
+    "gross_profit_sol": 1.043757162848463,
+    "gross_loss_sol": 2.1916949481527928,
+    "net_pnl_sol": -1.1479377853043298,
+    "profit_factor": 0.47623286430813,
+    "expectancy_sol": -0.010249444511645802
+  },
+  "execution_adjusted_performance": {
+    "gross_profit_sol": 0.9091316555721539,
+    "gross_loss_sol": 2.435700245251724,
+    "net_pnl_sol": -1.5265685896795704,
+    "profit_factor": 0.37325268466202305,
+    "expectancy_sol": -0.013630076693567594
+  },
+  "kill_switch_active": false,
+  "last_updated": "2026-09-11T01:18:31.101Z"
+}

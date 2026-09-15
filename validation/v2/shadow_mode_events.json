@@ -1,0 +1,4671 @@
+[
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029910,
+    "pipelineLatencyMs": -13052
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "f19d284fc3007f08ebea858762de629b54173c65d22c8cf714313ab8a8ff649c",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029910,
+    "timestamp": 1789089492,
+    "side": "SELL",
+    "solAmount": 0.01274883,
+    "tokenAmount": 22299640.531831,
+    "effectivePrice": 5.717056282500176e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13052
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029910,
+    "pipelineLatencyMs": -13052
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "fddf267426be3a8ecbe35e60d8dac371434f512f32c4b302756f2dde98dbc788",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029910,
+    "timestamp": 1789089492,
+    "side": "BUY",
+    "solAmount": 0.005267488,
+    "tokenAmount": 10149425.278719,
+    "effectivePrice": 5.189937218459754e-10,
+    "initiator": "57Uoyn4AwRMZ1hawy2jULJbTs9msFdCEv68dX9AtMkMi",
+    "pipelineLatencyMs": -13052
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029910,
+    "pipelineLatencyMs": -13052
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "d5da771e16514a2ccf93b986b13a45d2161ddde4232bb2a779784bb83d48f57b",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029910,
+    "timestamp": 1789089492,
+    "side": "BUY",
+    "solAmount": 0.014595143,
+    "tokenAmount": 605954.808458,
+    "effectivePrice": 2.4086190581011986e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13052
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029917,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "c79a2705c198b374fff869851b18140bcadf38c568cc1ee0c0d869872398d8d8",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029917,
+    "timestamp": 1789089494,
+    "side": "SELL",
+    "solAmount": 0.013469958,
+    "tokenAmount": 373858.262825,
+    "effectivePrice": 3.6029584843775886e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "f3b83ce903c5b3926f5a758c6ce32ec7b7748dbaedc4ca628263cdde04c87067",
+    "mint": "EkzkfUjeFQQ5zVC8AAZpnfHSvKkjaRn1QpFPtuDfpump",
+    "slot": 446029917,
+    "timestamp": 1789089494,
+    "side": "BUY",
+    "solAmount": 0.019555555,
+    "tokenAmount": 577381.469706,
+    "effectivePrice": 3.386938449887836e-8,
+    "initiator": "8tKjAAMDKWc2kzhVncNp79iaEumLwHaiUZLaSzDECcik",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029917,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "75035b618adda422e804c51a2e9272fa46aecf0e7450f5efbab0b9ad42ed67f7",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029917,
+    "timestamp": 1789089494,
+    "side": "SELL",
+    "solAmount": 0.004794319,
+    "tokenAmount": 11122186.145039,
+    "effectivePrice": 4.3105905057509615e-10,
+    "initiator": "4vWg8DzorbrNWcdRCMF8TfMmvwbiqRS5ZsQNpprPNAux",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029917,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "c0938210a3414af310f38d4cea769999432b197b3486295aca63f963b95868a8",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029917,
+    "timestamp": 1789089494,
+    "side": "SELL",
+    "solAmount": 0.032920016,
+    "tokenAmount": 9240137.602465,
+    "effectivePrice": 3.5627192382089528e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029917,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "a8ff89a360bc941c3bfe92bf1331c2a2b4e96a75f94b50dcb1f684d91a47da7c",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029917,
+    "timestamp": 1789089494,
+    "side": "BUY",
+    "solAmount": 0.00658436,
+    "tokenAmount": 15343153.94928,
+    "effectivePrice": 4.291399292326713e-10,
+    "initiator": "2wGNh8dzjacQmhWDJMTAxpaDLfsZ3UhhgUWhcU4sHDpj",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "5bbss3yWbY3oC6QsFGU974BbjoZo5VPDPw7DipZpump",
+    "slot": 446029917,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "8fbf4db0b8823d4fc5a339b308e2b9b9d982af561e406411751b4621d219f689",
+    "mint": "5bbss3yWbY3oC6QsFGU974BbjoZo5VPDPw7DipZpump",
+    "slot": 446029917,
+    "timestamp": 1789089494,
+    "side": "SELL",
+    "solAmount": 0.011083249,
+    "tokenAmount": 48000574.146406,
+    "effectivePrice": 2.3089825897071792e-10,
+    "initiator": "8Rr7CCPjrQm5kDtzr3Vmx57Ujp1AdEVMJSr9jgPFSeMG",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029917,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "61e5503e583b91e845a81d3ee6084328edc03a5865047fd15ef644b1b6b030b0",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029917,
+    "timestamp": 1789089494,
+    "side": "SELL",
+    "solAmount": 0.00236655,
+    "tokenAmount": 5459383.523841,
+    "effectivePrice": 4.33483009512948e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029916,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "cbf43ec41f1edb8817e9dbb49b24d3943feae5cb46365cfc65663a00def3cc7d",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029916,
+    "timestamp": 1789089494,
+    "side": "SELL",
+    "solAmount": 0.012117908,
+    "tokenAmount": 296791.54382,
+    "effectivePrice": 4.08296942831678e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "7395t7rnED2s7tcVk8PXHFcFDWbH98rLHbe18z58pump",
+    "slot": 446029916,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "b9ee589465d7f4e47b824bac818a08d0c00c700c3269bc335671d0508401c1eb",
+    "mint": "7395t7rnED2s7tcVk8PXHFcFDWbH98rLHbe18z58pump",
+    "slot": 446029916,
+    "timestamp": 1789089494,
+    "side": "SELL",
+    "solAmount": 0.952096229,
+    "tokenAmount": 20455595.989902,
+    "effectivePrice": 4.6544536246707586e-8,
+    "initiator": "DU1Mt1SScfs9dwTRrTuNn5jUqDcrnUKH8oBmvh1yBCRW",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "7395t7rnED2s7tcVk8PXHFcFDWbH98rLHbe18z58pump",
+    "slot": 446029916,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "e021dd88d65545a52e88137b53a49acbb92f2578f7990eb309f7d718d1353a58",
+    "mint": "7395t7rnED2s7tcVk8PXHFcFDWbH98rLHbe18z58pump",
+    "slot": 446029916,
+    "timestamp": 1789089494,
+    "side": "SELL",
+    "solAmount": 0.338933548,
+    "tokenAmount": 7044067.549537,
+    "effectivePrice": 4.811616947402467e-8,
+    "initiator": "7hEqv6SEZjEq73sbCe4kQhk9VgPpZeo1rd5K4ATZJykF",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029916,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "c42ba0a1bc62b5d0b3c0ae667593e18bb17a57b055dc26ae49e3a9d99f5c243c",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029916,
+    "timestamp": 1789089494,
+    "side": "SELL",
+    "solAmount": 0.056588062,
+    "tokenAmount": 13132359.551766,
+    "effectivePrice": 4.309055183642928e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029916,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "e2d1e37d35c8908007423c4a2fb108c3284cddd2dc0e2bd0630dc3e71b3b7718",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029916,
+    "timestamp": 1789089494,
+    "side": "SELL",
+    "solAmount": 0.422562431,
+    "tokenAmount": 8787878.787879,
+    "effectivePrice": 4.808469042413678e-8,
+    "initiator": "Gf1SM7E5TcgCmSTxunkrGPkK6npqstfCPARqEHDpjCko",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "5bbss3yWbY3oC6QsFGU974BbjoZo5VPDPw7DipZpump",
+    "slot": 446029916,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "d660d50bff548c39e7cd7c7de3a96e237814e9874301cdfcd96d6283424f071c",
+    "mint": "5bbss3yWbY3oC6QsFGU974BbjoZo5VPDPw7DipZpump",
+    "slot": 446029916,
+    "timestamp": 1789089494,
+    "side": "BUY",
+    "solAmount": 0.017394224,
+    "tokenAmount": 81740845.649684,
+    "effectivePrice": 2.1279721125649064e-10,
+    "initiator": "Em8J3gBWapfVBGVhVipwQnLrqCvnWBnLajw6XFsFECPF",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "5bbss3yWbY3oC6QsFGU974BbjoZo5VPDPw7DipZpump",
+    "slot": 446029916,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "DUPLICATE_EVENT",
+    "canonical_event_id": "d660d50bff548c39e7cd7c7de3a96e237814e9874301cdfcd96d6283424f071c",
+    "mint": "5bbss3yWbY3oC6QsFGU974BbjoZo5VPDPw7DipZpump",
+    "slot": 446029916,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029916,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "4060c6a4357da1b365709f9111891d94efc18e857fb32c1315704db15f42e38b",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029916,
+    "timestamp": 1789089494,
+    "side": "BUY",
+    "solAmount": 1.021925354,
+    "tokenAmount": 23989033.715178,
+    "effectivePrice": 4.259968809637471e-8,
+    "initiator": "CJiNwm1oWLCbNFd3Eeedw1W4891PfH4JMjEewVaeD5wn",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029916,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "19a873473a68d8772932de0df1e7a2aa6ed7bb0e59d075a11af97071f6d214d6",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029916,
+    "timestamp": 1789089494,
+    "side": "BUY",
+    "solAmount": 1.091595621,
+    "tokenAmount": 24222784.445378,
+    "effectivePrice": 4.5064828259588856e-8,
+    "initiator": "6kH7CfAyKTjNWFfpyADzi6jJeJn8ZLFsXZAkYf9ySoDH",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029916,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "0872025d97e9e402cbc6341212735c191542f7f9deacc40330d8e0a2825479c5",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029916,
+    "timestamp": 1789089494,
+    "side": "BUY",
+    "solAmount": 0.917590136,
+    "tokenAmount": 19327286.083795,
+    "effectivePrice": 4.7476408846110845e-8,
+    "initiator": "5sTL8eRp5ZHfPnP5fehSUBUQaobXmw42v4ZvWWDUaEVd",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029915,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "76249a6811bb64c63b98e841a495b81edadac63c9b68a9c0b5513cdd79312eb0",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029915,
+    "timestamp": 1789089494,
+    "side": "SELL",
+    "solAmount": 0.000859468,
+    "tokenAmount": 1927142.050121,
+    "effectivePrice": 4.4598061670961735e-10,
+    "initiator": "2wGNh8dzjacQmhWDJMTAxpaDLfsZ3UhhgUWhcU4sHDpj",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029915,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "9eee15ac0e2538696a0495288b06567f2c9cd86febddba618b395bd5dcdd2274",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029915,
+    "timestamp": 1789089494,
+    "side": "BUY",
+    "solAmount": 0.022729642,
+    "tokenAmount": 54532980.391609,
+    "effectivePrice": 4.1680542374128916e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029915,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "4ba11bbc63bec097140bdb51441cff16c69a5b96a5ce1a677e71be678a86aa2d",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029915,
+    "timestamp": 1789089494,
+    "side": "SELL",
+    "solAmount": 0.874977603,
+    "tokenAmount": 2235120.357259,
+    "effectivePrice": 3.914677794233028e-7,
+    "initiator": "45mvEeeU49aQZpaCX5NVizQ9RLknwFrduWfbz425aEbj",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029915,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "20794b8eef8e6a8fbdb00ec7277cb69495fec38bd24e47c483a9bd84dddb2c42",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029915,
+    "timestamp": 1789089494,
+    "side": "SELL",
+    "solAmount": 0.025763221,
+    "tokenAmount": 54286672.278702,
+    "effectivePrice": 4.745772750212863e-10,
+    "initiator": "Bd8Nqy2c28HnJJdifqg6Ea7gCAdPkg5H7f4HXzFdSpTF",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029915,
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "282bf220dafea67dcf7a5fe55a52d48de6631db4cef02bc3b0b890d54bd94f36",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029915,
+    "timestamp": 1789089494,
+    "side": "BUY",
+    "solAmount": 0.009777777,
+    "tokenAmount": 25170.464628,
+    "effectivePrice": 3.884623166281585e-7,
+    "initiator": "3FZCXNtH7Wj1bFKi8kLfbLC2s6Qtq9vQrfsaYCfyVqi8",
+    "pipelineLatencyMs": -12993
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029920,
+    "pipelineLatencyMs": -11847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "1b2103fbe3139859b3dbe2e9280d20c7b6c060d4ec00599e229ca26e6afc27a2",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029920,
+    "timestamp": 1789089495,
+    "side": "SELL",
+    "solAmount": 0.011954694,
+    "tokenAmount": 388262.216726,
+    "effectivePrice": 3.079025845163948e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -11847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "8JKEuWRVnemhipjFnNb5DDqX1UV2txsJVAXiHLgMpump",
+    "slot": 446029920,
+    "pipelineLatencyMs": -11847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "e180ff0c67d69f0f9eb18701d874309610d57ffa0417fb015f4ddcb06ab179e1",
+    "mint": "8JKEuWRVnemhipjFnNb5DDqX1UV2txsJVAXiHLgMpump",
+    "slot": 446029920,
+    "timestamp": 1789089495,
+    "side": "BUY",
+    "solAmount": 0.085848804,
+    "tokenAmount": 1372010.209447,
+    "effectivePrice": 6.257154896434923e-8,
+    "initiator": "8Wj1JoryvHB9ahqdQnuYbhZdGYQiXhjJt5QWPFktXa8b",
+    "pipelineLatencyMs": -11847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DQMfC7nEcvVF3zNzpLgSaPsQpCnuqZQ5Gwzrf4NZpump",
+    "slot": 446029920,
+    "pipelineLatencyMs": -11847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "b9e0b3097282c430c90a27448796c7428853a70bbf49442fbc5609be2cd83c07",
+    "mint": "DQMfC7nEcvVF3zNzpLgSaPsQpCnuqZQ5Gwzrf4NZpump",
+    "slot": 446029920,
+    "timestamp": 1789089495,
+    "side": "SELL",
+    "solAmount": 0.024830626,
+    "tokenAmount": 589942.927974,
+    "effectivePrice": 4.208987822817725e-8,
+    "initiator": "3dtuxGyVurRX8vLJVoYLvZRkHpJ28FoNePSRBs6UjeXL",
+    "pipelineLatencyMs": -11847
+  },
+  {
+    "event_type": "MEV_EVENT",
+    "mint": "D1ouA2wX9zEjTPYNzNzKsYyqcEfj5oSHUMGATH8Qpump",
+    "slot": 446029924,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "D1ouA2wX9zEjTPYNzNzKsYyqcEfj5oSHUMGATH8Qpump",
+    "slot": 446029924,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "f21634b5a96e7074f8a834b8fb8e97ceb9ee10b68b533ff20eeadadb848abfbd",
+    "mint": "D1ouA2wX9zEjTPYNzNzKsYyqcEfj5oSHUMGATH8Qpump",
+    "slot": 446029924,
+    "timestamp": 1789089496,
+    "side": "SELL",
+    "solAmount": 0.030245321,
+    "tokenAmount": 929546.688299,
+    "effectivePrice": 3.253771045685359e-8,
+    "initiator": "9n3D3qiF3KfUa1J1dPr5JgjGWyhXx1E3VosVUuvHEhAt",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029924,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "8aa34fcaa3b41683502db45d6bad53f640d8e5c3fa45d0ed878030173a81723b",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029924,
+    "timestamp": 1789089496,
+    "side": "SELL",
+    "solAmount": 0.010930491,
+    "tokenAmount": 592970.582126,
+    "effectivePrice": 1.843344565393193e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029924,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "7f47affcfe39efcfb0d9a751e2410ff53afb5005aad6e128ed45d435de183229",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029924,
+    "timestamp": 1789089496,
+    "side": "SELL",
+    "solAmount": 0.162726536,
+    "tokenAmount": 28725717.252412,
+    "effectivePrice": 5.664838046344567e-9,
+    "initiator": "752dF4cdssGJthrNieYAagd6bEpPgGHSSnsG9uYDvWY1",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "SJotsF971z2VvwkJq8sNM6UhPQDNWjoenhBMnUopump",
+    "slot": 446029924,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "564dcb88d75743073694c52552da27495c3b7490b2c2a69667db2ea37293798b",
+    "mint": "SJotsF971z2VvwkJq8sNM6UhPQDNWjoenhBMnUopump",
+    "slot": 446029924,
+    "timestamp": 1789089496,
+    "side": "BUY",
+    "solAmount": 0.010265782,
+    "tokenAmount": 1891445.574266,
+    "effectivePrice": 5.427479457865854e-9,
+    "initiator": "EJYfi5sZtAhYQttQ4uWGaCq9gNRFu7r4dP7imvGYbyzA",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029924,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "272a8c59a30ebfb25f7a0f23dfbb4b32a09c2333b8a670dc0d5aef813ed4596c",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029924,
+    "timestamp": 1789089496,
+    "side": "BUY",
+    "solAmount": 0.00560105,
+    "tokenAmount": 10218709.611414,
+    "effectivePrice": 5.481171510876276e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "EEqq1v37n5gTxJeoWZ7aw3rZRSRDqAa3HrtPvytnpump",
+    "slot": 446029923,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029922,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "ab97c7ffc789f58e22f9425f2c85e644139273249493fb06542947154ba28f4b",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029922,
+    "timestamp": 1789089496,
+    "side": "BUY",
+    "solAmount": 0.011520688,
+    "tokenAmount": 23285093.3838,
+    "effectivePrice": 4.94766665098076e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029922,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "cafdb377091414653ecf17022c40ead7c6e8a3ed4120cc8499c9b02d36aab8a7",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029922,
+    "timestamp": 1789089496,
+    "side": "SELL",
+    "solAmount": 0.008117524,
+    "tokenAmount": 14733012.26138,
+    "effectivePrice": 5.509751743897384e-10,
+    "initiator": "57Uoyn4AwRMZ1hawy2jULJbTs9msFdCEv68dX9AtMkMi",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029922,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "c4c794610daf181e5c9d287bf02e546b4f75b581189d966af5f1a169ad0af6bd",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029922,
+    "timestamp": 1789089496,
+    "side": "SELL",
+    "solAmount": 0.005246458,
+    "tokenAmount": 10756104.49789,
+    "effectivePrice": 4.877656219339618e-10,
+    "initiator": "8NsBPSP4p4i3QcUgscLd1Y1PJqC7aobbQsZCU7Xrc5TJ",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029922,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "67e39948313565123d537e2ba5e2110f7a625151d6d40ea497efb7b86245d7d8",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029922,
+    "timestamp": 1789089496,
+    "side": "SELL",
+    "solAmount": 0.02347207,
+    "tokenAmount": 1008875.558915,
+    "effectivePrice": 2.326557501823431e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029922,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "25f013034ff016a3432eb150c4b843486ef884bf40e5b33549ab3619c545cdf0",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029922,
+    "timestamp": 1789089496,
+    "side": "SELL",
+    "solAmount": 0.105054338,
+    "tokenAmount": 14673418.159282,
+    "effectivePrice": 7.1595000469297954e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "33MFQUs3zFbChqoEzqX4nmivZwsBYS33hsX6LBbwpump",
+    "slot": 446029922,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "bb02de39782df3633f1fd03994ecf7c80137b35b868701f58d35c23e281ca2d2",
+    "mint": "33MFQUs3zFbChqoEzqX4nmivZwsBYS33hsX6LBbwpump",
+    "slot": 446029922,
+    "timestamp": 1789089496,
+    "side": "BUY",
+    "solAmount": 0.012836018,
+    "tokenAmount": 409019.132267,
+    "effectivePrice": 3.138243907774194e-8,
+    "initiator": "G6pwxP62C4nZBGH9D4eNM47gmu1ftJo6bGz3HQnuUxyX",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029922,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "0988503976f92d19627410333636b21e773f5d0498ecd88bbe6a1d8ca31a7393",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029922,
+    "timestamp": 1789089496,
+    "side": "BUY",
+    "solAmount": 0.003979191,
+    "tokenAmount": 7159969.671107,
+    "effectivePrice": 5.557552870729939e-10,
+    "initiator": "4vWg8DzorbrNWcdRCMF8TfMmvwbiqRS5ZsQNpprPNAux",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "7yoonCX6CzX3WayE37fQBUttuJBgD2uCEBJLXjhgpump",
+    "slot": 446029922,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "a7a1bf18296f937ecc5c86aee2c0981379f2e934688222961b5699bd649ee8a6",
+    "mint": "7yoonCX6CzX3WayE37fQBUttuJBgD2uCEBJLXjhgpump",
+    "slot": 446029922,
+    "timestamp": 1789089496,
+    "side": "BUY",
+    "solAmount": 0.004938271,
+    "tokenAmount": 83537.297733,
+    "effectivePrice": 5.9114564799349734e-8,
+    "initiator": "Aj4FKSWxAAmiLPpxWm7LWEQ64MsQzaLoXzK7n2FR7Vzg",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029921,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "50298aee4f0721ee2776a4fa54dfb707a9070991e4a3bdcdf225d07cbdced68f",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029921,
+    "timestamp": 1789089496,
+    "side": "SELL",
+    "solAmount": 0.007708349,
+    "tokenAmount": 15343153.94928,
+    "effectivePrice": 5.023966405786944e-10,
+    "initiator": "2wGNh8dzjacQmhWDJMTAxpaDLfsZ3UhhgUWhcU4sHDpj",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029921,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "2988fbc8d8b27e0768932c2d24d938361b3ab782518435ea1da7f42526c1cf84",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029921,
+    "timestamp": 1789089496,
+    "side": "BUY",
+    "solAmount": 0.097282655,
+    "tokenAmount": 252460.043056,
+    "effectivePrice": 3.853388196500506e-7,
+    "initiator": "5bpX3xAJ7qR4qD8oU4eMQTpAeYRi8TMhCdzqbzZTcBAD",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029921,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "70523c28a1d2c4d34fb6f2b59b5bcc03ee877eec4fa995ec72772a87bd93be29",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029921,
+    "timestamp": 1789089496,
+    "side": "SELL",
+    "solAmount": 0.022590968,
+    "tokenAmount": 808886.750219,
+    "effectivePrice": 2.7928468347248443e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "D1ouA2wX9zEjTPYNzNzKsYyqcEfj5oSHUMGATH8Qpump",
+    "slot": 446029921,
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "16c7d832832c4a9c8dc226564d657c685fd6ba3d4114fa859bfbe264eb274a10",
+    "mint": "D1ouA2wX9zEjTPYNzNzKsYyqcEfj5oSHUMGATH8Qpump",
+    "slot": 446029921,
+    "timestamp": 1789089496,
+    "side": "SELL",
+    "solAmount": 0.08858605,
+    "tokenAmount": 2712600.828357,
+    "effectivePrice": 3.265723768640734e-8,
+    "initiator": "5g4EYuaEsGr4ci7cjsDuuV4ZYwFUBc2iaHD5qXsea5Hb",
+    "pipelineLatencyMs": -12847
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "64tV75mnjX7Tna8Hn52qDgwRhVC8dYxMHXsEFTpFpump",
+    "slot": 446029933,
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029933,
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "f038a8b7a4157442d4ae6f817b68e5ca1e3a8633342e64eac9a5648d63a83bbf",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029933,
+    "timestamp": 1789089499,
+    "side": "SELL",
+    "solAmount": 0.031095014,
+    "tokenAmount": 1556812.194822,
+    "effectivePrice": 1.997351646102392e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DQMfC7nEcvVF3zNzpLgSaPsQpCnuqZQ5Gwzrf4NZpump",
+    "slot": 446029933,
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "5ad45b77dede57762bdf6a55b80650ce5def015562a77e3fff6f726f3a1503f6",
+    "mint": "DQMfC7nEcvVF3zNzpLgSaPsQpCnuqZQ5Gwzrf4NZpump",
+    "slot": 446029933,
+    "timestamp": 1789089499,
+    "side": "SELL",
+    "solAmount": 0.247447708,
+    "tokenAmount": 7189858.929246,
+    "effectivePrice": 3.4416211838797484e-8,
+    "initiator": "8mjpbaNprcUdCnz9RXBp5mgmRwhUprsQy6oLT6s5dE4o",
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "MEV_EVENT",
+    "mint": "8JKEuWRVnemhipjFnNb5DDqX1UV2txsJVAXiHLgMpump",
+    "slot": 446029933,
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "8JKEuWRVnemhipjFnNb5DDqX1UV2txsJVAXiHLgMpump",
+    "slot": 446029933,
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "ce2a278d36073c19e0dfec6399a2dc038340e5c15556c3f81813de0569cd3b35",
+    "mint": "8JKEuWRVnemhipjFnNb5DDqX1UV2txsJVAXiHLgMpump",
+    "slot": 446029933,
+    "timestamp": 1789089499,
+    "side": "SELL",
+    "solAmount": 0.000004225,
+    "tokenAmount": 67.398439,
+    "effectivePrice": 6.268691178441092e-8,
+    "initiator": "C8KsrrGXQ2bXkhGYfxQnnDtCp1c9XTKPoGb9wafWJKEp",
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "SJotsF971z2VvwkJq8sNM6UhPQDNWjoenhBMnUopump",
+    "slot": 446029933,
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "3ff1d1c9b084d1448f0001d274f2b67fcc3dca9823cc71f2fadc4fb8397e18df",
+    "mint": "SJotsF971z2VvwkJq8sNM6UhPQDNWjoenhBMnUopump",
+    "slot": 446029933,
+    "timestamp": 1789089499,
+    "side": "BUY",
+    "solAmount": 0.000926335,
+    "tokenAmount": 174644.720687,
+    "effectivePrice": 5.304111091111576e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029933,
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "d2184cdaa4e327f3c1acfc94e3ea22ada4188f1a13ef1db893923d6b03dd9c8a",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029933,
+    "timestamp": 1789089499,
+    "side": "BUY",
+    "solAmount": 0.03937668,
+    "tokenAmount": 7978423.926713,
+    "effectivePrice": 4.9353958077059265e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "37QoJ5qSdcKnzJGxn7NyrcnqQvadCE7uBav56fT5pump",
+    "slot": 446029933,
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029932,
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "3e294ab765aa46def8bed8ac2e2543b603c4f83cf74348bc58788f5c870db953",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029932,
+    "timestamp": 1789089499,
+    "side": "SELL",
+    "solAmount": 0.045201002,
+    "tokenAmount": 1691602.267481,
+    "effectivePrice": 2.6720821359095096e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029932,
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "e8e24b3e47099b4124fb7ef42ba790feb16895df2b443ff366ecd1e151e53fc5",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029932,
+    "timestamp": 1789089499,
+    "side": "BUY",
+    "solAmount": 0.009876542,
+    "tokenAmount": 2021695.378367,
+    "effectivePrice": 4.885277033168893e-9,
+    "initiator": "AWXxZ1LKpmRbiUc7cqHaMVQthZAQrcr32PQN55fCo63b",
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DQMfC7nEcvVF3zNzpLgSaPsQpCnuqZQ5Gwzrf4NZpump",
+    "slot": 446029932,
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "0632506b07b59f3d72692e5544df938511425a8c9ba2835df41c53923bb5bc77",
+    "mint": "DQMfC7nEcvVF3zNzpLgSaPsQpCnuqZQ5Gwzrf4NZpump",
+    "slot": 446029932,
+    "timestamp": 1789089499,
+    "side": "SELL",
+    "solAmount": 0.044473094,
+    "tokenAmount": 1280937.269485,
+    "effectivePrice": 3.4719181851801666e-8,
+    "initiator": "86A3SYyazPi7oDPdfCmhrmhxQ3p4DUWsVmeC2juEFFyU",
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029932,
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "82e78853ab337127685fa68cd679d98882d26b9b08f3ddc58d3f7c082605397f",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029932,
+    "timestamp": 1789089499,
+    "side": "SELL",
+    "solAmount": 0.00046088,
+    "tokenAmount": 514274.780303,
+    "effectivePrice": 8.961746086954897e-10,
+    "initiator": "4Zc6z72Dme9rXNuKKroohDQEwz4VdutrTWsZEWG99SD4",
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DQMfC7nEcvVF3zNzpLgSaPsQpCnuqZQ5Gwzrf4NZpump",
+    "slot": 446029932,
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "b5dadcd493f560b59c2efc1687945e52961aa0d7f7c41b689ef2f90bd32e2402",
+    "mint": "DQMfC7nEcvVF3zNzpLgSaPsQpCnuqZQ5Gwzrf4NZpump",
+    "slot": 446029932,
+    "timestamp": 1789089499,
+    "side": "SELL",
+    "solAmount": 0.002485614,
+    "tokenAmount": 71491.473319,
+    "effectivePrice": 3.476797839805336e-8,
+    "initiator": "6hQSw5JDEjVvqFes2vwGnYFq9b44Yjq9wxeNVBYJpHSb",
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029932,
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "fe216f8fa0987cb5371228d39572e4d91b49440fe595c516a5b0e9fb21128e90",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029932,
+    "timestamp": 1789089499,
+    "side": "BUY",
+    "solAmount": 0.028913179,
+    "tokenAmount": 39682902.444867,
+    "effectivePrice": 7.286054501726583e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029934,
+    "pipelineLatencyMs": -13875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "5c0cdcab95312b08f99f5561f601c8f7aa940172fe34e5761d21a127bfb084af",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029934,
+    "timestamp": 1789089500,
+    "side": "SELL",
+    "solAmount": 0.20800309,
+    "tokenAmount": 4287704.653512,
+    "effectivePrice": 4.851152465215334e-8,
+    "initiator": "Gdfyi9hHz7s1aDKbexkGeudLZ4pVjpLpsxECTEmV55Qr",
+    "pipelineLatencyMs": -13875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029934,
+    "pipelineLatencyMs": -13875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "851663967f4938319e658518b4330c22394623e5591768b429175d491f96d139",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029934,
+    "timestamp": 1789089500,
+    "side": "SELL",
+    "solAmount": 0.00721362,
+    "tokenAmount": 6680977.079416,
+    "effectivePrice": 1.079725302789178e-9,
+    "initiator": "8NsBPSP4p4i3QcUgscLd1Y1PJqC7aobbQsZCU7Xrc5TJ",
+    "pipelineLatencyMs": -13875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029934,
+    "pipelineLatencyMs": -13875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "ae5fa5248bf811c9e6fb255b58d5cc667906b6185d7999b993fa42baec227ce6",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029934,
+    "timestamp": 1789089500,
+    "side": "SELL",
+    "solAmount": 0.140317674,
+    "tokenAmount": 361430.901268,
+    "effectivePrice": 3.8822821598188373e-7,
+    "initiator": "3bHautisJy2zXVkF2Gd34ax9GzFvPTANv7vqHXohY91B",
+    "pipelineLatencyMs": -13875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "B3NNQggQ6UVrt3ViFM6Eb7LWx85W3KGzWVm9szVSpump",
+    "slot": 446029934,
+    "pipelineLatencyMs": -13875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "7f0fbd628bd42b1893be6c981637acbda50a0c07c01305df50709c0ab52630a3",
+    "mint": "B3NNQggQ6UVrt3ViFM6Eb7LWx85W3KGzWVm9szVSpump",
+    "slot": 446029934,
+    "timestamp": 1789089500,
+    "side": "SELL",
+    "solAmount": 0.271186021,
+    "tokenAmount": 5744013.978037,
+    "effectivePrice": 4.721193611939591e-8,
+    "initiator": "8pGG1THKLP1sVmuRj7yyoQig4YQniucmjuU4iE5ohajK",
+    "pipelineLatencyMs": -13875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029934,
+    "pipelineLatencyMs": -13875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "d46d83ec7a2c010ade6ca79646ea9383b38f4e2bfb53603339f2310c0d1ed3de",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029934,
+    "timestamp": 1789089500,
+    "side": "BUY",
+    "solAmount": 0.027880342,
+    "tokenAmount": 4906593.049671,
+    "effectivePrice": 5.6822201714628544e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029934,
+    "pipelineLatencyMs": -13875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "10ca7be682da5e23f4f2811cfa48c5efaaa91fc897518dff0adc49dfa35c5c58",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029934,
+    "timestamp": 1789089500,
+    "side": "SELL",
+    "solAmount": 0.000337585,
+    "tokenAmount": 868.46,
+    "effectivePrice": 3.8871680906432074e-7,
+    "initiator": "8SveFUanfbLRMsL6NAXa1LCMmLEsUc7q7KhFBufscG5Y",
+    "pipelineLatencyMs": -13875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029934,
+    "pipelineLatencyMs": -13875
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "f5b27e1b94cc0b340db0eefdc59ed8d3ddab6a9ad73ca15fa5346dfe11fc23c9",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029934,
+    "timestamp": 1789089500,
+    "side": "BUY",
+    "solAmount": 0.027297916,
+    "tokenAmount": 29362061.239155,
+    "effectivePrice": 9.297002610837684e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "64tV75mnjX7Tna8Hn52qDgwRhVC8dYxMHXsEFTpFpump",
+    "slot": 446029934,
+    "pipelineLatencyMs": -13875
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029936,
+    "pipelineLatencyMs": -11431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "d73e633835b8bfb60d26be28ca69ab1d3c7101a9d3f330f8997efa851d0be6db",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029936,
+    "timestamp": 1789089500,
+    "side": "BUY",
+    "solAmount": 0.003519366,
+    "tokenAmount": 4169879.426216,
+    "effectivePrice": 8.439970656882241e-10,
+    "initiator": "4vWg8DzorbrNWcdRCMF8TfMmvwbiqRS5ZsQNpprPNAux",
+    "pipelineLatencyMs": -11431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "D1ouA2wX9zEjTPYNzNzKsYyqcEfj5oSHUMGATH8Qpump",
+    "slot": 446029936,
+    "pipelineLatencyMs": -11431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "486890f53f455ab84e4303fe23c2733e5966a8f02bcf9240ae5af390b8940d9c",
+    "mint": "D1ouA2wX9zEjTPYNzNzKsYyqcEfj5oSHUMGATH8Qpump",
+    "slot": 446029936,
+    "timestamp": 1789089500,
+    "side": "SELL",
+    "solAmount": 0.058257296,
+    "tokenAmount": 1799033.016869,
+    "effectivePrice": 3.238256077222518e-8,
+    "initiator": "Cczuvcy1Qn4yXSraXq2uPJnRNFYeVmsT1acibHpSBhUZ",
+    "pipelineLatencyMs": -11431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029936,
+    "pipelineLatencyMs": -11431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "d6a111559d0f58d482737ece44fc7ae67e28eeef07442a093db09b5a416e4752",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029936,
+    "timestamp": 1789089500,
+    "side": "SELL",
+    "solAmount": 0.069452919,
+    "tokenAmount": 11350232.607622,
+    "effectivePrice": 6.119074507192075e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -11431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029936,
+    "pipelineLatencyMs": -11431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "8c5e262f0e29f5c85264b82eee82c6b4952328b1ea81dac085dc21e936749359",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029936,
+    "timestamp": 1789089500,
+    "side": "BUY",
+    "solAmount": 0.098765431,
+    "tokenAmount": 254494.98056,
+    "effectivePrice": 3.880840037892809e-7,
+    "initiator": "EHFhdX6CLb6zDi4Lsu72KMDn43aAtSWpFAQkxgpkb6aA",
+    "pipelineLatencyMs": -11431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "H7rwT4WYpucv2aRCeWwbiyzUZQfKgbd68BGM8Dxmpump",
+    "slot": 446029936,
+    "pipelineLatencyMs": -11431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "ded15170e93a4cbdb7cf2dca94fd9109ab7fe89165bdecc3fe2ed452f1493609",
+    "mint": "H7rwT4WYpucv2aRCeWwbiyzUZQfKgbd68BGM8Dxmpump",
+    "slot": 446029936,
+    "timestamp": 1789089500,
+    "side": "SELL",
+    "solAmount": 0.009948128,
+    "tokenAmount": 355517.278227,
+    "effectivePrice": 2.7982122415012582e-8,
+    "initiator": "2NcmfJa2m5VpWpqeedPkQupjhfadYDpfoLe521cTyRAR",
+    "pipelineLatencyMs": -11431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029936,
+    "pipelineLatencyMs": -11431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "6072a281d29e5eee37222108eafa09b809694ea80ccdafb4783091d9ea533e25",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029936,
+    "timestamp": 1789089500,
+    "side": "BUY",
+    "solAmount": 0.003950617,
+    "tokenAmount": 4732849.690057,
+    "effectivePrice": 8.347226847917117e-10,
+    "initiator": "8NsBPSP4p4i3QcUgscLd1Y1PJqC7aobbQsZCU7Xrc5TJ",
+    "pipelineLatencyMs": -11431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "5TywLSgCHB8XvFKhtsERADjrLaSwbZJ5XQC9UNDSpump",
+    "slot": 446029935,
+    "pipelineLatencyMs": -11431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "e0206e19a44fa263c00db9a83bbee64a882f501b7df9f1fb8b37fcd773bd4694",
+    "mint": "5TywLSgCHB8XvFKhtsERADjrLaSwbZJ5XQC9UNDSpump",
+    "slot": 446029935,
+    "timestamp": 1789089500,
+    "side": "SELL",
+    "solAmount": 0.096803579,
+    "tokenAmount": 3451205.055947,
+    "effectivePrice": 2.8049211052583312e-8,
+    "initiator": "E1jr4Fp1nk5h2a5rkup8X67YYeAMe1fA5jgyyMjjjnZM",
+    "pipelineLatencyMs": -11431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "64tV75mnjX7Tna8Hn52qDgwRhVC8dYxMHXsEFTpFpump",
+    "slot": 446029938,
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "HozfzXTxUjWdRrzdG1mrFry8Pcavk99qYYmBCMrzpump",
+    "slot": 446029938,
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "242fd9003b2013dcd3638ca999075f9e3d1548e3e20a1dc63892b71b91956f28",
+    "mint": "HozfzXTxUjWdRrzdG1mrFry8Pcavk99qYYmBCMrzpump",
+    "slot": 446029938,
+    "timestamp": 1789089501,
+    "side": "BUY",
+    "solAmount": 0.019883987,
+    "tokenAmount": 428582.62306,
+    "effectivePrice": 4.6394757813632385e-8,
+    "initiator": "9XZxdeVFjpf4ZdhrrFKfRirAHA6YKPMhbYq9fwZ6xgKF",
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "7395t7rnED2s7tcVk8PXHFcFDWbH98rLHbe18z58pump",
+    "slot": 446029938,
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "d10a1c1a2fb301303e99ed5f52943a564454905d016e360330471dca72df77f2",
+    "mint": "7395t7rnED2s7tcVk8PXHFcFDWbH98rLHbe18z58pump",
+    "slot": 446029938,
+    "timestamp": 1789089501,
+    "side": "SELL",
+    "solAmount": 0.070256877,
+    "tokenAmount": 1549890.673517,
+    "effectivePrice": 4.533021470512732e-8,
+    "initiator": "ARu4n5mFdZogZAravu7CcizaojWnS6oqka37gdLT5SZn",
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "7395t7rnED2s7tcVk8PXHFcFDWbH98rLHbe18z58pump",
+    "slot": 446029938,
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "DUPLICATE_EVENT",
+    "canonical_event_id": "d10a1c1a2fb301303e99ed5f52943a564454905d016e360330471dca72df77f2",
+    "mint": "7395t7rnED2s7tcVk8PXHFcFDWbH98rLHbe18z58pump",
+    "slot": 446029938,
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Dwau5N7dTaE6Yi8wLK4ThdNVJVr2JWjBhXG7Jyowpump",
+    "slot": 446029938,
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "a2581a90f8fdbf38172ce05327a53e67ae43f551ef80bf544a0a1fe1c8b05fa2",
+    "mint": "Dwau5N7dTaE6Yi8wLK4ThdNVJVr2JWjBhXG7Jyowpump",
+    "slot": 446029938,
+    "timestamp": 1789089501,
+    "side": "BUY",
+    "solAmount": 0.147479399,
+    "tokenAmount": 1323469.878914,
+    "effectivePrice": 1.114338915827969e-7,
+    "initiator": "B676SJChfHM9HS8gbGJPcgLkgGvCcuAF8Y4ckx4jGwRW",
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029938,
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "e6f31de867657eb0c953a12afed6a37bdf633241b2d650d6e005ba652e09f94c",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029938,
+    "timestamp": 1789089501,
+    "side": "BUY",
+    "solAmount": 0.068492843,
+    "tokenAmount": 13911738.104576,
+    "effectivePrice": 4.9233850209896195e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029938,
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "1ca7c38adca9f88f26309c7eec0301d059a102f47110ded22533e64b334301bb",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029938,
+    "timestamp": 1789089501,
+    "side": "BUY",
+    "solAmount": 0.003950617,
+    "tokenAmount": 4672550.579808,
+    "effectivePrice": 8.454947533521051e-10,
+    "initiator": "8NsBPSP4p4i3QcUgscLd1Y1PJqC7aobbQsZCU7Xrc5TJ",
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "5bbss3yWbY3oC6QsFGU974BbjoZo5VPDPw7DipZpump",
+    "slot": 446029938,
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "471f14d3f9dfb1350b3ac0e6f4b33cd89dc8894de73a7ee6d93c3cf5189e3def",
+    "mint": "5bbss3yWbY3oC6QsFGU974BbjoZo5VPDPw7DipZpump",
+    "slot": 446029938,
+    "timestamp": 1789089501,
+    "side": "BUY",
+    "solAmount": 0.004888888,
+    "tokenAmount": 22709261.714745,
+    "effectivePrice": 2.1528167940508924e-10,
+    "initiator": "8Rr7CCPjrQm5kDtzr3Vmx57Ujp1AdEVMJSr9jgPFSeMG",
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029938,
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "05358a91f9be024bc188c12adefdb1a8120af9f9931db215699f684821bfd4a3",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029938,
+    "timestamp": 1789089501,
+    "side": "BUY",
+    "solAmount": 0.019106985,
+    "tokenAmount": 21852202.037243,
+    "effectivePrice": 8.743734369394768e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029937,
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "04b8458b303fff685cc312ba078dff82a9369a66caf38f10548b9db3505f368c",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029937,
+    "timestamp": 1789089501,
+    "side": "SELL",
+    "solAmount": 0.000880855,
+    "tokenAmount": 1039615.748322,
+    "effectivePrice": 8.472890117543438e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029937,
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "43412ee879da446a6b2a645f026ead8b3ed7015bfcc24ad1b17650a488329703",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029937,
+    "timestamp": 1789089501,
+    "side": "SELL",
+    "solAmount": 0.000671542,
+    "tokenAmount": 798113.916848,
+    "effectivePrice": 8.41411214394216e-10,
+    "initiator": "C7oA98fBSnK3iCorD5H4R8z2XNqnRp1wtBVfJNs58gn3",
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029937,
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "781ae29339b86e57be401b7f2d89f04ed2f0649b46588d960c048daa8735b7aa",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029937,
+    "timestamp": 1789089501,
+    "side": "BUY",
+    "solAmount": 0.024762167,
+    "tokenAmount": 1448272.062046,
+    "effectivePrice": 1.7097731599557365e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "SJotsF971z2VvwkJq8sNM6UhPQDNWjoenhBMnUopump",
+    "slot": 446029937,
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "c019b96e6bd35d236d0abd05c525547dde8a80ce4b5e6d60515ddcbc45d42887",
+    "mint": "SJotsF971z2VvwkJq8sNM6UhPQDNWjoenhBMnUopump",
+    "slot": 446029937,
+    "timestamp": 1789089501,
+    "side": "SELL",
+    "solAmount": 0.003354857,
+    "tokenAmount": 503069.734279,
+    "effectivePrice": 6.6687712883546535e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029937,
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "5f555a6f0f3dbd1a72997272d93d0a9abd7bc54a07736b013245a58d2b2b85f6",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029937,
+    "timestamp": 1789089501,
+    "side": "BUY",
+    "solAmount": 1.621897607,
+    "tokenAmount": 4115853.138426,
+    "effectivePrice": 3.94061098015818e-7,
+    "initiator": "FuxyWuUtrQMAGj5BfziGDeShTU9W3GZHkMfNF7R1fjGV",
+    "pipelineLatencyMs": -12431
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029945,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "aa6e804c805ee5375a2129086871a8020f6b7a54abb6c8a301a59654d5aeeced",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029945,
+    "timestamp": 1789089504,
+    "side": "BUY",
+    "solAmount": 0.031872242,
+    "tokenAmount": 49266186.075507,
+    "effectivePrice": 6.469395043316635e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029945,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "5914e022a390d39ccfb5bc6fd8d0b92427a77230d892cae89d74c9150667e95d",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029945,
+    "timestamp": 1789089504,
+    "side": "SELL",
+    "solAmount": 0.00570081,
+    "tokenAmount": 7186169.653528,
+    "effectivePrice": 7.933030077019162e-10,
+    "initiator": "57Uoyn4AwRMZ1hawy2jULJbTs9msFdCEv68dX9AtMkMi",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029945,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "9408f0ecc8fc75ef29aff93921884d5b792abd85be926c0af3e11df8394ddb2f",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029945,
+    "timestamp": 1789089504,
+    "side": "BUY",
+    "solAmount": 0.009876542,
+    "tokenAmount": 2654316.921226,
+    "effectivePrice": 3.720935477229348e-9,
+    "initiator": "AWXxZ1LKpmRbiUc7cqHaMVQthZAQrcr32PQN55fCo63b",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "CkfqwJH3munR4XKxHc2zvLhHAJMyvfTQcrkChGhKpump",
+    "slot": 446029945,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "5fd74f4bb0dd45826480ccfa402e48cfbc057fa64fc0eda97a7c8d99b3b1cefd",
+    "mint": "CkfqwJH3munR4XKxHc2zvLhHAJMyvfTQcrkChGhKpump",
+    "slot": 446029945,
+    "timestamp": 1789089504,
+    "side": "BUY",
+    "solAmount": 0.209772951,
+    "tokenAmount": 7258559.113004,
+    "effectivePrice": 2.8900081646257224e-8,
+    "initiator": "8QvkXm4V7wSg9CTfqdM5sLu2aji3qZTV5AXwJDoZL7ec",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DQMfC7nEcvVF3zNzpLgSaPsQpCnuqZQ5Gwzrf4NZpump",
+    "slot": 446029945,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "67ff3442ec9216aa659df41a4cab10493803a800f3c2a9909dc05101a6b2b8f2",
+    "mint": "DQMfC7nEcvVF3zNzpLgSaPsQpCnuqZQ5Gwzrf4NZpump",
+    "slot": 446029945,
+    "timestamp": 1789089504,
+    "side": "BUY",
+    "solAmount": 0.000977777,
+    "tokenAmount": 19890.069761,
+    "effectivePrice": 4.915905332404631e-8,
+    "initiator": "ASkP2riY5859LYFdtWryndwbYkfi3ZHWhZbJxiP2ski5",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "E9Tc8wDeMDZTnaxueR7hiuGjLycMUMmy9GNKtANjpump",
+    "slot": 446029945,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "028792633180e467bd8499cf072b957f46eb842d3f9e96f5b3bab87c209b8567",
+    "mint": "E9Tc8wDeMDZTnaxueR7hiuGjLycMUMmy9GNKtANjpump",
+    "slot": 446029945,
+    "timestamp": 1789089504,
+    "side": "BUY",
+    "solAmount": 0.000001,
+    "tokenAmount": 13.047001,
+    "effectivePrice": 7.664596637955343e-8,
+    "initiator": "64ymeD9XTAkNJgHtXgrG6JCNZmBC9fSVcmgkL54pFikE",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "64tV75mnjX7Tna8Hn52qDgwRhVC8dYxMHXsEFTpFpump",
+    "slot": 446029945,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "33MFQUs3zFbChqoEzqX4nmivZwsBYS33hsX6LBbwpump",
+    "slot": 446029945,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "82ee61ddeac834588b9ab740d638d6f65f4b17c1d903ffaa7b39d48fcbc531f6",
+    "mint": "33MFQUs3zFbChqoEzqX4nmivZwsBYS33hsX6LBbwpump",
+    "slot": 446029945,
+    "timestamp": 1789089504,
+    "side": "SELL",
+    "solAmount": 0.312689935,
+    "tokenAmount": 10058767.186443,
+    "effectivePrice": 3.108630801411102e-8,
+    "initiator": "GQnSfEkpBgJoowAcf9myMjsNzBUfH1e14Eqvkfm7sPdn",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "MEV_EVENT",
+    "mint": "CkfqwJH3munR4XKxHc2zvLhHAJMyvfTQcrkChGhKpump",
+    "slot": 446029945,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "CkfqwJH3munR4XKxHc2zvLhHAJMyvfTQcrkChGhKpump",
+    "slot": 446029945,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "8464300261131a394224443f944ebba258c26b16cd92e2ec1c76445a8d2b2b91",
+    "mint": "CkfqwJH3munR4XKxHc2zvLhHAJMyvfTQcrkChGhKpump",
+    "slot": 446029945,
+    "timestamp": 1789089504,
+    "side": "BUY",
+    "solAmount": 0.397604991,
+    "tokenAmount": 13979392.355183,
+    "effectivePrice": 2.844222273027368e-8,
+    "initiator": "6FGsiDL3GAFQ3duWJMakqcjKqC2n69XooYjGU2YpCR5M",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029945,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "7e1a26c8257625cd3b967d836f112cd7524aedb2db459807336b3c8aa6d24ad3",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029945,
+    "timestamp": 1789089504,
+    "side": "BUY",
+    "solAmount": 0.097777777,
+    "tokenAmount": 2288041.440038,
+    "effectivePrice": 4.273426839610742e-8,
+    "initiator": "7b2NezGiryig2wy7ufPEwE9DYMgZwU1rP7RzSGQJt51Z",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029945,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "eee828cddd9cd409ddc0258690eb43a9a2ece35a89f5eac6c725a3df42abddeb",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029945,
+    "timestamp": 1789089504,
+    "side": "BUY",
+    "solAmount": 0.254222222,
+    "tokenAmount": 6005831.697637,
+    "effectivePrice": 4.232922845640579e-8,
+    "initiator": "8zEiDZgwyV97bbt2Db64rSkjLDBKBec5HBPWRHpppnGD",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029945,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "6b25e1d9e4a47a80959af62dcd76bc8dd497739f3b63d415aa749e14331f2b1b",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029945,
+    "timestamp": 1789089504,
+    "side": "SELL",
+    "solAmount": 0.021776574,
+    "tokenAmount": 28765407.411838,
+    "effectivePrice": 7.570403466991452e-10,
+    "initiator": "Bd8Nqy2c28HnJJdifqg6Ea7gCAdPkg5H7f4HXzFdSpTF",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029944,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "93a07505cd0dca1e4f591d007f35482c94ad88a4090a274568009b6e7020c74b",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029944,
+    "timestamp": 1789089504,
+    "side": "SELL",
+    "solAmount": 0.005627704,
+    "tokenAmount": 9163760.800842,
+    "effectivePrice": 6.1412602558143e-10,
+    "initiator": "2wGNh8dzjacQmhWDJMTAxpaDLfsZ3UhhgUWhcU4sHDpj",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029944,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "f85a371befac69a9a5c3b9b4a3e9cae5b204afd504d27b9af409ffbcd30e9d18",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029944,
+    "timestamp": 1789089504,
+    "side": "SELL",
+    "solAmount": 0.029115258,
+    "tokenAmount": 6888467.428733,
+    "effectivePrice": 4.226667005574445e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029944,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "41870b355a3db2b41219c281d213f87f1fc7c7695a178351417434a8b3f9b4d9",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029944,
+    "timestamp": 1789089504,
+    "side": "SELL",
+    "solAmount": 0.564941028,
+    "tokenAmount": 12948511.665325,
+    "effectivePrice": 4.362980415060856e-8,
+    "initiator": "J5tRFLBaFz6xnffkVPig7Uz5RhZNKBPCxYC8zUx541FY",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029944,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "278a1ad89dfe79b076f00c5717bbb776492b7cf7b9a174640bad2f7e485c799e",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029944,
+    "timestamp": 1789089504,
+    "side": "SELL",
+    "solAmount": 0.408278129,
+    "tokenAmount": 9605350.657322,
+    "effectivePrice": 4.2505281021549824e-8,
+    "initiator": "3Cwe9edDGdEBGxpt1aM6g1fpiVFvKyEKGK5CxH2vk8S5",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DQMfC7nEcvVF3zNzpLgSaPsQpCnuqZQ5Gwzrf4NZpump",
+    "slot": 446029944,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "1f8a648699f2c365150f76e6edfb3bdcd0f1b2bb2077481008d3d1b0d3fbb692",
+    "mint": "DQMfC7nEcvVF3zNzpLgSaPsQpCnuqZQ5Gwzrf4NZpump",
+    "slot": 446029944,
+    "timestamp": 1789089504,
+    "side": "SELL",
+    "solAmount": 0.05033827,
+    "tokenAmount": 1022718.766462,
+    "effectivePrice": 4.922005115261602e-8,
+    "initiator": "J2qraBbeWoNGcb6TGhd8yq1Xr3ttLgbCSBtkM9RDmyG5",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "FGE6n94S4BJsWGV2cbaScnZQTJSuTv67XWsLGxTEpump",
+    "slot": 446029944,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "423a5fbb7341bda5e3509bc8dfd23464a20f4b3bac541d3d4219d093a8013590",
+    "mint": "FGE6n94S4BJsWGV2cbaScnZQTJSuTv67XWsLGxTEpump",
+    "slot": 446029944,
+    "timestamp": 1789089504,
+    "side": "BUY",
+    "solAmount": 0.043298024,
+    "tokenAmount": 1162587.446888,
+    "effectivePrice": 3.7242810522253295e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "EK4qzS98cmuXTkCnygbRTGy9xZgDmqEStKPXAJfFpump",
+    "slot": 446029944,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "5bbss3yWbY3oC6QsFGU974BbjoZo5VPDPw7DipZpump",
+    "slot": 446029944,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "5bc640bd2c5d0a7113cad133c2704242306ae51b5ee5d306c47564ce19ea8bc0",
+    "mint": "5bbss3yWbY3oC6QsFGU974BbjoZo5VPDPw7DipZpump",
+    "slot": 446029944,
+    "timestamp": 1789089504,
+    "side": "BUY",
+    "solAmount": 0.004888888,
+    "tokenAmount": 20249759.410817,
+    "effectivePrice": 2.414294363116461e-10,
+    "initiator": "4mqZKtvxwcGtuGC6qYY8RR8DYAc2fcrPSjKst22yTzJA",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029943,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "7edb83351cc7114f74247850f781eb3765344a75beb7c967e9e389fa36266b4e",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029943,
+    "timestamp": 1789089504,
+    "side": "BUY",
+    "solAmount": 0.000987654,
+    "tokenAmount": 2435.439901,
+    "effectivePrice": 4.055341294172218e-7,
+    "initiator": "8GAU54jSxsf2vtJojhoAsFr7CXojEgNxTG6qRaR9XMgR",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029943,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "6d424ee8821997bf9e37ac7bb5b5afc00db99ccb3f1e3964b580078553a1472c",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029943,
+    "timestamp": 1789089504,
+    "side": "BUY",
+    "solAmount": 0.011200805,
+    "tokenAmount": 19662132.061873,
+    "effectivePrice": 5.696638067913078e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029943,
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "53e1f39423b6fb9292a279fa9680d052c0ea8084aec5cb2a7e392eabffee2b99",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029943,
+    "timestamp": 1789089504,
+    "side": "BUY",
+    "solAmount": 0.018371759,
+    "tokenAmount": 958603.658901,
+    "effectivePrice": 1.91651250539378e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13165
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "026ff9be82d2f103f5bae42ada4d683b514ba5d34e532a67c4f743dd0e100ac4",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.049382715,
+    "tokenAmount": 709295.01115,
+    "effectivePrice": 6.962225057798505e-8,
+    "initiator": "5d6tW5WCctiqUmPSyE1UtLBRgQs5BABdtm3Eo9Dy7MWG",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "8ad15c311acaf390529e91dcfdcd5384035cc30c6b1111d60fee31be860c0591",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.049382715,
+    "tokenAmount": 710777.110652,
+    "effectivePrice": 6.947707552751797e-8,
+    "initiator": "H9ZUooJrBcgM1LeWwKcMDdtS6JMULt4fWyr9ERJLp8jf",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "91de5f23377af991e8d25b6adc4fe69f2375bd30577d6fd762c67cae789e500d",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.098765431,
+    "tokenAmount": 1429006.682722,
+    "effectivePrice": 6.911474396457662e-8,
+    "initiator": "64BVJQNc3xFEZ5RT3d8itjcSan1vppgcZjHqS72mRBoM",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "612159e2bde1661f4e57d333638a7387de95bfc1278ab7b15ad63d37f0141cc5",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.049382715,
+    "tokenAmount": 712263.860369,
+    "effectivePrice": 6.933205199322688e-8,
+    "initiator": "GBHKpJ76ddNjRthTqPCDs4yh5jBnSfaWHdbKnt4tbHU5",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "7e5d7785d9748403d698f054ca54629ee0e2e974263fced032e64535497c08a0",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.049382715,
+    "tokenAmount": 707817.542491,
+    "effectivePrice": 6.976757714454062e-8,
+    "initiator": "KEznscsNgpUmXFAguBMQoTLt52ZNoESDiCdUxMS6XD3",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "a33f80401701ee90adcfdd654b8b38d71bc6e1eddd02356aac109040485574c5",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.059259258,
+    "tokenAmount": 847437.284099,
+    "effectivePrice": 6.992760303555061e-8,
+    "initiator": "4QSpxzgQZFbtc2RNDvP3VQjo7YiyLVTK5DRjPhCEaV9g",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "d7005d26fbec3805d6d18a4d917ecb28fd31ccbf05853a1c06138a71cc5b7545",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.197530863,
+    "tokenAmount": 2809574.806594,
+    "effectivePrice": 7.030631913996386e-8,
+    "initiator": "9NEpj8UbgqUpSSXNoahBP6crhXNPZKTXi3X67X3xw7Wc",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "FGE6n94S4BJsWGV2cbaScnZQTJSuTv67XWsLGxTEpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "edc685b1e76b656ecf2edc9c6acec67abd32f97878b99c2322b40bffce75fda2",
+    "mint": "FGE6n94S4BJsWGV2cbaScnZQTJSuTv67XWsLGxTEpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.00099506,
+    "tokenAmount": 123298.734849,
+    "effectivePrice": 8.070318006252198e-9,
+    "initiator": "8FXJtB7P2RDcNtSAf5J8QwFPUxtqej3igiiE5XvB9Kgo",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "D1ouA2wX9zEjTPYNzNzKsYyqcEfj5oSHUMGATH8Qpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "636703e01e78b6cfbac9ff0c0331903275bfae2037f10e21ff5da5efb1db9b41",
+    "mint": "D1ouA2wX9zEjTPYNzNzKsYyqcEfj5oSHUMGATH8Qpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "SELL",
+    "solAmount": 0.066173013,
+    "tokenAmount": 2051375.685366,
+    "effectivePrice": 3.2257871374834795e-8,
+    "initiator": "2sWHzTkA7vD7SZe7wf8jFxHRkhdNKQ2GTXxkxQNiFund",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "6t9tkeFQ6PyvNLihF6pein6FbNExFxwghF8QRV1Apump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "b084a42cd54ce9f1a1c3d77f4289585f4f412094100cea64d8bb22bfbf8c7821",
+    "mint": "6t9tkeFQ6PyvNLihF6pein6FbNExFxwghF8QRV1Apump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.003011256,
+    "tokenAmount": 96671.756242,
+    "effectivePrice": 3.114928410384801e-8,
+    "initiator": "ESuvjvsQtjuxC4XGsDeMhx8Wp5yjQcCFGncGhupcJbg8",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "8JKEuWRVnemhipjFnNb5DDqX1UV2txsJVAXiHLgMpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "7503b693c692c59fa76eb218f250ed488aca8ea0f8d9912ce17cee6980dd1537",
+    "mint": "8JKEuWRVnemhipjFnNb5DDqX1UV2txsJVAXiHLgMpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "SELL",
+    "solAmount": 0.111065643,
+    "tokenAmount": 1776017.478586,
+    "effectivePrice": 6.253634569431512e-8,
+    "initiator": "nya666pQkP3PzWxi7JngU3rRMHuc7zbLK8c8wxQ4qpT",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "0d04b00b19456d70f7e5e11dd957f395e5b08e74e5a02bdf0e37bd529d84de05",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.15537644,
+    "tokenAmount": 2165764.246142,
+    "effectivePrice": 7.174208378256358e-8,
+    "initiator": "E418ruAsgQuuRFdpYQAJEjnq7Y1sXTKBmRiMSPwwRcm3",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "3d037f939611d6b3916a29455226116755ce64f3f87c7c913f5a175c7c8d2a5c",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.15373481,
+    "tokenAmount": 2156732.231561,
+    "effectivePrice": 7.128136156648885e-8,
+    "initiator": "5XEj4qt6STm1dKvwTiqiuLRYJoMWUey4BqiwDPTuaUVG",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "74ab350e24a94b9f5f39f977452238b034cd86888405c7939be13b3f41c460cd",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.153071073,
+    "tokenAmount": 2161241.161574,
+    "effectivePrice": 7.08255403059789e-8,
+    "initiator": "6J1T22cKBTw11McuSteoEMpFfMfmWgG9NzsKs11mQYGD",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "HBMqgApwgPFzEvKhauei9JpP38qjcjAzGyPoCU6upump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "11c5b7fc3044beaf7cce2c8952226922c801204ff6ed389405afdb70b6f90af7",
+    "mint": "HBMqgApwgPFzEvKhauei9JpP38qjcjAzGyPoCU6upump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "SELL",
+    "solAmount": 0.059230987,
+    "tokenAmount": 2107860.112451,
+    "effectivePrice": 2.810005590509835e-8,
+    "initiator": "2sWHzTkA7vD7SZe7wf8jFxHRkhdNKQ2GTXxkxQNiFund",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "59eRUzkuKUGf3Uz1e6JYeAcLkHDuTBgLM9PuoaJ4pump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "4ba7f97e88486cbca0fe8bc3e7a220e557e57f15cd7d8c6b6fb7746a8c9502c6",
+    "mint": "59eRUzkuKUGf3Uz1e6JYeAcLkHDuTBgLM9PuoaJ4pump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "SELL",
+    "solAmount": 0.059864358,
+    "tokenAmount": 2133310.803307,
+    "effectivePrice": 2.8061714170855888e-8,
+    "initiator": "2sWHzTkA7vD7SZe7wf8jFxHRkhdNKQ2GTXxkxQNiFund",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "B6Mkoinw6pcLQ1huuybRS9u2bHTZgC3zXXUB2rSNpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "13f172ccc5e0f5a09d6b2b7d4b141f4baeb26d901c4004a5521cf1be0e724f97",
+    "mint": "B6Mkoinw6pcLQ1huuybRS9u2bHTZgC3zXXUB2rSNpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "SELL",
+    "solAmount": 0.056752069,
+    "tokenAmount": 2024883.422855,
+    "effectivePrice": 2.802732659047699e-8,
+    "initiator": "2sWHzTkA7vD7SZe7wf8jFxHRkhdNKQ2GTXxkxQNiFund",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "d49dacd2c32f11512d333edf3cf7aab9cf5882f61b9ff2b6dacc0ccb7871e42c",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.024870938,
+    "tokenAmount": 17004754.085126,
+    "effectivePrice": 1.462587337370231e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "E9Tc8wDeMDZTnaxueR7hiuGjLycMUMmy9GNKtANjpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "9c99cdbc090c1a330d53231b85617201d5b67dc38a265712b657320e7c68a5b0",
+    "mint": "E9Tc8wDeMDZTnaxueR7hiuGjLycMUMmy9GNKtANjpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.000001,
+    "tokenAmount": 13.047,
+    "effectivePrice": 7.664597225415803e-8,
+    "initiator": "3VCx8WYeP6dmWaUgChyvNEqTqaCn9bNDsYBgBVbHTZ68",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "cba8fb619c1c40912c20db70e9574d30ac4efa4aef26ebc22ed4946a92d882de",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.049382715,
+    "tokenAmount": 716752.191581,
+    "effectivePrice": 6.889789187958035e-8,
+    "initiator": "3VWjwKMN8K59nnpJmZ6H9j2Cbz8tqmSTf3MC3K33EmFK",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "9d75edc7ef371ae45906b1dde34518d9230375a795f47fd4047d1fb12aabb16f",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.069135801,
+    "tokenAmount": 1005983.469389,
+    "effectivePrice": 6.87245895223216e-8,
+    "initiator": "12VsHVv8tLWeKeqWV9LBUcNfq8YK248ciP78NzFgHjiW",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "771194b190cae932d00ab3cf8e79645fbc2a4a1536d6071a4def15f8ebeff718",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.977777777,
+    "tokenAmount": 153261626.632315,
+    "effectivePrice": 6.379795115614654e-9,
+    "initiator": "7bocByUyoecXdt1WTc2Sw5ZihWzap6Ho6JzS3ZnCdoWL",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "51ce9bd492434198be8c69080bf510e198730ab1e7c194b2a4d8f9f9c1a10fa5",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029952,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 1.975308641,
+    "tokenAmount": 30047497.696119,
+    "effectivePrice": 6.573953881208335e-8,
+    "initiator": "618CHAKV1Ugsbdp4zfP2PYoGDwrfAUgGYPg8BK1sfxJA",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029951,
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "4dfa5a2efedbb7f81c32623c08c60931cf7d7416a5212d601c0b276b146e8c52",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029951,
+    "timestamp": 1789089506,
+    "side": "BUY",
+    "solAmount": 0.98765432,
+    "tokenAmount": 16034599.388812,
+    "effectivePrice": 6.15951977377824e-8,
+    "initiator": "Bbf969WowABsfnvApTsK1qPYv4x1VJADHgDX4skwPSd7",
+    "pipelineLatencyMs": -12782
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029961,
+    "pipelineLatencyMs": -12696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "02aa7ac58aaf8485290a95c3b40267cba421dbc798e069edee97270748dc30bb",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029961,
+    "timestamp": 1789089509,
+    "side": "BUY",
+    "solAmount": 0.004986316,
+    "tokenAmount": 66461.277591,
+    "effectivePrice": 7.502588244971133e-8,
+    "initiator": "A4PxURSPVXo6ahN55hmk926NvV3PVvBov4cxdkDtWgWo",
+    "pipelineLatencyMs": -12696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "EEqq1v37n5gTxJeoWZ7aw3rZRSRDqAa3HrtPvytnpump",
+    "slot": 446029961,
+    "pipelineLatencyMs": -12696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029961,
+    "pipelineLatencyMs": -12696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "e5a51e1279070f64ae91e2d189f20bc8f5e150558956446f4d47f8b58382c3f5",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029961,
+    "timestamp": 1789089509,
+    "side": "SELL",
+    "solAmount": 0.732490674,
+    "tokenAmount": 9620759.633287,
+    "effectivePrice": 7.613646966770123e-8,
+    "initiator": "Bbf969WowABsfnvApTsK1qPYv4x1VJADHgDX4skwPSd7",
+    "pipelineLatencyMs": -12696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029961,
+    "pipelineLatencyMs": -12696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "a9f297a9a943ec26ff44c3a6911ac006e3e1a287c97976657d31e49c0294181f",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029961,
+    "timestamp": 1789089509,
+    "side": "BUY",
+    "solAmount": 0.097777777,
+    "tokenAmount": 1267867.659931,
+    "effectivePrice": 7.71198604476758e-8,
+    "initiator": "7Kft9LQQBnazvMVN62azooBpF6jqLEcqrfYYpBxXpk8E",
+    "pipelineLatencyMs": -12696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029961,
+    "pipelineLatencyMs": -12696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "c265988a7db149a02489d717a3f8e1bb51a0adefb2c050197cd9f33830dbf7f8",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029961,
+    "timestamp": 1789089509,
+    "side": "SELL",
+    "solAmount": 0.250686011,
+    "tokenAmount": 613014.665765,
+    "effectivePrice": 4.089396632740607e-7,
+    "initiator": "6dTC1jHjKHLVB91H7yBqNhFW7uvhxEfVpDDf4D5LYW8q",
+    "pipelineLatencyMs": -12696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "GNPrw8fAgfwyMbUGWzwf4cLErW7xagrBH9qv6DYDpump",
+    "slot": 446029961,
+    "pipelineLatencyMs": -12696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "9cdc40fc8b4e530eb016c85f5fe74eb81626e56175b610679dd298cb94f68c9c",
+    "mint": "GNPrw8fAgfwyMbUGWzwf4cLErW7xagrBH9qv6DYDpump",
+    "slot": 446029961,
+    "timestamp": 1789089509,
+    "side": "SELL",
+    "solAmount": 0.065946879,
+    "tokenAmount": 1057024.321185,
+    "effectivePrice": 6.238917844962056e-8,
+    "initiator": "BohHTVdwVDnSvhpg8GcLjZQ8ipNC6dEWydDWLh6JqVNN",
+    "pipelineLatencyMs": -12696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029961,
+    "pipelineLatencyMs": -12696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "744415d3a65c0c47a9aac9c08fac800674946fdadb5148de8dc7de123523f293",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029961,
+    "timestamp": 1789089509,
+    "side": "BUY",
+    "solAmount": 0.037098252,
+    "tokenAmount": 8072198.931399,
+    "effectivePrice": 4.59580497399492e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "FGE6n94S4BJsWGV2cbaScnZQTJSuTv67XWsLGxTEpump",
+    "slot": 446029961,
+    "pipelineLatencyMs": -12696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "6cd4c1068fa0baa87a042e27f55e5cdcba3ed34ded8db7a810cb132355d65416",
+    "mint": "FGE6n94S4BJsWGV2cbaScnZQTJSuTv67XWsLGxTEpump",
+    "slot": 446029961,
+    "timestamp": 1789089509,
+    "side": "BUY",
+    "solAmount": 0.009120299,
+    "tokenAmount": 1900556.45779,
+    "effectivePrice": 4.798751945840768e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029962,
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "f9d659e1559fa09ec9a4dc4a87092183d60c93b3312264708e4be2dabf8db799",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029962,
+    "timestamp": 1789089510,
+    "side": "SELL",
+    "solAmount": 0.356669507,
+    "tokenAmount": 4827274.590106,
+    "effectivePrice": 7.388631003735134e-8,
+    "initiator": "8DZZsi4aWxbn5BBW5XnksoiC5oMZiZZyg8y5PYG7XNQk",
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029962,
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "0cd9abde90bc65afc2d641a11a97aeb516d8070f48238a1845856c3bfd022dc3",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029962,
+    "timestamp": 1789089510,
+    "side": "SELL",
+    "solAmount": 0.668757285,
+    "tokenAmount": 9244841.36099,
+    "effectivePrice": 7.233842733331498e-8,
+    "initiator": "64LYHEMcum3s5tjJDPJK6XYfNTeNWmKup8c1PeoWsGJA",
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "25skABp5qijFAV1abnNhLduV7D4WM7QUEqtsZDatpump",
+    "slot": 446029962,
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "438b593d803ffaa778c0e033521dc44140181797fb1b93de6a1fbb04d92f8f63",
+    "mint": "25skABp5qijFAV1abnNhLduV7D4WM7QUEqtsZDatpump",
+    "slot": 446029962,
+    "timestamp": 1789089510,
+    "side": "BUY",
+    "solAmount": 0.009876542,
+    "tokenAmount": 257401.62699,
+    "effectivePrice": 3.837016150789017e-8,
+    "initiator": "F8TKkHtrmRFKsCBunir3u1nTBsNUHxGxqrJb2JL26RV4",
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029962,
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "5752ffd295fd1ea2591718862d83eb94d148012b0575b19169a5068d6b19e979",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029962,
+    "timestamp": 1789089510,
+    "side": "BUY",
+    "solAmount": 0.012433237,
+    "tokenAmount": 2356483.983441,
+    "effectivePrice": 5.276181415773792e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029962,
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "539abef20856ecce98aa66d3b963457a4a9b4df865fbff6c80990229c0e595fe",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029962,
+    "timestamp": 1789089510,
+    "side": "BUY",
+    "solAmount": 0.097777777,
+    "tokenAmount": 1367743.34114,
+    "effectivePrice": 7.148839556294476e-8,
+    "initiator": "KBqisTTaRc13MoGi45RhfRWa8xTbSY6E6zmrvxohCY6",
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "ErxSS2bd8miDNrFcpgAgm3r64sdH2aSsKD14HV7Epump",
+    "slot": 446029962,
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "81e4d9bf38e91e4848b64c49839a8eb312af478754734ea577e5074cc812a7ef",
+    "mint": "ErxSS2bd8miDNrFcpgAgm3r64sdH2aSsKD14HV7Epump",
+    "slot": 446029962,
+    "timestamp": 1789089510,
+    "side": "SELL",
+    "solAmount": 0.005554504,
+    "tokenAmount": 264227.145015,
+    "effectivePrice": 2.1021700853955312e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029962,
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "180a9f8488695e786fa07a5821130bb41172bdd855e9e0cce5b742ba21c9bc8e",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029962,
+    "timestamp": 1789089510,
+    "side": "BUY",
+    "solAmount": 0.650398366,
+    "tokenAmount": 8958100.26976,
+    "effectivePrice": 7.260449720523446e-8,
+    "initiator": "HDUApJgLvgydExUht2MpEwfGmB1z8ifBHm2HjRF2d7Ce",
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029962,
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "2c8f16a5a1eca6df01bb7747f1053e5ec4fdd90cd3fa0c31d89b825f11e50123",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029962,
+    "timestamp": 1789089510,
+    "side": "BUY",
+    "solAmount": 0.63397279,
+    "tokenAmount": 8504402.262693,
+    "effectivePrice": 7.45464255355257e-8,
+    "initiator": "AA3r25VTmVGWjQNCPZnuJkqGBcrCgtfkB6jZtDUSBYYt",
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029962,
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "84a8bf969fafd3d9fcc25b9e27398a6597cfb09d6471bc4a52b0d3a82674008a",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029962,
+    "timestamp": 1789089510,
+    "side": "BUY",
+    "solAmount": 0.6711844,
+    "tokenAmount": 8768438.633186,
+    "effectivePrice": 7.65454863833752e-8,
+    "initiator": "HwEKcgZhVgyQMsw12eQH3JLotGBxqVdbiTEbHeFATXPR",
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "E9Tc8wDeMDZTnaxueR7hiuGjLycMUMmy9GNKtANjpump",
+    "slot": 446029962,
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "1fafcbaaed722fcc75e04982110cc18a40b44cbd25491ed37a16531126e76b56",
+    "mint": "E9Tc8wDeMDZTnaxueR7hiuGjLycMUMmy9GNKtANjpump",
+    "slot": 446029962,
+    "timestamp": 1789089510,
+    "side": "BUY",
+    "solAmount": 0.000001,
+    "tokenAmount": 13.046998,
+    "effectivePrice": 7.664598400336997e-8,
+    "initiator": "EC2f5DnHzuNRit1ExqghSifDbp1wgrzktsRRZCtU92MJ",
+    "pipelineLatencyMs": -13696
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "5909692b9929f0e85e72583c1b01ab0348eb52b2f68414e1479c0c83ebe8395a",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "BUY",
+    "solAmount": 0.010270093,
+    "tokenAmount": 26806969.04044,
+    "effectivePrice": 3.831128011714759e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "2f0d7b5b67d05379a20affaca8c1fc7e7ca9caea59936b36d57af0005f0d9486",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "BUY",
+    "solAmount": 0.067910864,
+    "tokenAmount": 15290500.067507,
+    "effectivePrice": 4.441376259780649e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "70142d15f0828b76c8852af3469e00f2aef3215c97dc66f1f4c7b7ccf79740d2",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "SELL",
+    "solAmount": 0.699023981,
+    "tokenAmount": 7909583.924206,
+    "effectivePrice": 8.837683343377271e-8,
+    "initiator": "GG8hd6XKsDjLpviYEyt3EKaZs8WXmZ86uqVto6zVmsjt",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "41978eb3503862c9863704cee27331a114b0034f4f52b5a74ede4d0d7e5e7926",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "SELL",
+    "solAmount": 1.483791975,
+    "tokenAmount": 153261626.632315,
+    "effectivePrice": 9.681431729546477e-9,
+    "initiator": "7bocByUyoecXdt1WTc2Sw5ZihWzap6Ho6JzS3ZnCdoWL",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "e9149c404d98666fbfa7653583fd8b169883caec83a5ed133ba031ab8ad52748",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "BUY",
+    "solAmount": 0.806447202,
+    "tokenAmount": 1979975.072811,
+    "effectivePrice": 4.0730169438702826e-7,
+    "initiator": "7YFAwauKBtgz4QD17oyue36XrpRuNqAWZruikwMwU95Q",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9ZhLiAc8fbBfKJoGxS7FKkmYi9DdgesJPGP9EXbppump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "d4e46192666866afd85297b31275cd21bf48cdde05e4a0e3b0610278f5717b5b",
+    "mint": "9ZhLiAc8fbBfKJoGxS7FKkmYi9DdgesJPGP9EXbppump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "BUY",
+    "solAmount": 0.024785808,
+    "tokenAmount": 21345239.149133,
+    "effectivePrice": 1.1611867089812742e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "46232c568186bd2d78fffbcf4069a68b7132b23279a2aaf286383f5c583dee75",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "SELL",
+    "solAmount": 0.020589194,
+    "tokenAmount": 8961181.969536,
+    "effectivePrice": 2.297598025572299e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "0699ef04b32724152b067fe503198fbb3afdc9af515362c7969614fc6225421c",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "BUY",
+    "solAmount": 0.098683824,
+    "tokenAmount": 1129252.848359,
+    "effectivePrice": 8.738859870347434e-8,
+    "initiator": "14okLLHdzZFy98ZiK3LJNcjrTGnYeXX1nPFqS15nAgb7",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "5b960b007dad6da5caa336f018cec01b03767dba37bc6fd5e28080d3d6c97dd3",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "BUY",
+    "solAmount": 0.002962962,
+    "tokenAmount": 1577348.879244,
+    "effectivePrice": 1.8784442928187857e-9,
+    "initiator": "8NsBPSP4p4i3QcUgscLd1Y1PJqC7aobbQsZCU7Xrc5TJ",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "c2a5bd03e94876df12330ac18c2e8315c14ff221554e08506bbe7779c17c8674",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "BUY",
+    "solAmount": 0.000493826,
+    "tokenAmount": 262209.035162,
+    "effectivePrice": 1.883329457716439e-9,
+    "initiator": "C7oA98fBSnK3iCorD5H4R8z2XNqnRp1wtBVfJNs58gn3",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "8JKEuWRVnemhipjFnNb5DDqX1UV2txsJVAXiHLgMpump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "31ace3abe6381236bcf85647b08c38621d2a9dff907c9d5e98e02ec553de9752",
+    "mint": "8JKEuWRVnemhipjFnNb5DDqX1UV2txsJVAXiHLgMpump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "SELL",
+    "solAmount": 2.158112471,
+    "tokenAmount": 36900251.235964,
+    "effectivePrice": 5.848503461940238e-8,
+    "initiator": "Et9RR58x4AEJ8A8mR1iZK1FLvm2SGBxpWJVLi2AAvujH",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "3131fcc4d206dec5cae16b056eebf7b8520717e904c61009e092cbccd7fb05df",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "SELL",
+    "solAmount": 0.008045816,
+    "tokenAmount": 982620.866695,
+    "effectivePrice": 8.188118401211785e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9ZhLiAc8fbBfKJoGxS7FKkmYi9DdgesJPGP9EXbppump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "ce2273906b9adfa081b44ad7a40fd7be903fb722cd918b9cc35c42640f0e35e2",
+    "mint": "9ZhLiAc8fbBfKJoGxS7FKkmYi9DdgesJPGP9EXbppump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "SELL",
+    "solAmount": 0.002303893,
+    "tokenAmount": 1895449.295879,
+    "effectivePrice": 1.2154864838690328e-9,
+    "initiator": "7y1NTf7wL1MA1D3YcoKfQsNem4RWhjhVmf7sq83zfo2p",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "1f32e6a7d2d39217e06cd3233519ebad7a5fff43d786755c2dd301ea3c41f9fe",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "BUY",
+    "solAmount": 0.004938271,
+    "tokenAmount": 2660400.777782,
+    "effectivePrice": 1.8562131845853244e-9,
+    "initiator": "2wGNh8dzjacQmhWDJMTAxpaDLfsZ3UhhgUWhcU4sHDpj",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "5c63fd4ca68aec2411313d9c04defc646a6236040d08278065bb7c0fc48d2e1a",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "SELL",
+    "solAmount": 0.004481072,
+    "tokenAmount": 10965918.938833,
+    "effectivePrice": 4.08636250641196e-10,
+    "initiator": "2wGNh8dzjacQmhWDJMTAxpaDLfsZ3UhhgUWhcU4sHDpj",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "e36b3f86c45713acf7ae7a6071911630b4f764139465f542e9c90446024195ea",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "BUY",
+    "solAmount": 0.003950617,
+    "tokenAmount": 2114097.003687,
+    "effectivePrice": 1.8687018585760714e-9,
+    "initiator": "57Uoyn4AwRMZ1hawy2jULJbTs9msFdCEv68dX9AtMkMi",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "8JKEuWRVnemhipjFnNb5DDqX1UV2txsJVAXiHLgMpump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "1c4421312c1137d47e5c9993221b1da10cc60ed76eaf3f8d33fd22c183f363c5",
+    "mint": "8JKEuWRVnemhipjFnNb5DDqX1UV2txsJVAXiHLgMpump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "SELL",
+    "solAmount": 0.727820162,
+    "tokenAmount": 13307960.503755,
+    "effectivePrice": 5.4690586269371396e-8,
+    "initiator": "FSz6mptAxKrjDjaJYQiGiCGGwsxL4WgWjsh9sGhw4BZX",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "FGE6n94S4BJsWGV2cbaScnZQTJSuTv67XWsLGxTEpump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "500f5ab8956791a2dcf2feb8fc9a74dc32ec69cbe77128828668d1cb4e662d0d",
+    "mint": "FGE6n94S4BJsWGV2cbaScnZQTJSuTv67XWsLGxTEpump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "BUY",
+    "solAmount": 0.019883987,
+    "tokenAmount": 3496724.622967,
+    "effectivePrice": 5.6864606578965515e-9,
+    "initiator": "ATH2NJv7eSTqN3LZhEcvQZunWTmS2TG3emeGPNP7pxKK",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "ae14441f496a4bd098c82d3a5c2e930933bbb7dae38c4618a2302a1cc63404fd",
+    "mint": "EkzkfUjeFQQ5zVC8AAZpnfHSvKkjaRn1QpFPtuDfpump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "BUY",
+    "solAmount": 0.097777777,
+    "tokenAmount": 2879625.328231,
+    "effectivePrice": 3.3955034372498196e-8,
+    "initiator": "DiECFBs5yPXwkQYN5kd2hvwmyiJautFQpdDZQa53jPRp",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Fj7wZXsesdFyASYs6Zye3vECKTMGJQ3WkKnpbKZ6pump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "5dea8a9f5f2b0790c3357bee39d45975d4fdd6a209bfd1bbc58cefc43c079eb0",
+    "mint": "Fj7wZXsesdFyASYs6Zye3vECKTMGJQ3WkKnpbKZ6pump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "BUY",
+    "solAmount": 0.395358023,
+    "tokenAmount": 7880237.758887,
+    "effectivePrice": 5.017082416759975e-8,
+    "initiator": "Ba8bEXqeubwcMy4Fd6S392uiuun3nFa4LRZu1hvNrnog",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029968,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "266b48d241c67ccfd9fcbd6ac1414fc512479ef7d3cd533b4629ce7db15ef4b9",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029968,
+    "timestamp": 1789089511,
+    "side": "BUY",
+    "solAmount": 0.195555555,
+    "tokenAmount": 2225412.261512,
+    "effectivePrice": 8.787385527710479e-8,
+    "initiator": "5P5L8QYzi1zgfaNFevhH6vWHTDxmoQhyQXupihqvPb7L",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029967,
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "daf93dc5bc333687bbb9f636e461c86755a72528f0891373f80a6b30064deb39",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029967,
+    "timestamp": 1789089511,
+    "side": "BUY",
+    "solAmount": 0.293333333,
+    "tokenAmount": 3300534.600403,
+    "effectivePrice": 8.887449110946559e-8,
+    "initiator": "CBfcB2JgsRkjKF4CjN91oVuQDKztbUfvFX5Cf6X6Ma7J",
+    "pipelineLatencyMs": -12488
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "64tV75mnjX7Tna8Hn52qDgwRhVC8dYxMHXsEFTpFpump",
+    "slot": 446029976,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029976,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "a09c5393a76b587b802294f7b5103eaf7c72650a84d9f559be80f657e7d0bc34",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029976,
+    "timestamp": 1789089514,
+    "side": "BUY",
+    "solAmount": 0.048888888,
+    "tokenAmount": 120581.805515,
+    "effectivePrice": 4.0544166502730274e-7,
+    "initiator": "48TvoodVBBpDCLsm5coZQFA1T8u7tM2MPhzFbgzJSsMa",
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029976,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "7cae7fb57d22e91c4ec440257b8066d89af1327f6ff776ac0a31cec83bb30b04",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029976,
+    "timestamp": 1789089514,
+    "side": "SELL",
+    "solAmount": 0.039201841,
+    "tokenAmount": 9865030.475272,
+    "effectivePrice": 3.9738185399695e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029976,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "57001a2a3160d2a78e6d356d5cf14e92b081db4a8c16d0e46b7c9222183730d9",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029976,
+    "timestamp": 1789089514,
+    "side": "SELL",
+    "solAmount": 0.044787821,
+    "tokenAmount": 10394393.898857,
+    "effectivePrice": 4.308843924504824e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "7395t7rnED2s7tcVk8PXHFcFDWbH98rLHbe18z58pump",
+    "slot": 446029976,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "e63298fe0824059f25d46ab6bac96f50280a3d1977d7d4140a4d2e82dac962ef",
+    "mint": "7395t7rnED2s7tcVk8PXHFcFDWbH98rLHbe18z58pump",
+    "slot": 446029976,
+    "timestamp": 1789089514,
+    "side": "SELL",
+    "solAmount": 0.001678705,
+    "tokenAmount": 37087.340416,
+    "effectivePrice": 4.52635584318088e-8,
+    "initiator": "ARu4n5mFdZogZAravu7CcizaojWnS6oqka37gdLT5SZn",
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "7395t7rnED2s7tcVk8PXHFcFDWbH98rLHbe18z58pump",
+    "slot": 446029976,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "DUPLICATE_EVENT",
+    "canonical_event_id": "e63298fe0824059f25d46ab6bac96f50280a3d1977d7d4140a4d2e82dac962ef",
+    "mint": "7395t7rnED2s7tcVk8PXHFcFDWbH98rLHbe18z58pump",
+    "slot": 446029976,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "ErxSS2bd8miDNrFcpgAgm3r64sdH2aSsKD14HV7Epump",
+    "slot": 446029976,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "21309c4008335eb84c5665a3ebd234a5aa04cde8a864284dc637639afe365aa7",
+    "mint": "ErxSS2bd8miDNrFcpgAgm3r64sdH2aSsKD14HV7Epump",
+    "slot": 446029976,
+    "timestamp": 1789089514,
+    "side": "BUY",
+    "solAmount": 0.039111111,
+    "tokenAmount": 948519.739733,
+    "effectivePrice": 4.1233839804967507e-8,
+    "initiator": "CzadY8ZQyMUoLhbyakEff8pdMMBQPmeyCB4E7idQoFY",
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029976,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "2b73b45ccd96eee2a4772e209535310bfcb2f72bd293ce07ebc712242b143529",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029976,
+    "timestamp": 1789089514,
+    "side": "BUY",
+    "solAmount": 0.48746754,
+    "tokenAmount": 1196692.809436,
+    "effectivePrice": 4.0734559124638087e-7,
+    "initiator": "4jiWdJcsV9GAyBgnVpYCbUPfY657o3LzqVtCEbTgVJCT",
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029976,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "9b1bcaccaf1723a86ea24fc35d5c95535ec17aaa01ba6cee65249a3f0f9e1ebe",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029976,
+    "timestamp": 1789089514,
+    "side": "SELL",
+    "solAmount": 0.005233044,
+    "tokenAmount": 10243512.467705,
+    "effectivePrice": 5.10864219328903e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029975,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "7cc0bd6d809dcc3075a2752d56cf544d3d4781fcb1f2a3269e93d78bcdb9d895",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029975,
+    "timestamp": 1789089514,
+    "side": "BUY",
+    "solAmount": 0.01964824,
+    "tokenAmount": 43139004.886627,
+    "effectivePrice": 4.5546345011057297e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "ErxSS2bd8miDNrFcpgAgm3r64sdH2aSsKD14HV7Epump",
+    "slot": 446029975,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "5270423c68d52e566a8d49ac3b7667dcc4057773d874953faa00aed5a202a1e0",
+    "mint": "ErxSS2bd8miDNrFcpgAgm3r64sdH2aSsKD14HV7Epump",
+    "slot": 446029975,
+    "timestamp": 1789089514,
+    "side": "BUY",
+    "solAmount": 0.020474751,
+    "tokenAmount": 566919.214546,
+    "effectivePrice": 3.6115817694407446e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "25skABp5qijFAV1abnNhLduV7D4WM7QUEqtsZDatpump",
+    "slot": 446029975,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "9f3c0d8e64d7f483faefddb81b4be9d7a89b1880f20023623896c0d34979f9a0",
+    "mint": "25skABp5qijFAV1abnNhLduV7D4WM7QUEqtsZDatpump",
+    "slot": 446029975,
+    "timestamp": 1789089514,
+    "side": "SELL",
+    "solAmount": 0.036991052,
+    "tokenAmount": 964259.97872,
+    "effectivePrice": 3.8362114799271777e-8,
+    "initiator": "98gVmL97mprfXWGxU3sLf3wiPTGoVZg6wg2XkPTeXHqR",
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029975,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "59885299f0c4cbd028f009e360fe55e8ef04cd7bd130c1ef7361c09f9fbeae62",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029975,
+    "timestamp": 1789089514,
+    "side": "SELL",
+    "solAmount": 0.122515846,
+    "tokenAmount": 301984.145713,
+    "effectivePrice": 4.057029077163433e-7,
+    "initiator": "2CShWryWZgTenWJ19v6KgyMnSyHRQtVsRnupvC5WTvDg",
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029975,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "8302753bd179e2d7288226189c49685a59e88048aa0ec863666ae9ca78afe9a6",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029975,
+    "timestamp": 1789089514,
+    "side": "SELL",
+    "solAmount": 0.005214742,
+    "tokenAmount": 1860535.822152,
+    "effectivePrice": 2.8028173055912124e-9,
+    "initiator": "Efbrkb9ShQiEJbYTzFccUr2nv1HoocpXC3dNyDzfRX5E",
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029975,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "bfbcdc191cb3f560ad12232f7618376182a9ef955cedc2fef82170d75c3321d4",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029975,
+    "timestamp": 1789089514,
+    "side": "BUY",
+    "solAmount": 0.00066546,
+    "tokenAmount": 237809.019673,
+    "effectivePrice": 2.798295880093374e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029974,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "0a7988c258fb570aa7b7e6a4469503d25a4da2b26f2bb3ab031aa81f2115af04",
+    "mint": "49aMGbvSwZg4MroPBHvVNbNUJHGyJpFxzTwPveKYpump",
+    "slot": 446029974,
+    "timestamp": 1789089514,
+    "side": "SELL",
+    "solAmount": 0.007616694,
+    "tokenAmount": 1869380.110488,
+    "effectivePrice": 4.074449041833268e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9ZhLiAc8fbBfKJoGxS7FKkmYi9DdgesJPGP9EXbppump",
+    "slot": 446029974,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "43533d45d1aad009aa807df47b1b34228770e3cf6e89df098be60f02d1e215a6",
+    "mint": "9ZhLiAc8fbBfKJoGxS7FKkmYi9DdgesJPGP9EXbppump",
+    "slot": 446029974,
+    "timestamp": 1789089514,
+    "side": "BUY",
+    "solAmount": 0.017636903,
+    "tokenAmount": 13357370.14439,
+    "effectivePrice": 1.3203873823476676e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029974,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "2db8eeeef0e06a41a83120caa26c5a64b6d237c8025b63638a2ea86e08c787c4",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029974,
+    "timestamp": 1789089514,
+    "side": "BUY",
+    "solAmount": 9.87e-7,
+    "tokenAmount": 12.384958,
+    "effectivePrice": 7.96934474868627e-8,
+    "initiator": "o41P5eczegHHgDumzm9pPZZWJtWbQZ1piYgG1VzgXsS",
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "64tV75mnjX7Tna8Hn52qDgwRhVC8dYxMHXsEFTpFpump",
+    "slot": 446029974,
+    "pipelineLatencyMs": -13142
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "ErxSS2bd8miDNrFcpgAgm3r64sdH2aSsKD14HV7Epump",
+    "slot": 446029983,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "3b0ca220affb1d0ee62d3f2c2900b038df1dfd5b2c239ebfa77022352187d8a6",
+    "mint": "ErxSS2bd8miDNrFcpgAgm3r64sdH2aSsKD14HV7Epump",
+    "slot": 446029983,
+    "timestamp": 1789089516,
+    "side": "BUY",
+    "solAmount": 0.043984187,
+    "tokenAmount": 1073162.453333,
+    "effectivePrice": 4.0985581319393965e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029983,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "7eed9e563effac5427ba840aa5cae03783a4fea522f89a1dce4373d1299e6d76",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029983,
+    "timestamp": 1789089516,
+    "side": "BUY",
+    "solAmount": 0.034960526,
+    "tokenAmount": 70780902.949493,
+    "effectivePrice": 4.93925967925935e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029983,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "562c56e24b13ac10a9a2eccaccc981667612785f8a5abe47c9a24b7a7d25a527",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029983,
+    "timestamp": 1789089516,
+    "side": "SELL",
+    "solAmount": 0.005422255,
+    "tokenAmount": 9092500.120623,
+    "effectivePrice": 5.963436819430559e-10,
+    "initiator": "4vWg8DzorbrNWcdRCMF8TfMmvwbiqRS5ZsQNpprPNAux",
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029983,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "df035b13a172fef4c6c9238ce232bd9e39d1e3791a8fddd5e1b702e374920c3d",
+    "mint": "9UvPfmvjVeGNFJgKRftcd9e5oFYdLRg97UN4BDp8pump",
+    "slot": 446029983,
+    "timestamp": 1789089516,
+    "side": "BUY",
+    "solAmount": 0.150483308,
+    "tokenAmount": 368574.448552,
+    "effectivePrice": 4.082846995802239e-7,
+    "initiator": "GkAkgQLExVkwuqFUUfqLbUg4Rq2wL144RUiWiBxn6JkD",
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "8DH3CJvpVekUwkmjnkonYTnXncKkvqPfLeVsDQGMpump",
+    "slot": 446029983,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "ce6bbcbcc93806e392b1b3d18f35620349dd9b6428ca67665b66ba4e992c9d2e",
+    "mint": "8DH3CJvpVekUwkmjnkonYTnXncKkvqPfLeVsDQGMpump",
+    "slot": 446029983,
+    "timestamp": 1789089516,
+    "side": "BUY",
+    "solAmount": 0.045677269,
+    "tokenAmount": 241132.419679,
+    "effectivePrice": 1.8942815346358832e-7,
+    "initiator": "6eoHCMzfYpcJ4bxJv44Mwj1CKcDQyNAsncGV5ARSmXU8",
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "9ZhLiAc8fbBfKJoGxS7FKkmYi9DdgesJPGP9EXbppump",
+    "slot": 446029982,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "26abb6cbe48b7d0d98725cc33c5114e983ac821a99e129bab09ae0780f851ab3",
+    "mint": "9ZhLiAc8fbBfKJoGxS7FKkmYi9DdgesJPGP9EXbppump",
+    "slot": 446029982,
+    "timestamp": 1789089516,
+    "side": "SELL",
+    "solAmount": 0.11171105,
+    "tokenAmount": 84864604.837551,
+    "effectivePrice": 1.3163444313897277e-9,
+    "initiator": "aSWCaHZajgo2F5UVdzngMUimCPxiR7WrZ2nP71QtE39",
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029982,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "1600eb9c82e61f2f11f2cf6ef8b213002b919fc2231f6259ac3682c5af77e8db",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029982,
+    "timestamp": 1789089516,
+    "side": "SELL",
+    "solAmount": 0.052469835,
+    "tokenAmount": 641383.975553,
+    "effectivePrice": 8.18072122159906e-8,
+    "initiator": "Bbf969WowABsfnvApTsK1qPYv4x1VJADHgDX4skwPSd7",
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029982,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "e8ea074819ec50cfdce7f5b77cfdc3fadc056a5b6732ebe3c72bdb411b7dc872",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029982,
+    "timestamp": 1789089516,
+    "side": "SELL",
+    "solAmount": 0.020811488,
+    "tokenAmount": 5996895.504094,
+    "effectivePrice": 3.470376961845054e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "MEV_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029982,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029982,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "7a90ea7c5f27c466520de4c71def1493ee3fee8ec4f27000a658340d720fa277",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029982,
+    "timestamp": 1789089516,
+    "side": "BUY",
+    "solAmount": 0.049541808,
+    "tokenAmount": 19342085.122318,
+    "effectivePrice": 2.561347842629223e-9,
+    "initiator": "3q8qaWiENCd9kGeVdZuMHu4uTvkCDgMhpLSQqqmSoh3U",
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029982,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "717f208389402befce331a96f2a02f7757814b8ef2c34a308788fe29bd0e4e6c",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029982,
+    "timestamp": 1789089516,
+    "side": "SELL",
+    "solAmount": 1.286096455,
+    "tokenAmount": 15321212.724029,
+    "effectivePrice": 8.394220993896603e-8,
+    "initiator": "8zEiDZgwyV97bbt2Db64rSkjLDBKBec5HBPWRHpppnGD",
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029981,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "e46cc9863b0619a8ae2ea2294ccdffbcc1b0edcf3fc23b6cdfe43f192de9ea29",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029981,
+    "timestamp": 1789089516,
+    "side": "BUY",
+    "solAmount": 0.011186456,
+    "tokenAmount": 27131565.325734,
+    "effectivePrice": 4.123041138872207e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029981,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "ca4ba39a8a7accc9e2e3f43fd67a62bd60ff9fb566b96573977ca7b0460e7a2e",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029981,
+    "timestamp": 1789089516,
+    "side": "BUY",
+    "solAmount": 9.87e-7,
+    "tokenAmount": 11.459133,
+    "effectivePrice": 8.613217073228839e-8,
+    "initiator": "4h2Apgs9oFYhDkTsxTTvFjh8rJ7zoJfCboADrsYFosux",
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029981,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "daf05355285f523a037c41be7f82ce96d06aa6d2e4cc2d0dd71d09baa06722af",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029981,
+    "timestamp": 1789089516,
+    "side": "SELL",
+    "solAmount": 0.016509146,
+    "tokenAmount": 5794287.056968,
+    "effectivePrice": 2.8492109275370984e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "ErxSS2bd8miDNrFcpgAgm3r64sdH2aSsKD14HV7Epump",
+    "slot": 446029981,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "c62afc332683819e2f09c805a907728d00e355f43dc6940d3d08b99e1435ab9f",
+    "mint": "ErxSS2bd8miDNrFcpgAgm3r64sdH2aSsKD14HV7Epump",
+    "slot": 446029981,
+    "timestamp": 1789089516,
+    "side": "BUY",
+    "solAmount": 0.011660019,
+    "tokenAmount": 303799.870362,
+    "effectivePrice": 3.8380592414691377e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Fdth7x2EMUdaqLw2247EvVf6UYCLwdaPakSjRzSQpump",
+    "slot": 446029981,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029981,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "c559800b02105eb3fb740671b616e542dae35f956bf4418bdda4b50c1d91400f",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029981,
+    "timestamp": 1789089516,
+    "side": "SELL",
+    "solAmount": 0.437967504,
+    "tokenAmount": 5047979.612948,
+    "effectivePrice": 8.676094944532248e-8,
+    "initiator": "618CHAKV1Ugsbdp4zfP2PYoGDwrfAUgGYPg8BK1sfxJA",
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029980,
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "6f6e2fe79c096b26a1f5ebcf4ae54ba41f74f980f6df998b477a2c6d83893498",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029980,
+    "timestamp": 1789089516,
+    "side": "BUY",
+    "solAmount": 0.002962962,
+    "tokenAmount": 7758847.563533,
+    "effectivePrice": 3.8188171319747027e-10,
+    "initiator": "8NsBPSP4p4i3QcUgscLd1Y1PJqC7aobbQsZCU7Xrc5TJ",
+    "pipelineLatencyMs": -12883
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "ErxSS2bd8miDNrFcpgAgm3r64sdH2aSsKD14HV7Epump",
+    "slot": 446029991,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "8a09f1b733815408f4bc1b420e9737f8294ac467497edc512052836b7a3df213",
+    "mint": "ErxSS2bd8miDNrFcpgAgm3r64sdH2aSsKD14HV7Epump",
+    "slot": 446029991,
+    "timestamp": 1789089519,
+    "side": "BUY",
+    "solAmount": 0.015043231,
+    "tokenAmount": 684329.815041,
+    "effectivePrice": 2.198242816455209e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029991,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "c0a7bf7ea24bc09844432b97dbc8bbe5ae2de110af80475f4362f9fe7804edb9",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029991,
+    "timestamp": 1789089519,
+    "side": "SELL",
+    "solAmount": 0.056455757,
+    "tokenAmount": 637537.55472,
+    "effectivePrice": 8.855283360490787e-8,
+    "initiator": "9dzuUkPDLvaqproE1wbnfEQZcCAB8h3NL1feVUVmgicE",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029991,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "0101e86d88efc99c07e2f16cc8c59df890c49cb44bc7a36dc41dc31cebd29341",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029991,
+    "timestamp": 1789089519,
+    "side": "BUY",
+    "solAmount": 0.005267488,
+    "tokenAmount": 16391012.784481,
+    "effectivePrice": 3.2136440067859956e-10,
+    "initiator": "57Uoyn4AwRMZ1hawy2jULJbTs9msFdCEv68dX9AtMkMi",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029991,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "41b125c2096b70b41b4c74ab5f4e95af913792b4edc5d529dfcc1e2e24dd25a9",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029991,
+    "timestamp": 1789089519,
+    "side": "BUY",
+    "solAmount": 0.003950617,
+    "tokenAmount": 12794219.706911,
+    "effectivePrice": 3.0878139429370687e-10,
+    "initiator": "8NsBPSP4p4i3QcUgscLd1Y1PJqC7aobbQsZCU7Xrc5TJ",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029991,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "cbbd12a00d07430cd3bd9ca71696bd6eab78637fa4ffe065c081c92579e1e484",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029991,
+    "timestamp": 1789089519,
+    "side": "BUY",
+    "solAmount": 0.00658436,
+    "tokenAmount": 22346558.910405,
+    "effectivePrice": 2.946476021833586e-10,
+    "initiator": "2wGNh8dzjacQmhWDJMTAxpaDLfsZ3UhhgUWhcU4sHDpj",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "8EsRgDsFEV1DKMy6J6EgsS663jjCw5HMAFpYszLppump",
+    "slot": 446029991,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "629ff2d53cfabf50ae834559a02c230a8e1c6ca43c957b614532c38b30762891",
+    "mint": "8EsRgDsFEV1DKMy6J6EgsS663jjCw5HMAFpYszLppump",
+    "slot": 446029991,
+    "timestamp": 1789089519,
+    "side": "SELL",
+    "solAmount": 0.082549912,
+    "tokenAmount": 2930073.089058,
+    "effectivePrice": 2.8173328613635122e-8,
+    "initiator": "CtW4M4iixABYFnUTVuWJ68SAi77nzLf1XXFmiGBjZxZv",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "8EsRgDsFEV1DKMy6J6EgsS663jjCw5HMAFpYszLppump",
+    "slot": 446029991,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "1f72c7d648d7414cca6c502c2644dc1ec5cbeeae68767cbab0ed14991b28e14a",
+    "mint": "8EsRgDsFEV1DKMy6J6EgsS663jjCw5HMAFpYszLppump",
+    "slot": 446029991,
+    "timestamp": 1789089519,
+    "side": "SELL",
+    "solAmount": 0.086720695,
+    "tokenAmount": 3060884.831179,
+    "effectivePrice": 2.8331903937266627e-8,
+    "initiator": "5H9TFMJYypjZSVRTQ8iQiopUnX5Tfebdr7o2qV6LoEsW",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "8EsRgDsFEV1DKMy6J6EgsS663jjCw5HMAFpYszLppump",
+    "slot": 446029991,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "1135d4b89e0c48f9deb3bbf08b2ab146f33081bf249ede9002f372068c2efbb5",
+    "mint": "8EsRgDsFEV1DKMy6J6EgsS663jjCw5HMAFpYszLppump",
+    "slot": 446029991,
+    "timestamp": 1789089519,
+    "side": "SELL",
+    "solAmount": 0.097637478,
+    "tokenAmount": 3425262.277383,
+    "effectivePrice": 2.850511000126912e-8,
+    "initiator": "2x86MZm1oKEkKKRoo3kM2JiTtyvMqBr4KtgfFdqsXJxT",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "8EsRgDsFEV1DKMy6J6EgsS663jjCw5HMAFpYszLppump",
+    "slot": 446029991,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "3e25164fb290f2250ce81dda38ff9061c5aaf1d4e85d16277949b2e024d994ab",
+    "mint": "8EsRgDsFEV1DKMy6J6EgsS663jjCw5HMAFpYszLppump",
+    "slot": 446029991,
+    "timestamp": 1789089519,
+    "side": "SELL",
+    "solAmount": 0.103624846,
+    "tokenAmount": 3611275.077588,
+    "effectivePrice": 2.869480828062865e-8,
+    "initiator": "B6UVNDcCF5jFfQgNHGYqkPxumP5JJEUSMFdjqc8evUTG",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029991,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "84582df60956b032111b2eb611841c508afffe8129ddf8cfe7d4a2c8940232ef",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029991,
+    "timestamp": 1789089519,
+    "side": "SELL",
+    "solAmount": 0.012497658,
+    "tokenAmount": 39492084.355351,
+    "effectivePrice": 3.1645982236707703e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029991,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "f51cba361ff6cc26dafcdfa57cb1df427f164ed523fd610770e73ccee75d4ff3",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029991,
+    "timestamp": 1789089519,
+    "side": "BUY",
+    "solAmount": 0.000977777,
+    "tokenAmount": 11030.268089,
+    "effectivePrice": 8.86448989372338e-8,
+    "initiator": "4y2DQXu1nScmPXugGLQ3ydDpBqumGYRyLPWPg2GB1cpt",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "MEV_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029991,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029991,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "f9e179e6ee85f4cbb487095f967b43f47e4497c4ee149b91f4cf6c423ba5013e",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029991,
+    "timestamp": 1789089519,
+    "side": "BUY",
+    "solAmount": 0.001955555,
+    "tokenAmount": 22061.758921,
+    "effectivePrice": 8.864003124150537e-8,
+    "initiator": "FVXkrwBmqxVhsJpddpMXw2Lfi5rhr9tH3c2jJPF2E7b7",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029991,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "fbb85d9955e5f65b7cd067379238f3f18bf13dd2cfe47b15f3fd697ecfc0ea8c",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029991,
+    "timestamp": 1789089519,
+    "side": "SELL",
+    "solAmount": 0.315053018,
+    "tokenAmount": 3533585.729064,
+    "effectivePrice": 8.91595795762548e-8,
+    "initiator": "618CHAKV1Ugsbdp4zfP2PYoGDwrfAUgGYPg8BK1sfxJA",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029991,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "0cbac167dbe4b5842db9a4e8fb5f747fee5dad4efc65b2bb9bd222b31651afbb",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029991,
+    "timestamp": 1789089519,
+    "side": "BUY",
+    "solAmount": 1.466666666,
+    "tokenAmount": 16812372.431125,
+    "effectivePrice": 8.723734095282935e-8,
+    "initiator": "2Yp4LZnHYQ2c3NM3dGw41dhWWi5XjrWkGLLhfzLiJNmc",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029990,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "696a64a5371f4e2732f8efc8c3f9f219eca2dab4db8dc76624b71f7147255bc5",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029990,
+    "timestamp": 1789089519,
+    "side": "BUY",
+    "solAmount": 0.00658436,
+    "tokenAmount": 3382628.260557,
+    "effectivePrice": 1.9465219033308104e-9,
+    "initiator": "2wGNh8dzjacQmhWDJMTAxpaDLfsZ3UhhgUWhcU4sHDpj",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029990,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "602d7987f0502db75dbbcb1847c2495eb03c9cf281cc7eb046c9efb1fb1d06ac",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029990,
+    "timestamp": 1789089519,
+    "side": "BUY",
+    "solAmount": 0.005267488,
+    "tokenAmount": 2679838.129994,
+    "effectivePrice": 1.965599317751253e-9,
+    "initiator": "57Uoyn4AwRMZ1hawy2jULJbTs9msFdCEv68dX9AtMkMi",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "CibD7PAL7qdp5DmKhRnENHUoZL5C2faGatMEnwU6pump",
+    "slot": 446029990,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "2bd308990e77dfa2fef93c69b4626c3ac919b417dd10aa6ac28058ea1d7a0021",
+    "mint": "CibD7PAL7qdp5DmKhRnENHUoZL5C2faGatMEnwU6pump",
+    "slot": 446029990,
+    "timestamp": 1789089519,
+    "side": "BUY",
+    "solAmount": 0.001595916,
+    "tokenAmount": 24818.521172,
+    "effectivePrice": 6.43034284331371e-8,
+    "initiator": "AjGfKmQ9Kjps9ena8Z5rtmmvzoZ9rd85Fhs1bmwB92Kt",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "ErxSS2bd8miDNrFcpgAgm3r64sdH2aSsKD14HV7Epump",
+    "slot": 446029990,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "c47096ec9b3a34670a599d62e59db6abe60a46c3b557eb96876d433d099ee1e5",
+    "mint": "ErxSS2bd8miDNrFcpgAgm3r64sdH2aSsKD14HV7Epump",
+    "slot": 446029990,
+    "timestamp": 1789089519,
+    "side": "SELL",
+    "solAmount": 0.006025037,
+    "tokenAmount": 258662.18998,
+    "effectivePrice": 2.32930719424662e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "2nCr3dLjTyFgBKw6TT8fikoBDVhgMkaPccWxnkJspump",
+    "slot": 446029990,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "08250ff00f833149e4582e74b6826835e7316cf75c91380808115c5d50910f07",
+    "mint": "2nCr3dLjTyFgBKw6TT8fikoBDVhgMkaPccWxnkJspump",
+    "slot": 446029990,
+    "timestamp": 1789089519,
+    "side": "SELL",
+    "solAmount": 0.000159205,
+    "tokenAmount": 5694.221704,
+    "effectivePrice": 2.795904484859868e-8,
+    "initiator": "HeDxm55Lxe2qH91TcE9W88aMRkbH742Y5nySakGGnh9h",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "FrpH45Wc11GS8n7eXw2A6TcZ7URgJHajW7XjpXzypump",
+    "slot": 446029990,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "9dae94ab9d734424c4672396e48237c661fba38d135a7f2c569db8d4e2b3b06b",
+    "mint": "FrpH45Wc11GS8n7eXw2A6TcZ7URgJHajW7XjpXzypump",
+    "slot": 446029990,
+    "timestamp": 1789089519,
+    "side": "SELL",
+    "solAmount": 0.001439391,
+    "tokenAmount": 509336.618624,
+    "effectivePrice": 2.8260112219863385e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029990,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "8e00e7aac6a4d685bac23d29f979345ce2a62e0691a4381dee7b32917a897102",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029990,
+    "timestamp": 1789089519,
+    "side": "BUY",
+    "solAmount": 0.003950617,
+    "tokenAmount": 1994755.714467,
+    "effectivePrice": 1.98050165809682e-9,
+    "initiator": "8NsBPSP4p4i3QcUgscLd1Y1PJqC7aobbQsZCU7Xrc5TJ",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029990,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "ea96dc7cdfa5a4fd10a5efd553bb81eaf8df63fcc3fcee9f236390accb79531e",
+    "mint": "BNZBdc8AKVx7AoCdrXv9Sy4UUdNwGMTQkTtu3Tqmpump",
+    "slot": 446029990,
+    "timestamp": 1789089519,
+    "side": "SELL",
+    "solAmount": 0.132181132,
+    "tokenAmount": 1553780.487541,
+    "effectivePrice": 8.507066027659336e-8,
+    "initiator": "64LYHEMcum3s5tjJDPJK6XYfNTeNWmKup8c1PeoWsGJA",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029990,
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "16e0a2e562e91291f5ae8a64ec85ad114fd2cac3810a4a7e75a72862156db75f",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029990,
+    "timestamp": 1789089519,
+    "side": "BUY",
+    "solAmount": 0.009876542,
+    "tokenAmount": 30858487.626552,
+    "effectivePrice": 3.200591720347885e-10,
+    "initiator": "9NBrgQ4QUCBBBwXeDs3zgviV8h5GkvPgiU1BkisGZY2R",
+    "pipelineLatencyMs": -13645
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "ErxSS2bd8miDNrFcpgAgm3r64sdH2aSsKD14HV7Epump",
+    "slot": 446029999,
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "45ebdab5265f8c86995535b1c7258f60baa5738d17f69c39d873dbb3e337949b",
+    "mint": "ErxSS2bd8miDNrFcpgAgm3r64sdH2aSsKD14HV7Epump",
+    "slot": 446029999,
+    "timestamp": 1789089521,
+    "side": "BUY",
+    "solAmount": 0.026829913,
+    "tokenAmount": 1318994.876257,
+    "effectivePrice": 2.034118060878071e-8,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "EK4qzS98cmuXTkCnygbRTGy9xZgDmqEStKPXAJfFpump",
+    "slot": 446029999,
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "8JKEuWRVnemhipjFnNb5DDqX1UV2txsJVAXiHLgMpump",
+    "slot": 446029998,
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "6643743e36c77d281c114a5e671d7ba41e1fbb6df452c1ef25359cb1fa9442f2",
+    "mint": "8JKEuWRVnemhipjFnNb5DDqX1UV2txsJVAXiHLgMpump",
+    "slot": 446029998,
+    "timestamp": 1789089521,
+    "side": "SELL",
+    "solAmount": 6.71e-7,
+    "tokenAmount": 12.319666,
+    "effectivePrice": 5.446576230232216e-8,
+    "initiator": "8Tcn1AkBTPDXExQT7baVp4KNjpAuYqqmPVpp5fADkfTp",
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029998,
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "25a177a422d91fa5fd40e39d8692daf3d90260c34354bfd5cb3549782d3e8b8d",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446029998,
+    "timestamp": 1789089521,
+    "side": "SELL",
+    "solAmount": 0.013548693,
+    "tokenAmount": 55380392.275166,
+    "effectivePrice": 2.4464783370766383e-10,
+    "initiator": "Bd8Nqy2c28HnJJdifqg6Ea7gCAdPkg5H7f4HXzFdSpTF",
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029998,
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "6adf7b3c159d389ea4efdd4a55b366b8479157e6be5d6399aaad7bccabd851ed",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446029998,
+    "timestamp": 1789089521,
+    "side": "BUY",
+    "solAmount": 0.033865235,
+    "tokenAmount": 9740082.421109,
+    "effectivePrice": 3.476894089377133e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029998,
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "d0a03b3a572a5d2194f617207b48616f445d6289990aabb9183415e6afc5902f",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029998,
+    "timestamp": 1789089521,
+    "side": "SELL",
+    "solAmount": 0.007341925,
+    "tokenAmount": 2817792.662954,
+    "effectivePrice": 2.6055589882554307e-9,
+    "initiator": "6TNAxJbdkbALmtZuMv6i9MRNkRz51t1GDGQ1RHLPfN45",
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029998,
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "311cb5f88cec010a56c1a7ab1dcccafa53d741a22d1e0bbb61f6b5614a6b6c04",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029998,
+    "timestamp": 1789089521,
+    "side": "SELL",
+    "solAmount": 0.007169007,
+    "tokenAmount": 2778606.513764,
+    "effectivePrice": 2.5800727683059398e-9,
+    "initiator": "6TNAxJbdkbALmtZuMv6i9MRNkRz51t1GDGQ1RHLPfN45",
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029998,
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "3339dd483fdd41ebfee4f74b7ffa6480f7636385d427d85098c63dc211387e80",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029998,
+    "timestamp": 1789089521,
+    "side": "SELL",
+    "solAmount": 0.010306789,
+    "tokenAmount": 3908957.226713,
+    "effectivePrice": 2.6367106116090372e-9,
+    "initiator": "2wGNh8dzjacQmhWDJMTAxpaDLfsZ3UhhgUWhcU4sHDpj",
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029998,
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "b58f10e98e6afb864b802f7fe1518d098204fab3a7d01952fe123d686acd6520",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029998,
+    "timestamp": 1789089521,
+    "side": "BUY",
+    "solAmount": 0.099974361,
+    "tokenAmount": 47281353.860812,
+    "effectivePrice": 2.114456394254423e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Fdth7x2EMUdaqLw2247EvVf6UYCLwdaPakSjRzSQpump",
+    "slot": 446029998,
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029998,
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "6bbcb6a9c3ea9ed5ebf97e86127f43fcd5c4561e823602f6cd9309e861f3c5b0",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446029998,
+    "timestamp": 1789089521,
+    "side": "SELL",
+    "solAmount": 0.004297913,
+    "tokenAmount": 1678852.30515,
+    "effectivePrice": 2.560030436754826e-9,
+    "initiator": "9ZrJwbFtXomaqtApMx3sXRmTN8QEQ3k651Yf197gbERu",
+    "pipelineLatencyMs": -13306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Fdth7x2EMUdaqLw2247EvVf6UYCLwdaPakSjRzSQpump",
+    "slot": 446030000,
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446030000,
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "bd3af0e21ae35a15d40e7a87fdc8f64a2f701de78436d75ca5445077791ddce1",
+    "mint": "sJcNW6UnSB5sRu9NnA7PXEJ5VoD196ZK1EtNqT6pump",
+    "slot": 446030000,
+    "timestamp": 1789089522,
+    "side": "BUY",
+    "solAmount": 0.143873703,
+    "tokenAmount": 35944781.896837,
+    "effectivePrice": 4.0026311305191226e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446030000,
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "44b2ad2ded0ed6202b801c0cfe8768a662bbbd1bac3406737e26d5be1f81a0b3",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446030000,
+    "timestamp": 1789089522,
+    "side": "SELL",
+    "solAmount": 0.061391138,
+    "tokenAmount": 26184966.137929,
+    "effectivePrice": 2.3445185178633765e-9,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446030000,
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "dda10bc6b7aa41a5d7c02313fa39217862574b86550be2986f8cca8085452fef",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446030000,
+    "timestamp": 1789089522,
+    "side": "BUY",
+    "solAmount": 0.000493826,
+    "tokenAmount": 2703791.577397,
+    "effectivePrice": 1.8264203651208104e-10,
+    "initiator": "C7oA98fBSnK3iCorD5H4R8z2XNqnRp1wtBVfJNs58gn3",
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446030000,
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "b2e7c0ddd07c36e46cc941bcfa27c9d9ef9256fd10c9db0f6203696c666b42f7",
+    "mint": "Ee8jPH12UkrPAE4mhcZtEw1Qi85jnsVWmxsSyebSpump",
+    "slot": 446030000,
+    "timestamp": 1789089522,
+    "side": "BUY",
+    "solAmount": 0.00658436,
+    "tokenAmount": 3293819.054263,
+    "effectivePrice": 1.9990047696998544e-9,
+    "initiator": "2wGNh8dzjacQmhWDJMTAxpaDLfsZ3UhhgUWhcU4sHDpj",
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446030000,
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "30f6c17da3ad3a3cf195b72f97090c20c296ccabe05443e0892242548180f3df",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446030000,
+    "timestamp": 1789089522,
+    "side": "SELL",
+    "solAmount": 0.022113877,
+    "tokenAmount": 111146535.059077,
+    "effectivePrice": 1.9896146099602616e-10,
+    "initiator": "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "MEV_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446030000,
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446030000,
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "402456a2bf4f101f9fd82860fa3bdcdac88881f1878f9e4d66869d509742debc",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446030000,
+    "timestamp": 1789089522,
+    "side": "BUY",
+    "solAmount": 0.014814813,
+    "tokenAmount": 91357715.019299,
+    "effectivePrice": 1.62162691972653e-10,
+    "initiator": "Hx44ecKZzK2UqZfVSxBp6B46jLBc2KGUwp4x9bLoR9GJ",
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "8JKEuWRVnemhipjFnNb5DDqX1UV2txsJVAXiHLgMpump",
+    "slot": 446030000,
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "b5c32b723215a9d7f9a32e3ba3e29f62dc399f21b86bef9b805aaaf7bfc11a3c",
+    "mint": "8JKEuWRVnemhipjFnNb5DDqX1UV2txsJVAXiHLgMpump",
+    "slot": 446030000,
+    "timestamp": 1789089522,
+    "side": "SELL",
+    "solAmount": 0.018724837,
+    "tokenAmount": 343433.268448,
+    "effectivePrice": 5.452249016124415e-8,
+    "initiator": "9NEpj8UbgqUpSSXNoahBP6crhXNPZKTXi3X67X3xw7Wc",
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "4yAeica3rHvzzNoi2jVLMV4H23Qrfqxf5DSXpKKApump",
+    "slot": 446030000,
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "0e348cb2a5da8a30069363d212ff5542edcbe1354731dd90873cafe3468da0e0",
+    "mint": "4yAeica3rHvzzNoi2jVLMV4H23Qrfqxf5DSXpKKApump",
+    "slot": 446030000,
+    "timestamp": 1789089522,
+    "side": "SELL",
+    "solAmount": 3.540983606,
+    "tokenAmount": 97545454.545454,
+    "effectivePrice": 3.6300857097856683e-8,
+    "initiator": "2CFywHXDPjDK2iRQsb95vnjgncDUZeQKJ6MceJ4ALpdc",
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "FEE_EVENT",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446030000,
+    "pipelineLatencyMs": -14306
+  },
+  {
+    "event_type": "ECONOMIC_TRADE",
+    "canonical_event_id": "371b1d81e1df2762d483ea4586722be7c7bb194aa21156969b98decbf07f38df",
+    "mint": "DPKBT6MDhT8bs8wVXgH718ZtZM9kwDaL7FvN2dSkpump",
+    "slot": 446030000,
+    "timestamp": 1789089522,
+    "side": "BUY",
+    "solAmount": 0.000987654,
+    "tokenAmount": 5460390.571461,
+    "effectivePrice": 1.8087607233849208e-10,
+    "initiator": "2wGNh8dzjacQmhWDJMTAxpaDLfsZ3UhhgUWhcU4sHDpj",
+    "pipelineLatencyMs": -14306
+  }
+]

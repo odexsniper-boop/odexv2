@@ -1,0 +1,837 @@
+{
+  "seal_metadata": {
+    "seal_name": "OOS3_FROZEN_VALIDATION_SEAL",
+    "sealed_at": "2026-09-10T21:31:53.104Z",
+    "dataset_file": "replay/raw_txs_oos3_final.json",
+    "dataset_sha256": "c07f4677ce2ff72b0509058ab8d5560476b12f97e4fb52a633560a94a354d6c4",
+    "total_transactions": 1018,
+    "total_tokens": 31,
+    "token_list": [
+      "5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump",
+      "GGXV8egpjAwUw2WSphGRtNasamniz8YD7hujckxqpump",
+      "BLQ9yGeco8ga1f6MaNHy1RwedA278tkBMMpHAZFSpump",
+      "2d1SzSR8STSFCVqHd8gCxhEHRLbwEAquU66435Tqpump",
+      "7mDEhMF2EC7GysG41GzgL27R7SZLxGGaiAS1xHcgpump",
+      "F184iCgWJ4zhWwqP2ADNuVXC2RSQeniPpEiN6SnRpump",
+      "CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump",
+      "4rLL1jNABtg6z6P9gJNQTk2jkbVwU514VHtf2xXopump",
+      "HXM9yMucR3W73ts8kK7MZNG8rr9Ef65o6z2ZxaKopump",
+      "3wYcGxjGiJdR8TKGwW996YunrvE1MPQcavcsNupJpump",
+      "HnXNrq6kim73QzLLQziqDuTmDQTJRRomkYEj5CDApump",
+      "6SvqUYW8MEDqtWhimnM114MxCqgpPgi7vADNNQpfpump",
+      "2TdW4wHwr5h6ZHTzgjfKJWgdEdA7nZx7upMaqZD7pump",
+      "A6dE2ENRwFxfqasPfJzrpnwEL5E6RoYu5AfbzFwXpump",
+      "BPdHr1Rqr8R3HAYhx15N4HpEzciv166mb2SDuatFpump",
+      "K12EDVNnsyZwFYTQQZK7QcaufzDshvQwHeNtzhopump",
+      "3HenEiz2QrYouX2HLiF7w3ZBJhVTstymUVcZoakMpump",
+      "He7qAdj6PKikdK3wuWEshVy95PVmvaVzBhzzXLWypump",
+      "Hu9hA1gf6ccE54HSheyLCMs1PQzsYRVRvQmRLfSMpump",
+      "6H768XQwP4Uadybuw8oPeQZdUnErD8zPmYmw8K8Mpump",
+      "74k9kTMx6DsLBskAbpYoxye4Xe66m6vp5bsMbe6Qpump",
+      "2iBbW1DvxxmXk3P1C7B31fJ5EHPBqojQLbT3JjiNpump",
+      "qyadYJMf1kx3BgLRmvyccbCWUBnNJQJaAvPmgQypump",
+      "BiyrRrHrAeGKtMyHnrKA79sTSiGDH1YJpS4ZupKDpump",
+      "4QUs2issEiaYf4fY6GiZXmnF7xeWazKTrsCUD6j2pump",
+      "79VJf6rnewgyGQ1QwesLC1aEnCxwZcnsob6ZLM51pump",
+      "9Y55eKs1PrD9CwkRoGZBwGc6d2bR3kpXQT5CzvXtpump",
+      "9chU3PLspShG4oQAatySWdbyp2Eaa9RaeD7mtYnYpump",
+      "8WeBqBXM7PM3uY49cDvKBB56xaE7QyZwjwFcWFApump",
+      "AwUhmv8qSJWXhQUrBtWjW1dCAopoeZP8SRcxLthypump",
+      "VycYoU6PhFW87kz7AeYALRCCGaZSg81zr25ZP38pump"
+    ],
+    "contamination_audit": {
+      "overlap_dev35": 0,
+      "overlap_oos1": 0,
+      "overlap_oos2": 0,
+      "status": "CLEAN_ZERO_CONTAMINATION"
+    },
+    "frozen_strategy": {
+      "name": "KO V3 V2.2 (Dynamic Relative Flow + Context-Aware Coordination)",
+      "strategy_version": "V2.2",
+      "opportunity_engine_hash": "e984896bb24b185e6a08762050006eea8ae6e3c0a5eb8bd1ead0f27abc6e75fe",
+      "orchestrator_hash": "7af1eaa90106fb47fc40f720012896e9c6cdb7d65a040bd2dee263e7082d48e8",
+      "coordination_engine_hash": "7e2a021a75905508c8f8799ba7f69412d6e3a6e582309d549f985346457a6107",
+      "probe_size_sol": 0.025,
+      "standard_size_sol": 0.1,
+      "hard_safety_gates": "FROZEN_UNCHANGED"
+    },
+    "token_metadata": [
+      {
+        "mint": "5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump",
+        "source": "V1_EXECUTED_TRADE",
+        "name": "HAPPY DOG",
+        "symbol": "HAPPYDOG",
+        "v1PnlPct": 22.336472999999994,
+        "v1Sol": 0.022336472999999996,
+        "v1Reason": "MANUAL_SELL"
+      },
+      {
+        "mint": "BLQ9yGeco8ga1f6MaNHy1RwedA278tkBMMpHAZFSpump",
+        "source": "V1_EXECUTED_TRADE",
+        "name": "Psyop Dog",
+        "symbol": "PSYOP",
+        "v1PnlPct": -18.270663000000006,
+        "v1Sol": -0.018270663000000006,
+        "v1Reason": "STOP_LOSS"
+      },
+      {
+        "mint": "GGXV8egpjAwUw2WSphGRtNasamniz8YD7hujckxqpump",
+        "source": "V1_EXECUTED_TRADE",
+        "name": "Amy",
+        "symbol": "Amy",
+        "v1PnlPct": -31.199222,
+        "v1Sol": -0.031199222,
+        "v1Reason": "STOP_LOSS"
+      },
+      {
+        "mint": "2d1SzSR8STSFCVqHd8gCxhEHRLbwEAquU66435Tqpump",
+        "source": "V1_EXECUTED_TRADE",
+        "name": "Adam Sandler",
+        "symbol": "SANDLER",
+        "v1PnlPct": -77.32804100000001,
+        "v1Sol": -0.07732804100000001,
+        "v1Reason": "STOP_LOSS"
+      },
+      {
+        "mint": "7mDEhMF2EC7GysG41GzgL27R7SZLxGGaiAS1xHcgpump",
+        "source": "V1_EXECUTED_TRADE",
+        "name": "Adam Sandler",
+        "symbol": "SANDLER",
+        "v1PnlPct": -70.53665094611303,
+        "v1Reason": "STALE_TIMEOUT"
+      },
+      {
+        "mint": "F184iCgWJ4zhWwqP2ADNuVXC2RSQeniPpEiN6SnRpump",
+        "source": "V1_EXECUTED_TRADE",
+        "name": "PUMP.TRUMP",
+        "symbol": "$TRUMP",
+        "v1PnlPct": -61.835682999999996,
+        "v1Sol": -0.061835683,
+        "v1Reason": "STOP_LOSS"
+      },
+      {
+        "mint": "4rLL1jNABtg6z6P9gJNQTk2jkbVwU514VHtf2xXopump",
+        "source": "V1_EXECUTED_TRADE",
+        "name": "Nicolas Cage",
+        "symbol": "CAGE",
+        "v1PnlPct": 71.17374399999999,
+        "v1Sol": 0.07117374399999998,
+        "v1Reason": "TAKE_PROFIT_2X"
+      },
+      {
+        "mint": "HnXNrq6kim73QzLLQziqDuTmDQTJRRomkYEj5CDApump",
+        "source": "V1_EXECUTED_TRADE",
+        "name": "pump frog",
+        "symbol": "prog",
+        "v1PnlPct": -33.37009900000002,
+        "v1Sol": -0.033370099000000014,
+        "v1Reason": "STOP_LOSS"
+      },
+      {
+        "mint": "6SvqUYW8MEDqtWhimnM114MxCqgpPgi7vADNNQpfpump",
+        "source": "V1_EXECUTED_TRADE",
+        "name": "ODD",
+        "symbol": "ODD",
+        "v1PnlPct": -44.5971055,
+        "v1Sol": -0.08919421100000001,
+        "v1Reason": "STOP_LOSS"
+      },
+      {
+        "mint": "CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump",
+        "source": "V1_EXECUTED_TRADE",
+        "name": "AICat",
+        "symbol": "AICat",
+        "v1PnlPct": 8.093136341702877,
+        "v1Reason": "STALE_TIMEOUT"
+      },
+      {
+        "mint": "2TdW4wHwr5h6ZHTzgjfKJWgdEdA7nZx7upMaqZD7pump",
+        "source": "V1_EXECUTED_TRADE",
+        "name": "Stealth Ninja Doge",
+        "symbol": "SHINOBI",
+        "v1PnlPct": 15.234559999999995,
+        "v1Sol": 0.03046911999999999,
+        "v1Reason": "TRAILING_STOP"
+      },
+      {
+        "mint": "HXM9yMucR3W73ts8kK7MZNG8rr9Ef65o6z2ZxaKopump",
+        "source": "V1_EXECUTED_TRADE",
+        "name": "The man rescued from Nepal",
+        "symbol": "Miracle",
+        "v1PnlPct": 36.07698549999999,
+        "v1Sol": 0.07215397099999998,
+        "v1Reason": "TRAILING_STOP"
+      },
+      {
+        "mint": "3wYcGxjGiJdR8TKGwW996YunrvE1MPQcavcsNupJpump",
+        "source": "V1_EXECUTED_TRADE",
+        "name": "🪙 $CRYBABY",
+        "symbol": "CRYBABY",
+        "v1PnlPct": -20.0548195,
+        "v1Sol": -0.040109639,
+        "v1Reason": "TRAILING_STOP"
+      },
+      {
+        "mint": "BPdHr1Rqr8R3HAYhx15N4HpEzciv166mb2SDuatFpump",
+        "source": "V1_EXECUTED_TRADE",
+        "name": "Justice For Nono",
+        "symbol": "Nono",
+        "v1PnlPct": 18.291882999999995,
+        "v1Sol": 0.018291882999999995,
+        "v1Reason": "STOP_LOSS"
+      },
+      {
+        "mint": "A6dE2ENRwFxfqasPfJzrpnwEL5E6RoYu5AfbzFwXpump",
+        "source": "V1_EXECUTED_TRADE",
+        "name": "Get Lit",
+        "symbol": "Lit",
+        "v1PnlPct": 23.551317999999988,
+        "v1Sol": 0.023551317999999988,
+        "v1Reason": "TRAILING_STOP"
+      },
+      {
+        "mint": "K12EDVNnsyZwFYTQQZK7QcaufzDshvQwHeNtzhopump",
+        "source": "V1_EXECUTED_TRADE",
+        "name": "Buddy",
+        "symbol": "BUDDY",
+        "v1PnlPct": -9.547022000000016,
+        "v1Sol": -0.009547022000000016,
+        "v1Reason": "STOP_LOSS"
+      },
+      {
+        "mint": "AwUhmv8qSJWXhQUrBtWjW1dCAopoeZP8SRcxLthypump",
+        "source": "MARKET_DETECTED_TOKEN",
+        "name": "DOOBIE",
+        "symbol": "DOOB",
+        "v1PnlPct": null,
+        "v1Sol": null,
+        "v1Reason": null
+      },
+      {
+        "mint": "VycYoU6PhFW87kz7AeYALRCCGaZSg81zr25ZP38pump",
+        "source": "MARKET_DETECTED_TOKEN",
+        "name": "Cloud Cat",
+        "symbol": "CCAT",
+        "v1PnlPct": null,
+        "v1Sol": null,
+        "v1Reason": null
+      },
+      {
+        "mint": "9chU3PLspShG4oQAatySWdbyp2Eaa9RaeD7mtYnYpump",
+        "source": "MARKET_DETECTED_TOKEN",
+        "name": "Memeler baş kaldırmış",
+        "symbol": "KALDIRMAK",
+        "v1PnlPct": null,
+        "v1Sol": null,
+        "v1Reason": null
+      },
+      {
+        "mint": "9Y55eKs1PrD9CwkRoGZBwGc6d2bR3kpXQT5CzvXtpump",
+        "source": "MARKET_DETECTED_TOKEN",
+        "name": "kunafa coin ",
+        "symbol": "kunfa",
+        "v1PnlPct": null,
+        "v1Sol": null,
+        "v1Reason": null
+      },
+      {
+        "mint": "79VJf6rnewgyGQ1QwesLC1aEnCxwZcnsob6ZLM51pump",
+        "source": "MARKET_DETECTED_TOKEN",
+        "name": "RETARDO",
+        "symbol": "re",
+        "v1PnlPct": null,
+        "v1Sol": null,
+        "v1Reason": null
+      },
+      {
+        "mint": "4QUs2issEiaYf4fY6GiZXmnF7xeWazKTrsCUD6j2pump",
+        "source": "MARKET_DETECTED_TOKEN",
+        "name": "IRL WOZNIAK",
+        "symbol": "WOZNIAK",
+        "v1PnlPct": null,
+        "v1Sol": null,
+        "v1Reason": null
+      },
+      {
+        "mint": "BiyrRrHrAeGKtMyHnrKA79sTSiGDH1YJpS4ZupKDpump",
+        "source": "MARKET_DETECTED_TOKEN",
+        "name": "Grand theft auto",
+        "symbol": "GTA VI",
+        "v1PnlPct": null,
+        "v1Sol": null,
+        "v1Reason": null
+      },
+      {
+        "mint": "qyadYJMf1kx3BgLRmvyccbCWUBnNJQJaAvPmgQypump",
+        "source": "MARKET_DETECTED_TOKEN",
+        "name": "paired",
+        "symbol": "paired",
+        "v1PnlPct": null,
+        "v1Sol": null,
+        "v1Reason": null
+      },
+      {
+        "mint": "8WeBqBXM7PM3uY49cDvKBB56xaE7QyZwjwFcWFApump",
+        "source": "MARKET_DETECTED_TOKEN",
+        "name": "El Gran Eclipse",
+        "symbol": "Eclipse",
+        "v1PnlPct": null,
+        "v1Sol": null,
+        "v1Reason": null
+      },
+      {
+        "mint": "74k9kTMx6DsLBskAbpYoxye4Xe66m6vp5bsMbe6Qpump",
+        "source": "MARKET_DETECTED_TOKEN",
+        "name": "PEPECRAFT",
+        "symbol": "PEPECRAFT",
+        "v1PnlPct": null,
+        "v1Sol": null,
+        "v1Reason": null
+      },
+      {
+        "mint": "2iBbW1DvxxmXk3P1C7B31fJ5EHPBqojQLbT3JjiNpump",
+        "source": "MARKET_DETECTED_TOKEN",
+        "name": "Only Up!",
+        "symbol": "Up!",
+        "v1PnlPct": null,
+        "v1Sol": null,
+        "v1Reason": null
+      },
+      {
+        "mint": "6H768XQwP4Uadybuw8oPeQZdUnErD8zPmYmw8K8Mpump",
+        "source": "MARKET_DETECTED_TOKEN",
+        "name": "LMAO",
+        "symbol": "LMAO",
+        "v1PnlPct": null,
+        "v1Sol": null,
+        "v1Reason": null
+      },
+      {
+        "mint": "Hu9hA1gf6ccE54HSheyLCMs1PQzsYRVRvQmRLfSMpump",
+        "source": "MARKET_DETECTED_TOKEN",
+        "name": "Wolf GiGi",
+        "symbol": "WFG",
+        "v1PnlPct": null,
+        "v1Sol": null,
+        "v1Reason": null
+      },
+      {
+        "mint": "He7qAdj6PKikdK3wuWEshVy95PVmvaVzBhzzXLWypump",
+        "source": "MARKET_DETECTED_TOKEN",
+        "name": "PixelDoge",
+        "symbol": "PiDoge",
+        "v1PnlPct": null,
+        "v1Sol": null,
+        "v1Reason": null
+      },
+      {
+        "mint": "3HenEiz2QrYouX2HLiF7w3ZBJhVTstymUVcZoakMpump",
+        "source": "MARKET_DETECTED_TOKEN",
+        "name": "Snowwhite",
+        "symbol": "Snowwhite",
+        "v1PnlPct": null,
+        "v1Sol": null,
+        "v1Reason": null
+      }
+    ]
+  },
+  "v1_report": {
+    "name": "V1 (Control Baseline)",
+    "totalTrades": 16,
+    "wins": 7,
+    "losses": 9,
+    "winRate": 43.75,
+    "grossProfit": 0.24606964534170284,
+    "grossLoss": 0.4313912309461131,
+    "netPnlSol": -0.18532158560441025,
+    "profitFactor": 0.5704094744856797,
+    "expectancySol": -0.011582599100275641,
+    "maxDrawdownPct": -77.32804100000001,
+    "avgWinSol": 0.03515280647738612,
+    "avgLossSol": 0.04793235899401257,
+    "trades": [
+      {
+        "token": "5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump",
+        "name": "HAPPY DOG",
+        "pnlPct": 22.336472999999994,
+        "pnlSol": 0.022336472999999996,
+        "reason": "MANUAL_SELL"
+      },
+      {
+        "token": "BLQ9yGeco8ga1f6MaNHy1RwedA278tkBMMpHAZFSpump",
+        "name": "Psyop Dog",
+        "pnlPct": -18.270663000000006,
+        "pnlSol": -0.018270663000000006,
+        "reason": "STOP_LOSS"
+      },
+      {
+        "token": "GGXV8egpjAwUw2WSphGRtNasamniz8YD7hujckxqpump",
+        "name": "Amy",
+        "pnlPct": -31.199222,
+        "pnlSol": -0.031199222,
+        "reason": "STOP_LOSS"
+      },
+      {
+        "token": "2d1SzSR8STSFCVqHd8gCxhEHRLbwEAquU66435Tqpump",
+        "name": "Adam Sandler",
+        "pnlPct": -77.32804100000001,
+        "pnlSol": -0.07732804100000001,
+        "reason": "STOP_LOSS"
+      },
+      {
+        "token": "7mDEhMF2EC7GysG41GzgL27R7SZLxGGaiAS1xHcgpump",
+        "name": "Adam Sandler",
+        "pnlPct": -70.53665094611303,
+        "pnlSol": -0.07053665094611304,
+        "reason": "STALE_TIMEOUT"
+      },
+      {
+        "token": "F184iCgWJ4zhWwqP2ADNuVXC2RSQeniPpEiN6SnRpump",
+        "name": "PUMP.TRUMP",
+        "pnlPct": -61.835682999999996,
+        "pnlSol": -0.061835683,
+        "reason": "STOP_LOSS"
+      },
+      {
+        "token": "4rLL1jNABtg6z6P9gJNQTk2jkbVwU514VHtf2xXopump",
+        "name": "Nicolas Cage",
+        "pnlPct": 71.17374399999999,
+        "pnlSol": 0.07117374399999998,
+        "reason": "TAKE_PROFIT_2X"
+      },
+      {
+        "token": "HnXNrq6kim73QzLLQziqDuTmDQTJRRomkYEj5CDApump",
+        "name": "pump frog",
+        "pnlPct": -33.37009900000002,
+        "pnlSol": -0.033370099000000014,
+        "reason": "STOP_LOSS"
+      },
+      {
+        "token": "6SvqUYW8MEDqtWhimnM114MxCqgpPgi7vADNNQpfpump",
+        "name": "ODD",
+        "pnlPct": -44.5971055,
+        "pnlSol": -0.08919421100000001,
+        "reason": "STOP_LOSS"
+      },
+      {
+        "token": "CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump",
+        "name": "AICat",
+        "pnlPct": 8.093136341702877,
+        "pnlSol": 0.008093136341702877,
+        "reason": "STALE_TIMEOUT"
+      },
+      {
+        "token": "2TdW4wHwr5h6ZHTzgjfKJWgdEdA7nZx7upMaqZD7pump",
+        "name": "Stealth Ninja Doge",
+        "pnlPct": 15.234559999999995,
+        "pnlSol": 0.03046911999999999,
+        "reason": "TRAILING_STOP"
+      },
+      {
+        "token": "HXM9yMucR3W73ts8kK7MZNG8rr9Ef65o6z2ZxaKopump",
+        "name": "The man rescued from Nepal",
+        "pnlPct": 36.07698549999999,
+        "pnlSol": 0.07215397099999998,
+        "reason": "TRAILING_STOP"
+      },
+      {
+        "token": "3wYcGxjGiJdR8TKGwW996YunrvE1MPQcavcsNupJpump",
+        "name": "🪙 $CRYBABY",
+        "pnlPct": -20.0548195,
+        "pnlSol": -0.040109639,
+        "reason": "TRAILING_STOP"
+      },
+      {
+        "token": "BPdHr1Rqr8R3HAYhx15N4HpEzciv166mb2SDuatFpump",
+        "name": "Justice For Nono",
+        "pnlPct": 18.291882999999995,
+        "pnlSol": 0.018291882999999995,
+        "reason": "STOP_LOSS"
+      },
+      {
+        "token": "A6dE2ENRwFxfqasPfJzrpnwEL5E6RoYu5AfbzFwXpump",
+        "name": "Get Lit",
+        "pnlPct": 23.551317999999988,
+        "pnlSol": 0.023551317999999988,
+        "reason": "TRAILING_STOP"
+      },
+      {
+        "token": "K12EDVNnsyZwFYTQQZK7QcaufzDshvQwHeNtzhopump",
+        "name": "Buddy",
+        "pnlPct": -9.547022000000016,
+        "pnlSol": -0.009547022000000016,
+        "reason": "STOP_LOSS"
+      }
+    ]
+  },
+  "v2_1_report": {
+    "name": "V2.1 (Frozen Coordination Baseline)",
+    "totalTrades": 7,
+    "wins": 0,
+    "losses": 7,
+    "winRate": 0,
+    "grossProfit": 0,
+    "grossLoss": 0.0061090677950909915,
+    "netPnlSol": -0.0061090677950909915,
+    "profitFactor": 0,
+    "expectancySol": -0.0008727239707272845,
+    "maxDrawdownPct": -10.425264213591458,
+    "avgWinSol": 0,
+    "avgLossSol": 0.0008727239707272845,
+    "v1WinnersCaptured": 2,
+    "v1WinnersMissed": 5,
+    "v1LosersAvoided": 8,
+    "v1LosersReintroduced": 1,
+    "capturedWinnerTokens": [
+      "5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump",
+      "CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump"
+    ],
+    "avoidedLoserTokens": [
+      "BLQ9yGeco8ga1f6MaNHy1RwedA278tkBMMpHAZFSpump",
+      "GGXV8egpjAwUw2WSphGRtNasamniz8YD7hujckxqpump",
+      "2d1SzSR8STSFCVqHd8gCxhEHRLbwEAquU66435Tqpump",
+      "F184iCgWJ4zhWwqP2ADNuVXC2RSQeniPpEiN6SnRpump",
+      "HnXNrq6kim73QzLLQziqDuTmDQTJRRomkYEj5CDApump",
+      "6SvqUYW8MEDqtWhimnM114MxCqgpPgi7vADNNQpfpump",
+      "3wYcGxjGiJdR8TKGwW996YunrvE1MPQcavcsNupJpump",
+      "K12EDVNnsyZwFYTQQZK7QcaufzDshvQwHeNtzhopump"
+    ],
+    "reintroducedLoserTokens": [
+      "7mDEhMF2EC7GysG41GzgL27R7SZLxGGaiAS1xHcgpump"
+    ],
+    "lookaheadViolations": 0,
+    "trades": [
+      {
+        "positionId": "v2_1_5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump_1788903694",
+        "token": "5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump",
+        "tier": "C",
+        "size": 0.025,
+        "entryPrice": 4.610976481605766e-8,
+        "exitPrice": 4.1302700005718015e-8,
+        "opportunity": 55,
+        "confidence": 70,
+        "pnlSol": -0.0026063160533978647,
+        "pnlPct": -10.425264213591458,
+        "exitReason": "FLOW_FAILURE",
+        "maePct": -10.425264213591458,
+        "mfePct": 2.5563030456029456,
+        "thesisState": "THESIS_STRONG",
+        "holdTimeSeconds": 563,
+        "wasV1Winner": true
+      },
+      {
+        "positionId": "v2_1_5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump_1788904257",
+        "token": "5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump",
+        "tier": "C",
+        "size": 0.025,
+        "entryPrice": 3.9595084321575614e-8,
+        "exitPrice": 3.796837598419731e-8,
+        "opportunity": 60,
+        "confidence": 70,
+        "pnlSol": -0.0010270898302468694,
+        "pnlPct": -4.108359320987478,
+        "exitReason": "FLOW_FAILURE",
+        "maePct": -4.108359320987478,
+        "mfePct": 0,
+        "thesisState": "THESIS_STRONG",
+        "holdTimeSeconds": 13,
+        "wasV1Winner": true
+      },
+      {
+        "positionId": "v2_1_7mDEhMF2EC7GysG41GzgL27R7SZLxGGaiAS1xHcgpump_1788918329",
+        "token": "7mDEhMF2EC7GysG41GzgL27R7SZLxGGaiAS1xHcgpump",
+        "tier": "C",
+        "size": 0.025,
+        "entryPrice": 2.8112433881466818e-8,
+        "exitPrice": 2.804395326145638e-8,
+        "opportunity": 60,
+        "confidence": 70,
+        "pnlSol": -0.00006089887156264989,
+        "pnlPct": -0.24359548625059957,
+        "exitReason": "FLOW_FAILURE",
+        "maePct": -0.24359548625059957,
+        "mfePct": 0,
+        "thesisState": "THESIS_STRONG",
+        "holdTimeSeconds": 9532,
+        "wasV1Winner": false
+      },
+      {
+        "positionId": "v2_1_5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump_1788921198",
+        "token": "5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump",
+        "tier": "C",
+        "size": 0.025,
+        "entryPrice": 3.023702209010522e-8,
+        "exitPrice": 3.0204758965298044e-8,
+        "opportunity": 60,
+        "confidence": 70,
+        "pnlSol": -0.000026675183745803496,
+        "pnlPct": -0.10670073498321399,
+        "exitReason": "FLOW_FAILURE",
+        "maePct": -0.10670073498321399,
+        "mfePct": 0,
+        "thesisState": "THESIS_STRONG",
+        "holdTimeSeconds": 16655,
+        "wasV1Winner": true
+      },
+      {
+        "positionId": "v2_1_CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump_1788924610",
+        "token": "CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump",
+        "tier": "C",
+        "size": 0.025,
+        "entryPrice": 4.518244308565033e-8,
+        "exitPrice": 4.3467225613969956e-8,
+        "opportunity": 60,
+        "confidence": 65,
+        "pnlSol": -0.0009490508671857967,
+        "pnlPct": -3.7962034687431867,
+        "exitReason": "FLOW_FAILURE",
+        "maePct": -3.7962034687431867,
+        "mfePct": 0,
+        "thesisState": "THESIS_STRONG",
+        "holdTimeSeconds": 18,
+        "wasV1Winner": true
+      },
+      {
+        "positionId": "v2_1_CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump_1788924643",
+        "token": "CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump",
+        "tier": "C",
+        "size": 0.025,
+        "entryPrice": 4.13240994624923e-8,
+        "exitPrice": 3.894542315602597e-8,
+        "opportunity": 60,
+        "confidence": 65,
+        "pnlSol": -0.0014390369889520076,
+        "pnlPct": -5.75614795580803,
+        "exitReason": "FLOW_FAILURE",
+        "maePct": -5.75614795580803,
+        "mfePct": 0,
+        "thesisState": "THESIS_STRONG",
+        "holdTimeSeconds": 24,
+        "wasV1Winner": true
+      },
+      {
+        "positionId": "v2_1_CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump_1788938291",
+        "token": "CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump",
+        "tier": "C",
+        "size": 0.025,
+        "entryPrice": 3.036243151123519e-8,
+        "opportunity": 60,
+        "confidence": 85,
+        "pnlSol": 0,
+        "pnlPct": 0,
+        "maePct": 0,
+        "mfePct": 0,
+        "holdTimeSeconds": 0,
+        "wasV1Winner": true
+      }
+    ],
+    "rejections": {
+      "totalEvaluations": 739,
+      "hardSafetyRejections": 281,
+      "coordinationRejections": 0,
+      "insufficientOpp": 445,
+      "insufficientConf": 42,
+      "confluenceConflicts": 3,
+      "tierAPlus": 0,
+      "tierA": 0,
+      "tierB": 0,
+      "tierC": 7
+    }
+  },
+  "v2_2_report": {
+    "name": "V2.2 (Frozen Dynamic Flow Candidate)",
+    "totalTrades": 8,
+    "wins": 0,
+    "losses": 8,
+    "winRate": 0,
+    "grossProfit": 0,
+    "grossLoss": 0.008132380788924256,
+    "netPnlSol": -0.008132380788924256,
+    "profitFactor": 0,
+    "expectancySol": -0.001016547598615532,
+    "maxDrawdownPct": -15.022699552013119,
+    "avgWinSol": 0,
+    "avgLossSol": 0.001016547598615532,
+    "v1WinnersCaptured": 2,
+    "v1WinnersMissed": 5,
+    "v1LosersAvoided": 7,
+    "v1LosersReintroduced": 2,
+    "capturedWinnerTokens": [
+      "5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump",
+      "CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump"
+    ],
+    "avoidedLoserTokens": [
+      "BLQ9yGeco8ga1f6MaNHy1RwedA278tkBMMpHAZFSpump",
+      "2d1SzSR8STSFCVqHd8gCxhEHRLbwEAquU66435Tqpump",
+      "F184iCgWJ4zhWwqP2ADNuVXC2RSQeniPpEiN6SnRpump",
+      "HnXNrq6kim73QzLLQziqDuTmDQTJRRomkYEj5CDApump",
+      "6SvqUYW8MEDqtWhimnM114MxCqgpPgi7vADNNQpfpump",
+      "3wYcGxjGiJdR8TKGwW996YunrvE1MPQcavcsNupJpump",
+      "K12EDVNnsyZwFYTQQZK7QcaufzDshvQwHeNtzhopump"
+    ],
+    "reintroducedLoserTokens": [
+      "GGXV8egpjAwUw2WSphGRtNasamniz8YD7hujckxqpump",
+      "7mDEhMF2EC7GysG41GzgL27R7SZLxGGaiAS1xHcgpump"
+    ],
+    "lookaheadViolations": 0,
+    "trades": [
+      {
+        "positionId": "v2_2_5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump_1788903669",
+        "token": "5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump",
+        "tier": "C",
+        "size": 0.025,
+        "entryPrice": 4.279887002444256e-8,
+        "exitPrice": 4.1302700005718015e-8,
+        "opportunity": 50,
+        "confidence": 70,
+        "pnlSol": -0.0008739541592278487,
+        "pnlPct": -3.4958166369113948,
+        "exitReason": "FLOW_FAILURE",
+        "maePct": -3.4958166369113948,
+        "mfePct": 10.489996841889306,
+        "thesisState": "THESIS_STRONG",
+        "holdTimeSeconds": 588,
+        "wasV1Winner": true
+      },
+      {
+        "positionId": "v2_2_5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump_1788904257",
+        "token": "5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump",
+        "tier": "C",
+        "size": 0.025,
+        "entryPrice": 3.9595084321575614e-8,
+        "exitPrice": 3.796837598419731e-8,
+        "opportunity": 60,
+        "confidence": 70,
+        "pnlSol": -0.0010270898302468694,
+        "pnlPct": -4.108359320987478,
+        "exitReason": "FLOW_FAILURE",
+        "maePct": -4.108359320987478,
+        "mfePct": 0,
+        "thesisState": "THESIS_STRONG",
+        "holdTimeSeconds": 13,
+        "wasV1Winner": true
+      },
+      {
+        "positionId": "v2_2_GGXV8egpjAwUw2WSphGRtNasamniz8YD7hujckxqpump_1788905143",
+        "token": "GGXV8egpjAwUw2WSphGRtNasamniz8YD7hujckxqpump",
+        "tier": "C",
+        "size": 0.025,
+        "entryPrice": 3.4779112251179315e-8,
+        "exitPrice": 2.955435071082726e-8,
+        "opportunity": 53,
+        "confidence": 70,
+        "pnlSol": -0.00375567488800328,
+        "pnlPct": -15.022699552013119,
+        "exitReason": "FLOW_FAILURE",
+        "maePct": -16.54554719904016,
+        "mfePct": 29.49798985339766,
+        "thesisState": "THESIS_STRONG",
+        "holdTimeSeconds": 103,
+        "wasV1Winner": false
+      },
+      {
+        "positionId": "v2_2_7mDEhMF2EC7GysG41GzgL27R7SZLxGGaiAS1xHcgpump_1788918329",
+        "token": "7mDEhMF2EC7GysG41GzgL27R7SZLxGGaiAS1xHcgpump",
+        "tier": "C",
+        "size": 0.025,
+        "entryPrice": 2.8112433881466818e-8,
+        "exitPrice": 2.804395326145638e-8,
+        "opportunity": 60,
+        "confidence": 70,
+        "pnlSol": -0.00006089887156264989,
+        "pnlPct": -0.24359548625059957,
+        "exitReason": "FLOW_FAILURE",
+        "maePct": -0.24359548625059957,
+        "mfePct": 0,
+        "thesisState": "THESIS_STRONG",
+        "holdTimeSeconds": 9532,
+        "wasV1Winner": false
+      },
+      {
+        "positionId": "v2_2_5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump_1788921198",
+        "token": "5pbn3EuSjnU1QzskXgts79iJinS2a1YzyfVVan7npump",
+        "tier": "C",
+        "size": 0.025,
+        "entryPrice": 3.023702209010522e-8,
+        "exitPrice": 3.0204758965298044e-8,
+        "opportunity": 60,
+        "confidence": 70,
+        "pnlSol": -0.000026675183745803496,
+        "pnlPct": -0.10670073498321399,
+        "exitReason": "FLOW_FAILURE",
+        "maePct": -0.10670073498321399,
+        "mfePct": 0,
+        "thesisState": "THESIS_STRONG",
+        "holdTimeSeconds": 16655,
+        "wasV1Winner": true
+      },
+      {
+        "positionId": "v2_2_CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump_1788924610",
+        "token": "CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump",
+        "tier": "C",
+        "size": 0.025,
+        "entryPrice": 4.518244308565033e-8,
+        "exitPrice": 4.3467225613969956e-8,
+        "opportunity": 60,
+        "confidence": 65,
+        "pnlSol": -0.0009490508671857967,
+        "pnlPct": -3.7962034687431867,
+        "exitReason": "FLOW_FAILURE",
+        "maePct": -3.7962034687431867,
+        "mfePct": 0,
+        "thesisState": "THESIS_STRONG",
+        "holdTimeSeconds": 18,
+        "wasV1Winner": true
+      },
+      {
+        "positionId": "v2_2_CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump_1788924643",
+        "token": "CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump",
+        "tier": "C",
+        "size": 0.025,
+        "entryPrice": 4.13240994624923e-8,
+        "exitPrice": 3.894542315602597e-8,
+        "opportunity": 60,
+        "confidence": 65,
+        "pnlSol": -0.0014390369889520076,
+        "pnlPct": -5.75614795580803,
+        "exitReason": "FLOW_FAILURE",
+        "maePct": -5.75614795580803,
+        "mfePct": 0,
+        "thesisState": "THESIS_STRONG",
+        "holdTimeSeconds": 24,
+        "wasV1Winner": true
+      },
+      {
+        "positionId": "v2_2_CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump_1788938291",
+        "token": "CCJALH3g927YtmgTrAUb5ZZUBLFHNWFzEfX2mv6jpump",
+        "tier": "C",
+        "size": 0.025,
+        "entryPrice": 3.036243151123519e-8,
+        "opportunity": 60,
+        "confidence": 85,
+        "pnlSol": 0,
+        "pnlPct": 0,
+        "maePct": 0,
+        "mfePct": 0,
+        "holdTimeSeconds": 0,
+        "wasV1Winner": true
+      }
+    ],
+    "rejections": {
+      "totalEvaluations": 710,
+      "hardSafetyRejections": 281,
+      "coordinationRejections": 0,
+      "insufficientOpp": 404,
+      "insufficientConf": 42,
+      "confluenceConflicts": 1,
+      "tierAPlus": 0,
+      "tierA": 0,
+      "tierB": 0,
+      "tierC": 8
+    }
+  },
+  "determinism": {
+    "v2_1": true,
+    "v2_2": true
+  }
+}
