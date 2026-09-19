@@ -45,38 +45,6 @@ export class NarrativeEngine {
     ];
   }
 
-  _isValidSocialHandle(url, type) {
-    if (!url || typeof url !== 'string') return false;
-    const clean = url.trim().toLowerCase();
-    const placeholders = [
-      'placeholder', 'example', 'username', 'yourhandle', 'yourchannel',
-      'channelname', 'mychannel', 'test', 'pumpfun', 'unknown', 'channel',
-      'home', 'null', 'undefined'
-    ];
-
-    if (type === 'twitter') {
-      const match = clean.match(/(?:twitter\.com|x\.com)\/([a-z0-9_]+)/i);
-      if (!match || !match[1]) return false;
-      const handle = match[1];
-      if (handle.length < 3 || placeholders.includes(handle)) return false;
-      return true;
-    }
-
-    if (type === 'telegram') {
-      const match = clean.match(/(?:t\.me|telegram\.me)\/([a-z0-9_]+)/i);
-      if (!match || !match[1]) return false;
-      const handle = match[1];
-      if (handle.length < 3 || placeholders.includes(handle)) return false;
-      return true;
-    }
-
-    if (type === 'website') {
-      return clean.startsWith('http://') || clean.startsWith('https://');
-    }
-
-    return clean.length > 5;
-  }
-
   /**
    * Evaluates narrative strength of a token
    * @param {Object} metadata - { name, symbol, description, twitter, telegram, website, replyCount }
@@ -124,28 +92,18 @@ export class NarrativeEngine {
       }
     }
 
-    // 3. Social Media & Community Verification (Proof of Audience & Depth)
+    // 3. Social Media & Community Verification (Proof of Audience)
     if (metadata.twitter && metadata.twitter.length > 5) {
-      if (this._isValidSocialHandle(metadata.twitter, 'twitter')) {
-        score += 20;
-        socialsFound++;
-        reasons.push('Verified Twitter/X link attached');
-      } else {
-        score -= 10;
-        reasons.push('Suspicious or placeholder Twitter/X handle flagged');
-      }
+      score += 20;
+      socialsFound++;
+      reasons.push('Verified Twitter/X link attached');
     }
     if (metadata.telegram && metadata.telegram.length > 5) {
-      if (this._isValidSocialHandle(metadata.telegram, 'telegram')) {
-        score += 15;
-        socialsFound++;
-        reasons.push('Verified Telegram community attached');
-      } else {
-        score -= 10;
-        reasons.push('Suspicious or placeholder Telegram handle flagged');
-      }
+      score += 15;
+      socialsFound++;
+      reasons.push('Verified Telegram community attached');
     }
-    if (metadata.website && this._isValidSocialHandle(metadata.website, 'website')) {
+    if (metadata.website && metadata.website.startsWith('http')) {
       score += 10;
       socialsFound++;
       reasons.push('Dedicated website attached');
@@ -195,7 +153,7 @@ export class NarrativeEngine {
       narrativeScore: score,
       theme: detectedTheme,
       reasons,
-      socialsFound: (this._isValidSocialHandle(metadata.twitter, 'twitter') ? 1 : 0) + (this._isValidSocialHandle(metadata.telegram, 'telegram') ? 1 : 0)
+      socialsFound: (metadata.twitter ? 1 : 0) + (metadata.telegram ? 1 : 0)
     };
   }
 }

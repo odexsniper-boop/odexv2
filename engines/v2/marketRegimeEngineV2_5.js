@@ -67,14 +67,18 @@ export class MarketRegimeEngineV2_5 {
         this.events.push({ timestamp: t, token: mint, side, solAmount, initiator });
 
         // Prune old events
-        const cutoff = t - this.config.rollingWindowSeconds;
+        const isMs = t > 1e11;
+        const windowMs = this.config.rollingWindowSeconds * (isMs ? 1000 : 1);
+        const cutoff = t - windowMs;
         while (this.events.length > 0 && this.events[0].timestamp < cutoff) {
             this.events.shift();
         }
     }
 
     getRegime(currentTime) {
-        const cutoff = currentTime - this.config.rollingWindowSeconds;
+        const isMs = currentTime > 1e11;
+        const windowMs = this.config.rollingWindowSeconds * (isMs ? 1000 : 1);
+        const cutoff = currentTime - windowMs;
         const windowEvents = this.events.filter(e => e.timestamp >= cutoff);
 
         let buySol = 0;

@@ -289,9 +289,8 @@ export class Orchestrator {
         // Advance to Stage 2: MONEY_FLOW_WATCH
         record.transitionTo(TokenState.MONEY_FLOW_WATCH);
         record.stageEnteredAt = Date.now();
-        // Seed candle builder (Dynamic timeframe: 4s micro-candles for high-velocity/top narrative tokens, 8s standard)
-        const candleTf = (record.narrativeScore >= 75 || record.bundledBuysCount >= 15) ? 4 : 8;
-        this.candleBuilders.set(mint, new CandleBuilder(candleTf));
+        // Seed candle builder (15s timeframe)
+        this.candleBuilders.set(mint, new CandleBuilder(8));
 
         // Start tracking live on-chain bonding curve reserves
         if (this.curveWatcher) {
@@ -514,20 +513,12 @@ export class Orchestrator {
 
     try {
       log(`⚡ [ORCHESTRATOR BUY] Executing 3-Stage Entry on ${record.name} (${mint.slice(0, 8)}) with ${this.buySizeSol} SOL`);
-      
-      // Dynamic Jito Tip Escalation: Boost tip by 1.3x for top-tier high-conviction entries (entryScore >= 85)
-      let dynamicTipLamports = this.execution?.jitoTipLamports;
-      if (record.entryScore >= 85 && dynamicTipLamports > 0) {
-        dynamicTipLamports = Math.round(dynamicTipLamports * 1.3);
-      }
-
       const buyFill = await this.execution.executeBuy({
         mint,
         solAmount: this.buySizeSol,
         creator: record.creator,
         virtualSolReserves: record.lastVirtualSolReserves,
         virtualTokenReserves: record.lastVirtualTokenReserves,
-        jitoTipLamports: dynamicTipLamports,
       });
 
       record.buyTxHash = buyFill.txHash || 'simulated_tx';

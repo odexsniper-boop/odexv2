@@ -93,7 +93,9 @@ export class MarketRegimeAnalyzerV2_5 {
         });
 
         // 3. Prune events outside rolling window
-        const cutoff = t - this.config.rollingWindowSeconds;
+        const isMs = t > 1e11;
+        const windowMs = this.config.rollingWindowSeconds * (isMs ? 1000 : 1);
+        const cutoff = t - windowMs;
         while (this.eventHistory.length > 0 && this.eventHistory[0].timestamp < cutoff) {
             this.eventHistory.shift();
         }
@@ -104,8 +106,10 @@ export class MarketRegimeAnalyzerV2_5 {
      * Purely causal.
      */
     evaluateRegime(currentTime) {
-        const windowEvents = this.eventHistory.filter(e => e.timestamp >= (currentTime - this.config.rollingWindowSeconds));
-        const shortEvents = this.eventHistory.filter(e => e.timestamp >= (currentTime - this.config.shortWindowSeconds));
+        const isMs = currentTime > 1e11;
+        const mult = isMs ? 1000 : 1;
+        const windowEvents = this.eventHistory.filter(e => e.timestamp >= (currentTime - (this.config.rollingWindowSeconds * mult)));
+        const shortEvents = this.eventHistory.filter(e => e.timestamp >= (currentTime - (this.config.shortWindowSeconds * mult)));
 
         // 1. Aggregate Flow Metrics
         let rollingBuySol = 0;

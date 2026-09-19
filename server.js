@@ -126,13 +126,20 @@ export function createDashboardServer(port = 3005) {
       walletKeypair = Keypair.fromSecretKey(secret);
       walletPubkey = walletKeypair.publicKey.toBase58();
     } catch (e) { console.error('[AUTO-CAUGHT ERROR]', e.message || e); }
-  } else if (process.env.PRIVATE_KEY) {
+  }
+  
+  if (!walletKeypair && process.env.PRIVATE_KEY) {
     try {
-      const secret = Uint8Array.from(JSON.parse(process.env.PRIVATE_KEY));
-      walletKeypair = Keypair.fromSecretKey(secret);
-      walletPubkey = walletKeypair.publicKey.toBase58();
+      const trimmed = process.env.PRIVATE_KEY.trim();
+      if (!trimmed.includes('...')) {
+        const secret = trimmed.startsWith('[') ? Uint8Array.from(JSON.parse(trimmed)) : bs58.decode(trimmed);
+        walletKeypair = Keypair.fromSecretKey(secret);
+        walletPubkey = walletKeypair.publicKey.toBase58();
+      }
     } catch (e) { console.error('[AUTO-CAUGHT ERROR]', e.message || e); }
-  } else if (savedActiveWallet?.pubkey) {
+  }
+
+  if (!walletPubkey && savedActiveWallet?.pubkey) {
     walletPubkey = savedActiveWallet.pubkey;
   }
 
@@ -409,6 +416,7 @@ export function createDashboardServer(port = 3005) {
         gasTipSol: ctx.tradingSettings.gasTipSol ?? (ctx.tradingSettings.jitoTipLamports ? ctx.tradingSettings.jitoTipLamports / 1e9 : 0.01),
         learningEnabled: smartAgent.learningEnabled,
         learningMetrics: smartAgent.getMetrics(),
+        vetoes: orchestrator.vetoCount,
         tradeHistory: ctx.positionManager.tradeHistory,
         tokens: orchestrator.getAllTokens().map(t => orchestrator.serializeToken(t)),
         positions: Array.from(ctx.positionManager.positions.values()).map(p => ({
@@ -481,6 +489,7 @@ export function createDashboardServer(port = 3005) {
 
   eventBus.on('POSITION_CLOSED', (data) => {
     orchestrator.handlePositionClosed(data);
+    dbManager.saveTrade(data);
     broadcast('POSITION_CLOSED', data);
   });
 
@@ -524,7 +533,20 @@ export function createDashboardServer(port = 3005) {
 
   app.get('/api/positions', async (req, res) => {
     const ctx = await getUserContext(req);
-    const posList = Array.from(ctx.positionManager.positions.values());
+    const posList = Array.from(ctx.positionManager.positions.values()).map(p => ({
+      mint: p.mint,
+      name: p.name,
+      symbol: p.symbol,
+      entryPriceSol: p.entryPriceSol,
+      currentPriceSol: p.currentPriceSol,
+      peakPriceSol: p.peakPriceSol,
+      initialSolSpent: p.initialSolSpent,
+      unrealizedPnlPercent: p.unrealizedPnlPercent,
+      status: p.status,
+      riskScore: p.riskScore || 20,
+      entryScore: p.entryScore || 75,
+      tokensHeldRaw: p.tokensHeldRaw ? p.tokensHeldRaw.toString() : '0',
+    }));
     res.json({
       success: true,
       count: posList.length,
@@ -548,8 +570,8 @@ export function createDashboardServer(port = 3005) {
 
   app.get('/api/trades', async (req, res) => {
     const ctx = await getUserContext(req);
-    const limit = parseInt(req.query.limit) || 50;
-    const history = ctx.positionManager.tradeHistory ? ctx.positionManager.tradeHistory.slice(-limit) : [];
+    const limit = parseInt(req.query.limit) || 100;
+    const history = ctx.positionManager.tradeHistory ? (limit ? ctx.positionManager.tradeHistory.slice(0, limit) : ctx.positionManager.tradeHistory) : [];
     for (const h of history) {
       if (!h.imageUrl) {
         const tok = orchestrator.tokens.get(h.mint);
@@ -1561,6 +1583,345 @@ export function createDashboardServer(port = 3005) {
       return res.json({ success: true, clientId: clientId.trim() });
     }
     res.status(400).json({ success: false, error: 'Valid Google Client ID is required' });
+  });
+
+  // -------------------------------------------------------------------------
+  // APPS & INTEGRATIONS (Google Sheets, Telegram, Webhook)
+  // -------------------------------------------------------------------------
+  app.get('/api/apps', (req, res) => {
+    const saved = dbManager.getSetting('apps_config', null) || {};
+    const tgToken = saved.telegram?.botToken || process.env.TELEGRAM_BOT_TOKEN || (CONFIG.TELEGRAM?.BOT_TOKEN || '');
+    const tgChat = saved.telegram?.chatId || process.env.TELEGRAM_CHAT_ID || (CONFIG.TELEGRAM?.CHAT_ID || '');
+
+    res.json({
+      success: true,
+      config: {
+        googleSheets: saved.googleSheets || { url: '', sheetId: '', tabName: 'Trades', enabled: true },
+        telegram: {
+          botToken: tgToken,
+          chatId: tgChat,
+          enabled: saved.telegram?.enabled !== false,
+          notifyBuys: saved.telegram?.notifyBuys !== false,
+          notifyVetos: saved.telegram?.notifyVetos !== false,
+          notifyDaily: saved.telegram?.notifyDaily !== false
+        },
+        discord: saved.discord || { webhookUrl: '', enabled: false }
+      }
+    });
+  });
+
+  app.post('/api/apps', (req, res) => {
+    const appsConfig = req.body || {};
+    dbManager.setSetting('apps_config', appsConfig);
+
+    // Synchronize live Telegram configuration
+    if (appsConfig.telegram?.botToken) {
+      if (!CONFIG.TELEGRAM) CONFIG.TELEGRAM = {};
+      CONFIG.TELEGRAM.BOT_TOKEN = appsConfig.telegram.botToken;
+    }
+    if (appsConfig.telegram?.chatId) {
+      if (!CONFIG.TELEGRAM) CONFIG.TELEGRAM = {};
+      CONFIG.TELEGRAM.CHAT_ID = appsConfig.telegram.chatId;
+    }
+
+    log('[APPS CONFIG] Updated Integrations (Google Sheets, Telegram, Webhook)');
+    res.json({ success: true });
+  });
+
+  app.post('/api/apps/test-telegram', async (req, res) => {
+    const { botToken, chatId } = req.body;
+    if (!botToken || !chatId) {
+      return res.status(400).json({ success: false, error: 'botToken and chatId are required' });
+    }
+    try {
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: `⚡ <b>ODEX V2 Sniping Bot Test Alert</b>\n\n✅ Telegram integration connected successfully!\nTime: <code>${new Date().toISOString()}</code>`,
+          parse_mode: 'HTML'
+        })
+      });
+      const data = await response.json();
+      if (!data.ok) {
+        return res.status(400).json({ success: false, error: data.description || 'Telegram API error' });
+      }
+      res.json({ success: true });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  app.post('/api/apps/test-gsheet', async (req, res) => {
+    const { url, tabName, sheetId } = req.body;
+    if (!url) {
+      return res.status(400).json({ success: false, error: 'Google Apps Script Webhook URL is required' });
+    }
+    try {
+      const now = new Date().toISOString().replace('T', ' ').slice(0, 19);
+      const testProfitSol = 0.04;
+      const testProfitPercent = 40.0;
+      const isWin = testProfitSol >= 0;
+      const profitSolDisplay = `${testProfitSol >= 0 ? '+' : '-'}${Math.abs(testProfitSol).toFixed(6)} SOL`;
+      const profitSolFormatted = `'${profitSolDisplay}`;
+      const winRateDisplay = `${testProfitPercent >= 0 ? '+' : '-'}${Math.abs(testProfitPercent).toFixed(2)}%`;
+      const winRateFormatted = `'${winRateDisplay}`;
+
+      // Matches Sheet Columns:
+      // A: DATE | B: TOKEN NAME | C: ENTRY | D: CLOSES | E: INVESTED SOL | F: PROFIT | G: WIN RATE | H: EXIT REASON | I: MINT
+      const testRow = [
+        now,
+        'ODEX TEST ($TEST)',
+        0.000025,
+        0.000035,
+        0.1,
+        profitSolFormatted,
+        winRateFormatted,
+        'TAKE_PROFIT_T1 (+35%)',
+        'So11111111111111111111111111111111111111112'
+      ];
+      const payload = {
+        action: 'record_trade',
+        tab: tabName || 'Trades',
+        sheetId: sheetId || '',
+        timestamp: now,
+        date: now,
+        tokenName: 'ODEX TEST ($TEST)',
+        entry: 0.000025,
+        closes: 0.000035,
+        investedSol: 0.1,
+        profit: profitSolDisplay,
+        profitFormatted: profitSolFormatted,
+        profitSol: testProfitSol,
+        winRate: winRateDisplay,
+        winRateFormatted: winRateFormatted,
+        profitPercent: testProfitPercent,
+        isWin: isWin,
+        color: isWin ? '#4285f4' : '#ea4335',
+        exitReason: 'TAKE_PROFIT_T1 (+35%)',
+        reason: 'TAKE_PROFIT_T1 (+35%)',
+        mint: 'So11111111111111111111111111111111111111112',
+        initialSol: 0.1,
+        row: testRow,
+        status: 'TEST_PING'
+      };
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        redirect: 'follow'
+      });
+      const responseText = await response.text();
+
+      // Diagnose Google Apps Script responses
+      if (responseText.includes('accounts.google.com') || responseText.includes('signin') || responseText.includes('ServiceLogin')) {
+        return res.status(400).json({
+          success: false,
+          error: 'Google blocked access: In your Google Apps Script deployment, "Who has access" MUST be set to "Anyone" (currently set to "Only myself", which blocks automated sync).'
+        });
+      }
+      if (responseText.includes('Page introuvable') || responseText.includes('Impossible d\'ouvrir') || responseText.includes('Page not found')) {
+        return res.status(400).json({
+          success: false,
+          error: 'Google Web App returned Page Not Found: Make sure you deployed as Web App with "Who has access" set to "Anyone".'
+        });
+      }
+
+      let parsed = null;
+      try { parsed = JSON.parse(responseText); } catch (e) {}
+
+      if (parsed && parsed.status === 'error') {
+        return res.status(400).json({
+          success: false,
+          error: 'Apps Script error: ' + (parsed.message || 'Check Google Sheet tabs')
+        });
+      }
+
+      res.json({ success: true, status: response.status, response: parsed || responseText });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  app.post('/api/apps/test-webhook', async (req, res) => {
+    const { webhookUrl } = req.body;
+    if (!webhookUrl) {
+      return res.status(400).json({ success: false, error: 'webhookUrl is required' });
+    }
+    try {
+      const response = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: `⚡ **ODEX V2 Snipe Bot Integration Test Ping**\nStatus: Connected\nTime: ${new Date().toISOString()}`
+        })
+      });
+      if (!response.ok) {
+        return res.status(400).json({ success: false, error: `Webhook returned HTTP ${response.status}` });
+      }
+      res.json({ success: true });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // Automated Event Forwarding to configured Apps (Google Sheets, Telegram, Webhook)
+  eventBus.on('POSITION_CLOSED', async (trade) => {
+    try {
+      const apps = dbManager.getSetting('apps_config', null);
+      if (!apps) return;
+
+      // Google Sheets sync
+      if (apps.googleSheets?.enabled && apps.googleSheets?.url) {
+        const closedDate = trade.closedAt ? new Date(trade.closedAt) : new Date();
+        const formattedDate = closedDate.toISOString().replace('T', ' ').slice(0, 19);
+        const tokenDisplayName = trade.name ? `${trade.name} ($${trade.symbol || 'UNK'})` : (trade.symbol || 'Unknown Token');
+        const entryPrice = Number(trade.entryPriceSol || 0);
+        const closePrice = Number(trade.exitPriceSol || 0);
+        const profitSol = Number(trade.pnlSol || 0);
+        let profitPercent = Number(trade.pnlPercent || 0);
+        const exitReason = trade.reason || 'Auto-exit';
+        const mintAddr = trade.mint || '';
+        const initialSol = Number(trade.initialSolSpent || 0);
+
+        // Normalize profit percent: if stored as decimal fraction between -1 and 1, convert to %
+        if (Math.abs(profitPercent) <= 1.0 && profitPercent !== 0 && initialSol > 0) {
+          const calculated = (profitSol / initialSol) * 100;
+          if (Math.abs(calculated) > Math.abs(profitPercent) * 5) {
+            profitPercent = calculated;
+          }
+        }
+
+        const isWin = profitSol >= 0;
+        const profitSolDisplay = `${isWin ? '+' : '-'}${Math.abs(profitSol).toFixed(6)} SOL`;
+        const profitSolFormatted = `'${profitSolDisplay}`;
+        const winRateDisplay = `${isWin ? '+' : '-'}${Math.abs(profitPercent).toFixed(2)}%`;
+        const winRateFormatted = `'${winRateDisplay}`;
+
+        // Matches User's Exact Sheet Columns:
+        // A: DATE | B: TOKEN NAME | C: ENTRY | D: CLOSES | E: INVESTED SOL | F: PROFIT | G: WIN RATE | H: EXIT REASON | I: MINT
+        const tradeRow = [
+          formattedDate,
+          tokenDisplayName,
+          entryPrice,
+          closePrice,
+          initialSol,
+          profitSolFormatted,
+          winRateFormatted,
+          exitReason,
+          mintAddr
+        ];
+
+        fetch(apps.googleSheets.url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'record_trade',
+            tab: apps.googleSheets.tabName || 'Trades',
+            sheetId: apps.googleSheets.sheetId || '',
+            timestamp: formattedDate,
+            date: formattedDate,
+            tokenName: tokenDisplayName,
+            entry: entryPrice,
+            closes: closePrice,
+            investedSol: initialSol,
+            profit: profitSolDisplay,
+            profitFormatted: profitSolFormatted,
+            profitSol: profitSol,
+            winRate: winRateDisplay,
+            winRateFormatted: winRateFormatted,
+            profitPercent: profitPercent,
+            isWin: isWin,
+            color: isWin ? '#4285f4' : '#ea4335',
+            exitReason: exitReason,
+            reason: exitReason,
+            mint: mintAddr,
+            initialSol: initialSol,
+            row: tradeRow,
+            trade: {
+              date: formattedDate,
+              tokenName: tokenDisplayName,
+              entry: entryPrice,
+              closes: closePrice,
+              investedSol: initialSol,
+              profit: profitSolDisplay,
+              profitFormatted: profitSolFormatted,
+              profitSol: profitSol,
+              winRate: winRateDisplay,
+              winRateFormatted: winRateFormatted,
+              profitPercent: profitPercent,
+              isWin: isWin,
+              reason: exitReason,
+              mint: mintAddr,
+              initialSol: initialSol,
+              ...trade
+            }
+          }),
+          redirect: 'follow'
+        }).then(async r => {
+          const t = await r.text();
+          if (t.includes('accounts.google.com') || t.includes('signin')) {
+            log('[GOOGLE SHEETS ERROR] Google blocked sync: Web App "Who has access" must be set to "Anyone".');
+          } else {
+            log(`[GOOGLE SHEETS SYNC] Logged trade for ${trade.symbol || trade.name} to Google Sheet.`);
+          }
+        }).catch(err => log(`[GOOGLE SHEETS SYNC ERROR] ${err.message}`));
+      }
+
+      // Telegram alert
+      if (apps.telegram?.enabled && apps.telegram?.botToken && apps.telegram?.chatId && apps.telegram?.notifyBuys !== false) {
+        const isWin = (trade.pnlSol || 0) >= 0;
+        const emoji = isWin ? '🟢 <b>PROFIT LOCKED</b>' : '🔴 <b>STOP LOSS HIT</b>';
+        const pnlText = `${isWin ? '+' : ''}${(trade.pnlPercent || 0).toFixed(2)}% (${isWin ? '+' : ''}${(trade.pnlSol || 0).toFixed(4)} SOL)`;
+        const msg = `${emoji}\n\nToken: <b>${trade.name || trade.symbol || 'Unknown'}</b> ($${trade.symbol || 'UNK'})\nMint: <code>${trade.mint}</code>\nResult: <b>${pnlText}</b>\nReason: ${trade.reason || 'Auto-exit'}\nInvested: ${trade.initialSolSpent || 0} SOL`;
+
+        fetch(`https://api.telegram.org/bot${apps.telegram.botToken}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: apps.telegram.chatId,
+            text: msg,
+            parse_mode: 'HTML'
+          })
+        }).catch(err => log(`[TELEGRAM ALERT ERROR] ${err.message}`));
+      }
+
+      // Discord webhook
+      if (apps.discord?.enabled && apps.discord?.webhookUrl) {
+        const isWin = (trade.pnlSol || 0) >= 0;
+        fetch(apps.discord.webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            content: `${isWin ? '🟢' : '🔴'} **Position Closed: ${trade.symbol || trade.name}** | PnL: ${(trade.pnlPercent || 0).toFixed(2)}% (${(trade.pnlSol || 0).toFixed(4)} SOL) | Reason: ${trade.reason}`
+          })
+        }).catch(err => log(`[DISCORD WEBHOOK ERROR] ${err.message}`));
+      }
+    } catch (e) {
+      log(`[APPS INTEGRATION ERROR] ${e.message}`);
+    }
+  });
+
+  eventBus.on('STATE_TRANSITION', async ({ mint, state, record }) => {
+    if (state === 'POSITION_OPEN') {
+      try {
+        const apps = dbManager.getSetting('apps_config', null);
+        if (apps?.telegram?.enabled && apps.telegram?.botToken && apps.telegram?.chatId && apps.telegram?.notifyBuys !== false) {
+          const msg = `⚡ <b>NEW POSITION OPENED</b>\n\nToken: <b>${record?.name || 'Unknown'}</b> ($${record?.symbol || 'UNK'})\nMint: <code>${mint}</code>\nEntry Price: ${record?.position?.entryPriceSol || record?.entryPriceSol || 'Market'}\nInitial Size: ${buySizeSol} SOL\nRisk Score: ${record?.entryScore || 0}/100`;
+          fetch(`https://api.telegram.org/bot${apps.telegram.botToken}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: apps.telegram.chatId,
+              text: msg,
+              parse_mode: 'HTML'
+            })
+          }).catch(() => {});
+        }
+      } catch (e) {}
+    }
   });
 
   const notificationsLog = [

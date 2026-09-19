@@ -1347,8 +1347,8 @@
       gap: 12px;
     }
     .token-img {
-      width: 58px;
-      height: 58px;
+      width: 70px;
+      height: 70px;
       border-radius: 12px;
       object-fit: cover;
       flex-shrink: 0;
@@ -1383,6 +1383,14 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
+    }
+    .token-time {
+      color: #12af80;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'Geist Mono', monospace;
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
     }
     .token-mint {
       font-size: 10px;
@@ -1537,7 +1545,7 @@
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
     }
     .drp-trigger-btn:hover {
-      border-color: rgba(0, 255, 163, 0.4);
+      border-color: rgba(255, 255, 255, 0.28);
       background: #121620;
     }
     .drp-popover {
@@ -1674,7 +1682,7 @@
     .drp-nav-btn:hover {
       background: rgba(255, 255, 255, 0.1);
       color: #ffffff;
-      border-color: var(--green-primary);
+      border-color: rgba(255, 255, 255, 0.3);
     }
     .drp-month-titles {
       display: flex;
@@ -1709,9 +1717,16 @@
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       row-gap: 2px;
+      justify-items: center;
     }
     .drp-day-cell {
+      width: 28px;
       height: 28px;
+      min-width: 28px;
+      max-width: 28px;
+      min-height: 28px;
+      max-height: 28px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1719,14 +1734,17 @@
       font-weight: 500;
       color: #cbd5e1;
       cursor: pointer;
-      border-radius: 4px;
+      border-radius: 50%;
       user-select: none;
-      transition: all 0.1s ease;
+      transition: all 0.12s ease;
       position: relative;
+      box-sizing: border-box;
+      line-height: 1;
     }
-    .drp-day-cell:hover:not(.drp-day-disabled) {
+    .drp-day-cell:hover:not(.drp-day-disabled):not(.drp-day-start):not(.drp-day-end):not(.drp-day-single) {
       background: rgba(255, 255, 255, 0.08);
       color: #ffffff;
+      border-radius: 50%;
     }
     .drp-day-disabled {
       color: rgba(255, 255, 255, 0.16);
@@ -1737,30 +1755,36 @@
       background: rgba(255, 255, 255, 0.08) !important;
       color: #ffffff !important;
       border-radius: 0 !important;
+      width: 100% !important;
+      justify-self: stretch !important;
     }
-    .drp-day-start {
-      background: #2b313e !important;
-      color: #ffffff !important;
-      font-weight: 700 !important;
-      border-radius: 50% !important;
-      border: 1px solid rgba(255, 255, 255, 0.35) !important;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
-    }
-    .drp-day-end {
-      background: #2b313e !important;
-      color: #ffffff !important;
-      font-weight: 700 !important;
-      border-radius: 50% !important;
-      border: 1px solid rgba(255, 255, 255, 0.35) !important;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
-    }
+    .drp-day-start,
+    .drp-day-end,
     .drp-day-single {
+      width: 28px !important;
+      height: 28px !important;
+      min-width: 28px !important;
+      max-width: 28px !important;
+      min-height: 28px !important;
+      max-height: 28px !important;
+      margin: 0 auto !important;
       background: #2b313e !important;
       color: #ffffff !important;
       font-weight: 700 !important;
       border-radius: 50% !important;
-      border: 1px solid rgba(255, 255, 255, 0.35) !important;
+      border: 1px solid rgba(255, 255, 255, 0.45) !important;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+      box-sizing: border-box !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .drp-day-start:hover,
+    .drp-day-end:hover,
+    .drp-day-single:hover {
+      background: #363d4d !important;
+      color: #ffffff !important;
+      border-color: rgba(255, 255, 255, 0.6) !important;
     }
     .drp-footer {
       display: flex;
@@ -1932,7 +1956,7 @@
               <div class="drp-sidebar">
                 <button type="button" class="drp-side-btn active" id="drp-btn-today" onclick="selectPresetRange('today')">Today</button>
                 <button type="button" class="drp-side-btn" id="drp-btn-yesterday" onclick="selectPresetRange('yesterday')">Yesterday</button>
-                <button type="button" class="drp-side-btn" id="drp-btn-last" onclick="selectPresetRange('last')">Last</button>
+                <button type="button" class="drp-side-btn" id="drp-btn-last" onclick="selectPresetRange('last')">Last 7 days</button>
                 <button type="button" class="drp-side-btn" id="drp-btn-mtd" onclick="selectPresetRange('mtd')">Period to date</button>
                 <button type="button" class="drp-side-btn" id="drp-btn-quarters" onclick="selectPresetRange('quarters')">Quarters</button>
                 <div style="height: 1px; background: rgba(255,255,255,0.06); margin: 6px 0;"></div>
@@ -1945,7 +1969,7 @@
                 <!-- Top Config Row: Last [30] [Days v] [x] Include today -->
                 <div class="drp-top-row">
                   <span class="drp-top-label">Last</span>
-                  <input type="number" id="drp-input-num" class="drp-num-input" value="30" min="1" max="365" oninput="onDrpNumChange()">
+                  <input type="number" id="drp-input-num" class="drp-num-input" value="7" min="1" max="365" oninput="onDrpNumChange()">
                   <select id="drp-select-unit" class="drp-unit-select" onchange="onDrpUnitChange()">
                     <option value="days">Days</option>
                     <option value="weeks">Weeks</option>
@@ -2237,6 +2261,19 @@
           </div>
 
           <div class="nav-group-block">
+            <div class="settings-nav-group-title">Apps</div>
+            <button class="settings-nav-item" id="nav-apps" onclick="switchSettingsTab('apps')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+                <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+              </svg>
+              <span>Apps</span>
+            </button>
+          </div>
+
+          <div class="nav-group-block">
             <div class="settings-nav-group-title">Network & APIs</div>
             <button class="settings-nav-item" id="nav-api" onclick="switchSettingsTab('api')">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2459,6 +2496,125 @@
                 </div>
               </div>
               <p class="settings-helper-text">Dynamically translated to micro-lamports per Compute Unit (CU).</p>
+            </div>
+          </div>
+
+          <!-- SECTION: Apps & Integrations -->
+          <div class="settings-section-view" id="sec-view-apps">
+            <h2 class="settings-pane-header">Apps & Integrations</h2>
+
+            <!-- Google Sheets Integration Card -->
+            <div class="settings-card">
+              <div class="settings-card-row">
+                <span class="settings-card-title">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="8" y1="13" x2="16" y2="13"></line>
+                    <line x1="8" y1="17" x2="16" y2="17"></line>
+                    <line x1="10" y1="9" x2="8" y2="9"></line>
+                  </svg>
+                  Google Sheets Sync
+                  <span class="settings-info-icon" title="Stream real-time trade logs, closed positions, and PnL metrics directly to your Google Sheet.">ⓘ</span>
+                </span>
+                <button type="button" class="settings-pill-toggle active" id="toggle-gsheet-sync" onclick="toggleImage2Pill(this)">
+                  <span class="settings-pill-thumb"></span>
+                </button>
+              </div>
+              <p class="settings-helper-text">Automatically log closed trades, realized PnL, token mints, entry/exit prices, and timestamps to a Google Sheet.</p>
+
+              <div class="settings-field-group" style="margin-top: 10px;">
+                <div class="settings-field-label">
+                  <span>Google Apps Script Webhook URL</span>
+                  <button type="button" class="sec-btn" onclick="testGoogleSheet()" style="padding: 2px 8px; font-size: 11px;">📊 Test Sync</button>
+                </div>
+                <input type="text" id="setting-gsheet-url" class="settings-clean-input" placeholder="https://script.google.com/macros/s/AKfycb.../exec" style="font-family: monospace; font-size: 12px;" />
+                <div class="settings-helper-text">Deployed Google Apps Script Web App URL (doPost handler) configured to append rows to your sheet.</div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 8px; margin-top: 8px;">
+                <div>
+                  <label class="settings-field-label">Spreadsheet ID (Optional)</label>
+                  <input type="text" id="setting-gsheet-id" class="settings-clean-input" placeholder="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms" style="font-family: monospace; font-size: 11.5px;" />
+                </div>
+                <div>
+                  <label class="settings-field-label">Sheet Tab Name</label>
+                  <input type="text" id="setting-gsheet-tab" class="settings-clean-input" placeholder="Trades" value="Trades" style="font-size: 11.5px;" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Telegram Alerts Card -->
+            <div class="settings-card">
+              <div class="settings-card-row">
+                <span class="settings-card-title">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                  Telegram Bot & Alerts
+                  <span class="settings-info-icon" title="Broadcast buy signals, position fills, TP/SL executions, and stage veto alerts.">ⓘ</span>
+                </span>
+                <button type="button" class="settings-pill-toggle active" id="toggle-telegram-alerts" onclick="toggleImage2Pill(this)">
+                  <span class="settings-pill-thumb"></span>
+                </button>
+              </div>
+              <p class="settings-helper-text">Receive real-time trade signals, buy/sell executions, and PnL alerts directly in your Telegram channel or DM.</p>
+
+              <div class="settings-field-group" style="margin-top: 10px;">
+                <label class="settings-field-label">Telegram Bot Token</label>
+                <input type="password" id="setting-telegram-token" class="settings-clean-input" placeholder="1234567890:ABCdefGhIJKlmNoPQRsTUVwxyZ" style="font-family: monospace; font-size: 12px;" />
+                <div class="settings-helper-text">Bot token obtained from Telegram @BotFather.</div>
+              </div>
+
+              <div class="settings-field-group" style="margin-top: 8px;">
+                <div class="settings-field-label">
+                  <span>Telegram Chat ID / Channel ID</span>
+                  <button type="button" class="sec-btn" onclick="testTelegramMessage()" style="padding: 2px 8px; font-size: 11px;">✈️ Test Message</button>
+                </div>
+                <input type="text" id="setting-telegram-chatid" class="settings-clean-input" placeholder="-1001234567890 or @your_channel" style="font-family: monospace; font-size: 12px;" />
+                <div class="settings-helper-text">Your Telegram User ID or Target Channel/Group ID.</div>
+              </div>
+
+              <div style="display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap;">
+                <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #d4d4d8; cursor: pointer;">
+                  <input type="checkbox" id="check-tg-buys" checked style="accent-color: #38bdf8;"> Buy/Sell Executions
+                </label>
+                <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #d4d4d8; cursor: pointer;">
+                  <input type="checkbox" id="check-tg-vetos" checked style="accent-color: #38bdf8;"> Stage 1-3 Veto Alerts
+                </label>
+                <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #d4d4d8; cursor: pointer;">
+                  <input type="checkbox" id="check-tg-daily" checked style="accent-color: #38bdf8;"> Daily PnL Summary
+                </label>
+              </div>
+            </div>
+
+            <!-- Discord / Custom Webhook Card -->
+            <div class="settings-card">
+              <div class="settings-card-row">
+                <span class="settings-card-title">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                  </svg>
+                  Discord / Custom Webhook
+                  <span class="settings-info-icon" title="Forward webhook payload to Discord, Slack, or any custom REST endpoint.">ⓘ</span>
+                </span>
+                <button type="button" class="settings-pill-toggle" id="toggle-discord-alerts" onclick="toggleImage2Pill(this)">
+                  <span class="settings-pill-thumb"></span>
+                </button>
+              </div>
+              <p class="settings-helper-text">Dispatch rich JSON payloads for trades, liquidations, and state machine transitions.</p>
+
+              <div class="settings-field-group" style="margin-top: 10px;">
+                <div class="settings-field-label">
+                  <span>Webhook URL</span>
+                  <button type="button" class="sec-btn" onclick="testDiscordWebhook()" style="padding: 2px 8px; font-size: 11px;">🔔 Test Ping</button>
+                </div>
+                <input type="text" id="setting-discord-url" class="settings-clean-input" placeholder="https://discord.com/api/webhooks/..." style="font-family: monospace; font-size: 12px;" />
+                <div class="settings-helper-text">Discord channel webhook or custom endpoint.</div>
+              </div>
             </div>
           </div>
 
@@ -2784,6 +2940,77 @@
     let autoBuyEnabled = false;
     let learningEnabled = true;
     let closedTrades = [];
+    let vetoCount = 0;
+    let managedWallets = [];
+    let activeWalletPubkey = '';
+
+    function formatSolAmount(val) {
+      const num = parseFloat(val || 0);
+      if (isNaN(num) || num <= 0) return '0.00';
+      if (num < 0.0001) return num.toFixed(6);
+      if (num < 1) return num.toFixed(4);
+      return num.toFixed(2);
+    }
+
+    function hydrateCachedWallet() {
+      try {
+        const storedWallets = JSON.parse(localStorage.getItem('ko_sniper_wallets') || '[]');
+        if (Array.isArray(storedWallets) && storedWallets.length > 0) {
+          managedWallets = storedWallets;
+        }
+        const cachedW = JSON.parse(localStorage.getItem('odex_cached_wallet') || 'null');
+        let sBal = cachedW?.solBalance;
+        let uBal = cachedW?.usdcBalance;
+        let pub = cachedW?.pubkey;
+
+        if (sBal === undefined || sBal === null) {
+          const activeW = managedWallets.find(w => w.active) || managedWallets[0];
+          if (activeW) {
+            pub = activeW.address;
+            if (activeW.balance) {
+              const num = parseFloat(String(activeW.balance).replace(/[^\d.]/g, ''));
+              if (!isNaN(num)) sBal = num;
+            }
+          }
+        }
+
+        if (sBal !== undefined && sBal !== null) {
+          const formatted = formatSolAmount(sBal);
+          const hdrSol = document.getElementById('hdr-sol-bal');
+          if (hdrSol) hdrSol.innerText = formatted;
+          const wmSol = document.getElementById('wm-sol-display') || document.getElementById('wm-sol-bal');
+          if (wmSol) wmSol.innerText = `${formatted} Sol`;
+        }
+        if (uBal !== undefined && uBal !== null) {
+          const hdrUsdc = document.getElementById('hdr-usdc-bal');
+          if (hdrUsdc) hdrUsdc.innerText = parseFloat(uBal || 0).toLocaleString();
+          const wmUsdc = document.getElementById('wm-usdc-display') || document.getElementById('wm-usdc-bal');
+          if (wmUsdc) wmUsdc.innerText = `$${parseFloat(uBal || 0).toLocaleString()}`;
+        }
+        if (pub) {
+          activeWalletPubkey = pub;
+          const wmAddr = document.getElementById('wm-active-addr');
+          if (wmAddr) wmAddr.innerText = `${pub.slice(0, 6)}...${pub.slice(-6)}`;
+          const solscanLink = document.getElementById('wm-solscan-link');
+          if (solscanLink) solscanLink.href = `https://solscan.io/account/${pub}`;
+        }
+      } catch (e) {}
+    }
+
+    // Hydrate wallet cash and address immediately on page load
+    hydrateCachedWallet();
+
+    // Restore cached vetoes immediately
+    try {
+      const savedVetoes = localStorage.getItem('odex_cached_vetoes');
+      if (savedVetoes !== null) {
+        vetoCount = parseInt(savedVetoes, 10) || 0;
+        const el = document.getElementById('stat-vetoes');
+        if (el) el.innerText = vetoCount;
+      }
+    } catch (e) {}
+
+    // Restore cached closed trades
     try {
       const cached = JSON.parse(localStorage.getItem('odex_cached_trades') || '[]');
       if (Array.isArray(cached) && cached.length > 0) {
@@ -2801,7 +3028,70 @@
         });
       }
     } catch (e) {}
-    let vetoCount = 0;
+
+    // Restore cached active positions
+    try {
+      const cachedPos = JSON.parse(localStorage.getItem('odex_cached_positions') || '[]');
+      if (Array.isArray(cachedPos) && cachedPos.length > 0) {
+        cachedPos.forEach(p => {
+          tokensMap.set(p.mint, {
+            mint: p.mint,
+            name: p.name,
+            symbol: p.symbol,
+            imageUrl: p.imageUrl || '',
+            state: 'POSITION_OPEN',
+            position: p,
+            updatedAt: Date.now(),
+          });
+        });
+      }
+    } catch (e) {}
+
+    // Restore cached tokens
+    try {
+      const cachedToks = JSON.parse(localStorage.getItem('odex_cached_tokens') || '[]');
+      if (Array.isArray(cachedToks) && cachedToks.length > 0) {
+        cachedToks.forEach(t => {
+          if (!tokensMap.has(t.mint)) tokensMap.set(t.mint, t);
+        });
+      }
+    } catch (e) {}
+
+    function saveCachedTokens() {
+      try {
+        const nonClosed = [];
+        for (const t of tokensMap.values()) {
+          if (t.state !== 'CLOSED') {
+            nonClosed.push({
+              mint: t.mint,
+              name: t.name,
+              symbol: t.symbol,
+              imageUrl: t.imageUrl || '',
+              state: t.state,
+              entryScore: t.entryScore,
+              rejectionReason: t.rejectionReason,
+              pnlPercent: t.pnlPercent,
+              position: t.position,
+              updatedAt: t.updatedAt || Date.now(),
+            });
+          }
+          if (nonClosed.length >= 60) break;
+        }
+        localStorage.setItem('odex_cached_tokens', JSON.stringify(nonClosed));
+      } catch (e) {}
+    }
+
+    function saveCachedPositions() {
+      try {
+        const openPos = [];
+        for (const t of tokensMap.values()) {
+          if (t.state === 'POSITION_OPEN' && t.position) {
+            openPos.push(t.position);
+          }
+        }
+        localStorage.setItem('odex_cached_positions', JSON.stringify(openPos));
+      } catch (e) {}
+    }
 
     const logContainer = document.getElementById('log-container');
 
@@ -2877,32 +3167,24 @@
           const raw = localStorage.getItem('odex_event_logs_30m');
           const logs = raw ? JSON.parse(raw) : [];
           logs.unshift({ msg, color, ts });
-          const cutoff = Date.now() - THIRTY_MINUTES_MS;
-          const freshLogs = logs.filter(l => l.ts >= cutoff).slice(0, 60);
+          const freshLogs = logs.slice(0, 80);
           localStorage.setItem('odex_event_logs_30m', JSON.stringify(freshLogs));
         } catch (e) { console.error('[AUTO-CAUGHT ERROR]', e.message || e); }
       }
 
-      // Prune any logs older than 30 minutes
-      const cutoff = Date.now() - THIRTY_MINUTES_MS;
-      while (logContainer.lastElementChild) {
-        const lastTs = Number(logContainer.lastElementChild.getAttribute('data-ts') || 0);
-        if (lastTs && lastTs < cutoff) {
-          logContainer.removeChild(logContainer.lastElementChild);
-        } else {
-          break;
-        }
+      // Keep terminal buffer manageable (max 100 entries)
+      while (logContainer.children.length > 100) {
+        logContainer.removeChild(logContainer.lastElementChild);
       }
     }
 
-    // Restore saved logs for the past 30 minutes on startup
+    // Restore saved logs on startup
     (function init30MinLogs() {
       try {
         const raw = localStorage.getItem('odex_event_logs_30m');
         if (raw) {
           const logs = JSON.parse(raw);
-          const cutoff = Date.now() - THIRTY_MINUTES_MS;
-          const freshLogs = logs.filter(l => l.ts >= cutoff).slice(0, 60);
+          const freshLogs = Array.isArray(logs) ? logs.slice(0, 80) : [];
           freshLogs.slice().reverse().forEach(l => {
             appendLog(l.msg, l.color, l.ts, false);
           });
@@ -2911,23 +3193,9 @@
       } catch (e) { console.error('[AUTO-CAUGHT ERROR]', e.message || e); }
 
       setInterval(() => {
-        const cutoff = Date.now() - THIRTY_MINUTES_MS;
-        while (logContainer.lastElementChild) {
-          const lastTs = Number(logContainer.lastElementChild.getAttribute('data-ts') || 0);
-          if (lastTs && lastTs < cutoff) {
-            logContainer.removeChild(logContainer.lastElementChild);
-          } else {
-            break;
-          }
+        while (logContainer.children.length > 100) {
+          logContainer.removeChild(logContainer.lastElementChild);
         }
-        try {
-          const raw = localStorage.getItem('odex_event_logs_30m');
-          if (raw) {
-            const logs = JSON.parse(raw);
-            const fresh = logs.filter(l => l.ts >= cutoff).slice(0, 60);
-            localStorage.setItem('odex_event_logs_30m', JSON.stringify(fresh));
-          }
-        } catch (e) { console.error('[AUTO-CAUGHT ERROR]', e.message || e); }
       }, 30000);
     })();
 
@@ -3126,10 +3394,11 @@
             t.position = p;
             tokensMap.set(p.mint, t);
           });
+          try { localStorage.setItem('odex_cached_positions', JSON.stringify(d.positions)); } catch (e) {}
         }
         if (d.tradeHistory) {
           closedTrades = d.tradeHistory;
-          try { localStorage.setItem('odex_cached_trades', JSON.stringify(closedTrades.slice(0, 50))); } catch (e) {}
+          try { localStorage.setItem('odex_cached_trades', JSON.stringify(closedTrades.slice(0, 100))); } catch (e) {}
           d.tradeHistory.forEach(h => {
             let t = tokensMap.get(h.mint);
             const img = h.imageUrl || (t && t.imageUrl) || '';
@@ -3151,6 +3420,13 @@
           });
           updateHistoricalWinRate();
         }
+        if (d.vetoes !== undefined) {
+          vetoCount = d.vetoes;
+          const el = document.getElementById('stat-vetoes');
+          if (el) el.innerText = vetoCount;
+          try { localStorage.setItem('odex_cached_vetoes', vetoCount.toString()); } catch (e) {}
+        }
+        saveCachedTokens();
         render();
         if (typeof updateAutoBalance === 'function') updateAutoBalance();
       } else if (type === 'SETTINGS_UPDATED') {
@@ -3191,6 +3467,7 @@
         if (record.state === 'REJECTED') {
           vetoCount++;
           document.getElementById('stat-vetoes').innerText = vetoCount;
+          try { localStorage.setItem('odex_cached_vetoes', vetoCount.toString()); } catch (e) {}
           appendLog(`❌ [Rejected] ${record.name || record.mint.slice(0, 8)}: ${record.rejectionReason || 'Vetoed'}`, 'var(--red-primary)');
         } else if (record.state === 'ENTRY_READY') {
           appendLog(`⭐ [Entry Ready] ${record.name || record.mint.slice(0, 8)} passed all 4 gates! Score: ${record.entryScore}/100`, 'var(--purple-primary)');
@@ -3201,6 +3478,7 @@
           appendLog(`🚀 [Position Open] ${record.name} position confirmed active`, 'var(--green-primary)');
           playNotificationChime('buy');
         }
+        saveCachedTokens();
         render();
       } else if (type === 'TOKEN_METADATA_UPDATED') {
         const t = tokensMap.get(d.mint);
@@ -3214,6 +3492,7 @@
               pre.src = d.imageUrl;
             } catch (e) { console.error('[AUTO-CAUGHT ERROR]', e.message || e); }
           }
+          saveCachedTokens();
           render();
         }
       } else if (type === 'POSITION_OPENED') {
@@ -3223,6 +3502,8 @@
           t.state = 'POSITION_OPEN';
           t.position = d;
           tokensMap.set(d.mint, t);
+          saveCachedPositions();
+          saveCachedTokens();
           playNotificationChime('buy');
           refreshWalletBalances();
           render();
@@ -3236,7 +3517,7 @@
           render();
         } else if (type === 'POSITION_CLOSED') {
           closedTrades.unshift(d);
-          try { localStorage.setItem('odex_cached_trades', JSON.stringify(closedTrades.slice(0, 50))); } catch (e) {}
+          try { localStorage.setItem('odex_cached_trades', JSON.stringify(closedTrades.slice(0, 100))); } catch (e) {}
           let t = tokensMap.get(d.mint);
           if (!t) {
             t = {
@@ -3252,6 +3533,8 @@
             t.state = 'CLOSED';
             t.closedData = d;
           }
+          saveCachedPositions();
+          saveCachedTokens();
           updateHistoricalWinRate();
           appendLog(`🎉 [CLOSED] ${d.name || d.mint.slice(0, 8)} closed with ${(d.finalPnlPercent || 0).toFixed(1)}% PnL`, (d.finalPnlPercent >= 0) ? 'var(--green-primary)' : 'var(--red-primary)');
           refreshWalletBalances();
@@ -3311,6 +3594,32 @@
       }
     }
 
+    function formatTokenAge(timestamp, now = Date.now()) {
+      if (!timestamp || isNaN(timestamp)) return '';
+      const diffSec = Math.max(0, Math.floor((now - timestamp) / 1000));
+      if (diffSec < 60) return `${diffSec}s`;
+      const diffMin = Math.floor(diffSec / 60);
+      if (diffMin < 60) return `${diffMin}m`;
+      const diffHr = Math.floor(diffMin / 60);
+      if (diffHr < 24) return `${diffHr}h`;
+      const diffDays = Math.floor(diffHr / 24);
+      return `${diffDays}d`;
+    }
+
+    // High-precision live ticker to keep token launch times 100% accurate every second
+    setInterval(() => {
+      const now = Date.now();
+      const timeEls = document.querySelectorAll('.token-time');
+      for (let i = 0; i < timeEls.length; i++) {
+        const el = timeEls[i];
+        const ts = Number(el.getAttribute('data-ts'));
+        if (ts && !isNaN(ts)) {
+          const fresh = formatTokenAge(ts, now);
+          if (el.innerText !== fresh) el.innerText = fresh;
+        }
+      }
+    }, 1000);
+
     let renderPending = false;
     let lastRenderTime = 0;
     const RENDER_THROTTLE_MS = 60;
@@ -3368,6 +3677,7 @@
                 imageUrl: img,
                 state: 'CLOSED',
                 closedData: h,
+                detectedAt: new Date(h.openedAt || h.timestamp || h.closedAt || Date.now()).getTime(),
                 updatedAt: new Date(h.closedAt || h.openedAt || Date.now()).getTime(),
               });
             }
@@ -3586,6 +3896,21 @@
           </div>
         `;
 
+        let launchTs = t.detectedAt;
+        if (!launchTs && t.openedAt) launchTs = new Date(t.openedAt).getTime();
+        if (!launchTs && t.closedData) {
+          launchTs = t.closedData.openedAt ? new Date(t.closedData.openedAt).getTime() : (t.closedData.timestamp ? new Date(t.closedData.timestamp).getTime() : null);
+        }
+        if (!launchTs && t.timestamp) launchTs = new Date(t.timestamp).getTime();
+        if (!launchTs && t.updatedAt) launchTs = Number(t.updatedAt);
+        if (!launchTs || isNaN(launchTs)) launchTs = Date.now();
+        else {
+          launchTs = Number(launchTs);
+          if (launchTs < 10000000000) launchTs = launchTs * 1000;
+        }
+        t.detectedAt = launchTs;
+        const timeAgoStr = formatTokenAge(launchTs);
+
         const mintShort = t.mint ? `${t.mint.slice(0, 4)}...${t.mint.slice(-4)}` : '...';
         const nameClean = escapeHtml(t.name) || 'Resolving...';
         const symClean = escapeHtml(t.symbol) || '...';
@@ -3609,6 +3934,7 @@
                   <span class="token-name">${nameClean}</span>
                   <span class="token-symbol">${symClean}</span>
                   <div class="mint-row">
+                    <span class="token-time" data-ts="${launchTs}" title="Launched at ${new Date(launchTs).toLocaleTimeString()}">${timeAgoStr}</span>
                     <span class="token-mint">${mintShort}</span>
                     <button class="copy-btn" onclick="copyAddress(event, '${t.mint}')" title="Copy full mint address">
                       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -3636,6 +3962,21 @@
             if (symEl && symEl.innerHTML !== symClean) symEl.innerHTML = symClean;
             const imgEl = cells[0].querySelector('.token-img');
             if (imgEl && imgSrc !== fallbackSvg && imgEl.src !== imgSrc) imgEl.src = imgSrc;
+            const timeEl = cells[0].querySelector('.token-time');
+            if (timeEl) {
+              timeEl.setAttribute('data-ts', launchTs);
+              if (timeEl.innerText !== timeAgoStr) timeEl.innerText = timeAgoStr;
+            } else {
+              const mintRow = cells[0].querySelector('.mint-row');
+              if (mintRow) {
+                const newSpan = document.createElement('span');
+                newSpan.className = 'token-time';
+                newSpan.setAttribute('data-ts', launchTs);
+                newSpan.title = `Launched at ${new Date(launchTs).toLocaleTimeString()}`;
+                newSpan.innerText = timeAgoStr;
+                mintRow.insertBefore(newSpan, mintRow.firstChild);
+              }
+            }
 
             if (cells[1].innerHTML !== narrativeHtml) cells[1].innerHTML = narrativeHtml;
             if (cells[2].innerHTML !== moneyFlowHtml) cells[2].innerHTML = moneyFlowHtml;
@@ -3660,7 +4001,7 @@
 
     let drpState = {
       preset: localStorage.getItem('drp_preset') || 'all',
-      count: 30,
+      count: 7,
       unit: 'days',
       includeToday: true,
       activeStart: null,
@@ -3686,11 +4027,15 @@
       drpState.viewMonth = leftMonth;
 
       const initialPreset = localStorage.getItem('drp_preset') || 'all';
-      computePresetDates(initialPreset);
+      if (initialPreset === 'last') {
+        drpState.count = 7;
+        drpState.unit = 'days';
+      }
+      computePresetDates(initialPreset, drpState.count, drpState.unit, drpState.includeToday);
       drpState.preset = initialPreset;
       drpState.activeStart = new Date(drpState.tempStart);
       drpState.activeEnd = new Date(drpState.tempEnd);
-      drpState.label = initialPreset === 'all' ? 'All Time' : (initialPreset === 'today' ? 'Today' : initialPreset);
+      drpState.label = initialPreset === 'all' ? 'All Time' : (initialPreset === 'today' ? 'Today' : (initialPreset === 'last' ? 'Last 7 days' : initialPreset));
 
       renderDrpHeaderLabel();
     }
@@ -3728,13 +4073,17 @@
 
     function selectPresetRange(preset) {
       drpState.preset = preset;
+      if (preset === 'last') {
+        drpState.count = 7;
+        drpState.unit = 'days';
+      }
       computePresetDates(preset, drpState.count, drpState.unit, drpState.includeToday);
       syncDrpUI();
       renderDrpCalendars();
       applyDateRangePicker();
     }
 
-    function computePresetDates(preset, count = 30, unit = 'days', includeToday = true) {
+    function computePresetDates(preset, count = 7, unit = 'days', includeToday = true) {
       const now = new Date();
       let start, end;
 
@@ -3954,7 +4303,7 @@
 
     function applyDateRangePicker() {
       if (!drpState.tempStart) {
-        computePresetDates('last', 30, 'days', true);
+        computePresetDates('last', 7, 'days', true);
       } else if (!drpState.tempEnd) {
         drpState.tempEnd = new Date(drpState.tempStart.getFullYear(), drpState.tempStart.getMonth(), drpState.tempStart.getDate(), 23, 59, 59, 999);
       }
@@ -4042,6 +4391,10 @@
       const activeTabBtn = document.getElementById(`tab-${savedTab}`);
       if (activeTabBtn) activeTabBtn.classList.add('active');
     } catch (e) {}
+
+    // Immediate synchronous render of cached stats, positions, and trades on page load
+    updateHistoricalWinRate();
+    render();
 
     let isPaperModeEnabled = true;
     let currentBuySize = 0.1;
@@ -4136,17 +4489,41 @@
 
     async function loadInitialDataRest() {
       try {
-        const [tradesRes, tokensRes, walletRes] = await Promise.allSettled([
-          fetch('/api/trades?limit=50').then(r => r.json()),
+        const [tradesRes, tokensRes, walletRes, positionsRes, statusRes] = await Promise.allSettled([
+          fetch('/api/trades?limit=100').then(r => r.json()),
           fetch('/api/tokens').then(r => r.json()),
           fetch('/api/wallet').then(r => r.json()),
+          fetch('/api/positions').then(r => r.json()),
+          fetch('/api/status').then(r => r.json()),
         ]);
+
+        if (statusRes.status === 'fulfilled' && statusRes.value) {
+          const s = statusRes.value;
+          if (s.vetoes !== undefined) {
+            vetoCount = s.vetoes;
+            const el = document.getElementById('stat-vetoes');
+            if (el) el.innerText = vetoCount;
+            try { localStorage.setItem('odex_cached_vetoes', vetoCount.toString()); } catch (e) {}
+          }
+          if (s.autoBuyEnabled !== undefined) {
+            autoBuyEnabled = Boolean(s.autoBuyEnabled);
+            updateAutoBuyBtn();
+          }
+          if (s.mode !== undefined) {
+            isPaperModeEnabled = (s.mode === 'PAPER');
+            updatePaperModeUI();
+          }
+          if (s.learningEnabled !== undefined) {
+            learningEnabled = s.learningEnabled;
+            if (typeof updateLearningBtn === 'function') updateLearningBtn(s.learningMetrics);
+          }
+        }
 
         if (tradesRes.status === 'fulfilled' && tradesRes.value?.trades) {
           const tList = tradesRes.value.trades;
           if (Array.isArray(tList) && tList.length > 0) {
             closedTrades = tList;
-            try { localStorage.setItem('odex_cached_trades', JSON.stringify(closedTrades.slice(0, 50))); } catch (e) {}
+            try { localStorage.setItem('odex_cached_trades', JSON.stringify(closedTrades.slice(0, 100))); } catch (e) {}
             tList.forEach(h => {
               let t = tokensMap.get(h.mint);
               const img = h.imageUrl || (t && t.imageUrl) || '';
@@ -4171,19 +4548,67 @@
           }
         }
 
+        if (positionsRes.status === 'fulfilled' && positionsRes.value?.positions) {
+          const pList = positionsRes.value.positions;
+          if (Array.isArray(pList)) {
+            pList.forEach(p => {
+              const t = tokensMap.get(p.mint) || { mint: p.mint };
+              t.name = p.name;
+              t.symbol = p.symbol;
+              t.state = 'POSITION_OPEN';
+              t.position = p;
+              tokensMap.set(p.mint, t);
+            });
+            try { localStorage.setItem('odex_cached_positions', JSON.stringify(pList)); } catch (e) {}
+            render();
+          }
+        }
+
         if (tokensRes.status === 'fulfilled' && tokensRes.value?.tokens) {
           const tokList = tokensRes.value.tokens;
           if (Array.isArray(tokList)) {
             tokList.forEach(t => {
               if (!tokensMap.has(t.mint)) tokensMap.set(t.mint, t);
             });
+            saveCachedTokens();
             render();
           }
         }
 
-        if (walletRes.status === 'fulfilled' && walletRes.value?.mode) {
-          isPaperModeEnabled = (walletRes.value.mode === 'PAPER');
-          updatePaperModeUI();
+        if (walletRes.status === 'fulfilled' && walletRes.value) {
+          const w = walletRes.value;
+          if (w.mode) {
+            isPaperModeEnabled = (w.mode === 'PAPER');
+            updatePaperModeUI();
+          }
+          if (w.solBalance !== undefined) {
+            const solVal = formatSolAmount(w.solBalance);
+            const hdrSol = document.getElementById('hdr-sol-bal');
+            if (hdrSol) hdrSol.innerText = solVal;
+            const wmSol = document.getElementById('wm-sol-display') || document.getElementById('wm-sol-bal');
+            if (wmSol) wmSol.innerText = `${solVal} Sol`;
+          }
+          if (w.usdcBalance !== undefined) {
+            const usdcVal = parseFloat(w.usdcBalance || 0).toLocaleString();
+            const hdrUsdc = document.getElementById('hdr-usdc-bal');
+            if (hdrUsdc) hdrUsdc.innerText = usdcVal;
+            const wmUsdc = document.getElementById('wm-usdc-display') || document.getElementById('wm-usdc-bal');
+            if (wmUsdc) wmUsdc.innerText = `$${usdcVal}`;
+          }
+          if (w.pubkey) {
+            activeWalletPubkey = w.pubkey;
+            const wmAddr = document.getElementById('wm-active-addr');
+            if (wmAddr && activeWalletPubkey) {
+              wmAddr.innerText = `${activeWalletPubkey.slice(0, 6)}...${activeWalletPubkey.slice(-6)}`;
+            }
+          }
+          try {
+            localStorage.setItem('odex_cached_wallet', JSON.stringify({
+              solBalance: w.solBalance,
+              usdcBalance: w.usdcBalance || 0,
+              pubkey: w.pubkey,
+            }));
+          } catch (e) {}
         }
       } catch (e) {
         console.error('[REST INIT ERROR]', e);
@@ -4406,6 +4831,7 @@
         }
         await fetchRpcData();
         await fetchSupabaseData();
+        await fetchAppsData();
       } catch (err) {
         console.error('Account data load error:', err);
       }
@@ -4545,6 +4971,142 @@
         }
       } catch (err) {
         alert('Sync error: ' + err.message);
+      }
+    }
+
+    async function fetchAppsData() {
+      try {
+        const res = await fetch('/api/apps');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && data.config) {
+            const cfg = data.config;
+            // Google Sheets
+            if (cfg.googleSheets) {
+              const gUrl = document.getElementById('setting-gsheet-url');
+              if (gUrl && cfg.googleSheets.url !== undefined) gUrl.value = cfg.googleSheets.url;
+              const gId = document.getElementById('setting-gsheet-id');
+              if (gId && cfg.googleSheets.sheetId !== undefined) gId.value = cfg.googleSheets.sheetId;
+              const gTab = document.getElementById('setting-gsheet-tab');
+              if (gTab && cfg.googleSheets.tabName !== undefined) gTab.value = cfg.googleSheets.tabName;
+              const gToggle = document.getElementById('toggle-gsheet-sync');
+              if (gToggle) {
+                if (cfg.googleSheets.enabled) gToggle.classList.add('active');
+                else gToggle.classList.remove('active');
+              }
+            }
+            // Telegram
+            if (cfg.telegram) {
+              const tgToken = document.getElementById('setting-telegram-token');
+              if (tgToken && cfg.telegram.botToken) tgToken.value = cfg.telegram.botToken;
+              const tgChat = document.getElementById('setting-telegram-chatid');
+              if (tgChat && cfg.telegram.chatId) tgChat.value = cfg.telegram.chatId;
+              const tgToggle = document.getElementById('toggle-telegram-alerts');
+              if (tgToggle) {
+                if (cfg.telegram.enabled) tgToggle.classList.add('active');
+                else tgToggle.classList.remove('active');
+              }
+              const tgBuys = document.getElementById('check-tg-buys');
+              if (tgBuys && cfg.telegram.notifyBuys !== undefined) tgBuys.checked = cfg.telegram.notifyBuys;
+              const tgVetos = document.getElementById('check-tg-vetos');
+              if (tgVetos && cfg.telegram.notifyVetos !== undefined) tgVetos.checked = cfg.telegram.notifyVetos;
+              const tgDaily = document.getElementById('check-tg-daily');
+              if (tgDaily && cfg.telegram.notifyDaily !== undefined) tgDaily.checked = cfg.telegram.notifyDaily;
+            }
+            // Discord / Webhook
+            if (cfg.discord) {
+              const dcUrl = document.getElementById('setting-discord-url');
+              if (dcUrl && cfg.discord.webhookUrl !== undefined) dcUrl.value = cfg.discord.webhookUrl;
+              const dcToggle = document.getElementById('toggle-discord-alerts');
+              if (dcToggle) {
+                if (cfg.discord.enabled) dcToggle.classList.add('active');
+                else dcToggle.classList.remove('active');
+              }
+            }
+          }
+        }
+      } catch (e) {
+        console.error('Failed to fetch apps config:', e);
+      }
+    }
+
+    async function testGoogleSheet() {
+      const url = document.getElementById('setting-gsheet-url')?.value.trim();
+      if (!url) {
+        alert('Please enter a valid Google Apps Script Webhook URL first.');
+        return;
+      }
+      try {
+        appendLog('📊 Testing Google Sheets connection...', 'var(--yellow-primary)');
+        const res = await fetch('/api/apps/test-gsheet', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            url,
+            sheetId: document.getElementById('setting-gsheet-id')?.value.trim() || '',
+            tabName: document.getElementById('setting-gsheet-tab')?.value.trim() || 'Trades'
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          appendLog('✅ Google Sheets sync test passed!', 'var(--green-primary)');
+          alert('✅ Google Sheets test ping succeeded! A test row was dispatched to your sheet.');
+        } else {
+          alert('Google Sheets test note: ' + (data.error || 'Check Webhook URL and script permissions'));
+        }
+      } catch (err) {
+        alert('Network error testing Google Sheets: ' + err.message);
+      }
+    }
+
+    async function testTelegramMessage() {
+      const token = document.getElementById('setting-telegram-token')?.value.trim();
+      const chatId = document.getElementById('setting-telegram-chatid')?.value.trim();
+      if (!token || !chatId) {
+        alert('Please enter both Telegram Bot Token and Chat ID.');
+        return;
+      }
+      try {
+        appendLog('✈️ Sending test alert to Telegram...', 'var(--yellow-primary)');
+        const res = await fetch('/api/apps/test-telegram', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ botToken: token, chatId })
+        });
+        const data = await res.json();
+        if (data.success) {
+          appendLog('✅ Telegram alert dispatched successfully.', 'var(--green-primary)');
+          alert('✅ Test alert successfully dispatched to your Telegram!');
+        } else {
+          alert('Telegram error: ' + (data.error || 'Check Bot Token and Chat ID'));
+        }
+      } catch (err) {
+        alert('Network error: ' + err.message);
+      }
+    }
+
+    async function testDiscordWebhook() {
+      const url = document.getElementById('setting-discord-url')?.value.trim();
+      if (!url) {
+        alert('Please enter a Discord Webhook URL.');
+        return;
+      }
+      try {
+        appendLog('🔔 Sending test ping to Discord webhook...', 'var(--yellow-primary)');
+        const res = await fetch('/api/apps/test-webhook', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ webhookUrl: url })
+        });
+        const data = await res.json();
+        if (data.success) {
+          appendLog('✅ Discord webhook ping succeeded.', 'var(--green-primary)');
+          alert('✅ Discord webhook test ping dispatched successfully!');
+        } else {
+          alert('Discord error: ' + (data.error || 'Failed to ping webhook'));
+        }
+      } catch (err) {
+        alert('Network error: ' + err.message);
       }
     }
 
@@ -4858,6 +5420,57 @@
           console.error('[SETTINGS SAVE ERROR]', e);
         }
 
+        // 5. Apps Config (Google Sheets, Telegram, Discord Webhook)
+        const gsheetUrl = document.getElementById('setting-gsheet-url')?.value.trim() || '';
+        const gsheetId = document.getElementById('setting-gsheet-id')?.value.trim() || '';
+        const gsheetTab = document.getElementById('setting-gsheet-tab')?.value.trim() || 'Trades';
+        const gsheetEnabled = document.getElementById('toggle-gsheet-sync')?.classList.contains('active') ?? false;
+
+        const telegramToken = document.getElementById('setting-telegram-token')?.value.trim() || '';
+        const telegramChatId = document.getElementById('setting-telegram-chatid')?.value.trim() || '';
+        const telegramEnabled = document.getElementById('toggle-telegram-alerts')?.classList.contains('active') ?? false;
+        const tgBuys = document.getElementById('check-tg-buys')?.checked ?? true;
+        const tgVetos = document.getElementById('check-tg-vetos')?.checked ?? true;
+        const tgDaily = document.getElementById('check-tg-daily')?.checked ?? true;
+
+        const discordUrl = document.getElementById('setting-discord-url')?.value.trim() || '';
+        const discordEnabled = document.getElementById('toggle-discord-alerts')?.classList.contains('active') ?? false;
+
+        const appsPayload = {
+          googleSheets: {
+            url: gsheetUrl,
+            sheetId: gsheetId,
+            tabName: gsheetTab,
+            enabled: gsheetEnabled
+          },
+          telegram: {
+            botToken: telegramToken,
+            chatId: telegramChatId,
+            enabled: telegramEnabled,
+            notifyBuys: tgBuys,
+            notifyVetos: tgVetos,
+            notifyDaily: tgDaily
+          },
+          discord: {
+            webhookUrl: discordUrl,
+            enabled: discordEnabled
+          }
+        };
+
+        try {
+          const appsRes = await fetch('/api/apps', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(appsPayload)
+          });
+          if (appsRes.ok) {
+            updatedLabels.push('Apps');
+            try { localStorage.setItem('odex_apps_config', JSON.stringify(appsPayload)); } catch (e) {}
+          }
+        } catch (e) {
+          console.error('[APPS SAVE ERROR]', e);
+        }
+
         if (errors.length > 0) {
           alert('Some settings could not be updated:\n' + errors.join('\n'));
         } else {
@@ -5126,8 +5739,7 @@
     });
 
     /* Solana Wallets Manager */
-    let managedWallets = [];
-    let activeWalletPubkey = '';
+    // Note: managedWallets and activeWalletPubkey are initialized at the top of script for instant sync hydration
 
     function openWalletModal() {
       const modal = document.getElementById('wallet-modal');
@@ -5276,6 +5888,15 @@
           }
         }));
         saveManagedWallets();
+        try {
+          const sText = document.getElementById('hdr-sol-bal')?.innerText || '0.00';
+          const uText = document.getElementById('hdr-usdc-bal')?.innerText || '0';
+          localStorage.setItem('odex_cached_wallet', JSON.stringify({
+            solBalance: parseFloat(sText) || 0,
+            usdcBalance: parseFloat(uText) || 0,
+            pubkey: activeWalletPubkey,
+          }));
+        } catch (e) {}
       } catch (err) {
         console.error('Wallet fetch error:', err);
       } finally {

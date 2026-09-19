@@ -5,10 +5,10 @@ export class ConfluenceEngine {
         const pm = state.priceMomentum && state.priceMomentum['30s'] ? state.priceMomentum['30s'] : null;
         const cr = state.coordinationRisk && state.coordinationRisk['10s'] ? state.coordinationRisk['10s'] : null;
         
-        let flowOk = mf && mf.netFlow.value > 0;
-        let partOk = part && part.uniqueBuyers.value >= 3 && part.tradeFlowHerfindahlIndex.value < 5000;
-        let momOk = pm && pm.priceVelocity.value > 0;
-        let coordOk = !cr || cr.coordinationRisk.value < 50;
+        let flowOk = Boolean(mf && mf.netFlow?.value > 0);
+        let partOk = Boolean(part && (part.uniqueBuyers?.value ?? 0) >= 3 && (part.tradeFlowHerfindahlIndex?.value ?? 0) < 5000);
+        let momOk = Boolean(pm && pm.priceVelocity?.value > 0);
+        let coordOk = Boolean(!cr || (cr.coordinationRisk?.value ?? 0) < 50);
         
         const okCount = [flowOk, partOk, momOk, coordOk].filter(Boolean).length;
         

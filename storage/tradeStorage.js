@@ -40,7 +40,7 @@ export class TradeStorage {
 
       const state = {
         positions,
-        tradeHistory: tradeHistory.slice(0, 100),
+        tradeHistory: tradeHistory,
         vetoCount,
         lastSaved: new Date().toISOString(),
       };

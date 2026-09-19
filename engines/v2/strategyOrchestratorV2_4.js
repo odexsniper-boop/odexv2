@@ -138,7 +138,7 @@ export class StrategyOrchestratorV2_4 {
                         this.positionEvents.push(positionEvent);
 
                         if (action.type === 'FULL_EXIT') {
-                            const pnlPct = (pos.exit_price - pos.entry_price) / pos.entry_price;
+                            const pnlPct = pos.entry_size > 0 ? (pos.realized_pnl / pos.entry_size) : ((pos.exit_price - pos.entry_price) / pos.entry_price);
                             const exitEvent = {
                                 event_type: 'EXIT_EVENT',
                                 position_id: pos.position_id,

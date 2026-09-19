@@ -110,7 +110,7 @@ export class ThesisStateEngineV2_3 {
         const liqDet = state.liquidityMetrics?.liquidityDeterioration?.value ?? 0;
 
         let brokenSignals = 0;
-        if (mf30 && mf30.netFlow.value < -0.5) {
+        if (mf30 && mf30.netFlow?.value < -0.5) {
             reasons.push('flow_collapse_negative_net_flow');
             brokenSignals++;
         }
@@ -139,7 +139,7 @@ export class ThesisStateEngineV2_3 {
             reasons.push('buyer_acceleration_declining');
             weakeningSignals++;
         }
-        if (mf15 && mf15.sellVolume.value > mf15.buyVolume.value) {
+        if (mf15 && (mf15.sellVolume?.value ?? 0) > (mf15.buyVolume?.value ?? 0)) {
             reasons.push('seller_pressure_dominant');
             weakeningSignals++;
         }

@@ -93,8 +93,8 @@ export class CoordinationRiskEngineV2_1 {
                     evidence.push('high_buyer_concentration');
                 }
 
-                // Record co-occurrences for future blocks
-                if (w <= 5) {
+                // Record co-occurrences for future blocks (only once per cycle on primary window)
+                if (w === this.windows[0]) {
                     for (let i = 0; i < initiators.length; i++) {
                         for (let j = i + 1; j < initiators.length; j++) {
                             this.registry.recordCoOccurrence(initiators[i], initiators[j]);
