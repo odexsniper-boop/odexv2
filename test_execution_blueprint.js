@@ -8,6 +8,7 @@ import { TransactionMonitor } from './engines/transactionMonitor.js';
 import { ExecutionController } from './engines/executionController.js';
 import { ExecutionEngine } from './engines/executionEngine.js';
 import { PositionManager } from './engines/positionManager.js';
+import { TradeStorage } from './storage/tradeStorage.js';
 import { TOKEN_PROGRAM_ID, TOKEN_2022_PROGRAM_ID } from './pumpfun.js';
 import { log } from './config.js';
 
@@ -209,6 +210,8 @@ async function run20PointTestSuite() {
     throw new Error('Test 8 failed: Position was closed despite SELL failure!');
   }
   log('  ✓ Position remains OPEN when SELL fails (no premature exit)');
+  dummyPosManager.positions.delete('mock_hold_mint');
+  TradeStorage.saveState(dummyPosManager.positions, dummyPosManager.tradeHistory);
 
   // -------------------------------------------------------------
   // Test 9: Duplicate Execution Protection (Idempotency)
@@ -412,6 +415,9 @@ async function run20PointTestSuite() {
   const paperDuration = performance.now() - paperStart;
   if (paperFill.mode !== 'PAPER') throw new Error('Test 20 failed: Paper mode violated');
   log(`  ✓ Paper trading isolated and executed in ${paperDuration.toFixed(2)}ms (Fill: ${paperFill.txHash})`);
+
+  posManager.positions.delete(testMintSPL.toBase58());
+  TradeStorage.saveState(new Map(), posManager.tradeHistory.filter(t => t.mint !== testMintSPL.toBase58() && !t.mint.startsWith('mock')));
 
   log('\n================================================================');
   log('ALL 20 INSTITUTIONAL ENGINE VERIFICATION TESTS PASSED (20/20)!');

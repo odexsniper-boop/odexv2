@@ -1,6 +1,6 @@
 import { CONFIG, log } from '../config.js';
 import { eventBus } from '../eventBus.js';
-import { calculateSpotPriceSol } from '../pumpfun.js';
+import { calculateSpotPriceSol, calculateSolOut } from '../pumpfun.js';
 import { TradeStorage } from '../storage/tradeStorage.js';
 
 export class PositionManager {
@@ -98,8 +98,11 @@ export class PositionManager {
       entryPriceSol: buyFill.spotPriceSol,
       currentPriceSol: buyFill.spotPriceSol,
       peakPriceSol: buyFill.spotPriceSol,
-      initialSolSpent: buyFill.solSpent,
-      actualBuyCost: buyFill.solSpent,
+      initialSolSpent: buyFill.actualBuyCost || buyFill.solSpent,
+      actualBuyCost: buyFill.actualBuyCost || buyFill.solSpent,
+      buyTransactionFees: buyFill.actualTransactionFees || 0,
+      buyPriorityFee: buyFill.priorityFee || 0,
+      buyJitoTip: buyFill.jitoTip || 0,
       tokensHeldRaw: BigInt(buyFill.rawTokensReceived),
       initialTokensRaw: BigInt(buyFill.rawTokensReceived),
       tokensHeldDisplay: buyFill.tokensReceived,
@@ -110,7 +113,15 @@ export class PositionManager {
       openedAt: buyFill.timestamp,
       lastUpdated: buyFill.timestamp,
       openedTimeMs: Date.now(),
+      pricePnlPercent: 0,
+      priceChangePercent: 0,
+      grossPnlSol: 0,
+      grossPnlPercent: 0,
+      estimatedFeesSol: (buyFill.actualTransactionFees || 0) + (buyFill.priorityFee || 0) + (buyFill.jitoTip || 0),
+      netPnlSol: 0,
+      netPnlPercent: 0,
       unrealizedPnlPercent: 0,
+      unrealizedPnlSol: 0,
       realizedSolGained: 0,
       trailingActive: false,
       hitTiers: new Set(),
@@ -163,21 +174,75 @@ export class PositionManager {
     }
 
     const priceRatio = currentPriceSol / pos.entryPriceSol;
-    pos.unrealizedPnlPercent = (priceRatio - 1) * 100;
+    pos.priceRatio = priceRatio;
+    pos.priceChangePercent = (priceRatio - 1) * 100;
+    pos.pricePnlPercent = (priceRatio - 1) * 100; // PURE PRICE-BASED PNL %
+
+    // 1. Gross PnL: Gross token value from curve vs gross buy cost (excluding fixed tips/fees)
+    let grossSol = 0;
+    if (pos.tokensHeldRaw && virtualSolReserves && virtualTokenReserves) {
+      const expectedSolLamports = calculateSolOut(pos.tokensHeldRaw, virtualSolReserves, virtualTokenReserves);
+      grossSol = Number(expectedSolLamports) / 1e9;
+    } else {
+      grossSol = (Number(pos.tokensHeldDisplay) || 0) * currentPriceSol;
+    }
+    const grossBuyCost = Number(pos.solSpent || (pos.initialSolSpent - (pos.buyJitoTip || 0) - (pos.buyPriorityFee || 0)) || pos.initialSolSpent || 0.1);
+    const grossPnlSol = grossSol - grossBuyCost;
+    const grossPnlPercent = grossBuyCost > 0 ? (grossPnlSol / grossBuyCost) * 100 : pos.pricePnlPercent;
+    pos.grossSol = grossSol;
+    pos.grossPnlSol = grossPnlSol;
+    pos.grossPnlPercent = grossPnlPercent;
+
+    // 2. Estimated Fees: Buy fees + estimated sell fees (pump.fun 1% fee + priority fee + Jito tip + tx fee)
+    const jitoTip = (this.execution?.jitoTipLamports ?? this.execution?.controller?.defaultJitoTipLamports ?? 10_000_000) / 1e9;
+    const priorityFeeMicros = this.execution?.defaultPriorityFeeMicroLamports ?? this.execution?.controller?.defaultPriorityFee ?? 100_000;
+    const priorityFeeSol = (priorityFeeMicros * 100_000) / 1e15;
+    const sellPumpFee = grossSol * 0.01;
+    const estimatedSellFees = 0.000005 + priorityFeeSol + jitoTip + sellPumpFee;
+    const buyFees = Number(pos.buyTransactionFees || 0) + Number(pos.buyPriorityFee || 0) + Number(pos.buyJitoTip || 0);
+    const totalEstimatedFeesSol = buyFees + estimatedSellFees;
+    pos.estimatedFeesSol = totalEstimatedFeesSol;
+
+    // 3. Net PnL: After all buy/sell fees, Jito tips, priority fees, and protocol fees
+    const estimatedGrossSol = grossSol * 0.99;
+    const estimatedNetProceeds = Math.max(0, estimatedGrossSol - (0.000005 + priorityFeeSol + jitoTip));
+    const netProfitSol = estimatedNetProceeds - (pos.initialSolSpent || 0.1);
+    const netPnlPercent = pos.initialSolSpent ? (netProfitSol / pos.initialSolSpent) * 100 : pos.pricePnlPercent;
+
+    pos.netPnlSol = netProfitSol;
+    pos.netPnlPercent = netPnlPercent;
+    pos.unrealizedPnlSol = netProfitSol;
+    pos.unrealizedPnlPercent = netPnlPercent;
 
     eventBus.emit('POSITION_TICK', {
       mint: pos.mint,
       pnlPercent: pos.unrealizedPnlPercent,
+      pricePnlPercent: pos.pricePnlPercent,
+      grossPnlPercent: pos.grossPnlPercent,
+      grossPnlSol: pos.grossPnlSol,
+      estimatedFeesSol: pos.estimatedFeesSol,
+      unrealizedPnlSol: pos.unrealizedPnlSol,
+      netPnlSol: pos.netPnlSol,
+      stopLossPercent: this.stopLossPercent,
       currentPriceSol,
       peakPriceSol: pos.peakPriceSol,
     });
 
     try {
-      // 1. HARD STOP LOSS: Executes strictly at -20%
-      if (pos.unrealizedPnlPercent <= this.stopLossPercent) {
-        log(`[EXIT TRIGGER] Stop Loss hit on ${pos.name} (${pos.unrealizedPnlPercent.toFixed(1)}% <= ${this.stopLossPercent}%) - Executing immediate exit.`);
-        await this.closePosition(mint, virtualSolReserves, virtualTokenReserves, 'STOP_LOSS', 100, 10000);
-        return;
+      // 1. HARD STOP LOSS: Evaluates strictly on pricePnlPercent (token spot price movement)
+      // Do not include fixed buy/sell Jito tips or priority fees when determining stop trigger
+      // Grace period: do not trigger ordinary STOP_LOSS if hold duration < minHoldDurationMs UNLESS catastrophic flash-dump (<= -25%)
+      if (pos.pricePnlPercent <= this.stopLossPercent) {
+        const openedTime = pos.openedTimeMs || (pos.openedAt ? new Date(pos.openedAt).getTime() : 0);
+        const holdDurationMs = Date.now() - openedTime;
+        const isSevereFlashDump = pos.pricePnlPercent <= -25;
+        if (holdDurationMs < this.minHoldDurationMs && !isSevereFlashDump) {
+          // Grace period active for minor fluctuations: do not trigger ordinary STOP_LOSS
+        } else {
+          log(`[EXIT TRIGGER] Stop Loss hit on ${pos.name} (Price PnL: ${pos.pricePnlPercent.toFixed(1)}% <= ${this.stopLossPercent}%, Hold: ${(holdDurationMs / 1000).toFixed(1)}s >= ${(this.minHoldDurationMs / 1000).toFixed(1)}s${isSevereFlashDump ? ' [FLASH DUMP OVERRIDE]' : ''}) - Executing immediate exit.`);
+          await this.closePosition(mint, virtualSolReserves, virtualTokenReserves, 'STOP_LOSS', 100, 10000);
+          return;
+        }
       }
 
       // 2. TRAILING STOP LOSS
@@ -220,12 +285,16 @@ export class PositionManager {
     }
   }
 
-  checkStalePositions() {
+  async checkStalePositions() {
     const now = Date.now();
     for (const [mint, pos] of this.positions.entries()) {
       if (now - pos.openedTimeMs > this.staleTimeoutMs) {
         log(`[STALE TIMEOUT] ${pos.name} inactive for 5m. Closing.`);
-        this.closePositionDirect(mint, 'STALE_TIMEOUT');
+        try {
+          await this.closePosition(mint, pos.lastKnownVirtualSol, pos.lastKnownVirtualTok, 'STALE_TIMEOUT', 100);
+        } catch (e) {
+          await this.closePositionDirect(mint, 'STALE_TIMEOUT');
+        }
       }
     }
   }
@@ -241,13 +310,38 @@ export class PositionManager {
     const pos = this.positions.get(mint);
     if (!pos || pos.status === 'SOLD') return;
 
+    if (this.execution && pos.lastKnownVirtualSol && pos.lastKnownVirtualTok) {
+      try {
+        await this.closePosition(mint, pos.lastKnownVirtualSol, pos.lastKnownVirtualTok, reason, 100);
+        return;
+      } catch (e) {}
+    }
+
     this.cleanupWatchers(mint);
 
     pos.status = 'SOLD';
-    const profitSol = (pos.initialSolSpent * pos.unrealizedPnlPercent) / 100;
-    if (profitSol < 0) {
+    pos.closedAt = new Date().toISOString();
+
+    // Deduct 1% pump.fun protocol fee + Solana base fee, priority fee, and Jito tip for full fee simulation
+    let grossSol = 0;
+    if (pos.tokensHeldRaw && pos.lastKnownVirtualSol && pos.lastKnownVirtualTok) {
+      const expectedSolLamports = calculateSolOut(pos.tokensHeldRaw, pos.lastKnownVirtualSol, pos.lastKnownVirtualTok);
+      grossSol = Number(expectedSolLamports) / 1e9;
+    } else {
+      grossSol = (Number(pos.tokensHeldDisplay) || 0) * (pos.currentPriceSol || pos.entryPriceSol || 0);
+    }
+    const estimatedGrossSol = grossSol * 0.99;
+    const jitoTip = (this.execution?.jitoTipLamports ?? this.execution?.controller?.defaultJitoTipLamports ?? 10_000_000) / 1e9;
+    const priorityFeeMicros = this.execution?.defaultPriorityFeeMicroLamports ?? this.execution?.controller?.defaultPriorityFee ?? 100_000;
+    const priorityFeeSol = (priorityFeeMicros * 100_000) / 1e15;
+    const estimatedSellFees = 0.000005 + priorityFeeSol + jitoTip;
+    const actualNetSellProceeds = Math.max(0, estimatedGrossSol - estimatedSellFees);
+    const netProfitSol = actualNetSellProceeds - (pos.initialSolSpent || 0.1);
+    const finalPnlPercent = pos.initialSolSpent ? (netProfitSol / pos.initialSolSpent) * 100 : 0;
+
+    if (netProfitSol < 0) {
       this._syncDailyLoss();
-      this.dailyRealizedLossSol += Math.abs(profitSol);
+      this.dailyRealizedLossSol += Math.abs(netProfitSol);
     }
 
     const tradeRecord = {
@@ -261,10 +355,23 @@ export class PositionManager {
       entryPriceSol: pos.entryPriceSol,
       exitPriceSol: pos.currentPriceSol,
       initialSolSpent: pos.initialSolSpent,
-      finalPnlPercent: pos.unrealizedPnlPercent,
-      profitSol,
-      pnlSol: profitSol,
-      pnlPercent: pos.unrealizedPnlPercent,
+      actualBuyCost: pos.actualBuyCost || pos.initialSolSpent,
+      actualGrossSellProceeds: estimatedGrossSol,
+      actualTransactionFees: estimatedSellFees,
+      actualNetSellProceeds,
+      solReceived: actualNetSellProceeds,
+      grossPnlSol: pos.grossPnlSol || 0,
+      grossPnlPercent: pos.grossPnlPercent || 0,
+      estimatedFeesSol: pos.estimatedFeesSol || 0,
+      pricePnlPercent: pos.pricePnlPercent !== undefined ? pos.pricePnlPercent : (((pos.currentPriceSol - pos.entryPriceSol) / pos.entryPriceSol) * 100),
+      finalPricePnlPercent: pos.pricePnlPercent !== undefined ? pos.pricePnlPercent : (((pos.currentPriceSol - pos.entryPriceSol) / pos.entryPriceSol) * 100),
+      netProfitSol,
+      profitSol: netProfitSol,
+      pnlSol: netProfitSol,
+      netPnlSol: netProfitSol,
+      netPnlPercent: finalPnlPercent,
+      finalPnlPercent,
+      pnlPercent: finalPnlPercent,
       status: 'SOLD',
       reason,
       openedAt: pos.openedAt,
@@ -350,9 +457,20 @@ export class PositionManager {
         actualTransactionFees: sellFill.actualTransactionFees || 0,
         actualNetSellProceeds: pos.realizedSolGained,
         solReceived: pos.realizedSolGained,
+        grossPnlSol: pos.grossPnlSol || 0,
+        grossPnlPercent: pos.grossPnlPercent || 0,
+        estimatedFeesSol: pos.estimatedFeesSol || 0,
+        pricePnlPercent: pos.pricePnlPercent !== undefined 
+          ? pos.pricePnlPercent 
+          : (((sellFill.spotPriceSol - pos.entryPriceSol) / pos.entryPriceSol) * 100),
+        finalPricePnlPercent: pos.pricePnlPercent !== undefined 
+          ? pos.pricePnlPercent 
+          : (((sellFill.spotPriceSol - pos.entryPriceSol) / pos.entryPriceSol) * 100),
         netProfitSol,
         profitSol: netProfitSol,
         pnlSol: netProfitSol,
+        netPnlSol: netProfitSol,
+        netPnlPercent: finalPnl,
         finalPnlPercent: finalPnl,
         pnlPercent: finalPnl,
         status: 'SOLD',
@@ -371,6 +489,13 @@ export class PositionManager {
     } else {
       TradeStorage.saveState(this.positions, this.tradeHistory);
       eventBus.emit('POSITION_SCALED_OUT', { mint: pos.mint, partialFill: sellFill });
+    }
+  }
+
+  setStopLoss(percent) {
+    if (typeof percent === 'number' && !isNaN(percent)) {
+      this.stopLossPercent = percent > 0 ? -percent : percent;
+      log(`[POSITION MANAGER] Stop loss set to ${this.stopLossPercent}%`);
     }
   }
 }

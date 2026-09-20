@@ -850,14 +850,14 @@
     }
     /* Modern Unified Settings Modal Frame (matching sleek dialog style) */
     .settings-modal-dialog {
-      background: #18181b;
+      background: #0c0f17;
       border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 16px;
+      border-radius: 14px;
       width: 780px;
       max-width: 95vw;
       height: 600px;
       max-height: 90vh;
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.05);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -875,7 +875,7 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      background: #18181b;
+      background: #0c0f17;
       flex-shrink: 0;
     }
     .settings-search-wrapper {
@@ -949,7 +949,7 @@
       border-right: 1px solid rgba(255, 255, 255, 0.08);
       padding: 16px 10px;
       overflow-y: auto;
-      background: #121215;
+      background: rgba(0, 0, 0, 0.25);
       display: flex;
       flex-direction: column;
       gap: 14px;
@@ -1001,7 +1001,7 @@
     .settings-content-pane {
       padding: 24px 32px;
       overflow-y: auto;
-      background: #18181b;
+      background: #0c0f17;
     }
     .settings-section-view {
       display: none;
@@ -1016,8 +1016,13 @@
       gap: 10px;
       padding: 14px 24px;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
-      background: #18181b;
+      background: rgba(0, 0, 0, 0.35);
       flex-shrink: 0;
+    }
+    /* Settings Modals Input Styling matching Date Filter */
+    .settings-modal-dialog input[type="number"] {
+      background: #080a10 !important;
+      border: 1px solid rgba(255, 255, 255, 0.14) !important;
     }
     .btn-settings-cancel {
       background: #27272a;
@@ -1074,7 +1079,7 @@
       align-items: center;
     }
     .settings-clean-input {
-      background: #121214;
+      background: #080a10;
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 8px;
       padding: 10px 14px;
@@ -1148,6 +1153,12 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      vertical-align: middle;
+      line-height: 1;
+      transition: color 0.15s ease;
+    }
+    .settings-info-icon:hover {
+      color: #a1a1aa;
     }
     .settings-helper-text {
       font-size: 11.5px;
@@ -2089,119 +2100,116 @@
 
   <!-- Dedicated Separate Trading Settings Modal (From Token Section Gear Button) -->
   <div class="settings-modal-backdrop" id="trading-settings-modal" onclick="onTradingSettingsBackdropClick(event)">
-    <div class="settings-modal-dialog" style="width: 580px; height: auto; max-height: 88vh;" onclick="event.stopPropagation()">
+    <div class="settings-modal-dialog" style="width: 440px; height: auto; max-height: 88vh;" onclick="event.stopPropagation()">
       <!-- Topbar Header -->
-      <div class="settings-topbar">
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <div style="display: flex; align-items: center; justify-content: center; color: #a1a1aa;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <div class="settings-topbar" style="height: 48px; padding: 0 18px;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 7px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #ffffff; flex-shrink: 0;">
               <circle cx="12" cy="12" r="3"></circle>
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
             </svg>
-          </div>
-          <div>
-            <div style="font-weight: 700; font-size: 15px; color: #ffffff; letter-spacing: -0.01em;">Trading & Snipe Settings</div>
-            <div style="font-size: 11px; color: #a1a1aa;">Direct execution parameters for bonding curve snipes</div>
+            <span style="font-weight: 700; font-size: 13px; color: #ffffff; letter-spacing: -0.01em;">Trading & Snipe Settings</span>
           </div>
         </div>
         <button class="settings-close-x-btn" onclick="closeTradingSettingsModal()" title="Close">✕</button>
       </div>
 
       <!-- Scrollable Content Pane -->
-      <div style="padding: 22px 28px; overflow-y: auto; background: #18181b; display: flex; flex-direction: column; gap: 14px;">
+      <div style="padding: 16px 20px; overflow-y: auto; background: #0c0f17; display: flex; flex-direction: column; gap: 6px;">
         <!-- Trading Mode -->
-        <div>
-          <div class="settings-group-header" style="margin: 0 0 8px 0;">Trading Mode</div>
-          <div class="settings-card">
-            <div class="settings-card-row">
-              <span class="settings-card-title">Paper Trading (Demo) <span class="settings-info-icon" title="Toggle simulation mode to test the bot without using real SOL.">ⓘ</span></span>
-              <div class="autobuy-toggle-container" id="trade-input-paper-container" onclick="togglePaperMode()">
-                <div class="autobuy-pill-toggle" id="trade-input-paper-toggle">
-                  <div class="autobuy-pill-thumb"></div>
-                </div>
-                <span class="autobuy-toggle-label" id="trade-input-paper-label" style="min-width: 25px; text-align: center;">ON</span>
+        <div class="settings-card" style="padding: 11px 0; gap: 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.06);">
+          <div class="settings-card-row">
+            <span class="settings-card-title" style="font-size: 12px;">Paper Trading (Simulation) <span class="settings-info-icon" title="Toggle simulation mode to test the bot without using real SOL."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span></span>
+            <div class="autobuy-toggle-container" id="trade-input-paper-container" onclick="togglePaperMode()">
+              <div class="autobuy-pill-toggle" id="trade-input-paper-toggle">
+                <div class="autobuy-pill-thumb"></div>
               </div>
+              <span class="autobuy-toggle-label" id="trade-input-paper-label" style="min-width: 25px; text-align: center;">ON</span>
             </div>
-            <p class="settings-helper-text">When ON, trades perfectly simulate live execution without risking real funds.</p>
           </div>
+          <p class="settings-helper-text" style="font-size: 11.5px; color: #8e8e93; line-height: 1.4;">Simulate live execution without risking real funds.</p>
         </div>
 
         <!-- Order Sizing -->
-        <div>
-          <div class="settings-group-header" style="margin: 0 0 8px 0;">Order Sizing</div>
-          <div class="settings-card">
-            <div class="settings-card-row">
-              <span class="settings-card-title">Entry Position Size (SOL) <span class="settings-info-icon" title="Fixed entry SOL size allocated to qualifying Stage 3 pattern breakouts.">ⓘ</span></span>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <input type="number" id="trade-input-buy-size" value="0.1" step="0.05" min="0.001" onchange="updateBuySize(this.value)" style="width: 80px; background: #121214; border: 1px solid rgba(255,255,255,0.12); color: #ffffff; border-radius: 6px; padding: 6px 10px; font-weight: 700; text-align: center; font-family: inherit;">
-                <button class="btn-preset btn-preset-size" onclick="setBuySize(0.1)">0.1</button>
-                <button class="btn-preset btn-preset-size" onclick="setBuySize(0.5)">0.5</button>
-                <button class="btn-preset btn-preset-size" onclick="setBuySize(1.0)">1.0</button>
-              </div>
+        <div class="settings-card" style="padding: 11px 0; gap: 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.06);">
+          <div class="settings-card-row">
+            <span class="settings-card-title" style="font-size: 12px;">Entry Size (SOL) <span class="settings-info-icon" title="Fixed entry SOL size allocated to qualifying Stage 3 pattern breakouts."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span></span>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <input type="number" id="trade-input-buy-size" value="0.1" step="0.05" min="0.001" onchange="updateBuySize(this.value)" style="width: 66px; background: #121214; border: 1px solid rgba(255,255,255,0.14); color: #ffffff; border-radius: 6px; padding: 5px 6px; font-size: 12px; font-weight: 700; text-align: center; font-family: inherit;">
+              <button class="btn-preset btn-preset-size" onclick="setBuySize(0.1)" style="padding: 4px 7px; font-size: 11px;">0.1</button>
+              <button class="btn-preset btn-preset-size" onclick="setBuySize(0.5)" style="padding: 4px 7px; font-size: 11px;">0.5</button>
+              <button class="btn-preset btn-preset-size" onclick="setBuySize(1.0)" style="padding: 4px 7px; font-size: 11px;">1.0</button>
             </div>
-            <p class="settings-helper-text">Applies automatically to paper simulation and live wallet orders.</p>
           </div>
+          <p class="settings-helper-text" style="font-size: 11.5px; color: #8e8e93; line-height: 1.4;">Fixed entry amount allocated per breakout trade.</p>
         </div>
 
         <!-- Slippage -->
-        <div>
-          <div class="settings-group-header" style="margin: 0 0 8px 0;">Slippage Tolerance</div>
-          <div class="settings-card">
-            <div class="settings-card-row">
-              <span class="settings-card-title">Slippage Tolerance (%) <span class="settings-info-icon" title="Maximum allowed price movement between trade signal detection and block inclusion.">ⓘ</span></span>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <input type="number" id="trade-input-slippage" value="15" step="1" min="0.1" max="100" onchange="updateSlippage(this.value)" style="width: 80px; background: #121214; border: 1px solid rgba(255,255,255,0.12); color: #ffffff; border-radius: 6px; padding: 6px 10px; font-weight: 700; text-align: center; font-family: inherit;">
-                <button class="btn-preset btn-preset-slippage" onclick="setSlippage(5)">5%</button>
-                <button class="btn-preset btn-preset-slippage" onclick="setSlippage(15)">15%</button>
-                <button class="btn-preset btn-preset-slippage" onclick="setSlippage(25)">25%</button>
-                <button class="btn-preset btn-preset-slippage" onclick="setSlippage(50)">50%</button>
-              </div>
+        <div class="settings-card" style="padding: 11px 0; gap: 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.06);">
+          <div class="settings-card-row">
+            <span class="settings-card-title" style="font-size: 12px;">Slippage Tolerance (%) <span class="settings-info-icon" title="Maximum allowed price movement between trade signal detection and block inclusion."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span></span>
+            <div style="display: flex; align-items: center; gap: 4px;">
+              <input type="number" id="trade-input-slippage" value="15" step="1" min="0.1" max="100" onchange="updateSlippage(this.value)" style="width: 60px; background: #121214; border: 1px solid rgba(255,255,255,0.14); color: #ffffff; border-radius: 6px; padding: 5px 6px; font-size: 12px; font-weight: 700; text-align: center; font-family: inherit;">
+              <button class="btn-preset btn-preset-slippage" onclick="setSlippage(5)" style="padding: 4px 6px; font-size: 10.5px;">5%</button>
+              <button class="btn-preset btn-preset-slippage" onclick="setSlippage(15)" style="padding: 4px 6px; font-size: 10.5px;">15%</button>
+              <button class="btn-preset btn-preset-slippage" onclick="setSlippage(25)" style="padding: 4px 6px; font-size: 10.5px;">25%</button>
+              <button class="btn-preset btn-preset-slippage" onclick="setSlippage(50)" style="padding: 4px 6px; font-size: 10.5px;">50%</button>
             </div>
-            <p class="settings-helper-text">Prevents high slippage fill failures during volatile bonding curve pumps.</p>
           </div>
+          <p class="settings-helper-text" style="font-size: 11.5px; color: #8e8e93; line-height: 1.4;">Maximum price impact allowed for bonding curve orders.</p>
         </div>
 
         <!-- Gas Fee / Jito MEV Tip -->
-        <div>
-          <div class="settings-group-header" style="margin: 0 0 8px 0;">Gas Fee (Jito MEV Tip)</div>
-          <div class="settings-card">
-            <div class="settings-card-row">
-              <span class="settings-card-title">Gas Fee / Jito Tip (SOL) <span class="settings-info-icon" title="Private Jito MEV validator bundle tip to bypass public mempool and prevent sandwich attacks.">ⓘ</span></span>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <input type="number" id="trade-input-gas-tip" value="0.01" step="0.005" min="0" onchange="updateGasTip(this.value)" style="width: 80px; background: #121214; border: 1px solid rgba(255,255,255,0.12); color: #ffffff; border-radius: 6px; padding: 6px 10px; font-weight: 700; text-align: center; font-family: inherit;">
-                <button class="btn-preset btn-preset-gastip" onclick="setGasTip(0.005)">0.005</button>
-                <button class="btn-preset btn-preset-gastip" onclick="setGasTip(0.01)">0.01</button>
-                <button class="btn-preset btn-preset-gastip" onclick="setGasTip(0.02)">0.02</button>
-                <button class="btn-preset btn-preset-gastip" onclick="setGasTip(0.05)">0.05</button>
-              </div>
+        <div class="settings-card" style="padding: 11px 0; gap: 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.06);">
+          <div class="settings-card-row">
+            <span class="settings-card-title" style="font-size: 12px;">Jito MEV Tip (SOL) <span class="settings-info-icon" title="Private Jito MEV validator bundle tip to bypass public mempool and prevent sandwich attacks."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span></span>
+            <div style="display: flex; align-items: center; gap: 4px;">
+              <input type="number" id="trade-input-gas-tip" value="0.01" step="0.005" min="0" onchange="updateGasTip(this.value)" style="width: 62px; background: #121214; border: 1px solid rgba(255,255,255,0.14); color: #ffffff; border-radius: 6px; padding: 5px 6px; font-size: 12px; font-weight: 700; text-align: center; font-family: inherit;">
+              <button class="btn-preset btn-preset-gastip" onclick="setGasTip(0.005)" style="padding: 4px 5px; font-size: 10.5px;">0.005</button>
+              <button class="btn-preset btn-preset-gastip" onclick="setGasTip(0.01)" style="padding: 4px 5px; font-size: 10.5px;">0.01</button>
+              <button class="btn-preset btn-preset-gastip" onclick="setGasTip(0.02)" style="padding: 4px 5px; font-size: 10.5px;">0.02</button>
+              <button class="btn-preset btn-preset-gastip" onclick="setGasTip(0.05)" style="padding: 4px 5px; font-size: 10.5px;">0.05</button>
             </div>
-            <p class="settings-helper-text">Direct tip sent to Jito block-builders to ensure front-of-block priority.</p>
           </div>
+          <p class="settings-helper-text" style="font-size: 11.5px; color: #8e8e93; line-height: 1.4;">Validator tip to ensure front-of-block inclusion.</p>
         </div>
 
         <!-- Priority Fee -->
-        <div>
-          <div class="settings-group-header" style="margin: 0 0 8px 0;">Priority Fee</div>
-          <div class="settings-card">
-            <div class="settings-card-row">
-              <span class="settings-card-title">Priority Fee (SOL) <span class="settings-info-icon" title="Solana Compute Budget unit price to guarantee fast slot inclusion during network congestion.">ⓘ</span></span>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <input type="number" id="trade-input-priority-fee" value="0.001" step="0.0005" min="0" onchange="updatePriorityFee(this.value)" style="width: 80px; background: #121214; border: 1px solid rgba(255,255,255,0.12); color: #ffffff; border-radius: 6px; padding: 6px 10px; font-weight: 700; text-align: center; font-family: inherit;">
-                <button class="btn-preset btn-preset-priority" onclick="setPriorityFee(0.0001)">0.0001</button>
-                <button class="btn-preset btn-preset-priority" onclick="setPriorityFee(0.001)">0.001</button>
-                <button class="btn-preset btn-preset-priority" onclick="setPriorityFee(0.005)">0.005</button>
-                <button class="btn-preset btn-preset-priority" onclick="setPriorityFee(0.01)">0.01</button>
-              </div>
+        <div class="settings-card" style="padding: 11px 0; gap: 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.06);">
+          <div class="settings-card-row">
+            <span class="settings-card-title" style="font-size: 12px;">Priority Fee (SOL) <span class="settings-info-icon" title="Solana Compute Budget unit price to guarantee fast slot inclusion during network congestion."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span></span>
+            <div style="display: flex; align-items: center; gap: 3px;">
+              <input type="number" id="trade-input-priority-fee" value="0.001" step="0.0005" min="0" onchange="updatePriorityFee(this.value)" style="width: 66px; background: #121214; border: 1px solid rgba(255,255,255,0.14); color: #ffffff; border-radius: 6px; padding: 5px 5px; font-size: 12px; font-weight: 700; text-align: center; font-family: inherit;">
+              <button class="btn-preset btn-preset-priority" onclick="setPriorityFee(0.0001)" style="padding: 4px 4px; font-size: 9.5px;">0.0001</button>
+              <button class="btn-preset btn-preset-priority" onclick="setPriorityFee(0.001)" style="padding: 4px 5px; font-size: 10.5px;">0.001</button>
+              <button class="btn-preset btn-preset-priority" onclick="setPriorityFee(0.005)" style="padding: 4px 5px; font-size: 10.5px;">0.005</button>
+              <button class="btn-preset btn-preset-priority" onclick="setPriorityFee(0.01)" style="padding: 4px 5px; font-size: 10.5px;">0.01</button>
             </div>
-            <p class="settings-helper-text">Dynamically translated to micro-lamports per Compute Unit (CU).</p>
           </div>
+          <p class="settings-helper-text" style="font-size: 11.5px; color: #8e8e93; line-height: 1.4;">Compute budget fee for fast Solana slot landing.</p>
+        </div>
+
+        <!-- Stop Loss -->
+        <div class="settings-card" style="padding: 11px 0; gap: 5px; border-bottom: none;">
+          <div class="settings-card-row">
+            <span class="settings-card-title" style="font-size: 12px;">Stop Loss (%) <span class="settings-info-icon" title="Executes an immediate market exit when token spot price drops by this percentage from entry price. Excludes fixed Jito tips."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span></span>
+            <div style="display: flex; align-items: center; gap: 4px;">
+              <input type="number" id="trade-input-stop-loss" value="16" step="1" min="1" max="90" onchange="updateStopLoss(this.value)" style="width: 60px; background: #121214; border: 1px solid rgba(255,255,255,0.14); color: #ffffff; border-radius: 6px; padding: 5px 6px; font-size: 12px; font-weight: 700; text-align: center; font-family: inherit;">
+              <button class="btn-preset btn-preset-stoploss" onclick="setStopLoss(10)" style="padding: 4px 6px; font-size: 10.5px;">10%</button>
+              <button class="btn-preset btn-preset-stoploss" onclick="setStopLoss(15)" style="padding: 4px 6px; font-size: 10.5px;">15%</button>
+              <button class="btn-preset btn-preset-stoploss" onclick="setStopLoss(16)" style="padding: 4px 6px; font-size: 10.5px;">16%</button>
+              <button class="btn-preset btn-preset-stoploss" onclick="setStopLoss(20)" style="padding: 4px 6px; font-size: 10.5px;">20%</button>
+            </div>
+          </div>
+          <p class="settings-helper-text" style="font-size: 11.5px; color: #8e8e93; line-height: 1.4;">Automatic price stop loss. Exits position if market price drops below threshold.</p>
         </div>
       </div>
 
       <!-- Unified Footer -->
-      <div class="settings-modal-footer">
-        <button type="button" class="btn-settings-cancel" onclick="closeTradingSettingsModal()">Cancel</button>
-        <button type="button" class="btn-settings-save" onclick="saveTradingSettingsAndClose()">Save</button>
+      <div class="settings-modal-footer" style="padding: 14px 20px;">
+        <button type="button" class="btn-settings-cancel" onclick="closeTradingSettingsModal()" style="padding: 7px 18px; font-size: 12.5px;">Cancel</button>
+        <button type="button" class="btn-settings-save" onclick="saveTradingSettingsAndClose()" style="padding: 7px 20px; font-size: 12.5px;">Save</button>
       </div>
     </div>
   </div>
@@ -2496,6 +2504,20 @@
                 </div>
               </div>
               <p class="settings-helper-text">Dynamically translated to micro-lamports per Compute Unit (CU).</p>
+            </div>
+
+            <div class="settings-card">
+              <div class="settings-card-row">
+                <span class="settings-card-title">Stop Loss (%) <span class="settings-info-icon" title="Executes an immediate market exit when token spot price drops by this percentage from entry price.">ⓘ</span></span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <input type="number" id="input-stop-loss" value="16" step="1" min="1" max="90" onchange="updateStopLoss(this.value)" style="width: 80px; background: #121214; border: 1px solid rgba(255,255,255,0.12); color: #ffffff; border-radius: 6px; padding: 6px 10px; font-weight: 700; text-align: center; font-family: inherit;">
+                  <button class="btn-preset btn-preset-stoploss" onclick="setStopLoss(10)">10%</button>
+                  <button class="btn-preset btn-preset-stoploss" onclick="setStopLoss(15)">15%</button>
+                  <button class="btn-preset btn-preset-stoploss" onclick="setStopLoss(16)">16%</button>
+                  <button class="btn-preset btn-preset-stoploss" onclick="setStopLoss(20)">20%</button>
+                </div>
+              </div>
+              <p class="settings-helper-text">Automatic price stop loss. Exits position if market price drops below threshold from entry.</p>
             </div>
           </div>
 
@@ -3380,12 +3402,21 @@
         if (d.gasTipSol !== undefined) {
           syncGasTipInput(d.gasTipSol);
         }
+        if (d.stopLossPercent !== undefined) {
+          syncStopLossInput(d.stopLossPercent);
+        }
 
         if (d.tokens) {
           const initTokens = d.tokens.length > 150 ? d.tokens.slice(-150) : d.tokens;
           initTokens.forEach(t => tokensMap.set(t.mint, t));
         }
         if (d.positions) {
+          const activeMints = new Set(d.positions.map(p => p.mint));
+          for (const [m, tok] of tokensMap.entries()) {
+            if (tok.state === 'POSITION_OPEN' && !activeMints.has(m)) {
+              tok.state = 'CLOSED';
+            }
+          }
           d.positions.forEach(p => {
             const t = tokensMap.get(p.mint) || { mint: p.mint };
             t.name = p.name;
@@ -3403,8 +3434,10 @@
             let t = tokensMap.get(h.mint);
             const img = h.imageUrl || (t && t.imageUrl) || '';
             if (t) {
-              t.state = 'CLOSED';
-              t.closedData = h;
+              if (t.state !== 'POSITION_OPEN') {
+                t.state = 'CLOSED';
+                t.closedData = h;
+              }
               if (img) t.imageUrl = img;
             } else {
               tokensMap.set(h.mint, {
@@ -3445,6 +3478,10 @@
         if (d.gasTipSol !== undefined) {
           syncGasTipInput(d.gasTipSol);
           appendLog(`⚙️ [CONFIG] Gas fee / Jito tip updated to ${d.gasTipSol} SOL`, 'var(--blue-primary)');
+        }
+        if (d.stopLossPercent !== undefined) {
+          syncStopLossInput(d.stopLossPercent);
+          appendLog(`⚙️ [CONFIG] Stop Loss updated to ${d.stopLossPercent}%`, 'var(--blue-primary)');
         }
       } else if (type === 'STATE_TRANSITION') {
         const record = d.record;
@@ -3511,8 +3548,17 @@
           let t = tokensMap.get(d.mint);
           if (!t) return;
           t.state = 'POSITION_OPEN';
+          if (!t.position) t.position = { mint: d.mint };
           t.position.currentPriceSol = d.currentPriceSol;
           t.position.unrealizedPnlPercent = d.pnlPercent;
+          t.position.netPnlPercent = d.pnlPercent;
+          if (d.pricePnlPercent !== undefined) t.position.pricePnlPercent = d.pricePnlPercent;
+          if (d.netPnlSol !== undefined) t.position.netPnlSol = d.netPnlSol;
+          if (d.unrealizedPnlSol !== undefined) t.position.unrealizedPnlSol = d.unrealizedPnlSol;
+          if (d.grossPnlPercent !== undefined) t.position.grossPnlPercent = d.grossPnlPercent;
+          if (d.grossPnlSol !== undefined) t.position.grossPnlSol = d.grossPnlSol;
+          if (d.estimatedFeesSol !== undefined) t.position.estimatedFeesSol = d.estimatedFeesSol;
+          if (d.stopLossPercent !== undefined) t.position.stopLossPercent = d.stopLossPercent;
           t.pnlPercent = d.pnlPercent;
           render();
         } else if (type === 'POSITION_CLOSED') {
@@ -3608,16 +3654,21 @@
 
     // High-precision live ticker to keep token launch times 100% accurate every second
     setInterval(() => {
-      const now = Date.now();
-      const timeEls = document.querySelectorAll('.token-time');
-      for (let i = 0; i < timeEls.length; i++) {
-        const el = timeEls[i];
-        const ts = Number(el.getAttribute('data-ts'));
-        if (ts && !isNaN(ts)) {
-          const fresh = formatTokenAge(ts, now);
-          if (el.innerText !== fresh) el.innerText = fresh;
+      // FIX: Use requestAnimationFrame and max limits to prevent DOM stutters
+      requestAnimationFrame(() => {
+        const now = Date.now();
+        const timeEls = document.querySelectorAll('.token-time');
+        // Limit to 200 elements to prevent extreme CPU drain if feed gets massive
+        const limit = Math.min(timeEls.length, 200); 
+        for (let i = 0; i < limit; i++) {
+          const el = timeEls[i];
+          const ts = Number(el.getAttribute('data-ts'));
+          if (ts && !isNaN(ts)) {
+            const fresh = formatTokenAge(ts, now);
+            if (el.innerText !== fresh) el.innerText = fresh;
+          }
         }
-      }
+      });
     }, 1000);
 
     let renderPending = false;
@@ -3646,13 +3697,13 @@
       const statPosEl = document.getElementById('stat-positions');
       if (statPosEl) statPosEl.innerText = activePositions;
 
-      const isTokenClosed = (t) => t && (t.state === 'CLOSED' || Boolean(t.closedData) || (Array.isArray(closedTrades) && closedTrades.some(c => c.mint === t.mint)));
+      const isTokenClosed = (t) => t && t.state !== 'POSITION_OPEN' && (t.state === 'CLOSED' || Boolean(t.closedData) || (Array.isArray(closedTrades) && closedTrades.some(c => c.mint === t.mint)));
 
       let filtered = allList;
       if (currentFilter === 'all') {
         filtered = allList.filter(t => !isTokenClosed(t));
       } else if (currentFilter === 'open') {
-        filtered = allList.filter(t => t.state === 'POSITION_OPEN' && !isTokenClosed(t));
+        filtered = allList.filter(t => t.state === 'POSITION_OPEN');
       } else if (currentFilter === 'pattern') {
         filtered = allList.filter(t => t.state === 'PATTERN_FORMING' && !isTokenClosed(t));
       } else if (currentFilter === 'flow') {
@@ -3754,7 +3805,15 @@
         const flowRatio = flow.buySellRatio || (t.sellVolumeSol > 0 ? (t.buyVolumeSol / t.sellVolumeSol).toFixed(2) : 1.0);
         const netDelta = flow.netVolumeDeltaSol !== undefined ? flow.netVolumeDeltaSol : ((t.buyVolumeSol || 0) - (t.sellVolumeSol || 0));
         const deltaColor = netDelta >= 0 ? 'var(--green-primary)' : 'var(--red-primary)';
-        const buyersCount = flow.uniqueBuyersCount || (t.uniqueBuyers ? t.uniqueBuyers.size : 0);
+        const bq = t.buyerQuality || {};
+        const organicBuyers = bq.organicBuyerCount || flow.organicBuyersCount || flow.uniqueBuyersCount || (t.uniqueBuyers ? t.uniqueBuyers.size : 0);
+        const rawBuyers = bq.rawBuyerCount || flow.rawBuyersCount || organicBuyers;
+        const hasCluster = bq.clusterCount > 0 || (rawBuyers > organicBuyers);
+        const clusterRisk = bq.coordinationRisk || flow.clusterRisk || 'LOW';
+
+        const buyerHtml = hasCluster 
+          ? `<span title="${bq.reasons ? bq.reasons.join(' | ') : 'Clustered wallets detected'}">👥 ${organicBuyers}/${rawBuyers} Organic</span> <span style="font-size: 9.5px; padding: 1px 4px; border-radius: 3px; background: ${clusterRisk === 'CRITICAL' ? 'rgba(239, 68, 68, 0.2)' : clusterRisk === 'HIGH' ? 'rgba(245, 158, 11, 0.2)' : 'rgba(59, 130, 246, 0.15)'}; color: ${clusterRisk === 'CRITICAL' ? 'var(--red-primary)' : clusterRisk === 'HIGH' ? 'var(--yellow-primary)' : '#60a5fa'}; font-weight: 700;">${clusterRisk === 'CRITICAL' ? '⚠️ Sybil' : clusterRisk === 'HIGH' ? '⚠️ Cluster' : '🔗 Grouped'}</span>`
+          : `👥 ${organicBuyers} unique buyers`;
 
         const moneyFlowHtml = `
           <div>
@@ -3762,8 +3821,8 @@
               <span style="font-weight: 700; font-size: 12px; color: ${flowRatio >= 1.2 ? 'var(--green-primary)' : 'var(--yellow-primary)'};">${flowRatio}x Ratio</span>
               <span style="font-size: 11px; font-weight: 600; color: ${deltaColor};">${netDelta >= 0 ? '+' : ''}${typeof netDelta === 'number' ? netDelta.toFixed(2) : netDelta} SOL</span>
             </div>
-            <div style="font-size: 11px; color: var(--text-muted);">
-              👥 ${buyersCount} unique buyers
+            <div style="font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
+              ${buyerHtml}
             </div>
           </div>
         `;
@@ -3796,9 +3855,33 @@
         // 4. State Machine Badge & Rejection message
         const formattedState = formatToNormalCase(t.state);
         const formattedRejection = formatRejectionReason(t.rejectionReason);
+
+        let exitBadgeHtml = '';
+        if (isClosed) {
+          const exitReason = t.closedData?.reason || t.reason || '';
+          if (exitReason) {
+            if (exitReason.includes('STOP_LOSS')) {
+              exitBadgeHtml = `<div style="color: var(--red-primary); font-size: 11px; font-weight: 700; margin-top: 4px; display: flex; align-items: center; gap: 4px;">🛑 Stop Loss</div>`;
+            } else if (exitReason.includes('TRAILING_STOP')) {
+              exitBadgeHtml = `<div style="color: #f59e0b; font-size: 11px; font-weight: 700; margin-top: 4px; display: flex; align-items: center; gap: 4px;">📈 Trailing Stop</div>`;
+            } else if (exitReason.includes('TAKE_PROFIT')) {
+              exitBadgeHtml = `<div style="color: var(--green-primary); font-size: 11px; font-weight: 700; margin-top: 4px; display: flex; align-items: center; gap: 4px;">🎯 Take Profit</div>`;
+            } else if (exitReason.includes('MANUAL')) {
+              exitBadgeHtml = `<div style="color: #a855f7; font-size: 11px; font-weight: 700; margin-top: 4px; display: flex; align-items: center; gap: 4px;">✋ Manual Exit</div>`;
+            } else if (exitReason.includes('DEV_DUMP') || exitReason.includes('HONEYPOT')) {
+              exitBadgeHtml = `<div style="color: #ef4444; font-size: 11px; font-weight: 700; margin-top: 4px; display: flex; align-items: center; gap: 4px;">🚨 Dev Dump Guard</div>`;
+            } else if (exitReason.includes('STALE')) {
+              exitBadgeHtml = `<div style="color: #71717a; font-size: 11px; font-weight: 600; margin-top: 4px; display: flex; align-items: center; gap: 4px;">⏱️ Stale Timeout</div>`;
+            } else {
+              exitBadgeHtml = `<div style="color: var(--text-muted); font-size: 11px; font-weight: 600; margin-top: 4px;">${formatToNormalCase(exitReason)}</div>`;
+            }
+          }
+        }
+
         let stateHtml = `
           <div>
             <span class="status-badge badge-${t.state ? t.state.toLowerCase() : 'waiting'}">${formattedState}</span>
+            ${exitBadgeHtml}
             ${isRejected ? `<div style="color: var(--red-primary); font-size: 11px; font-weight: 600; margin-top: 4px; max-width: 180px; line-height: 1.3;">🚫 ${formattedRejection}</div>` : ''}
             ${t.state === 'ENTRY_READY' ? `<div style="color: var(--purple-primary); font-size: 11px; font-weight: 700; margin-top: 4px;">🎯 3-Stage Trigger!</div>` : ''}
           </div>
@@ -3807,36 +3890,97 @@
         // 5. PnL display
         let pnlHtml = '<span style="color: var(--text-muted);">--</span>';
         if (isHolding && t.position) {
-          const pnl = t.position.unrealizedPnlPercent !== undefined ? t.position.unrealizedPnlPercent : (t.pnlPercent || 0);
+          const pnl = t.position.netPnlPercent !== undefined 
+            ? t.position.netPnlPercent 
+            : (t.position.unrealizedPnlPercent !== undefined ? t.position.unrealizedPnlPercent : (t.pnlPercent || 0));
           const initialSol = t.position.initialSolSpent || 0.1;
-          const solDiff = initialSol * (pnl / 100);
-          const pnlClass = pnl >= 0 ? 'pnl-pos' : 'pnl-neg';
-          const pnlSign = pnl >= 0 ? '+' : '';
-          const solSign = solDiff >= 0 ? '+' : '';
+          let solDiff = t.position.netPnlSol !== undefined 
+            ? t.position.netPnlSol 
+            : (t.position.unrealizedPnlSol !== undefined ? t.position.unrealizedPnlSol : (initialSol * (pnl / 100)));
+
+          // If solDiff is 0 or unpopulated but pnl is non-zero, compute the actual SOL delta
+          if (Math.abs(solDiff) < 0.00001 && Math.abs(pnl) > 0.01) {
+            solDiff = initialSol * (pnl / 100);
+          }
+
+          const pricePnl = t.position.pricePnlPercent !== undefined 
+            ? t.position.pricePnlPercent 
+            : (t.position.priceChangePercent !== undefined 
+                ? t.position.priceChangePercent 
+                : ((t.position.currentPriceSol && t.position.entryPriceSol) 
+                    ? ((t.position.currentPriceSol - t.position.entryPriceSol) / t.position.entryPriceSol) * 100 
+                    : pnl));
+
+          const isNeg = pnl < -0.001 || solDiff < -0.00005;
+          const isPos = pnl > 0.001 && solDiff > 0.00005;
+          const pnlClass = isNeg ? 'pnl-neg' : (isPos ? 'pnl-pos' : '');
+          const pnlSign = isPos ? '+' : '';
+          const solColor = isNeg ? 'var(--red-primary)' : (isPos ? 'var(--green-primary)' : 'var(--text-muted)');
+          let solStr = Math.abs(solDiff) < 0.00005 ? '0.0000' : Math.abs(solDiff).toFixed(4);
+          if (isNeg && solStr === '0.0000') solStr = '-0.0001';
+          else if (isNeg) solStr = '-' + solStr;
+          else if (isPos) solStr = '+' + solStr;
+
+          const posStopLoss = t.position.stopLossPercent !== undefined ? t.position.stopLossPercent : (currentStopLoss || -16);
+          const priceColor = pricePnl >= 0 ? 'var(--green-primary)' : 'var(--red-primary)';
+          const priceSign = pricePnl >= 0 ? '+' : '';
+          const isTriggeringSl = pricePnl <= posStopLoss;
+
           pnlHtml = `<div>
-            <span class="pnl-text ${pnlClass}">${pnlSign}${pnl.toFixed(2)}%</span><br>
-            <span style="font-size: 11px; font-weight: 600; color: ${pnl >= 0 ? 'var(--green-primary)' : 'var(--red-primary)'};">
-              ${solSign}${solDiff.toFixed(4)} SOL
+            <span class="pnl-text ${pnlClass}" title="Net PnL after all fees: ${pnlSign}${pnl.toFixed(2)}% | Spot Price Movement: ${priceSign}${pricePnl.toFixed(2)}%">${pnlSign}${pnl.toFixed(2)}% Net</span><br>
+            <span style="font-size: 11px; font-weight: 600; color: ${solColor};" title="Net SOL after all fees: ${solStr} SOL">
+              ${solStr} SOL
             </span>
+            <div style="font-size: 10px; margin-top: 3px; display: flex; align-items: center; gap: 4px;" title="Token spot price movement vs Stop Loss threshold">
+              <span style="color: #a1a1aa;">Price:</span>
+              <strong style="color: ${priceColor};">${priceSign}${pricePnl.toFixed(1)}%</strong>
+              <span style="color: #71717a; font-size: 9.5px;">(SL: ${posStopLoss}%)</span>
+              ${isTriggeringSl ? '<span style="color: var(--red-primary); font-weight: 700; font-size: 9px;">[SL ACTIVE]</span>' : ''}
+            </div>
           </div>`;
         } else if (isClosed) {
           const closedInfo = t.closedData || (Array.isArray(closedTrades) ? closedTrades.find(c => c.mint === t.mint) : null) || (t.finalPnlPercent !== undefined ? t : null);
           if (closedInfo) {
             const pnl = closedInfo.finalPnlPercent !== undefined ? closedInfo.finalPnlPercent : (closedInfo.pnlPercent || 0);
             const initialSol = closedInfo.initialSolSpent || 0.1;
-            const netSol = closedInfo.netProfitSol !== undefined 
+            let netSol = closedInfo.netProfitSol !== undefined 
               ? closedInfo.netProfitSol 
-              : (closedInfo.profitSol !== undefined 
-                  ? closedInfo.profitSol 
-                  : (initialSol * (pnl / 100)));
-            const pnlClass = pnl >= 0 ? 'pnl-pos' : 'pnl-neg';
-            const pnlSign = pnl >= 0 ? '+' : '';
-            const solSign = netSol >= 0 ? '+' : '';
+              : (closedInfo.pnlSol !== undefined
+                  ? closedInfo.pnlSol
+                  : (closedInfo.profitSol !== undefined 
+                      ? closedInfo.profitSol 
+                      : (initialSol * (pnl / 100))));
+
+            // If netSol is 0 or unpopulated but pnl is non-zero, compute the actual SOL delta
+            if (Math.abs(netSol) < 0.00001 && Math.abs(pnl) > 0.01) {
+              netSol = initialSol * (pnl / 100);
+            }
+
+            const pricePnl = closedInfo.finalPricePnlPercent !== undefined
+              ? closedInfo.finalPricePnlPercent
+              : (closedInfo.pricePnlPercent !== undefined ? closedInfo.pricePnlPercent : pnl);
+
+            const isNeg = pnl < -0.001 || netSol < -0.00005;
+            const isPos = pnl > 0.001 && netSol > 0.00005;
+            const pnlClass = isNeg ? 'pnl-neg' : (isPos ? 'pnl-pos' : '');
+            const pnlSign = isPos ? '+' : '';
+            const solColor = isNeg ? 'var(--red-primary)' : (isPos ? 'var(--green-primary)' : 'var(--text-muted)');
+            let solStr = Math.abs(netSol) < 0.00005 ? '0.0000' : Math.abs(netSol).toFixed(4);
+            if (isNeg && solStr === '0.0000') solStr = '-0.0001';
+            else if (isNeg) solStr = '-' + solStr;
+            else if (isPos) solStr = '+' + solStr;
+
+            const closedPriceColor = pricePnl >= 0 ? 'var(--green-primary)' : 'var(--red-primary)';
+            const closedPriceSign = pricePnl >= 0 ? '+' : '';
+
             pnlHtml = `<div>
-              <span class="pnl-text ${pnlClass}">${pnlSign}${pnl.toFixed(2)}%</span><br>
-              <span style="font-size: 11px; font-weight: 600; color: ${pnl >= 0 ? 'var(--green-primary)' : 'var(--red-primary)'};">
-                ${solSign}${netSol.toFixed(4)} SOL
+              <span class="pnl-text ${pnlClass}" title="Net Realized PnL: ${pnlSign}${pnl.toFixed(2)}% | Price Move: ${closedPriceSign}${pricePnl.toFixed(2)}%">${pnlSign}${pnl.toFixed(2)}% Net</span><br>
+              <span style="font-size: 11px; font-weight: 600; color: ${solColor};" title="Net SOL after all fees: ${solStr} SOL">
+                ${solStr} SOL
               </span>
+              <div style="font-size: 10px; margin-top: 3px; color: #a1a1aa;" title="Exit spot price move">
+                Price: <strong style="color: ${closedPriceColor};">${closedPriceSign}${pricePnl.toFixed(1)}%</strong>
+              </div>
             </div>`;
           }
         }
@@ -4401,6 +4545,7 @@
     let currentSlippage = 15;
     let currentGasTip = 0.01;
     let currentPriorityFee = 0.001;
+    let currentStopLoss = -16;
 
     try {
       const cached = JSON.parse(localStorage.getItem('odex_trading_settings') || '{}');
@@ -4408,6 +4553,7 @@
       if (cached.slippagePercent !== undefined) currentSlippage = cached.slippagePercent;
       if (cached.gasTipSol !== undefined) currentGasTip = cached.gasTipSol;
       if (cached.priorityFeeSol !== undefined) currentPriorityFee = cached.priorityFeeSol;
+      if (cached.stopLossPercent !== undefined) currentStopLoss = cached.stopLossPercent;
       if (cached.isPaperModeEnabled !== undefined) isPaperModeEnabled = cached.isPaperModeEnabled;
     } catch (e) {}
 
@@ -4469,6 +4615,7 @@
       syncSlippageInput(currentSlippage);
       syncGasTipInput(currentGasTip);
       syncPriorityFeeInput(currentPriorityFee);
+      syncStopLossInput(currentStopLoss);
       updatePaperModeUI();
     }
 
@@ -4684,6 +4831,19 @@
     function updatePriorityFee(val) { syncPriorityFeeInput(val); }
     function setPriorityFee(val) { syncPriorityFeeInput(val); }
 
+    function syncStopLossInput(val) {
+      const v = parseFloat(val);
+      if (!isNaN(v)) {
+        currentStopLoss = v > 0 ? -v : v;
+        const absVal = Math.abs(currentStopLoss);
+        const el1 = document.getElementById('trade-input-stop-loss');
+        const el2 = document.getElementById('input-stop-loss');
+        if (el1) el1.value = absVal;
+        if (el2) el2.value = absVal;
+      }
+    }
+    function updateStopLoss(val) { syncStopLossInput(val); }
+    function setStopLoss(val) { syncStopLossInput(val); }
 
     async function resetHistory() {
       try {
@@ -5393,6 +5553,8 @@
         if (!isNaN(gasTipVal)) updateGasTip(gasTipVal);
         const priorityFeeVal = parseFloat(document.getElementById('input-priority-fee')?.value);
         if (!isNaN(priorityFeeVal)) updatePriorityFee(priorityFeeVal);
+        const stopLossVal = parseFloat(document.getElementById('input-stop-loss')?.value);
+        if (!isNaN(stopLossVal)) updateStopLoss(stopLossVal);
         updatedLabels.push('Trading Parameter');
 
         try {
@@ -5404,6 +5566,7 @@
               slippagePercent: currentSlippage,
               gasTipSol: currentGasTip,
               priorityFeeSol: currentPriorityFee,
+              stopLossPercent: currentStopLoss,
               tradingMode: isPaperModeEnabled ? 'PAPER' : 'LIVE'
             })
           });
@@ -5413,6 +5576,7 @@
               slippagePercent: currentSlippage,
               gasTipSol: currentGasTip,
               priorityFeeSol: currentPriorityFee,
+              stopLossPercent: currentStopLoss,
               isPaperModeEnabled
             }));
           } catch (e) {}
@@ -5497,6 +5661,8 @@
       if (!isNaN(gasTipVal)) updateGasTip(gasTipVal);
       const priorityFeeVal = parseFloat(document.getElementById('trade-input-priority-fee')?.value);
       if (!isNaN(priorityFeeVal)) updatePriorityFee(priorityFeeVal);
+      const stopLossVal = parseFloat(document.getElementById('trade-input-stop-loss')?.value);
+      if (!isNaN(stopLossVal)) updateStopLoss(stopLossVal);
 
       try {
         await fetch('/api/update-settings', {
@@ -5507,6 +5673,7 @@
             slippagePercent: currentSlippage,
             gasTipSol: currentGasTip,
             priorityFeeSol: currentPriorityFee,
+            stopLossPercent: currentStopLoss,
             tradingMode: isPaperModeEnabled ? 'PAPER' : 'LIVE'
           })
         });
@@ -5516,6 +5683,7 @@
             slippagePercent: currentSlippage,
             gasTipSol: currentGasTip,
             priorityFeeSol: currentPriorityFee,
+            stopLossPercent: currentStopLoss,
             isPaperModeEnabled
           }));
         } catch (e) {}
@@ -5868,8 +6036,8 @@
           }
         }
 
-        // Fetch live balances for ALL managed wallets in parallel concurrently (fast & lightweight)
-        await Promise.allSettled(managedWallets.map(async (w) => {
+        // FIX: Fetch sequentially with spacing to avoid Helius/RPC rate limits
+        for (const w of managedWallets) {
           if (w.address && !w.address.startsWith('PaperTrading')) {
             try {
               const bRes = await fetch(`/api/wallet/balance/${w.address}`);
@@ -5884,9 +6052,10 @@
                   if (wmSol) wmSol.innerText = `${balFormatted} Sol`;
                 }
               }
+              await new Promise(r => setTimeout(r, 150)); // Prevent RPC spam
             } catch (e) { console.error('[AUTO-CAUGHT ERROR]', e.message || e); }
           }
-        }));
+        }
         saveManagedWallets();
         try {
           const sText = document.getElementById('hdr-sol-bal')?.innerText || '0.00';
@@ -5939,7 +6108,7 @@
     });
 
     // Start auto balance updater automatically
-    startAutoBalanceUpdater(4000);
+    startAutoBalanceUpdater(15000);
 
     function saveManagedWallets() {
       try {

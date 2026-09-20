@@ -157,6 +157,7 @@ export function createDashboardServer(port = 3005) {
     priorityFeeMicroLamports: 8333, // 0.001 SOL priority fee approx
     gasTipSol: 0.01,
     jitoTipLamports: 10_000_000, // 0.01 SOL Jito tip / gas fee
+    stopLossPercent: -16,
   });
 
   const execution = new ExecutionEngine({
@@ -185,7 +186,9 @@ export function createDashboardServer(port = 3005) {
     return null;
   });
 
-  const positionManager = new PositionManager(execution);
+  const positionManager = new PositionManager(execution, {
+    stopLossPercent: tradingSettings.stopLossPercent !== undefined ? tradingSettings.stopLossPercent : -16,
+  });
   const safetyFilter = new HardSafetyFilter({
     maxDevPercent: 8.0, // Strict 8% limit
     maxBundleWallets: 3,
@@ -300,7 +303,10 @@ export function createDashboardServer(port = 3005) {
       jitoTipLamports: Number(userSettings.jito_tip_lamports || userSettings.jitoTipLamports || 10000000),
     });
 
-    const userPositionManager = new PositionManager(userExecution);
+    const userStopLoss = Number(userSettings.stop_loss_percent ?? userSettings.stopLossPercent ?? -16);
+    const userPositionManager = new PositionManager(userExecution, {
+      stopLossPercent: userStopLoss,
+    });
     userPositionManager.setCurveWatcher(curveWatcher);
     userPositionManager.setDevWatcher(devWatcher);
 
@@ -350,6 +356,7 @@ export function createDashboardServer(port = 3005) {
         priorityFeeMicroLamports: Number(userSettings.priority_fee_micro_lamports || userSettings.priorityFeeMicroLamports || 8333),
         gasTipSol: Number(userSettings.gas_tip_sol || userSettings.gasTipSol || 0.01),
         jitoTipLamports: Number(userSettings.jito_tip_lamports || userSettings.jitoTipLamports || 10000000),
+        stopLossPercent: userStopLoss,
       },
     };
 
@@ -385,6 +392,16 @@ export function createDashboardServer(port = 3005) {
 
   const clients = new Set();
 
+  // Fix: Zombie User Memory Leak Sweeper
+  setInterval(() => {
+    const activeUserIds = new Set([...clients].filter(c => c.readyState === 1 && c.userId).map(c => c.userId));
+    for (const [uid, uBot] of userBotRegistry.entries()) {
+      if (!activeUserIds.has(uid) && uBot.positionManager.positions.size === 0) {
+        userBotRegistry.delete(uid);
+      }
+    }
+  }, 60_000 * 5); // 5 minute sweep
+
   wss.on('connection', async (ws, req) => {
     clients.add(ws);
     ws.userId = null;
@@ -414,6 +431,7 @@ export function createDashboardServer(port = 3005) {
         slippagePercent: ctx.tradingSettings.slippagePercent ?? (ctx.tradingSettings.slippageBps ? ctx.tradingSettings.slippageBps / 100 : 15),
         priorityFeeSol: ctx.tradingSettings.priorityFeeSol ?? 0.001,
         gasTipSol: ctx.tradingSettings.gasTipSol ?? (ctx.tradingSettings.jitoTipLamports ? ctx.tradingSettings.jitoTipLamports / 1e9 : 0.01),
+        stopLossPercent: ctx.tradingSettings.stopLossPercent ?? ctx.positionManager.stopLossPercent ?? -16,
         learningEnabled: smartAgent.learningEnabled,
         learningMetrics: smartAgent.getMetrics(),
         vetoes: orchestrator.vetoCount,
@@ -428,6 +446,13 @@ export function createDashboardServer(port = 3005) {
           peakPriceSol: p.peakPriceSol,
           initialSolSpent: p.initialSolSpent,
           unrealizedPnlPercent: p.unrealizedPnlPercent,
+          pricePnlPercent: p.pricePnlPercent ?? p.priceChangePercent ?? 0,
+          grossPnlPercent: p.grossPnlPercent ?? 0,
+          grossPnlSol: p.grossPnlSol ?? 0,
+          estimatedFeesSol: p.estimatedFeesSol ?? 0,
+          netPnlPercent: p.netPnlPercent ?? p.unrealizedPnlPercent ?? 0,
+          netPnlSol: p.netPnlSol ?? p.unrealizedPnlSol ?? 0,
+          stopLossPercent: p.stopLossPercent ?? ctx.positionManager.stopLossPercent ?? -16,
           status: p.status,
           riskScore: p.riskScore || 20,
           entryScore: p.entryScore || 75,
@@ -487,6 +512,16 @@ export function createDashboardServer(port = 3005) {
   eventBus.on('POSITION_TICK', (data) => broadcast('POSITION_TICK', data));
   eventBus.on('POSITION_SCALED_OUT', (data) => broadcast('POSITION_SCALED_OUT', data));
 
+  eventBus.on('CURVE_TICK', (data) => {
+    if (data?.mint && data?.virtualSolReserves && data?.virtualTokenReserves) {
+      for (const [uid, uBot] of userBotRegistry.entries()) {
+        if (uBot.positionManager && uBot.positionManager.positions.has(data.mint)) {
+          uBot.positionManager.updatePrice(data.mint, data.virtualSolReserves, data.virtualTokenReserves);
+        }
+      }
+    }
+  });
+
   eventBus.on('POSITION_CLOSED', (data) => {
     orchestrator.handlePositionClosed(data);
     dbManager.saveTrade(data);
@@ -542,6 +577,12 @@ export function createDashboardServer(port = 3005) {
       peakPriceSol: p.peakPriceSol,
       initialSolSpent: p.initialSolSpent,
       unrealizedPnlPercent: p.unrealizedPnlPercent,
+      pricePnlPercent: p.pricePnlPercent ?? p.priceChangePercent ?? 0,
+      grossPnlPercent: p.grossPnlPercent ?? 0,
+      grossPnlSol: p.grossPnlSol ?? 0,
+      estimatedFeesSol: p.estimatedFeesSol ?? 0,
+      netPnlPercent: p.netPnlPercent ?? p.unrealizedPnlPercent ?? 0,
+      netPnlSol: p.netPnlSol ?? p.unrealizedPnlSol ?? 0,
       status: p.status,
       riskScore: p.riskScore || 20,
       entryScore: p.entryScore || 75,
@@ -912,7 +953,7 @@ export function createDashboardServer(port = 3005) {
 
   app.post('/api/update-settings', async (req, res) => {
     const ctx = await getUserContext(req);
-    const { buySizeSol: newSize, slippagePercent, priorityFeeSol, gasTipSol, isPaperTrading, tradingMode } = req.body;
+    const { buySizeSol: newSize, slippagePercent, priorityFeeSol, gasTipSol, isPaperTrading, tradingMode, stopLossPercent } = req.body;
     let updated = false;
 
     const paperToggled = isPaperTrading !== undefined ? isPaperTrading : (tradingMode !== undefined ? tradingMode === 'PAPER' : undefined);
@@ -982,6 +1023,22 @@ export function createDashboardServer(port = 3005) {
       updated = true;
     }
 
+    if (stopLossPercent !== undefined && !isNaN(Number(stopLossPercent))) {
+      let slPct = Number(stopLossPercent);
+      if (slPct > 0) slPct = -slPct;
+      ctx.tradingSettings.stopLossPercent = slPct;
+      if (ctx.positionManager && ctx.positionManager.setStopLoss) {
+        ctx.positionManager.setStopLoss(slPct);
+      }
+      if (ctx.isLocal) {
+        tradingSettings.stopLossPercent = slPct;
+        if (positionManager && positionManager.setStopLoss) {
+          positionManager.setStopLoss(slPct);
+        }
+      }
+      updated = true;
+    }
+
     if (updated) {
       dbManager.setSetting('trading_settings', ctx.tradingSettings);
       dbManager.setSetting('trading_mode', ctx.currentMode);
@@ -1000,6 +1057,7 @@ export function createDashboardServer(port = 3005) {
         slippagePercent: ctx.tradingSettings.slippagePercent,
         priorityFeeSol: ctx.tradingSettings.priorityFeeSol,
         gasTipSol: ctx.tradingSettings.gasTipSol,
+        stopLossPercent: ctx.tradingSettings.stopLossPercent,
         userId: req.userId || null,
       };
       broadcast('SETTINGS_UPDATED', payload, req.userId);

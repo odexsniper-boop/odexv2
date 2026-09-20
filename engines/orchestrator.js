@@ -5,6 +5,7 @@ import { fetchTokenMetadata } from './metadataFetcher.js';
 import { narrativeEngine } from './narrativeEngine.js';
 import { validateMoneyFlow } from './manipulationEngine.js';
 import { evaluateThreeCandlePattern, CandleBuilder } from './priceEngine.js';
+import { BuyerQualityEngine } from './buyerQualityEngine.js';
 
 /**
  * 3-Stage Deterministic Orchestrator & State Machine:
@@ -51,6 +52,9 @@ export class Orchestrator {
     this.tradeCooldownMs = tradeCooldownMs;
     this.lastTradeTime = 0;
 
+    // Buyer Quality & Sybil Defense Engine
+    this.buyerQualityEngine = new BuyerQualityEngine(curveWatcher?.connection || executionEngine?.connection || null);
+
     // Active tokens map (mint -> TokenRecord)
     this.tokens = new Map();
     // Real-time candle builders (mint -> CandleBuilder)
@@ -74,6 +78,7 @@ export class Orchestrator {
         else if (!protectedStates.includes(record.state) && (now - record.updatedAt > 600000)) {
           this.tokens.delete(mint);
           this.candleBuilders.delete(mint);
+          this.buyerQualityEngine.cleanupToken(mint);
           if (this.curveWatcher) this.curveWatcher.unwatch(mint);
           if (this.devWatcher) this.devWatcher.unwatchDev(mint);
         }
@@ -342,6 +347,7 @@ export class Orchestrator {
         record.buyVolumeSol += tick.solDelta;
         if (tick.buyerPubkey) {
           record.uniqueBuyers.add(tick.buyerPubkey);
+          this.buyerQualityEngine.recordBuy(mint, tick.buyerPubkey, tick.solDelta, tick.timestamp || Date.now(), tick.slot || 0);
         }
       } else {
         record.sellVolumeSol += tick.solDelta;
@@ -373,25 +379,51 @@ export class Orchestrator {
     }
 
     // Handle Stage 2: MONEY_FLOW_WATCH
-      if (record.state === TokenState.MONEY_FLOW_WATCH) {
-        const realBuyerCount = Math.max(record.uniqueBuyers.size, record.bundledBuysCount);
-        const flowVerdict = validateMoneyFlow({
-          buyVolumeSol: record.buyVolumeSol,
-          sellVolumeSol: record.sellVolumeSol,
-          uniqueBuyersCount: realBuyerCount,
-          txCount: record.txCount,
-          liquiditySol: Number(tick.virtualSolReserves || 30000000000n) / 1e9,
-          requiresExceptionalMomentum: record.stage1_narrative?.requiresExceptionalMomentum || false,
-          marketCapSol: record.initialMarketCapSol || 30.0,
-          devHoldingPercent: record.devPercent,
-          devSoldAny: record.devSoldAny,
+    if (record.state === TokenState.MONEY_FLOW_WATCH) {
+      const quality = this.buyerQualityEngine.evaluateBuyerQuality(mint);
+      record.buyerQuality = quality;
+
+      // 1. HARD VETO: Extreme Coordinated Sybil Cluster / Cartel
+      if (quality.isHardVeto) {
+        this.vetoCount++;
+        record.transitionTo(TokenState.REJECTED, `STAGE 2 VETO: COORDINATED_BUYER_CLUSTER (${quality.reasons[0] || 'Extreme Sybil Domination'})`);
+        log(`🚨 [STAGE 2 VETO] Coordinated sybil cluster rejected on ${record.name || mint.slice(0, 8)}! (${quality.reasons.join('; ')})`);
+        if (this.curveWatcher) this.curveWatcher.unwatch(mint);
+        if (this.devWatcher) this.devWatcher.unwatchDev(mint);
+        eventBus.emit('STATE_TRANSITION', {
+          mint,
+          state: record.state,
+          reason: record.rejectionReason,
+          record: this.serializeToken(record),
         });
+        return;
+      }
+
+      // 2. Derive true organic buyer breadth and cleaned organic volume
+      const rawBuyerCount = Math.max(record.uniqueBuyers.size, record.bundledBuysCount);
+      const effectiveOrganicBuyers = quality.organicBuyerCount > 0 ? quality.organicBuyerCount : rawBuyerCount;
+      const effectiveBuyVolume = quality.organicBuyVolumeSol > 0 ? quality.organicBuyVolumeSol : record.buyVolumeSol;
+
+      const flowVerdict = validateMoneyFlow({
+        buyVolumeSol: effectiveBuyVolume,
+        sellVolumeSol: record.sellVolumeSol,
+        uniqueBuyersCount: effectiveOrganicBuyers,
+        organicBuyersCount: effectiveOrganicBuyers,
+        rawBuyersCount: rawBuyerCount,
+        clusterRisk: quality.coordinationRisk,
+        txCount: record.txCount,
+        liquiditySol: Number(tick.virtualSolReserves || 30000000000n) / 1e9,
+        requiresExceptionalMomentum: record.stage1_narrative?.requiresExceptionalMomentum || false,
+        marketCapSol: record.initialMarketCapSol || 30.0,
+        devHoldingPercent: record.devPercent,
+        devSoldAny: record.devSoldAny,
+      });
 
       record.stage2_moneyFlow = flowVerdict;
       record.moneyFlowScore = flowVerdict.score;
 
       if (flowVerdict.passed) {
-        log(`💰 [STAGE 2 PASS] Real Money Flow Confirmed for ${record.name}! (Net Delta: +${flowVerdict.netVolumeDeltaSol} SOL, Ratio: ${flowVerdict.buySellRatio}x, Buyers: ${flowVerdict.uniqueBuyersCount})`);
+        log(`💰 [STAGE 2 PASS] Real Money Flow Confirmed for ${record.name}! (Net Delta: +${flowVerdict.netVolumeDeltaSol} SOL, Ratio: ${flowVerdict.buySellRatio}x, Organic Buyers: ${flowVerdict.uniqueBuyersCount}/${rawBuyerCount}, Cluster Risk: ${quality.coordinationRisk})`);
         
         // Advance to Stage 3: PATTERN_FORMING
         record.transitionTo(TokenState.PATTERN_FORMING);
@@ -649,6 +681,7 @@ export class Orchestrator {
       stage1_narrative: record.stage1_narrative,
       stage2_moneyFlow: record.stage2_moneyFlow,
       stage3_pattern: record.stage3_pattern,
+      buyerQuality: record.buyerQuality || null,
       narrativeScore: record.narrativeScore,
       moneyFlowScore: record.moneyFlowScore,
       patternScore: record.patternScore,
@@ -661,6 +694,7 @@ export class Orchestrator {
         peakPriceSol: record.position.peakPriceSol,
         initialSolSpent: record.position.initialSolSpent,
         unrealizedPnlPercent: record.position.unrealizedPnlPercent,
+        unrealizedPnlSol: record.position.unrealizedPnlSol,
         status: record.position.status,
       } : null,
       closedData: record.closedData || null,

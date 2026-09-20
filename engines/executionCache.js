@@ -58,6 +58,7 @@ export class ExecutionCache {
     this.refreshGlobalState().catch(() => {});
     this.timer = setInterval(() => {
       this.refreshGlobalState().catch(() => {});
+      this.enforceCacheLimits();
     }, this.refreshIntervalMs);
     if (this.timer.unref) {
       this.timer.unref();
@@ -68,6 +69,26 @@ export class ExecutionCache {
     if (this.timer) {
       clearInterval(this.timer);
       this.timer = null;
+    }
+  }
+
+  /**
+   * Prevents infinite memory leaks by clamping map sizes (Pseudo-LRU via insertion order)
+   */
+  enforceCacheLimits() {
+    const MAX_SIZE = 5000;
+    const mapNames = ['mintPdasCache', 'userPdasCache', 'creatorVaultCache', 'mintMetaCache', 'reservesCache'];
+    
+    for (const mapName of mapNames) {
+      const map = this[mapName];
+      if (map && map.size > MAX_SIZE) {
+        let toDelete = map.size - (MAX_SIZE - 500); // Leave 4500
+        for (const key of map.keys()) {
+          map.delete(key);
+          toDelete--;
+          if (toDelete <= 0) break;
+        }
+      }
     }
   }
 
