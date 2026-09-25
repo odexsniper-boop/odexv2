@@ -115,7 +115,9 @@ export class SmartAgent {
    */
   learnFromTrade(tradeRecord) {
     const pnl = Number(tradeRecord.finalPnlPercent || 0);
-    const isWin = pnl >= 0;
+    const pricePnl = Number(tradeRecord.pricePnlPercent ?? tradeRecord.priceChangePercent ?? pnl);
+    const isTakeProfit = typeof tradeRecord.reason === 'string' && tradeRecord.reason.startsWith('TAKE_PROFIT');
+    const isWin = pnl >= 0 || pricePnl > 0 || isTakeProfit;
 
     const experience = {
       mint: tradeRecord.mint,

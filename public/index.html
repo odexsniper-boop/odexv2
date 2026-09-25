@@ -413,6 +413,42 @@
       border-color: var(--green-primary);
     }
 
+    /* Header Deposit Button (Axiom / BullX Style) */
+    .btn-deposit-header {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #526fff;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 0 16px;
+      height: 28px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      user-select: none;
+      text-decoration: none;
+      line-height: 28px;
+      letter-spacing: 0.15px;
+      box-shadow: 0 2px 8px rgba(82, 111, 255, 0.35);
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+    .btn-deposit-header:hover {
+      background: #637fff;
+      box-shadow: 0 4px 14px rgba(82, 111, 255, 0.55);
+      transform: translateY(-1px);
+    }
+    .btn-deposit-header:active {
+      background: #4660e6;
+      transform: translateY(0);
+      box-shadow: 0 1px 4px rgba(82, 111, 255, 0.3);
+    }
+
     /* Solana Wallet Manager Header Pill & Modal */
     .wallet-pill-container {
       display: flex;
@@ -465,12 +501,12 @@
       color: #ffffff;
     }
     .wallet-avatar-badge {
-      width: 26px;
-      height: 26px;
+      width: 29.25px;
+      height: 29.25px;
       border-radius: 50%;
       background: linear-gradient(135deg, #7c3aed, #a855f7, #f43f5e);
       color: #ffffff;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
       display: flex;
       align-items: center;
@@ -556,50 +592,46 @@
     .avatar-menu-item.danger:hover svg {
       color: #fb7185;
     }
-    /* Enhanced Responsive Wallet Styles (657fff theme & Fill Buttons) */
+    /* Compact Solana Wallet Manager (Matching Deposit Section Style) */
+    #wallet-modal .settings-modal {
+      width: 440px;
+      max-width: calc(100vw - 28px);
+      padding: 20px 22px;
+      background: rgba(10, 14, 24, 0.20);
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 14px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+    }
     .wallet-item-row {
       display: flex;
       flex-direction: column;
-      gap: 7px;
-      background: #0F1015;
+      gap: 6px;
+      background: #000000;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 10px;
-      padding: 11px 14px;
-      transition: background 0.12s ease, border-color 0.12s ease;
+      padding: 9px 12px;
+      transition: background 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
       contain: layout style;
       transform: translateZ(0);
       backface-visibility: hidden;
     }
     .wallet-item-row:hover {
-      background: #0e111d;
-      border-color: rgba(101, 127, 255, 0.35);
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(101, 127, 255, 0.3);
     }
     .wallet-item-row.active-wallet {
-      border-color: rgba(101, 127, 255, 0.6) !important;
-      background: rgba(101, 127, 255, 0.08) !important;
-      box-shadow: 0 2px 8px rgba(101, 127, 255, 0.15);
-    }
-    .wallet-item-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      width: 100%;
-    }
-    .wallet-item-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      width: 100%;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding-top: 7px;
+      border: 1px solid rgba(101, 127, 255, 0.5) !important;
+      background: rgba(101, 127, 255, 0.06) !important;
+      box-shadow: 0 0 12px rgba(101, 127, 255, 0.15) !important;
     }
     .wallet-balance-num {
-      font-size: 14px;
+      font-size: 12.5px;
       font-weight: 700;
       color: #657fff;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       letter-spacing: -0.2px;
       white-space: nowrap;
       -webkit-font-smoothing: antialiased;
@@ -628,22 +660,25 @@
     .badge-default-wallet {
       font-size: 9.5px;
       padding: 2px 7px;
-      border-radius: 4px;
-      background: rgba(101, 127, 255, 0.18);
+      border-radius: 9999px;
+      background: rgba(101, 127, 255, 0.15);
       color: #657fff;
-      font-weight: 700;
-      border: 1px solid rgba(101, 127, 255, 0.4);
+      font-weight: 600;
+      border: 1px solid rgba(101, 127, 255, 0.35);
       letter-spacing: 0.3px;
       text-transform: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
     }
     .badge-phantom-wallet {
-      font-size: 9.5px;
+      font-size: 9px;
       padding: 2px 6px;
-      border-radius: 4px;
-      background: rgba(171, 159, 242, 0.18);
-      color: #ab9ff2;
-      font-weight: 700;
-      border: 1px solid rgba(171, 159, 242, 0.35);
+      border-radius: 9999px;
+      background: rgba(101, 127, 255, 0.1);
+      color: #d4d4d8;
+      font-weight: 600;
+      border: 1px solid rgba(101, 127, 255, 0.25);
       letter-spacing: 0.3px;
       display: inline-flex;
       align-items: center;
@@ -651,17 +686,17 @@
       text-transform: none;
     }
     .btn-set-default {
-      background: rgba(101, 127, 255, 0.14);
+      background: rgba(101, 127, 255, 0.12);
       color: #657fff;
-      border: 1px solid rgba(101, 127, 255, 0.35);
-      border-radius: 6px;
+      border: 1px solid rgba(101, 127, 255, 0.3);
+      border-radius: 5px;
       padding: 2px 7px;
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
       user-select: none;
     }
@@ -679,103 +714,138 @@
     .wallet-item-row .action-icon-btn {
       width: 26px;
       height: 26px;
-      font-size: 12px;
+      font-size: 11.5px;
       border-radius: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #a1a1aa;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
       user-select: none;
     }
     .wallet-item-row .action-icon-btn:hover {
       transform: translateY(-1px);
+      color: #ffffff;
+      border-color: rgba(101, 127, 255, 0.4);
     }
     .wallet-item-row .action-icon-btn:active {
-      transform: scale(0.90);
+      transform: scale(0.92);
+    }
+    .wallet-item-row .action-icon-btn.btn-send-sol {
+      background: rgba(101, 127, 255, 0.1);
+      border-color: rgba(101, 127, 255, 0.25);
+      color: #657fff;
+    }
+    .wallet-item-row .action-icon-btn.btn-send-sol:hover {
+      background: rgba(101, 127, 255, 0.25);
+      border-color: #657fff;
+      color: #ffffff;
+    }
+    .wallet-item-row .action-icon-btn.btn-delete-wallet {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.25);
+      color: #ef4444;
+    }
+    .wallet-item-row .action-icon-btn.btn-delete-wallet:hover {
+      background: rgba(239, 68, 68, 0.25);
+      border-color: #ef4444;
+      color: #ffffff;
     }
     .btn-wallet-fill-phantom {
-      background: #AB9FF2;
-      color: #0d0b1a;
-      border: none;
+      background: rgba(255, 255, 255, 0.06);
+      color: #d4d4d8;
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 8px;
       font-family: inherit;
-      font-size: 12.5px;
+      font-size: 11.5px;
       font-weight: 600;
       white-space: nowrap;
-      padding: 9.5px 14px;
+      height: 38px;
+      padding: 0 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
+      gap: 6px;
       cursor: pointer;
-      transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
       flex: 1;
       user-select: none;
     }
     .btn-wallet-fill-phantom:hover {
-      background: #beb3f7;
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.22);
+      color: #ffffff;
       transform: translateY(-1px);
     }
     .btn-wallet-fill-phantom:active {
-      transform: scale(0.96);
+      transform: scale(0.97);
     }
     .btn-wallet-fill-import {
-      background: #657fff;
+      background: #526fff;
       color: #ffffff;
-      border: none;
+      border: 1px solid #526fff;
       border-radius: 8px;
       font-family: inherit;
-      font-size: 12.5px;
-      font-weight: 600;
+      font-size: 11.5px;
+      font-weight: 700;
       white-space: nowrap;
-      padding: 9.5px 14px;
+      height: 38px;
+      padding: 0 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
+      gap: 6px;
       cursor: pointer;
-      transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 10px rgba(82, 111, 255, 0.35);
       flex: 1;
       user-select: none;
     }
     .btn-wallet-fill-import:hover {
-      background: #7a91ff;
+      background: #415ee8;
+      border-color: #415ee8;
+      filter: brightness(1.08);
       transform: translateY(-1px);
     }
     .btn-wallet-fill-import:active {
-      transform: scale(0.96);
+      transform: scale(0.97);
     }
     .btn-wallet-fill-refresh {
-      background: #ffffff;
-      color: #000000;
-      border: none;
+      background: rgba(255, 255, 255, 0.06);
+      color: #d4d4d8;
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 8px;
       font-family: inherit;
-      font-size: 12.5px;
+      font-size: 11.5px;
       font-weight: 600;
       white-space: nowrap;
-      padding: 9.5px 14px;
+      height: 38px;
+      padding: 0 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
+      gap: 6px;
       cursor: pointer;
-      transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
       flex: 1;
       user-select: none;
     }
     .btn-wallet-fill-refresh:hover {
-      background: #f1f5f9;
-      color: #000000;
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.22);
+      color: #ffffff;
       transform: translateY(-1px);
     }
     .btn-wallet-fill-refresh:active {
-      transform: scale(0.96);
+      transform: scale(0.97);
     }
     .btn-delete-wallet {
-      background: #dc2626 !important;
-      border-color: #ef4444 !important;
-      color: #ffffff !important;
+      background: rgba(239, 68, 68, 0.12) !important;
+      border-color: rgba(239, 68, 68, 0.3) !important;
+      color: #f87171 !important;
       transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
       user-select: none;
     }
@@ -824,49 +894,55 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.86);
+      background: rgba(0, 0, 0, 0.50);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       z-index: 1000;
       display: none;
       align-items: center;
       justify-content: center;
-      transform: translateZ(0);
-      will-change: opacity;
     }
     .settings-modal-backdrop.open {
       display: flex;
+      animation: backdropFadeIn 0.15s ease-out;
+    }
+    @keyframes backdropFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     .settings-modal {
-      background: #000000;
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      background: rgba(10, 14, 24, 0.20);
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 14px;
       width: 440px;
       max-width: 90vw;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.85);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
       padding: 24px;
       color: #ffffff;
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      contain: layout style;
     }
     /* Modern Unified Settings Modal Frame (matching sleek dialog style) */
     .settings-modal-dialog {
-      background: #0c0f17;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(10, 14, 24, 0.20);
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 14px;
       width: 780px;
       max-width: 95vw;
       height: 600px;
       max-height: 90vh;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
       display: flex;
       flex-direction: column;
       overflow: hidden;
       color: #ffffff;
-      animation: modalFadeIn 0.18s ease-out;
+      animation: modalFadeIn 0.15s ease-out;
     }
     @keyframes modalFadeIn {
-      from { opacity: 0; transform: scale(0.98); }
-      to { opacity: 1; transform: scale(1); }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     .settings-topbar {
       height: 54px;
@@ -875,7 +951,7 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      background: #0c0f17;
+      background: rgba(0, 0, 0, 0.06);
       flex-shrink: 0;
     }
     .settings-search-wrapper {
@@ -949,7 +1025,7 @@
       border-right: 1px solid rgba(255, 255, 255, 0.08);
       padding: 16px 10px;
       overflow-y: auto;
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(0, 0, 0, 0.06);
       display: flex;
       flex-direction: column;
       gap: 14px;
@@ -1001,7 +1077,7 @@
     .settings-content-pane {
       padding: 24px 32px;
       overflow-y: auto;
-      background: #0c0f17;
+      background: transparent;
     }
     .settings-section-view {
       display: none;
@@ -1016,7 +1092,7 @@
       gap: 10px;
       padding: 14px 24px;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(0, 0, 0, 0.35);
+      background: rgba(0, 0, 0, 0.08);
       flex-shrink: 0;
     }
     /* Settings Modals Input Styling matching Date Filter */
@@ -1509,11 +1585,13 @@
 
     /* Architecture Log Panel */
     .arch-panel {
-      background: #101114;
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: rgba(10, 14, 24, 0.20);
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 14px;
       padding: 18px 20px;
-      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04), 0 4px 20px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
     }
     .arch-panel h2 {
       margin: 0 0 12px 0;
@@ -1527,14 +1605,17 @@
     .log-box {
       height: 170px;
       overflow-y: auto;
-      background: #000000;
-      border: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(20px) saturate(190%);
+      -webkit-backdrop-filter: blur(20px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.10);
       border-radius: 8px;
       padding: 12px;
       font-family: 'Geist Mono', 'SF Mono', Consolas, monospace;
       font-size: 11px;
       color: #e4e4e7;
       font-variant-numeric: tabular-nums;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
     }
     .log-entry { margin-bottom: 4px; line-height: 1.4; }
     .log-time { color: var(--text-muted); margin-right: 8px; }
@@ -1565,10 +1646,12 @@
       top: calc(100% + 8px);
       width: 660px;
       max-width: 95vw;
-      background: #0c0f17;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(10, 14, 22, 0.48);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 14px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
       z-index: 1200;
       display: flex;
       flex-direction: column;
@@ -1590,7 +1673,7 @@
       display: flex;
       flex-direction: column;
       gap: 3px;
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(0, 0, 0, 0.10);
     }
     .drp-side-btn {
       background: transparent;
@@ -1803,7 +1886,7 @@
       align-items: center;
       padding: 12px 18px;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(0, 0, 0, 0.35);
+      background: rgba(0, 0, 0, 0.12);
     }
     .drp-footer-range {
       font-size: 12px;
@@ -1845,6 +1928,286 @@
       filter: brightness(1.1);
       box-shadow: 0 0 12px rgba(0, 255, 163, 0.4);
     }
+
+    /* Header Search Bar (Axiom / BullX / Photon Style) */
+    .header-search-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #080b11;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 0 10px 0 12px;
+      height: 38px;
+      flex: 1;
+      max-width: 460px;
+      margin: 0 24px;
+      position: relative;
+      transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+      cursor: text;
+    }
+    .header-search-bar:hover {
+      border-color: rgba(255, 255, 255, 0.14);
+      background: #0b0e16;
+    }
+    .header-search-bar:focus-within {
+      border-color: rgba(255, 255, 255, 0.24);
+      background: #0b0e16;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+    .header-search-icon {
+      flex-shrink: 0;
+      color: #4b5568;
+      pointer-events: none;
+      transition: color 0.15s ease;
+    }
+    .header-search-bar:focus-within .header-search-icon {
+      color: #8b99ad;
+    }
+    .header-search-input {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #ffffff;
+      font-size: 13px;
+      font-family: inherit;
+      font-weight: 400;
+      padding: 0;
+      margin: 0;
+      line-height: 38px;
+    }
+    .header-search-input::placeholder {
+      color: #4b5568;
+      font-weight: 400;
+      opacity: 1;
+    }
+    .header-search-actions {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+    .header-search-clear-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: color 0.15s ease;
+    }
+    .header-search-clear-btn:hover {
+      color: #ffffff;
+    }
+    .header-search-paste-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #151824;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 5px;
+      padding: 2.5px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #8b99ad;
+      cursor: pointer;
+      line-height: 1.2;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .header-search-paste-btn:hover {
+      background: #1e2434;
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+    .header-search-paste-btn:active {
+      transform: scale(0.96);
+    }
+    .header-search-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #151824;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 5px;
+      padding: 2.5px 7px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #526076;
+      line-height: 1.2;
+      user-select: none;
+      pointer-events: none;
+    }
+    @media (max-width: 900px) {
+      .header-search-bar {
+        max-width: 260px;
+        margin: 0 10px;
+      }
+    }
+    @media (max-width: 640px) {
+      .header-search-bar {
+        display: none;
+      }
+    }
+
+    /* Table Layout Wrapper with Left-side Multi-chain Selector */
+    .table-layout-wrapper {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      width: 100%;
+      margin-top: 16px;
+      margin-bottom: 24px;
+    }
+    .table-layout-wrapper .table-container {
+      flex: 1;
+      min-width: 0;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    /* Floating Chain Selector Capsule (Axiom / BullX / Photon Style) */
+    .chain-selector-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      width: 36px;
+      background: #080b11;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 9px 4px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+      position: sticky;
+      top: 16px;
+      flex-shrink: 0;
+      z-index: 25;
+      user-select: none;
+    }
+    .chain-all-btn {
+      position: relative;
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      cursor: pointer;
+      padding: 2px 0 3px 0;
+      transition: color 0.15s ease;
+      line-height: 1;
+      text-align: center;
+      width: 100%;
+    }
+    .chain-all-btn:hover {
+      color: #ffffff;
+    }
+    .chain-divider {
+      width: 16px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 1px 0 3px 0;
+    }
+    .chain-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .chain-item svg {
+      display: block;
+      flex-shrink: 0;
+    }
+    .chain-item.active {
+      background: #171f32;
+      border-color: rgba(101, 127, 255, 0.45);
+      box-shadow: 0 0 12px rgba(101, 127, 255, 0.28);
+      cursor: default;
+    }
+    .chain-item.disabled {
+      color: #64748b;
+      opacity: 0.75;
+      cursor: pointer;
+    }
+    .chain-item.disabled:hover {
+      color: #cbd5e1;
+      opacity: 1;
+      transform: scale(1.12);
+      border-color: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Tooltip Hover Text (Pops out to the right of each chain icon) */
+    .chain-item[data-tooltip]::before,
+    .chain-all-btn[data-tooltip]::before {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: calc(100% + 9px);
+      top: 50%;
+      transform: translateY(-50%) scale(0.94);
+      background: #10141f;
+      color: #f8fafc;
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+      z-index: 100;
+      letter-spacing: 0.2px;
+    }
+    .chain-item[data-tooltip]::after,
+    .chain-all-btn[data-tooltip]::after {
+      content: '';
+      position: absolute;
+      left: calc(100% + 4px);
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: 5px 5px 5px 0;
+      border-style: solid;
+      border-color: transparent #10141f transparent transparent;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.15s ease, visibility 0.15s ease;
+      z-index: 101;
+    }
+    .chain-item:hover[data-tooltip]::before,
+    .chain-all-btn:hover[data-tooltip]::before {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(-50%) scale(1);
+    }
+    .chain-item:hover[data-tooltip]::after,
+    .chain-all-btn:hover[data-tooltip]::after {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @media (max-width: 820px) {
+      .chain-selector-pill {
+        display: none;
+      }
+      .table-layout-wrapper {
+        gap: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1855,10 +2218,32 @@
       <!-- Main App Top Header -->
       <div class="main-app-header">
         <div class="app-brand">
-          <img src="/icons/ODEX SNIPER.png" alt="ODEX SNIPER" class="app-header-logo-img" style="height: 40px; width: auto; object-fit: contain; filter: drop-shadow(0 0 14px rgba(0, 255, 163, 0.28));" />
+          <img src="/icons/Odex.png" alt="ODEX SNIPER" class="app-header-logo-img" style="height: 40px; width: auto; object-fit: contain; filter: drop-shadow(0 0 14px rgba(0, 255, 163, 0.28));" />
+        </div>
+
+        <!-- Header Token & Trader Search Bar (Axiom / BullX / Photon Style) -->
+        <div class="header-search-bar" onclick="focusHeaderSearch(event)">
+          <svg class="header-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="header-search-input" class="header-search-input" placeholder="Search for tokens or traders..." oninput="handleHeaderSearch(this.value)" autocomplete="off" spellcheck="false" />
+          <div class="header-search-actions">
+            <button type="button" class="header-search-clear-btn" id="header-search-clear-btn" onclick="clearHeaderSearch(event)" title="Clear search">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+            <button type="button" class="header-search-paste-btn" onclick="pasteHeaderSearch(event)" title="Paste token or trader address">Paste</button>
+            <span class="header-search-badge" title="Shortcut: Press / to search">/</span>
+          </div>
         </div>
 
         <div style="display: flex; align-items: center; gap: 10px;">
+          <!-- Header Deposit Button (Axiom / BullX Style) -->
+          <button type="button" class="btn-deposit-header" id="btn-header-deposit" onclick="openDepositModal()" title="Deposit SOL or SPL tokens">Deposit</button>
+
           <!-- Solana Wallets Manager Pill -->
           <div class="wallet-pill-container" onclick="openWalletModal()" title="Open Solana Wallets Manager">
             <div class="wallet-pill">
@@ -2067,7 +2452,7 @@
       <!-- Header & Filters -->
       <div class="top-bar">
         <div class="title-area">
-          <h1><span style="color: var(--green-primary);">⚡</span> ODEX Sniper <span class="pulse-dot"></span></h1>
+          <h1>Live Tokens <span class="pulse-dot"></span></h1>
         </div>
 
         <div class="filter-tabs">
@@ -2100,7 +2485,7 @@
 
   <!-- Dedicated Separate Trading Settings Modal (From Token Section Gear Button) -->
   <div class="settings-modal-backdrop" id="trading-settings-modal" onclick="onTradingSettingsBackdropClick(event)">
-    <div class="settings-modal-dialog" style="width: 440px; height: auto; max-height: 88vh;" onclick="event.stopPropagation()">
+    <div class="settings-modal-dialog" style="width: 440px; height: auto; max-height: 88vh; background: rgba(10, 14, 24, 0.20); backdrop-filter: blur(24px) saturate(200%); -webkit-backdrop-filter: blur(24px) saturate(200%); border: 1px solid rgba(255, 255, 255, 0.18); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 0 rgba(255, 255, 255, 0.14);" onclick="event.stopPropagation()">
       <!-- Topbar Header -->
       <div class="settings-topbar" style="height: 48px; padding: 0 18px;">
         <div>
@@ -2116,7 +2501,7 @@
       </div>
 
       <!-- Scrollable Content Pane -->
-      <div style="padding: 16px 20px; overflow-y: auto; background: #0c0f17; display: flex; flex-direction: column; gap: 6px;">
+      <div style="padding: 16px 20px; overflow-y: auto; background: transparent; display: flex; flex-direction: column; gap: 6px;">
         <!-- Trading Mode -->
         <div class="settings-card" style="padding: 11px 0; gap: 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.06);">
           <div class="settings-card-row">
@@ -2191,7 +2576,7 @@
         </div>
 
         <!-- Stop Loss -->
-        <div class="settings-card" style="padding: 11px 0; gap: 5px; border-bottom: none;">
+        <div class="settings-card" style="padding: 11px 0; gap: 5px;">
           <div class="settings-card-row">
             <span class="settings-card-title" style="font-size: 12px;">Stop Loss (%) <span class="settings-info-icon" title="Executes an immediate market exit when token spot price drops by this percentage from entry price. Excludes fixed Jito tips."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span></span>
             <div style="display: flex; align-items: center; gap: 4px;">
@@ -2203,6 +2588,21 @@
             </div>
           </div>
           <p class="settings-helper-text" style="font-size: 11.5px; color: #8e8e93; line-height: 1.4;">Automatic price stop loss. Exits position if market price drops below threshold.</p>
+        </div>
+
+        <!-- Daily Stop Loss -->
+        <div class="settings-card" style="padding: 11px 0; gap: 5px; border-bottom: none;">
+          <div class="settings-card-row">
+            <span class="settings-card-title" style="font-size: 12px;">Daily Stop Loss (SOL) <span class="settings-info-icon" title="Halts Auto-Snipe and blocks new trades when cumulative daily realized losses reach this limit. Set to 0 to disable."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span></span>
+            <div style="display: flex; align-items: center; gap: 4px;">
+              <input type="number" id="trade-input-daily-stop-loss" value="0" step="0.1" min="0" onchange="updateDailyStopLoss(this.value)" style="width: 60px; background: #121214; border: 1px solid rgba(255,255,255,0.14); color: #ffffff; border-radius: 6px; padding: 5px 6px; font-size: 12px; font-weight: 700; text-align: center; font-family: inherit;">
+              <button class="btn-preset btn-preset-dailystop" onclick="setDailyStopLoss(0.5)" style="padding: 4px 6px; font-size: 10.5px;">0.5</button>
+              <button class="btn-preset btn-preset-dailystop" onclick="setDailyStopLoss(1.0)" style="padding: 4px 6px; font-size: 10.5px;">1.0</button>
+              <button class="btn-preset btn-preset-dailystop" onclick="setDailyStopLoss(2.0)" style="padding: 4px 6px; font-size: 10.5px;">2.0</button>
+              <button class="btn-preset btn-preset-dailystop" onclick="setDailyStopLoss(5.0)" style="padding: 4px 6px; font-size: 10.5px;">5.0</button>
+            </div>
+          </div>
+          <p class="settings-helper-text" style="font-size: 11.5px; color: #8e8e93; line-height: 1.4;">Circuit breaker: Automatically halts trading once cumulative daily loss hits limit (0 = disabled).</p>
         </div>
       </div>
 
@@ -2216,7 +2616,7 @@
 
   <!-- Image 2 Style Unified Settings & Account Modal -->
   <div class="settings-modal-backdrop" id="settings-modal" onclick="onSettingsBackdropClick(event)">
-    <div class="settings-modal-dialog" onclick="event.stopPropagation()">
+    <div class="settings-modal-dialog" style="background: rgba(10, 14, 24, 0.20); backdrop-filter: blur(24px) saturate(200%); -webkit-backdrop-filter: blur(24px) saturate(200%); border: 1px solid rgba(255, 255, 255, 0.18); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 0 rgba(255, 255, 255, 0.14);" onclick="event.stopPropagation()">
       <!-- Top Search & Close Bar (matching screenshot) -->
       <div class="settings-topbar">
         <div class="settings-search-wrapper">
@@ -2519,6 +2919,20 @@
               </div>
               <p class="settings-helper-text">Automatic price stop loss. Exits position if market price drops below threshold from entry.</p>
             </div>
+
+            <div class="settings-card">
+              <div class="settings-card-row">
+                <span class="settings-card-title">Daily Stop Loss (SOL) <span class="settings-info-icon" title="Circuit breaker: Automatically halts Auto-Snipe and blocks new trades when cumulative daily realized loss hits this limit. Set to 0 to disable.">ⓘ</span></span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <input type="number" id="input-daily-stop-loss" value="0" step="0.1" min="0" onchange="updateDailyStopLoss(this.value)" style="width: 80px; background: #121214; border: 1px solid rgba(255,255,255,0.12); color: #ffffff; border-radius: 6px; padding: 6px 10px; font-weight: 700; text-align: center; font-family: inherit;">
+                  <button class="btn-preset btn-preset-dailystop" onclick="setDailyStopLoss(0.5)">0.5</button>
+                  <button class="btn-preset btn-preset-dailystop" onclick="setDailyStopLoss(1.0)">1.0</button>
+                  <button class="btn-preset btn-preset-dailystop" onclick="setDailyStopLoss(2.0)">2.0</button>
+                  <button class="btn-preset btn-preset-dailystop" onclick="setDailyStopLoss(5.0)">5.0</button>
+                </div>
+              </div>
+              <p class="settings-helper-text">Halts Auto-Snipe and stops all new trades once cumulative daily realized loss hits this limit (0 = disabled).</p>
+            </div>
           </div>
 
           <!-- SECTION: Apps & Integrations -->
@@ -2684,88 +3098,126 @@
     </div>
   </div>
 
-  <!-- Solana Wallets Manager Modal Section -->
+  <!-- Solana Wallets Manager Modal Section (Compact Deposit Theme) -->
   <div class="settings-modal-backdrop" id="wallet-modal" onclick="onWalletBackdropClick(event)">
-    <div class="settings-modal" style="width: 522px; max-width: calc(100vw - 28px); padding: 18px 20px;">
-      <div class="settings-modal-header" style="margin-bottom: 14px; padding-bottom: 10px;">
-        <h2 style="display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700;">
+    <div class="settings-modal" style="width: 440px; max-width: calc(100vw - 28px); padding: 20px 22px; position: relative;">
+      <!-- Modal Top Header -->
+      <div class="settings-modal-header" style="margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 8px;">
           <img src="/icons/solana-sol-icon.svg" width="20" height="20" alt="Solana" style="object-fit: contain; filter: drop-shadow(0 0 6px rgba(101, 127, 255, 0.5));">
-          Solana Wallets Manager
-          <span style="font-size: 9.5px; font-weight: 700; padding: 2px 7px; background: rgba(101, 127, 255, 0.15); color: #657fff; border: 1px solid rgba(101, 127, 255, 0.35); border-radius: 9999px; margin-left: 3px;">Connected</span>
-        </h2>
+          <h2 style="font-size: 16px; font-weight: 700; margin: 0; color: #ffffff;">
+            Solana Wallets Manager
+          </h2>
+          <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; padding: 2px 7px; background: rgba(0, 255, 163, 0.12); color: #00ffa3; border-radius: 9999px; margin-left: 2px;">
+            <span style="width: 5px; height: 5px; border-radius: 50%; background: #00ffa3;"></span>Connected
+          </span>
+        </div>
         <button class="settings-modal-close" onclick="closeWalletModal()" style="font-size: 16px; padding: 3px 6px;">✕</button>
       </div>
 
       <!-- Active Primary Wallet Card -->
-      <div style="background: #0F1015; border: 1px solid rgba(101, 127, 255, 0.3); border-radius: 12px; padding: 13px 15px; margin-bottom: 14px; box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04), 0 4px 14px rgba(101, 127, 255, 0.05);">
+      <div style="background: #000000; border: 1px solid rgba(101, 127, 255, 0.25); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px;">
+        <!-- Card Top Header -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="width: 7px; height: 7px; border-radius: 50%; background: #657fff; box-shadow: 0 0 8px #657fff;"></div>
-            <span style="font-size: 13px; font-weight: 700; color: #ffffff;" id="wm-active-name">Wallet 1 (Main Sniper)</span>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="width: 7px; height: 7px; border-radius: 50%; background: #00ffa3; box-shadow: 0 0 6px #00ffa3;"></span>
+            <span style="font-size: 12.5px; font-weight: 700; color: #ffffff;" id="wm-active-name">Primary Sniper Wallet (Active)</span>
           </div>
-          <span class="badge-default-wallet" id="wm-mode-tag">Default</span>
+          <span class="badge-default-wallet" id="wm-mode-tag" style="font-size: 9.5px; padding: 2px 7px;">
+            Default
+          </span>
         </div>
 
-        <div style="display: flex; align-items: center; justify-content: space-between; background: #000000; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 8px 12px; margin-bottom: 10px;">
-          <span style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 500; color: #d4d4d8; letter-spacing: 0.3px; -webkit-font-smoothing: antialiased;" id="wm-active-addr">Connecting to wallet...</span>
-          <div style="display: flex; gap: 6px;">
-            <button class="copy-btn" onclick="openSendSolModal(activeWalletPubkey)" title="Send SOL to another wallet" style="padding: 3px 8px; display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: #657fff; background: rgba(101, 127, 255, 0.12); border: 1px solid rgba(101, 127, 255, 0.3); border-radius: 6px; cursor: pointer;">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-              Send SOL
+        <!-- Active Wallet Address Pill (Matching Deposit Address Bar Design) -->
+        <div style="display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 6px 10px; margin-bottom: 10px;">
+          <span style="font-family: monospace; font-size: 11.5px; font-weight: 500; color: #cbd5e1; letter-spacing: 0.2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;" id="wm-active-addr">Connecting to wallet...</span>
+          <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+            <button type="button" class="copy-btn" onclick="copyActiveWallet(event)" title="Copy Address"
+              style="padding: 4px 8px; background: rgba(101, 127, 255, 0.15); border: 1px solid rgba(101, 127, 255, 0.4); border-radius: 6px; color: #657fff; font-weight: 700; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.15s ease;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Copy</span>
             </button>
-            <button class="copy-btn" onclick="copyActiveWallet(event)" title="Copy Address" style="padding: 3px 5px;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            </button>
-            <a id="wm-solscan-link" href="https://solscan.io" target="_blank" class="copy-btn" title="View on Solscan Explorer" style="display: flex; align-items: center; justify-content: center; text-decoration: none; padding: 3px 5px;">
-              <img src="/icons/solscan-logo-light.svg" alt="Solscan" width="13" height="13" style="object-fit: contain;">
+            <a id="wm-solscan-link" href="https://solscan.io" target="_blank" class="copy-btn" title="View on Solscan Explorer"
+              style="display: flex; align-items: center; justify-content: center; text-decoration: none; padding: 4px 6px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 6px;">
+              <img src="/icons/solscan-logo-light.svg" alt="Solscan" width="12" height="12" style="object-fit: contain;">
             </a>
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-          <div style="background: #000000; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 15px 18px;">
-            <div style="font-size: 15px; font-weight: 600; color: #d4d4d8; margin-bottom: 7px; letter-spacing: 0.2px; display: flex; align-items: center; gap: 8px;">
-              <img src="/icons/solana-sol-icon.svg" width="24" height="24" alt="SOL" style="object-fit: contain; flex-shrink: 0;">
-              Sol balance
+        <!-- Two-Column Balance Display -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <!-- SOL Balance Card -->
+          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 9px 11px; display: flex; align-items: center; gap: 9px;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: #000000; border: 1px solid rgba(101, 127, 255, 0.35); display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 0 8px rgba(101, 127, 255, 0.2);">
+              <img src="/icons/solana-sol-icon.svg" width="16" height="16" alt="SOL">
             </div>
-            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 26px; font-weight: 700; color: #657fff; letter-spacing: -0.02em; -webkit-font-smoothing: antialiased;" id="wm-sol-display">0.0000 Sol</div>
+            <div style="min-width: 0; flex: 1;">
+              <div style="font-size: 10.5px; font-weight: 600; color: #a1a1aa; margin-bottom: 2px;">Sol Balance</div>
+              <div style="font-size: 15.5px; font-weight: 800; line-height: 1.1; white-space: nowrap;">
+                <span id="wm-sol-display"><span style="color: #657fff;">0.0000</span> <span style="color: #a1a1aa; font-size: 11.5px; font-weight: 600;">SOL</span></span>
+              </div>
+              <div id="wm-sol-fiat-sub" style="font-size: 10px; color: #71717a; font-weight: 500; margin-top: 2px;">≈ $0.00</div>
+            </div>
           </div>
-          <div style="background: #000000; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 15px 18px;">
-            <div style="font-size: 15px; font-weight: 600; color: #d4d4d8; margin-bottom: 7px; letter-spacing: 0.2px; display: flex; align-items: center; gap: 8px;">
-              <img src="/icons/usdc.svg" width="42" height="31" alt="USDC" style="object-fit: contain; flex-shrink: 0;">
-              Usdc balance
+
+          <!-- USDC Balance Card -->
+          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 9px 11px; display: flex; align-items: center; gap: 9px;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(101, 127, 255, 0.12); border: 1px solid rgba(101, 127, 255, 0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <span style="font-size: 15px; font-weight: 800; color: #657fff; line-height: 1;">$</span>
             </div>
-            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 26px; font-weight: 700; color: #ffffff; letter-spacing: -0.02em; -webkit-font-smoothing: antialiased;" id="wm-usdc-display">$0.00</div>
+            <div style="min-width: 0; flex: 1;">
+              <div style="font-size: 10.5px; font-weight: 600; color: #a1a1aa; margin-bottom: 2px;">USDC Balance</div>
+              <div style="font-size: 15.5px; font-weight: 800; color: #ffffff; line-height: 1.1; white-space: nowrap;" id="wm-usdc-display">$0.00</div>
+              <div id="wm-usdc-sub" style="font-size: 10px; color: #71717a; font-weight: 500; margin-top: 2px;">0.0000 USDC</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Registered Wallets Sub-List -->
-      <div style="margin-bottom: 16px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.2px;">Managed sniper wallets</span>
-          <button class="btn-action" style="padding: 4px 10px; font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 5px; color: #000000; border: 1px solid #ffffff; background: #ffffff; border-radius: 6px; box-shadow: 0 1px 4px rgba(255, 255, 255, 0.15); cursor: pointer; transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1); user-select: none;" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform=''" onmouseleave="this.style.transform=''" onclick="generateNewWallet()">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            New Wallet
-          </button>
+      <!-- Managed sniper wallets Sub-List Header -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin: 12px 0 8px;">
+        <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: #e4e4e7;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#657fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          <span>Managed Sniper Wallets</span>
         </div>
-        <div id="wm-wallets-list" style="display: flex; flex-direction: column; gap: 8px; max-height: 336px; overflow-y: auto; padding-right: 2px;">
-          <!-- Dynamically filled by renderWallets() -->
-        </div>
+        <button class="btn-action" style="padding: 5px 12px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; color: #ffffff; background: #526fff; border: 1px solid #526fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(82, 111, 255, 0.35); cursor: pointer; transition: all 0.12s ease; user-select: none;" onmousedown="this.style.transform='scale(0.96)'" onmouseup="this.style.transform=''" onmouseleave="this.style.transform=''" onclick="generateNewWallet()">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          New Wallet
+        </button>
       </div>
 
-      <!-- Action Buttons (Solid Fill Style with 657fff Theme & Phantom Circle Icon) -->
-      <div style="display: flex; gap: 8px; margin-top: 16px;">
+      <!-- Scrollable Wallets List -->
+      <div id="wm-wallets-list" style="display: flex; flex-direction: column; gap: 6px; max-height: 150px; overflow-y: auto; padding-right: 2px;">
+        <!-- Dynamically filled by renderWallets() -->
+      </div>
+
+      <!-- Action Buttons (Matching Deposit Modal Style) -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 14px;">
         <button class="btn-wallet-fill-phantom" onclick="connectPhantomWallet()" title="Connect via Phantom Chrome Extension">
-          <img src="/icons/Phantom-Icon_Circle.svg" width="16" height="16" alt="Phantom" style="border-radius: 50%; display: block; flex-shrink: 0;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#ffffff">
+            <path d="M12 2a9 9 0 0 0-9 9v7.5a1.5 1.5 0 0 0 2.5 1.1l1.8-1.5 1.8 1.5a1.5 1.5 0 0 0 1.9 0l1.8-1.5 1.8 1.5a1.5 1.5 0 0 0 2.5-1.1V11a9 9 0 0 0-9-9zm-3.5 10a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+          </svg>
           <span style="white-space: nowrap;">Connect Phantom</span>
         </button>
         <button class="btn-wallet-fill-import" onclick="promptImportKey()" title="Import Solana Private Key">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="7.5" cy="15.5" r="5.5"></circle><path d="m21 2-9.6 9.6"></path><path d="m15.5 7.5 3 3"></path></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="7.5" cy="15.5" r="5.5"></circle>
+            <path d="m21 2-9.6 9.6"></path>
+            <path d="m15.5 7.5 3 3"></path>
+          </svg>
           <span style="white-space: nowrap;">Import Key</span>
         </button>
         <button class="btn-wallet-fill-refresh" onclick="refreshWalletBalances()" title="Refresh On-Chain Balances">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #000000; flex-shrink: 0;"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path><path d="M16 21h5v-5"></path></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+            <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+            <path d="M16 21h5v-5"></path>
+          </svg>
           <span style="white-space: nowrap;">Refresh</span>
         </button>
       </div>
@@ -2851,6 +3303,79 @@
     </div>
   </div>
 
+  <!-- Deposit Funds Modal -->
+  <div class="settings-modal-backdrop" id="deposit-modal" onclick="onDepositBackdropClick(event)">
+    <div class="settings-modal" style="width: 440px; max-width: calc(100vw - 28px); padding: 20px 22px;">
+      <div class="settings-modal-header" style="margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; margin: 0; color: #ffffff;">
+          <img src="/icons/solana-sol-icon.svg" width="20" height="20" alt="Solana" style="object-fit: contain; filter: drop-shadow(0 0 6px rgba(101, 127, 255, 0.5));">
+          Deposit Solana (SOL)
+        </h2>
+        <button class="settings-modal-close" onclick="closeDepositModal()" style="font-size: 16px; padding: 3px 6px;">✕</button>
+      </div>
+
+      <!-- Active Wallet Card -->
+      <div style="background: #000000; border: 1px solid rgba(101, 127, 255, 0.25); border-radius: 10px; padding: 12px 14px; margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <span style="font-size: 11px; font-weight: 600; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.5px;">Deposit Target Wallet</span>
+          <span style="font-size: 12px; font-weight: 700; color: #657fff;" id="deposit-balance-display">0.00 SOL</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 13px; font-weight: 700; color: #ffffff;" id="deposit-wallet-name">Wallet 1 (Main Sniper)</span>
+          <span class="badge-default-wallet" style="font-size: 9.5px; padding: 2px 7px;">Active</span>
+        </div>
+      </div>
+
+      <!-- QR Code Display Box -->
+      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 16px;">
+        <div style="background: #ffffff; padding: 12px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); display: inline-flex; align-items: center; justify-content: center;">
+          <img id="deposit-qr-code" src="" alt="Solana Deposit QR Code" width="160" height="160" style="display: block; border-radius: 4px;" />
+        </div>
+        <span style="font-size: 11px; color: #71717a; margin-top: 8px;">Scan with Phantom, Solflare, or any mobile wallet</span>
+      </div>
+
+      <!-- Wallet Address Bar with Copy Button -->
+      <div style="margin-bottom: 14px;">
+        <label style="display: block; font-size: 11.5px; font-weight: 600; color: #d4d4d8; margin-bottom: 6px;">
+          Deposit Solana Address
+        </label>
+        <div style="display: flex; align-items: center; gap: 8px; background: #000000; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 8px 10px;">
+          <input type="text" id="deposit-address-input" readonly
+            style="width: 100%; background: transparent; border: none; color: #fff; font-size: 12px; font-family: monospace; outline: none; text-overflow: ellipsis; cursor: text;"
+            value="" />
+          <button type="button" class="copy-btn" id="deposit-copy-btn" onclick="copyDepositAddress(event)" title="Copy Address"
+            style="padding: 5px 10px; background: rgba(101, 127, 255, 0.15); border: 1px solid rgba(101, 127, 255, 0.4); border-radius: 6px; color: #657fff; font-weight: 700; font-size: 11.5px; cursor: pointer; display: flex; align-items: center; gap: 4px; flex-shrink: 0; transition: all 0.15s ease;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span id="deposit-copy-text">Copy</span>
+          </button>
+          <a id="deposit-solscan-link" href="https://solscan.io" target="_blank" class="copy-btn" title="View on Solscan Explorer" style="display: flex; align-items: center; justify-content: center; text-decoration: none; padding: 5px 7px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 6px; flex-shrink: 0;">
+            <img src="/icons/solscan-logo-light.svg" alt="Solscan" width="13" height="13" style="object-fit: contain;">
+          </a>
+        </div>
+      </div>
+
+      <!-- Info Tip -->
+      <div style="background: rgba(101, 127, 255, 0.08); border: 1px solid rgba(101, 127, 255, 0.2); border-radius: 8px; padding: 10px 12px; font-size: 11px; color: #94a3b8; line-height: 1.5; margin-bottom: 16px;">
+        <span style="color: #657fff; font-weight: 600;">⚡ Instant Recognition:</span> Transfer SOL or any SPL token to this address. The bot detects deposits automatically and updates your balance in real-time.
+      </div>
+
+      <!-- Modal Bottom Actions -->
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 14px;">
+        <button type="button" onclick="closeDepositModal(); openWalletModal();" style="padding: 8px 14px; font-size: 12px; font-weight: 600; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 8px; color: #d4d4d8; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+          <svg class="wallet-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path>
+            <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path>
+            <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path>
+          </svg>
+          Wallets Manager
+        </button>
+        <button type="button" onclick="closeDepositModal()" style="padding: 8px 22px; font-size: 12.5px; font-weight: 700; background: #526fff; border: 1px solid #526fff; border-radius: 8px; color: #ffffff; cursor: pointer; box-shadow: 0 2px 10px rgba(82, 111, 255, 0.35); transition: all 0.12s;">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
 
 
   <!-- Notifications Modal -->
@@ -2922,27 +3447,112 @@
   <!-- Scrollable Tokens Section (Boxed layout, scrolls independently) -->
   <div class="tokens-section">
     <div class="tokens-boxed-container">
-      <!-- Main Token Monitoring Table -->
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Token</th>
-              <th>Stage 1: Narrative</th>
-              <th>Stage 2: Money Flow</th>
-              <th>Stage 3: 3-Candle Trigger</th>
-              <th>Pipeline State</th>
-              <th>Position / Actions</th>
-            </tr>
-          </thead>
-          <tbody id="token-table-body">
-            <tr>
-              <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 40px;">
-                Connecting to Solana RPC stream & 3-stage state machine...
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- Main Token Monitoring Table with Left-Side Multi-Chain Selector -->
+      <div class="table-layout-wrapper">
+        <!-- Floating Vertical Chain Selector Capsule (Axiom / BullX / Photon Style) -->
+        <aside class="chain-selector-pill" aria-label="Blockchain Selector">
+          <!-- All -->
+          <div class="chain-all-btn" data-tooltip="All Chains" title="All Chains">All</div>
+          <div class="chain-divider"></div>
+
+          <!-- Solana (Active) -->
+          <button class="chain-item active" data-tooltip="Solana (Active)" title="Solana (Active)" type="button">
+            <svg width="15" height="12" viewBox="0 0 508.07 398.17" fill="none">
+              <defs>
+                <linearGradient id="chain-sol-1" x1="463" y1="205.16" x2="182.39" y2="742.62" gradientTransform="translate(0 -198)" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="#00ffa3"/>
+                  <stop offset="1" stop-color="#dc1fff"/>
+                </linearGradient>
+                <linearGradient id="chain-sol-2" x1="340.31" y1="141.1" x2="59.71" y2="678.57" gradientTransform="translate(0 -198)" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="#00ffa3"/>
+                  <stop offset="1" stop-color="#dc1fff"/>
+                </linearGradient>
+                <linearGradient id="chain-sol-3" x1="401.26" y1="172.92" x2="120.66" y2="710.39" gradientTransform="translate(0 -198)" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="#00ffa3"/>
+                  <stop offset="1" stop-color="#dc1fff"/>
+                </linearGradient>
+              </defs>
+              <path fill="url(#chain-sol-1)" d="M84.53,358.89A16.63,16.63,0,0,1,96.28,354H501.73a8.3,8.3,0,0,1,5.87,14.18l-80.09,80.09a16.61,16.61,0,0,1-11.75,4.86H10.31A8.31,8.31,0,0,1,4.43,439Z" transform="translate(-1.98 -55)"/>
+              <path fill="url(#chain-sol-2)" d="M84.53,59.85A17.08,17.08,0,0,1,96.28,55H501.73a8.3,8.3,0,0,1,5.87,14.18l-80.09,80.09a16.61,16.61,0,0,1-11.75,4.86H10.31A8.31,8.31,0,0,1,4.43,140Z" transform="translate(-1.98 -55)"/>
+              <path fill="url(#chain-sol-3)" d="M427.51,208.42a16.61,16.61,0,0,0-11.75-4.86H10.31a8.31,8.31,0,0,0-5.88,14.18l80.1,80.09a16.6,16.6,0,0,0,11.75,4.86H501.73a8.3,8.3,0,0,0,5.87-14.18Z" transform="translate(-1.98 -55)"/>
+            </svg>
+          </button>
+
+          <!-- Pump.fun -->
+          <button class="chain-item disabled" data-tooltip="Pump.fun" title="Pump.fun" type="button" onclick="showChainInactiveToast('Pump.fun')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.24 3.76a6 6 0 0 0-8.49 0L3.5 12a6 6 0 0 0 8.49 8.49l8.25-8.24a6 6 0 0 0 0-8.49z" />
+              <line x1="8.5" y1="15.5" x2="15.5" y2="8.5" />
+            </svg>
+          </button>
+
+          <!-- Abstract -->
+          <button class="chain-item disabled" data-tooltip="Abstract" title="Abstract" type="button" onclick="showChainInactiveToast('Abstract')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19L12 4l8 15M7 14h10" />
+            </svg>
+          </button>
+
+          <!-- BNB Chain -->
+          <button class="chain-item disabled" data-tooltip="BNB Chain" title="BNB Chain" type="button" onclick="showChainInactiveToast('BNB Chain')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l3.4 3.4-3.4 3.4-3.4-3.4L12 2zm-5.7 5.7L9.7 11 6.3 14.4 2.9 11l3.4-3.3zm11.4 0l3.4 3.3-3.4 3.4-3.4-3.4 3.4-3.3zM12 15.2l3.4 3.4-3.4 3.4-3.4-3.4 3.4-3.4zm0-6.1l2.3 2.3-2.3 2.3-2.3-2.3 2.3-2.3z" />
+            </svg>
+          </button>
+
+          <!-- Base -->
+          <button class="chain-item disabled" data-tooltip="Base" title="Base" type="button" onclick="showChainInactiveToast('Base')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 3.5a6.5 6.5 0 1 0 6.5 6.5H13V5.5z" />
+            </svg>
+          </button>
+
+          <!-- Hyperliquid -->
+          <button class="chain-item disabled" data-tooltip="Hyperliquid" title="Hyperliquid" type="button" onclick="showChainInactiveToast('Hyperliquid')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4.5 5.5l7.5 6.5-7.5 6.5V5.5zm15 0v13l-7.5-6.5 7.5-6.5z" />
+            </svg>
+          </button>
+
+          <!-- Blast -->
+          <button class="chain-item disabled" data-tooltip="Blast" title="Blast" type="button" onclick="showChainInactiveToast('Blast')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="8.5" />
+              <line x1="6.5" y1="12" x2="17.5" y2="12" stroke-width="2.2" />
+            </svg>
+          </button>
+
+          <!-- Ethereum -->
+          <button class="chain-item disabled" data-tooltip="Ethereum" title="Ethereum" type="button" onclick="showChainInactiveToast('Ethereum')">
+            <svg width="14" height="17" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 1.5l-6.5 11 6.5 3.8 6.5-3.8-6.5-11z" opacity="0.9"/>
+              <path d="M5.5 13.5l6.5 9 6.5-9-6.5 3.8-6.5-3.8z" opacity="0.6"/>
+            </svg>
+          </button>
+        </aside>
+
+        <!-- Main Token Monitoring Table -->
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Stage 1: Narrative</th>
+                <th>Stage 2: Money Flow</th>
+                <th>Stage 3: 3-Candle Trigger</th>
+                <th>Pipeline State</th>
+                <th>Position / Actions</th>
+              </tr>
+            </thead>
+            <tbody id="token-table-body">
+              <tr>
+                <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 40px;">
+                  Connecting to Solana RPC stream & 3-stage state machine...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- Engine Event Log -->
@@ -2958,6 +3568,7 @@
 
   <script>
     let currentFilter = localStorage.getItem('odex_active_tab') || 'all';
+    let tokenSearchQuery = '';
     let tokensMap = new Map(); // mint -> TokenRecord
     let autoBuyEnabled = false;
     let learningEnabled = true;
@@ -2966,12 +3577,105 @@
     let managedWallets = [];
     let activeWalletPubkey = '';
 
+    function showChainInactiveToast(chainName) {
+      appendLog(`ℹ️ [NETWORK] ODEX is currently connected to high-speed Solana mainnet-beta. ${chainName} multi-chain support is coming soon.`, 'var(--blue-primary)');
+    }
+
+    function handleHeaderSearch(val) {
+      tokenSearchQuery = (val || '').trim().toLowerCase();
+      const clearBtn = document.getElementById('header-search-clear-btn');
+      if (clearBtn) {
+        clearBtn.style.display = val && val.length > 0 ? 'inline-flex' : 'none';
+      }
+      render();
+    }
+
+    function clearHeaderSearch(e) {
+      if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      const input = document.getElementById('header-search-input');
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+      handleHeaderSearch('');
+    }
+
+    function focusHeaderSearch(e) {
+      if (e && (e.target.closest('.header-search-paste-btn') || e.target.closest('.header-search-clear-btn'))) {
+        return;
+      }
+      const input = document.getElementById('header-search-input');
+      if (input && document.activeElement !== input) {
+        input.focus();
+      }
+    }
+
+    async function pasteHeaderSearch(e) {
+      if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      const input = document.getElementById('header-search-input');
+      try {
+        if (navigator.clipboard && navigator.clipboard.readText) {
+          const text = await navigator.clipboard.readText();
+          if (text) {
+            if (input) {
+              input.value = text.trim();
+              input.focus();
+            }
+            handleHeaderSearch(text.trim());
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('Clipboard read failed or permission denied:', err);
+      }
+      if (input) {
+        input.focus();
+        input.select();
+      }
+    }
+
+    // Global keyboard shortcut: Press '/' to focus search input, Escape to clear
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName) && !document.activeElement?.isContentEditable) {
+        e.preventDefault();
+        const input = document.getElementById('header-search-input');
+        if (input) {
+          input.focus();
+          input.select();
+        }
+      } else if (e.key === 'Escape' && document.activeElement?.id === 'header-search-input') {
+        clearHeaderSearch();
+        document.activeElement?.blur();
+      }
+    });
+
     function formatSolAmount(val) {
       const num = parseFloat(val || 0);
       if (isNaN(num) || num <= 0) return '0.00';
       if (num < 0.0001) return num.toFixed(6);
       if (num < 1) return num.toFixed(4);
       return num.toFixed(2);
+    }
+
+    function updateWalletFiatDisplay(solVal, usdcVal) {
+      if (solVal !== undefined && solVal !== null) {
+        const rawStr = String(solVal).replace(/sol/ig, '').trim();
+        const num = parseFloat(rawStr) || 0;
+        const fiatEl = document.getElementById('wm-sol-fiat-sub');
+        if (fiatEl) fiatEl.innerText = `≈ $${(num * 150).toFixed(2)}`;
+      }
+      if (usdcVal !== undefined && usdcVal !== null) {
+        const rawStr = String(usdcVal).replace(/[^\d.]/g, '').trim();
+        const uNum = parseFloat(rawStr) || 0;
+        const uSub = document.getElementById('wm-usdc-sub');
+        if (uSub) uSub.innerText = `${uNum.toFixed(4)} USDC`;
+      }
     }
 
     function hydrateCachedWallet() {
@@ -3001,13 +3705,15 @@
           const hdrSol = document.getElementById('hdr-sol-bal');
           if (hdrSol) hdrSol.innerText = formatted;
           const wmSol = document.getElementById('wm-sol-display') || document.getElementById('wm-sol-bal');
-          if (wmSol) wmSol.innerText = `${formatted} Sol`;
+          if (wmSol) wmSol.innerHTML = `<span style="color: #657fff; font-weight: 700;">${formatted}</span> <span style="color: #a1a1aa; font-size: 12px; font-weight: 600;">SOL</span>`;
+          updateWalletFiatDisplay(sBal);
         }
         if (uBal !== undefined && uBal !== null) {
           const hdrUsdc = document.getElementById('hdr-usdc-bal');
           if (hdrUsdc) hdrUsdc.innerText = parseFloat(uBal || 0).toLocaleString();
           const wmUsdc = document.getElementById('wm-usdc-display') || document.getElementById('wm-usdc-bal');
           if (wmUsdc) wmUsdc.innerText = `$${parseFloat(uBal || 0).toLocaleString()}`;
+          updateWalletFiatDisplay(undefined, uBal);
         }
         if (pub) {
           activeWalletPubkey = pub;
@@ -3405,6 +4111,9 @@
         if (d.stopLossPercent !== undefined) {
           syncStopLossInput(d.stopLossPercent);
         }
+        if (d.dailyStopLossSol !== undefined) {
+          syncDailyStopLossInput(d.dailyStopLossSol);
+        }
 
         if (d.tokens) {
           const initTokens = d.tokens.length > 150 ? d.tokens.slice(-150) : d.tokens;
@@ -3588,6 +4297,18 @@
       } else if (type === 'AUTOBUY_STATUS') {
         autoBuyEnabled = d.enabled;
         updateAutoBuyBtn();
+      } else if (type === 'SETTINGS_UPDATED') {
+        if (d.buySizeSol !== undefined) syncBuySizeInput(d.buySizeSol);
+        if (d.slippagePercent !== undefined) syncSlippageInput(d.slippagePercent);
+        if (d.priorityFeeSol !== undefined) syncPriorityFeeInput(d.priorityFeeSol);
+        if (d.gasTipSol !== undefined) syncGasTipInput(d.gasTipSol);
+        if (d.stopLossPercent !== undefined) syncStopLossInput(d.stopLossPercent);
+        if (d.dailyStopLossSol !== undefined) syncDailyStopLossInput(d.dailyStopLossSol);
+      } else if (type === 'DAILY_STOP_LOSS_TRIGGERED') {
+        appendLog(`🛑 ${d.message || 'Daily Stop Loss triggered. Auto-Snipe halted.'}`, 'var(--red-primary)');
+        autoBuyEnabled = false;
+        updateAutoBuyBtn();
+        alert(`🛑 Daily Stop Loss Hit!\n\nCumulative realized loss today reached ${Number(d.dailyLoss || 0).toFixed(3)} SOL (Limit: ${d.limit} SOL).\n\nAuto-Snipe has been automatically halted to protect capital.`);
       } else if (type === 'LEARNING_STATUS_UPDATED') {
         learningEnabled = d.learningEnabled;
         updateLearningBtn(d);
@@ -3750,10 +4471,22 @@
         }
       }
 
+      if (tokenSearchQuery) {
+        const q = tokenSearchQuery;
+        filtered = filtered.filter(t => {
+          const name = (t.name || '').toLowerCase();
+          const symbol = (t.symbol || '').toLowerCase();
+          const mint = (t.mint || '').toLowerCase();
+          const wallet = ((t.closedData && t.closedData.wallet) || (t.position && t.position.wallet) || '').toLowerCase();
+          return name.includes(q) || symbol.includes(q) || mint.includes(q) || wallet.includes(q);
+        });
+      }
+
       if (filtered.length === 0) {
-        if (!tbody.querySelector('.empty-state-row')) {
-          tbody.innerHTML = '<tr class="empty-state-row"><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">No tokens in this state</td></tr>';
-        }
+        const emptyMsg = tokenSearchQuery 
+          ? `No tokens or trades found matching "${escapeHtml(tokenSearchQuery)}"` 
+          : 'No tokens in this state';
+        tbody.innerHTML = `<tr class="empty-state-row"><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">${emptyMsg}</td></tr>`;
         return;
       }
 
@@ -4172,14 +4905,44 @@
 
       const initialPreset = localStorage.getItem('drp_preset') || 'all';
       if (initialPreset === 'last') {
-        drpState.count = 7;
-        drpState.unit = 'days';
+        drpState.count = parseInt(localStorage.getItem('drp_count')) || 7;
+        drpState.unit = localStorage.getItem('drp_unit') || 'days';
+        const savedInc = localStorage.getItem('drp_include_today');
+        drpState.includeToday = savedInc !== null ? savedInc === 'true' : true;
       }
-      computePresetDates(initialPreset, drpState.count, drpState.unit, drpState.includeToday);
       drpState.preset = initialPreset;
-      drpState.activeStart = new Date(drpState.tempStart);
-      drpState.activeEnd = new Date(drpState.tempEnd);
-      drpState.label = initialPreset === 'all' ? 'All Time' : (initialPreset === 'today' ? 'Today' : (initialPreset === 'last' ? 'Last 7 days' : initialPreset));
+      computePresetDates(initialPreset, drpState.count, drpState.unit, drpState.includeToday);
+      if (drpState.tempStart && !isNaN(new Date(drpState.tempStart).getTime())) {
+        drpState.activeStart = new Date(drpState.tempStart);
+      } else {
+        drpState.activeStart = new Date(0);
+      }
+      if (drpState.tempEnd && !isNaN(new Date(drpState.tempEnd).getTime())) {
+        drpState.activeEnd = new Date(drpState.tempEnd);
+      } else {
+        drpState.activeEnd = new Date(Date.now() + 86400000 * 365 * 10);
+      }
+
+      if (initialPreset === 'all') drpState.label = 'All Time';
+      else if (initialPreset === 'today') drpState.label = 'Today';
+      else if (initialPreset === 'yesterday') drpState.label = 'Yesterday';
+      else if (initialPreset === 'mtd') drpState.label = 'Period to date';
+      else if (initialPreset === 'quarters') {
+        const q = Math.floor(new Date().getMonth() / 3) + 1;
+        drpState.label = `Q${q} ${new Date().getFullYear()}`;
+      } else if (initialPreset === 'last') {
+        drpState.label = `Last ${drpState.count} ${drpState.unit}`;
+      } else if (initialPreset === 'custom' && drpState.activeStart && drpState.activeEnd) {
+        const s = drpState.activeStart;
+        const e = drpState.activeEnd;
+        if (s.getFullYear() === e.getFullYear() && s.getMonth() === e.getMonth() && s.getDate() === e.getDate()) {
+          drpState.label = `${DRP_SHORT_MONTHS[s.getMonth()]} ${s.getDate()}`;
+        } else {
+          drpState.label = `${DRP_SHORT_MONTHS[s.getMonth()]} ${s.getDate()}–${DRP_SHORT_MONTHS[e.getMonth()]} ${e.getDate()}`;
+        }
+      } else {
+        drpState.label = 'All Time';
+      }
 
       renderDrpHeaderLabel();
     }
@@ -4224,7 +4987,9 @@
       computePresetDates(preset, drpState.count, drpState.unit, drpState.includeToday);
       syncDrpUI();
       renderDrpCalendars();
-      applyDateRangePicker();
+      if (preset !== 'custom') {
+        applyDateRangePicker();
+      }
     }
 
     function computePresetDates(preset, count = 7, unit = 'days', includeToday = true) {
@@ -4250,6 +5015,19 @@
       } else if (preset === 'all') {
         start = new Date(0);
         end = new Date(now.getFullYear() + 5, 11, 31, 23, 59, 59, 999);
+      } else if (preset === 'custom') {
+        const savedStart = localStorage.getItem('drp_custom_start');
+        const savedEnd = localStorage.getItem('drp_custom_end');
+        if (savedStart && savedEnd && !isNaN(new Date(savedStart).getTime()) && !isNaN(new Date(savedEnd).getTime())) {
+          start = new Date(savedStart);
+          end = new Date(savedEnd);
+        } else if (drpState.tempStart && drpState.tempEnd) {
+          start = new Date(drpState.tempStart);
+          end = new Date(drpState.tempEnd);
+        } else {
+          start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+          end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+        }
       } else if (preset === 'last') {
         const c = Math.max(Number(count) || 1, 1);
         let daysMultiplier = 1;
@@ -4259,13 +5037,10 @@
 
         if (includeToday) {
           end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
-          const s = new Date(now.getTime() - (totalDays - 1) * 86400000);
-          start = new Date(s.getFullYear(), s.getMonth(), s.getDate(), 0, 0, 0, 0);
+          start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (totalDays - 1), 0, 0, 0, 0);
         } else {
-          const y = new Date(now.getTime() - 86400000);
-          end = new Date(y.getFullYear(), y.getMonth(), y.getDate(), 23, 59, 59, 999);
-          const s = new Date(y.getTime() - (totalDays - 1) * 86400000);
-          start = new Date(s.getFullYear(), s.getMonth(), s.getDate(), 0, 0, 0, 0);
+          end = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 23, 59, 59, 999);
+          start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - totalDays, 0, 0, 0, 0);
         }
       }
 
@@ -4467,10 +5242,23 @@
       } else {
         const s = drpState.activeStart;
         const e = drpState.activeEnd;
-        drpState.label = `${DRP_SHORT_MONTHS[s.getMonth()]} ${s.getDate()}–${DRP_SHORT_MONTHS[e.getMonth()]} ${e.getDate()}`;
+        if (s.getFullYear() === e.getFullYear() && s.getMonth() === e.getMonth() && s.getDate() === e.getDate()) {
+          drpState.label = `${DRP_SHORT_MONTHS[s.getMonth()]} ${s.getDate()}`;
+        } else {
+          drpState.label = `${DRP_SHORT_MONTHS[s.getMonth()]} ${s.getDate()}–${DRP_SHORT_MONTHS[e.getMonth()]} ${e.getDate()}`;
+        }
       }
 
       localStorage.setItem('drp_preset', drpState.preset);
+      if (drpState.preset === 'custom' && drpState.activeStart && drpState.activeEnd) {
+        localStorage.setItem('drp_custom_start', drpState.activeStart.toISOString());
+        localStorage.setItem('drp_custom_end', drpState.activeEnd.toISOString());
+      }
+      if (drpState.preset === 'last') {
+        localStorage.setItem('drp_count', String(drpState.count));
+        localStorage.setItem('drp_unit', drpState.unit);
+        localStorage.setItem('drp_include_today', String(drpState.includeToday));
+      }
       renderDrpHeaderLabel();
       closeDateRangePicker();
       updateHistoricalWinRate();
@@ -4486,9 +5274,13 @@
       if (!trade) return false;
       if (drpState.preset === 'all') return true;
       if (!drpState.activeStart || !drpState.activeEnd) return true;
-      const tTime = new Date(trade.closedAt || trade.timestamp || trade.openedAt || Date.now()).getTime();
       const s = drpState.activeStart.getTime();
       const e = drpState.activeEnd.getTime();
+      if (isNaN(s) || isNaN(e)) return true;
+      const rawTime = trade.closedAt || trade.closed_at || trade.timestamp || trade.openedAt || trade.opened_at || trade.updatedAt || trade.detectedAt || trade.created_at;
+      if (!rawTime) return true;
+      const tTime = new Date(rawTime).getTime();
+      if (isNaN(tTime)) return true;
       return tTime >= s && tTime <= e;
     }
 
@@ -4509,14 +5301,14 @@
         return;
       }
       
-      const wins = filteredTrades.filter(t => (t.finalPnlPercent || t.pnlPercent || 0) >= 0).length;
+      const wins = filteredTrades.filter(t => (t.finalPnlPercent ?? t.pnlPercent ?? t.pnl_percent ?? t.netPnlPercent ?? 0) >= 0).length;
       const rate = ((wins / filteredTrades.length) * 100).toFixed(0);
       const wrEl = document.getElementById('stat-winrate');
       if (wrEl) wrEl.innerText = `${rate}%`;
       const cntEl = document.getElementById('stat-closed-count');
       if (cntEl) cntEl.innerText = `${filteredTrades.length} closed trades (${wins} wins)`;
 
-      const totalPnl = filteredTrades.reduce((acc, t) => acc + (t.netProfitSol || t.profitSol || 0), 0);
+      const totalPnl = filteredTrades.reduce((acc, t) => acc + (t.netProfitSol ?? t.profitSol ?? t.pnlSol ?? t.pnl_sol ?? t.netPnlSol ?? 0), 0);
       if (pnlEl) {
         pnlEl.innerText = (totalPnl >= 0 ? '+' : '') + totalPnl.toFixed(3) + ' SOL';
         pnlEl.style.color = totalPnl >= 0 ? 'var(--green-primary)' : 'var(--red-primary)';
@@ -4546,6 +5338,7 @@
     let currentGasTip = 0.01;
     let currentPriorityFee = 0.001;
     let currentStopLoss = -16;
+    let currentDailyStopLoss = 0;
 
     try {
       const cached = JSON.parse(localStorage.getItem('odex_trading_settings') || '{}');
@@ -4554,6 +5347,7 @@
       if (cached.gasTipSol !== undefined) currentGasTip = cached.gasTipSol;
       if (cached.priorityFeeSol !== undefined) currentPriorityFee = cached.priorityFeeSol;
       if (cached.stopLossPercent !== undefined) currentStopLoss = cached.stopLossPercent;
+      if (cached.dailyStopLossSol !== undefined) currentDailyStopLoss = cached.dailyStopLossSol;
       if (cached.isPaperModeEnabled !== undefined) isPaperModeEnabled = cached.isPaperModeEnabled;
     } catch (e) {}
 
@@ -4585,6 +5379,9 @@
             `⚡ Auto-Snipe is now ${autoBuyEnabled ? 'ENABLED 🟢' : 'DISABLED 🔴'}`,
             autoBuyEnabled ? 'var(--green-primary)' : 'var(--yellow-primary)'
           );
+        } else if (data && data.error) {
+          alert(`🛑 Cannot enable Auto-Snipe:\n\n${data.error}`);
+          appendLog(`🛑 ${data.error}`, 'var(--red-primary)');
         }
       } catch (err) {
         console.error('[AUTOBUY TOGGLE ERROR]', err);
@@ -4616,6 +5413,7 @@
       syncGasTipInput(currentGasTip);
       syncPriorityFeeInput(currentPriorityFee);
       syncStopLossInput(currentStopLoss);
+      syncDailyStopLossInput(currentDailyStopLoss);
       updatePaperModeUI();
     }
 
@@ -4637,7 +5435,7 @@
     async function loadInitialDataRest() {
       try {
         const [tradesRes, tokensRes, walletRes, positionsRes, statusRes] = await Promise.allSettled([
-          fetch('/api/trades?limit=100').then(r => r.json()),
+          fetch('/api/trades?limit=1000').then(r => r.json()),
           fetch('/api/tokens').then(r => r.json()),
           fetch('/api/wallet').then(r => r.json()),
           fetch('/api/positions').then(r => r.json()),
@@ -4659,6 +5457,24 @@
           if (s.mode !== undefined) {
             isPaperModeEnabled = (s.mode === 'PAPER');
             updatePaperModeUI();
+          }
+          if (s.buySizeSol !== undefined) {
+            syncBuySizeInput(s.buySizeSol);
+          }
+          if (s.slippagePercent !== undefined) {
+            syncSlippageInput(s.slippagePercent);
+          }
+          if (s.priorityFeeSol !== undefined) {
+            syncPriorityFeeInput(s.priorityFeeSol);
+          }
+          if (s.gasTipSol !== undefined) {
+            syncGasTipInput(s.gasTipSol);
+          }
+          if (s.stopLossPercent !== undefined) {
+            syncStopLossInput(s.stopLossPercent);
+          }
+          if (s.dailyStopLossSol !== undefined) {
+            syncDailyStopLossInput(s.dailyStopLossSol);
           }
           if (s.learningEnabled !== undefined) {
             learningEnabled = s.learningEnabled;
@@ -4733,7 +5549,8 @@
             const hdrSol = document.getElementById('hdr-sol-bal');
             if (hdrSol) hdrSol.innerText = solVal;
             const wmSol = document.getElementById('wm-sol-display') || document.getElementById('wm-sol-bal');
-            if (wmSol) wmSol.innerText = `${solVal} Sol`;
+            if (wmSol) wmSol.innerHTML = `<span style="color: #657fff; font-weight: 700;">${solVal}</span> <span style="color: #a1a1aa; font-size: 12px; font-weight: 600;">SOL</span>`;
+            updateWalletFiatDisplay(w.solBalance);
           }
           if (w.usdcBalance !== undefined) {
             const usdcVal = parseFloat(w.usdcBalance || 0).toLocaleString();
@@ -4741,6 +5558,7 @@
             if (hdrUsdc) hdrUsdc.innerText = usdcVal;
             const wmUsdc = document.getElementById('wm-usdc-display') || document.getElementById('wm-usdc-bal');
             if (wmUsdc) wmUsdc.innerText = `$${usdcVal}`;
+            updateWalletFiatDisplay(undefined, w.usdcBalance);
           }
           if (w.pubkey) {
             activeWalletPubkey = w.pubkey;
@@ -4845,6 +5663,19 @@
     function updateStopLoss(val) { syncStopLossInput(val); }
     function setStopLoss(val) { syncStopLossInput(val); }
 
+    function syncDailyStopLossInput(val) {
+      const v = parseFloat(val);
+      if (!isNaN(v) && v >= 0) {
+        currentDailyStopLoss = v;
+        const el1 = document.getElementById('trade-input-daily-stop-loss');
+        const el2 = document.getElementById('input-daily-stop-loss');
+        if (el1) el1.value = v;
+        if (el2) el2.value = v;
+      }
+    }
+    function updateDailyStopLoss(val) { syncDailyStopLossInput(val); }
+    function setDailyStopLoss(val) { syncDailyStopLossInput(val); }
+
     async function resetHistory() {
       try {
         await fetch('/api/reset-history', { method: 'POST' });
@@ -4881,6 +5712,7 @@
       closeAvatarMenu();
       const modal = document.getElementById('settings-modal');
       if (modal) modal.classList.add('open');
+      syncTradingSettingsInputs();
       switchSettingsTab(defaultTab);
       await fetchAccountSecurityData();
     }
@@ -5555,6 +6387,9 @@
         if (!isNaN(priorityFeeVal)) updatePriorityFee(priorityFeeVal);
         const stopLossVal = parseFloat(document.getElementById('input-stop-loss')?.value);
         if (!isNaN(stopLossVal)) updateStopLoss(stopLossVal);
+        const rawDailyLoss = document.getElementById('input-daily-stop-loss')?.value;
+        const dailyStopLossVal = (rawDailyLoss === '' || rawDailyLoss === undefined) ? 0 : parseFloat(rawDailyLoss);
+        if (!isNaN(dailyStopLossVal)) updateDailyStopLoss(dailyStopLossVal);
         updatedLabels.push('Trading Parameter');
 
         try {
@@ -5567,6 +6402,7 @@
               gasTipSol: currentGasTip,
               priorityFeeSol: currentPriorityFee,
               stopLossPercent: currentStopLoss,
+              dailyStopLossSol: currentDailyStopLoss,
               tradingMode: isPaperModeEnabled ? 'PAPER' : 'LIVE'
             })
           });
@@ -5577,6 +6413,7 @@
               gasTipSol: currentGasTip,
               priorityFeeSol: currentPriorityFee,
               stopLossPercent: currentStopLoss,
+              dailyStopLossSol: currentDailyStopLoss,
               isPaperModeEnabled
             }));
           } catch (e) {}
@@ -5663,6 +6500,9 @@
       if (!isNaN(priorityFeeVal)) updatePriorityFee(priorityFeeVal);
       const stopLossVal = parseFloat(document.getElementById('trade-input-stop-loss')?.value);
       if (!isNaN(stopLossVal)) updateStopLoss(stopLossVal);
+      const rawTradeDailyLoss = document.getElementById('trade-input-daily-stop-loss')?.value;
+      const dailyStopLossVal = (rawTradeDailyLoss === '' || rawTradeDailyLoss === undefined) ? 0 : parseFloat(rawTradeDailyLoss);
+      if (!isNaN(dailyStopLossVal)) updateDailyStopLoss(dailyStopLossVal);
 
       try {
         await fetch('/api/update-settings', {
@@ -5674,6 +6514,7 @@
             gasTipSol: currentGasTip,
             priorityFeeSol: currentPriorityFee,
             stopLossPercent: currentStopLoss,
+            dailyStopLossSol: currentDailyStopLoss,
             tradingMode: isPaperModeEnabled ? 'PAPER' : 'LIVE'
           })
         });
@@ -5684,6 +6525,7 @@
             gasTipSol: currentGasTip,
             priorityFeeSol: currentPriorityFee,
             stopLossPercent: currentStopLoss,
+            dailyStopLossSol: currentDailyStopLoss,
             isPaperModeEnabled
           }));
         } catch (e) {}
@@ -5700,6 +6542,7 @@
         closeTradingSettingsModal();
         closeSettingsModal();
         closeWalletModal();
+        closeDepositModal();
         closeNotifModal();
         closeUpdatesModal();
         closeBugModal();
@@ -5906,6 +6749,80 @@
       }
     });
 
+    /* Deposit Modal Handlers */
+    function openDepositModal() {
+      const modal = document.getElementById('deposit-modal');
+      if (!modal) return;
+      
+      const addr = activeWalletPubkey || (managedWallets && managedWallets[0] ? managedWallets[0].address : '');
+      const currentActive = (managedWallets || []).find(w => w.address === addr);
+      const name = currentActive ? (currentActive.label || 'Wallet 1 (Main Sniper)') : (document.getElementById('wm-active-name')?.innerText || 'Wallet 1 (Main Sniper)');
+      const solBal = document.getElementById('hdr-sol-bal')?.innerText || '0.00';
+
+      const addrInput = document.getElementById('deposit-address-input');
+      if (addrInput) addrInput.value = addr || 'PaperTradingWallet1111111111111111111111111';
+
+      const nameEl = document.getElementById('deposit-wallet-name');
+      if (nameEl) nameEl.innerText = name;
+
+      const balEl = document.getElementById('deposit-balance-display');
+      if (balEl) balEl.innerText = `${solBal} SOL`;
+
+      const qrImg = document.getElementById('deposit-qr-code');
+      if (qrImg && addr) {
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(addr)}&color=0-0-0&bgcolor=ffffff`;
+      }
+
+      const solscanLink = document.getElementById('deposit-solscan-link');
+      if (solscanLink && addr) {
+        solscanLink.href = `https://solscan.io/account/${addr}`;
+      }
+
+      modal.classList.add('open');
+    }
+
+    function closeDepositModal() {
+      const modal = document.getElementById('deposit-modal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function onDepositBackdropClick(e) {
+      if (e.target.id === 'deposit-modal') {
+        closeDepositModal();
+      }
+    }
+
+    function copyDepositAddress(e) {
+      if (e) e.stopPropagation();
+      const addrInput = document.getElementById('deposit-address-input');
+      const addr = addrInput ? addrInput.value : activeWalletPubkey;
+      if (!addr) return;
+
+      navigator.clipboard.writeText(addr).then(() => {
+        const txt = document.getElementById('deposit-copy-text');
+        const btn = document.getElementById('deposit-copy-btn');
+        if (txt && btn) {
+          const originalText = txt.innerText;
+          txt.innerText = 'Copied!';
+          btn.style.borderColor = '#22c55e';
+          btn.style.color = '#22c55e';
+          setTimeout(() => {
+            txt.innerText = originalText;
+            btn.style.borderColor = 'rgba(101, 127, 255, 0.4)';
+            btn.style.color = '#657fff';
+          }, 1500);
+        }
+        if (typeof appendLog === 'function') {
+          appendLog(`📋 Copied deposit address to clipboard: ${addr.slice(0, 6)}...${addr.slice(-4)}`, 'var(--green-primary)');
+        }
+      }).catch(() => {
+        if (addrInput) {
+          addrInput.select();
+          document.execCommand('copy');
+        }
+      });
+    }
+
     /* Solana Wallets Manager */
     // Note: managedWallets and activeWalletPubkey are initialized at the top of script for instant sync hydration
 
@@ -6000,9 +6917,10 @@
           const hdrUsdc = document.getElementById('hdr-usdc-bal');
           if (hdrUsdc) hdrUsdc.innerText = usdcVal;
           const wmSol = document.getElementById('wm-sol-display') || document.getElementById('wm-sol-bal');
-          if (wmSol) wmSol.innerText = `${solVal} Sol`;
+          if (wmSol) wmSol.innerHTML = `<span style="color: #657fff; font-weight: 700;">${solVal}</span> <span style="color: #a1a1aa; font-size: 12px; font-weight: 600;">SOL</span>`;
           const wmUsdc = document.getElementById('wm-usdc-display') || document.getElementById('wm-usdc-bal');
           if (wmUsdc) wmUsdc.innerText = `$${usdcVal}`;
+          updateWalletFiatDisplay(solBalRaw, data.usdcBalance);
 
           const wmAddr = document.getElementById('wm-active-addr');
           if (wmAddr) {
@@ -6049,7 +6967,8 @@
                   const hdrSol = document.getElementById('hdr-sol-bal');
                   if (hdrSol) hdrSol.innerText = balFormatted;
                   const wmSol = document.getElementById('wm-sol-display') || document.getElementById('wm-sol-bal');
-                  if (wmSol) wmSol.innerText = `${balFormatted} Sol`;
+                  if (wmSol) wmSol.innerHTML = `<span style="color: #657fff; font-weight: 700;">${balFormatted}</span> <span style="color: #a1a1aa; font-size: 12px; font-weight: 600;">SOL</span>`;
+                  updateWalletFiatDisplay(balFormatted);
                 }
               }
               await new Promise(r => setTimeout(r, 150)); // Prevent RPC spam
@@ -6132,55 +7051,71 @@
       listEl.innerHTML = managedWallets.map((w, idx) => {
         const isSelected = w.address === activeWalletPubkey;
         const isPhantom = w.source === 'phantom' || (w.label && w.label.toLowerCase().includes('phantom'));
+        const balVal = w.balance || '0.00 Sol';
+        const numOnly = parseFloat(balVal) || 0;
+        const fiatVal = (numOnly * 150).toFixed(2);
         return `
           <div class="wallet-item-row ${isSelected ? 'active-wallet' : ''}">
-            <!-- Top Line: Identity on Left, Balance on Right (Spacious & Responsive) -->
-            <div class="wallet-item-top">
+            <!-- Top Line: Icon + Label & Address on Left, Balance + Arrow on Right -->
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%;">
               <div style="display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1;">
-                <div style="width: 7px; height: 7px; border-radius: 50%; background: ${isSelected ? '#657fff' : 'var(--text-muted)'}; box-shadow: ${isSelected ? '0 0 8px #657fff' : 'none'}; flex-shrink: 0;"></div>
-                <span style="font-size: 13.5px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${w.label || `Wallet ${idx + 1}`}</span>
-                ${isPhantom ? `<span class="badge-phantom-wallet" style="font-size: 9.5px; padding: 2px 7px;"><img src="/icons/Phantom-Icon_Circle.svg" width="13" height="13" alt="Phantom" style="border-radius: 50%; display: inline-block; vertical-align: middle;"> Phantom</span>` : ''}
-                ${isSelected ? '<span class="badge-default-wallet" style="font-size: 9.5px; padding: 2px 7px;">Default</span>' : ''}
+                <!-- Circular Solana Badge -->
+                <div style="width: 32px; height: 32px; border-radius: 50%; background: #000000; border: 1px solid rgba(101, 127, 255, 0.35); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                  <img src="/icons/solana-sol-icon.svg" width="16" height="16" alt="SOL" style="object-fit: contain;">
+                </div>
+                <div style="min-width: 0; flex: 1;">
+                  <div style="display: flex; align-items: center; gap: 5px;">
+                    <span style="font-size: 12.5px; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${w.label || `Wallet ${idx + 1}`}</span>
+                    ${isSelected ? `
+                      <span class="badge-default-wallet" style="font-size: 9px; padding: 1.5px 6px;">
+                        Default
+                      </span>
+                    ` : ''}
+                    ${isPhantom ? `<span class="badge-phantom-wallet"><img src="/icons/Phantom-Icon_Circle.svg" width="11" height="11" alt="Phantom" style="border-radius: 50%; display: inline-block;"> Phantom</span>` : ''}
+                  </div>
+                  <div style="font-size: 11px; font-weight: 500; color: #a1a1aa; font-family: monospace; margin-top: 1px;">
+                    ${w.address.slice(0, 6)}...${w.address.slice(-6)}
+                  </div>
+                </div>
               </div>
-              <div class="wallet-balance-num">
-                ${w.balance || '0.00 Sol'}
+              <div style="text-align: right; flex-shrink: 0;">
+                <div style="display: flex; align-items: center; justify-content: flex-end; gap: 3px;">
+                  <span class="wallet-balance-num"><span style="color: #657fff; font-weight: 700;">${formatSolAmount(numOnly)}</span> <span style="color: #a1a1aa; font-weight: 600; font-size: 11px;">SOL</span></span>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+                <div style="font-size: 10px; color: #71717a; font-weight: 500; margin-top: 1px;">≈ $${fiatVal}</div>
               </div>
             </div>
 
-            <!-- Bottom Line: Address on Left, Action Buttons on Right -->
-            <div class="wallet-item-bottom">
-              <div style="font-size: 11.5px; font-weight: 500; color: #a1a1aa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; letter-spacing: 0.3px; -webkit-font-smoothing: antialiased;">
-                ${w.address.slice(0, 6)}...${w.address.slice(-6)}
-              </div>
-              <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
-                ${!isSelected ? `
-                  <button class="btn-set-default" title="Set as Default Sniper Wallet" onclick="setDefaultWallet('${w.address}')">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    Set Default
-                  </button>
-                ` : ''}
-                <button class="action-icon-btn btn-send-sol" title="Send SOL to another wallet" onclick="openSendSolModal('${w.address}')" style="color: #657fff; display: flex; align-items: center; justify-content: center;">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                  </svg>
+            <!-- Bottom Actions Line -->
+            <div style="display: flex; align-items: center; justify-content: flex-end; gap: 5px; margin-top: 4px; padding-top: 4px; border-top: 1px solid rgba(255, 255, 255, 0.05);">
+              ${!isSelected ? `
+                <button class="btn-set-default" title="Set as Default Sniper Wallet" onclick="setDefaultWallet('${w.address}')">
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Set Default
                 </button>
-                <button class="action-icon-btn" title="Copy Address" onclick="copyAddress(event, '${w.address}')">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
-                  </svg>
-                </button>
-                <a href="https://solscan.io/account/${w.address}" target="_blank" class="action-icon-btn" title="View on Solscan Explorer" style="display: flex; align-items: center; justify-content: center; text-decoration: none;">
-                  <img src="/icons/solscan-logo-light.svg" alt="Solscan" width="13" height="13" style="object-fit: contain;">
-                </a>
-                <button class="action-icon-btn btn-delete-wallet" title="Delete Wallet" onclick="deleteWallet('${w.address}')">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 6h18"></path>
-                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                  </svg>
-                </button>
-              </div>
+              ` : ''}
+              <button class="action-icon-btn btn-send-sol" title="Send SOL" onclick="openSendSolModal('${w.address}')">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#657fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+              <button class="action-icon-btn" title="Copy Address" onclick="copyAddress(event, '${w.address}')">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+              </button>
+              <a href="https://solscan.io/account/${w.address}" target="_blank" class="action-icon-btn" title="View on Solscan Explorer" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
+                <img src="/icons/solscan-logo-light.svg" alt="Solscan" width="12" height="12" style="object-fit: contain;">
+              </a>
+              <button class="action-icon-btn btn-delete-wallet" title="Delete Wallet" onclick="deleteWallet('${w.address}')">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 6h18"></path>
+                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                </svg>
+              </button>
             </div>
           </div>
         `;
@@ -6394,11 +7329,14 @@
       }
 
       const balFormatted = target.balance || '0.00 Sol';
+      const numOnly = balFormatted.replace(/sol/ig, '').trim();
       const wmSol = document.getElementById('wm-sol-display') || document.getElementById('wm-sol-bal');
-      if (wmSol) wmSol.innerText = balFormatted;
+      if (wmSol) wmSol.innerHTML = `<span style="color: #657fff; font-weight: 700;">${numOnly}</span> <span style="color: #a1a1aa; font-size: 12px; font-weight: 600;">SOL</span>`;
 
       const hdrSol = document.getElementById('hdr-sol-bal');
-      if (hdrSol) hdrSol.innerText = balFormatted.replace(' Sol', '').replace(' SOL', '');
+      if (hdrSol) hdrSol.innerText = numOnly;
+
+      updateWalletFiatDisplay(numOnly);
 
       // Instant UI list re-render (0ms latency)
       renderWallets();

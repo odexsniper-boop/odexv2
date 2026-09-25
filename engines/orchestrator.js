@@ -119,8 +119,14 @@ export class Orchestrator {
   }
 
   setAutoBuy(enabled) {
+    if (enabled && this.positionManager && this.positionManager.isDailyLossExceeded()) {
+      this.autoBuyEnabled = false;
+      log(`🛑 [DAILY STOP LOSS] Cannot enable Auto-Snipe: Daily loss cap exceeded (${this.positionManager.getTodayRealizedLossSol().toFixed(3)} / ${this.positionManager.dailyLossCapSol} SOL).`);
+      return false;
+    }
     this.autoBuyEnabled = !!enabled;
     log(`[ORCHESTRATOR] Auto-Snipe ${this.autoBuyEnabled ? 'ENABLED' : 'DISABLED'}`);
+    return this.autoBuyEnabled;
   }
 
   setBuySize(sol) {
@@ -548,7 +554,11 @@ export class Orchestrator {
       log(`⚡ [ORCHESTRATOR BUY] Executing 3-Stage Entry on ${record.name} (${mint.slice(0, 8)}) with ${this.buySizeSol} SOL`);
       
       // Dynamic Jito Tip Escalation: Boost tip by 1.3x for top-tier high-conviction entries (entryScore >= 85)
-      let dynamicTipLamports = this.execution?.jitoTipLamports;
+      let dynamicTipLamports = this.execution?.jitoTipLamports ?? 10_000_000;
+      const maxSensibleTip = Math.max(1_000_000, Math.floor(this.buySizeSol * 1e9 * 0.10));
+      if (dynamicTipLamports > maxSensibleTip && this.buySizeSol < 0.1) {
+        dynamicTipLamports = maxSensibleTip;
+      }
       if (record.entryScore >= 85 && dynamicTipLamports > 0) {
         dynamicTipLamports = Math.round(dynamicTipLamports * 1.3);
       }
@@ -574,6 +584,7 @@ export class Orchestrator {
         devPercent: record.devPercent,
         bundledBuysCount: Math.max(record.uniqueBuyers.size, record.bundledBuysCount),
         imageUrl: record.imageUrl,
+        stopLossPercent: this.positionManager.stopLossPercent,
       });
 
       record.position = position;

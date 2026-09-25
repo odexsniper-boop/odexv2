@@ -38,8 +38,10 @@ export class PositionManager {
     this.minHoldDurationMs = options.minHoldDurationMs !== undefined ? options.minHoldDurationMs : 8000; // 8s grace window
     this.staleTimeoutMs = options.staleTimeoutMs || 5 * 60 * 1000;
 
-    // Daily Loss Cap guardrail disabled for testing
-    this.dailyLossCapSol = Infinity;
+    // Daily Loss Cap guardrail
+    this.dailyLossCapSol = (options.dailyLossCapSol !== undefined && !isNaN(options.dailyLossCapSol) && Number(options.dailyLossCapSol) > 0)
+      ? Number(options.dailyLossCapSol)
+      : Infinity;
     this.dailyRealizedLossSol = 0;
     this.lastLossResetDay = new Date().getUTCDate();
 
@@ -67,8 +69,48 @@ export class PositionManager {
     }
   }
 
+  getTodayRealizedLossSol() {
+    this._syncDailyLoss();
+    const todayStr = new Date().toISOString().slice(0, 10);
+    let historyLossToday = 0;
+    if (Array.isArray(this.tradeHistory)) {
+      for (const t of this.tradeHistory) {
+        const rawDate = t.closedAt || t.closed_at || t.openedAt || t.opened_at || '';
+        const dateStr = typeof rawDate === 'string' ? rawDate.slice(0, 10) : (rawDate ? new Date(rawDate).toISOString().slice(0, 10) : '');
+        if (dateStr === todayStr) {
+          const profit = Number(t.netProfitSol ?? t.profitSol ?? t.pnlSol ?? t.net_profit_sol ?? 0);
+          if (!isNaN(profit) && profit < 0) {
+            historyLossToday += Math.abs(profit);
+          }
+        }
+      }
+    }
+    return Math.max(historyLossToday, this.dailyRealizedLossSol);
+  }
+
   isDailyLossExceeded() {
-    return false;
+    if (!this.dailyLossCapSol || !isFinite(this.dailyLossCapSol) || this.dailyLossCapSol <= 0) {
+      return false;
+    }
+    const currentLoss = this.getTodayRealizedLossSol();
+    return currentLoss >= this.dailyLossCapSol;
+  }
+
+  setDailyLossCap(capSol) {
+    if (capSol === null || capSol === undefined || isNaN(capSol) || Number(capSol) <= 0) {
+      this.dailyLossCapSol = Infinity;
+      log(`[POSITION MANAGER] Daily stop loss cap disabled.`);
+    } else {
+      this.dailyLossCapSol = Number(capSol);
+      log(`[POSITION MANAGER] Daily stop loss cap set to ${this.dailyLossCapSol} SOL`);
+      if (this.isDailyLossExceeded()) {
+        const currentLoss = this.getTodayRealizedLossSol();
+        eventBus.emit('DAILY_STOP_LOSS_HIT', {
+          dailyLoss: currentLoss,
+          limit: this.dailyLossCapSol
+        });
+      }
+    }
   }
 
   setCurveWatcher(watcher) {
@@ -126,6 +168,7 @@ export class PositionManager {
       trailingActive: false,
       hitTiers: new Set(),
       status: 'HOLDING',
+      stopLossPercent: tokenMeta.stopLossPercent !== undefined ? tokenMeta.stopLossPercent : this.stopLossPercent,
       lastKnownVirtualSol: 30_000_000_000n,
       lastKnownVirtualTok: 1_073_000_000_000_000n,
     };
@@ -232,14 +275,15 @@ export class PositionManager {
       // 1. HARD STOP LOSS: Evaluates strictly on pricePnlPercent (token spot price movement)
       // Do not include fixed buy/sell Jito tips or priority fees when determining stop trigger
       // Grace period: do not trigger ordinary STOP_LOSS if hold duration < minHoldDurationMs UNLESS catastrophic flash-dump (<= -25%)
-      if (pos.pricePnlPercent <= this.stopLossPercent) {
+      const effectiveStopLoss = pos.stopLossPercent !== undefined ? pos.stopLossPercent : this.stopLossPercent;
+      if (pos.pricePnlPercent <= effectiveStopLoss) {
         const openedTime = pos.openedTimeMs || (pos.openedAt ? new Date(pos.openedAt).getTime() : 0);
         const holdDurationMs = Date.now() - openedTime;
         const isSevereFlashDump = pos.pricePnlPercent <= -25;
         if (holdDurationMs < this.minHoldDurationMs && !isSevereFlashDump) {
           // Grace period active for minor fluctuations: do not trigger ordinary STOP_LOSS
         } else {
-          log(`[EXIT TRIGGER] Stop Loss hit on ${pos.name} (Price PnL: ${pos.pricePnlPercent.toFixed(1)}% <= ${this.stopLossPercent}%, Hold: ${(holdDurationMs / 1000).toFixed(1)}s >= ${(this.minHoldDurationMs / 1000).toFixed(1)}s${isSevereFlashDump ? ' [FLASH DUMP OVERRIDE]' : ''}) - Executing immediate exit.`);
+          log(`[EXIT TRIGGER] Stop Loss hit on ${pos.name} (Price PnL: ${pos.pricePnlPercent.toFixed(1)}% <= ${effectiveStopLoss}%, Hold: ${(holdDurationMs / 1000).toFixed(1)}s >= ${(this.minHoldDurationMs / 1000).toFixed(1)}s${isSevereFlashDump ? ' [FLASH DUMP OVERRIDE]' : ''}) - Executing immediate exit.`);
           await this.closePosition(mint, virtualSolReserves, virtualTokenReserves, 'STOP_LOSS', 100, 10000);
           return;
         }
@@ -342,6 +386,13 @@ export class PositionManager {
     if (netProfitSol < 0) {
       this._syncDailyLoss();
       this.dailyRealizedLossSol += Math.abs(netProfitSol);
+      if (this.isDailyLossExceeded()) {
+        const currentLoss = this.getTodayRealizedLossSol();
+        eventBus.emit('DAILY_STOP_LOSS_HIT', {
+          dailyLoss: currentLoss,
+          limit: this.dailyLossCapSol,
+        });
+      }
     }
 
     const tradeRecord = {
@@ -390,11 +441,12 @@ export class PositionManager {
     if (this.devWatcher) this.devWatcher.unwatch(mint);
   }
 
-  async closePosition(mint, virtualSolReserves, virtualTokenReserves, reason, sellPercent = 100, slippageBps = 1500) {
+  async closePosition(mint, virtualSolReserves, virtualTokenReserves, reason, sellPercent = 100, slippageBps = null) {
     const pos = this.positions.get(mint);
     if (!pos || pos.status === 'SOLD' || pos.isExiting) return;
     pos.isExiting = true;
 
+    const effectiveSlippageBps = slippageBps !== null ? slippageBps : (this.execution?.defaultSlippageBps || 1500);
     let tokensToSellRaw = (pos.tokensHeldRaw * BigInt(sellPercent)) / 100n;
     let sellFill = null;
     try {
@@ -403,9 +455,11 @@ export class PositionManager {
         tokenAmountRaw: tokensToSellRaw.toString(),
         virtualSolReserves,
         virtualTokenReserves,
-        slippageBps,
+        slippageBps: effectiveSlippageBps,
         reason,
         creator: pos.creator,
+        priorityFee: this.execution?.defaultPriorityFeeMicroLamports,
+        jitoTipLamports: this.execution?.jitoTipLamports,
       });
     } catch (err) {
       log(`[POSITION EXIT FAILED] On-chain sell failed for ${pos.name}: ${err.message}. Position remains OPEN.`);
@@ -439,6 +493,13 @@ export class PositionManager {
       if (netProfitSol < 0) {
         this._syncDailyLoss();
         this.dailyRealizedLossSol += Math.abs(netProfitSol);
+        if (this.isDailyLossExceeded()) {
+          const currentLoss = this.getTodayRealizedLossSol();
+          eventBus.emit('DAILY_STOP_LOSS_HIT', {
+            dailyLoss: currentLoss,
+            limit: this.dailyLossCapSol,
+          });
+        }
       }
 
       const tradeRecord = {

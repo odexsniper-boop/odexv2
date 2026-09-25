@@ -15,6 +15,19 @@ if (!fs.existsSync(DATA_DIR)) {
 
 const DB_FILE = process.env.DATABASE_PATH || path.join(DATA_DIR, 'bot.db');
 
+function safeJsonStringify(obj) {
+  try {
+    return JSON.stringify(obj, (k, v) => {
+      if (typeof v === 'bigint') return v.toString();
+      if (v instanceof Set) return Array.from(v);
+      if (v instanceof Map) return Object.fromEntries(v);
+      return v;
+    });
+  } catch {
+    return '{}';
+  }
+}
+
 class DatabaseManager {
   constructor() {
     this.db = null;
@@ -197,8 +210,19 @@ class DatabaseManager {
     if (trade) {
       supabaseManager.saveTrade(trade).catch(() => {});
     }
-    if (!this.connected || !this.db) return;
+    if (!this.connected || !this.db || !trade) return;
     try {
+      const closedAt = trade.closedAt || trade.closed_at || '';
+      const mint = trade.mint || '';
+
+      // Deduplication check: prevent duplicate rows if trade was already saved
+      if (mint && closedAt) {
+        const existing = this.db.prepare('SELECT id FROM trades WHERE mint = ? AND closed_at = ?').get(mint, closedAt);
+        if (existing) {
+          return;
+        }
+      }
+
       const stmt = this.db.prepare(`
         INSERT INTO trades (
           mint, symbol, name, entry_price_sol, exit_price_sol,
@@ -207,7 +231,7 @@ class DatabaseManager {
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `);
       stmt.run(
-        trade.mint || '',
+        mint,
         trade.symbol || '',
         trade.name || '',
         Number(trade.entryPriceSol || trade.entry_price_sol || 0),
@@ -217,15 +241,15 @@ class DatabaseManager {
         Number(trade.pnlPercent || trade.pnl_percent || trade.finalPnlPercent || 0),
         trade.exitReason || trade.exit_reason || trade.reason || '',
         trade.openedAt || trade.opened_at || '',
-        trade.closedAt || trade.closed_at || new Date().toISOString(),
-        JSON.stringify(trade)
+        closedAt || new Date().toISOString(),
+        safeJsonStringify(trade)
       );
     } catch (e) {
       log(`[DATABASE ERROR] saveTrade: ${e.message}`);
     }
   }
 
-  getTrades(limit = 100) {
+  getTrades(limit = 1000) {
     if (!this.connected || !this.db) return [];
     try {
       const rows = this.db.prepare(`SELECT * FROM trades ORDER BY id DESC LIMIT ?`).all(limit);
@@ -246,7 +270,7 @@ class DatabaseManager {
     if (positionsList) {
       supabaseManager.savePositions(positionsList).catch(() => {});
     }
-    if (!this.connected || !this.db) return;
+    if (!this.connected || !this.db || !Array.isArray(positionsList)) return;
     try {
       this.db.exec('BEGIN TRANSACTION;');
       this.db.exec('DELETE FROM positions;');
@@ -258,6 +282,7 @@ class DatabaseManager {
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `);
       for (const p of positionsList) {
+        if (!p || !p.mint) continue;
         stmt.run(
           p.mint,
           p.symbol || '',
@@ -269,10 +294,10 @@ class DatabaseManager {
           Number(p.initialSolSpent || 0),
           Number(p.unrealizedPnlPercent || 0),
           p.status || 'ACTIVE',
-          p.tokensHeldRaw || '0',
-          JSON.stringify(p.hitTiers || []),
+          p.tokensHeldRaw ? String(p.tokensHeldRaw) : '0',
+          safeJsonStringify(p.hitTiers || []),
           new Date().toISOString(),
-          JSON.stringify(p)
+          safeJsonStringify(p)
         );
       }
       this.db.exec('COMMIT;');
@@ -331,7 +356,7 @@ class DatabaseManager {
         Number(token.compositeScore || 0),
         token.detectedAt || new Date().toISOString(),
         new Date().toISOString(),
-        JSON.stringify(token)
+        safeJsonStringify(token)
       );
     } catch (e) {
       log(`[DATABASE ERROR] saveDetectedToken: ${e.message}`);
@@ -355,7 +380,7 @@ class DatabaseManager {
         Number(snapshotData.spotPriceSol || snapshotData.priceSol || 0),
         Number(snapshotData.marketCapSol || 0),
         Number(snapshotData.liquiditySol || 0),
-        JSON.stringify(snapshotData)
+        safeJsonStringify(snapshotData)
       );
     } catch (e) {
       // Non-blocking
@@ -379,7 +404,7 @@ class DatabaseManager {
         Number(exp.pnlPercent || 0),
         exp.outcome || '',
         exp.timestamp || Date.now(),
-        JSON.stringify(exp)
+        safeJsonStringify(exp)
       );
     } catch (e) {
       // Non-blocking

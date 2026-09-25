@@ -1,6 +1,19 @@
 import { createClient } from '@supabase/supabase-js';
 import { log } from '../config.js';
 
+function safeClone(obj) {
+  try {
+    return JSON.parse(JSON.stringify(obj, (k, v) => {
+      if (typeof v === 'bigint') return v.toString();
+      if (v instanceof Set) return Array.from(v);
+      if (v instanceof Map) return Object.fromEntries(v);
+      return v;
+    }));
+  } catch {
+    return {};
+  }
+}
+
 class SupabaseManager {
   constructor() {
     this.client = null;
@@ -64,7 +77,7 @@ class SupabaseManager {
         exit_reason: trade.exitReason || trade.exit_reason || trade.reason || '',
         opened_at: trade.openedAt || trade.opened_at || null,
         closed_at: trade.closedAt || trade.closed_at || new Date().toISOString(),
-        raw_data: trade,
+        raw_data: safeClone(trade),
       };
 
       const { error } = await this.client
@@ -109,7 +122,7 @@ class SupabaseManager {
         tokens_held_raw: p.tokensHeldRaw ? String(p.tokensHeldRaw) : '0',
         hit_tiers: p.hitTiers || [],
         updated_at: new Date().toISOString(),
-        raw_data: p,
+        raw_data: safeClone(p),
       }));
 
       const { error } = await this.client
@@ -145,7 +158,7 @@ class SupabaseManager {
         composite_score: Number(token.compositeScore || 0),
         detected_at: token.detectedAt || new Date().toISOString(),
         last_updated: new Date().toISOString(),
-        raw_data: token,
+        raw_data: safeClone(token),
       };
 
       const { error } = await this.client
@@ -176,7 +189,7 @@ class SupabaseManager {
         price_sol: Number(snapshotData.spotPriceSol || snapshotData.priceSol || 0),
         market_cap: Number(snapshotData.marketCapSol || 0),
         liquidity: Number(snapshotData.liquiditySol || 0),
-        raw_data: snapshotData,
+        raw_data: safeClone(snapshotData),
       };
 
       await this.client.from('snapshots').insert(payload);
@@ -460,7 +473,7 @@ class SupabaseManager {
         tokens_held_raw: p.tokensHeldRaw ? String(p.tokensHeldRaw) : '0',
         hit_tiers: p.hitTiers || [],
         updated_at: new Date().toISOString(),
-        raw_data: p,
+        raw_data: safeClone(p),
       }));
       await this.client
         .from('user_positions')

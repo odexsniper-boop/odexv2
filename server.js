@@ -158,6 +158,7 @@ export function createDashboardServer(port = 3005) {
     gasTipSol: 0.01,
     jitoTipLamports: 10_000_000, // 0.01 SOL Jito tip / gas fee
     stopLossPercent: -16,
+    dailyStopLossSol: 0,
   });
 
   const execution = new ExecutionEngine({
@@ -188,7 +189,11 @@ export function createDashboardServer(port = 3005) {
 
   const positionManager = new PositionManager(execution, {
     stopLossPercent: tradingSettings.stopLossPercent !== undefined ? tradingSettings.stopLossPercent : -16,
+    dailyLossCapSol: tradingSettings.dailyStopLossSol !== undefined ? tradingSettings.dailyStopLossSol : 0,
   });
+  if (tradingSettings.dailyStopLossSol) {
+    positionManager.setDailyLossCap(tradingSettings.dailyStopLossSol);
+  }
   const safetyFilter = new HardSafetyFilter({
     maxDevPercent: 8.0, // Strict 8% limit
     maxBundleWallets: 3,
@@ -275,6 +280,7 @@ export function createDashboardServer(port = 3005) {
       jito_tip_lamports: dbSettings?.jito_tip_lamports ?? dbSettings?.jitoTipLamports ?? tradingSettings.jitoTipLamports,
       auto_buy_enabled: dbSettings?.auto_buy_enabled ?? dbSettings?.autoBuyEnabled ?? autoBuyEnabled,
       trading_mode: dbSettings?.trading_mode ?? dbSettings?.tradingMode ?? currentMode,
+      daily_stop_loss_sol: dbSettings?.daily_stop_loss_sol ?? dbSettings?.dailyStopLossSol ?? tradingSettings.dailyStopLossSol ?? 0,
     };
 
     let userWalletKeypair = null;
@@ -304,9 +310,14 @@ export function createDashboardServer(port = 3005) {
     });
 
     const userStopLoss = Number(userSettings.stop_loss_percent ?? userSettings.stopLossPercent ?? -16);
+    const userDailyStopLoss = Number(userSettings.daily_stop_loss_sol ?? userSettings.dailyStopLossSol ?? tradingSettings.dailyStopLossSol ?? 0);
     const userPositionManager = new PositionManager(userExecution, {
       stopLossPercent: userStopLoss,
+      dailyLossCapSol: userDailyStopLoss,
     });
+    if (userDailyStopLoss > 0) {
+      userPositionManager.setDailyLossCap(userDailyStopLoss);
+    }
     userPositionManager.setCurveWatcher(curveWatcher);
     userPositionManager.setDevWatcher(devWatcher);
 
@@ -357,6 +368,7 @@ export function createDashboardServer(port = 3005) {
         gasTipSol: Number(userSettings.gas_tip_sol || userSettings.gasTipSol || 0.01),
         jitoTipLamports: Number(userSettings.jito_tip_lamports || userSettings.jitoTipLamports || 10000000),
         stopLossPercent: userStopLoss,
+        dailyStopLossSol: userDailyStopLoss,
       },
     };
 
@@ -366,8 +378,13 @@ export function createDashboardServer(port = 3005) {
 
   async function executeUserBuy(uBot, record) {
     try {
+      if (uBot.positionManager.isDailyLossExceeded()) {
+        log(`🛑 [MULTI-USER DAILY STOP LOSS] User ${uBot.userId.slice(0, 8)} reached daily loss cap. Entry blocked.`);
+        return;
+      }
       if (uBot.positionManager.positions.size >= 5) return;
       if (uBot.positionManager.positions.has(record.mint)) return;
+      if (autoBuyEnabled && (!uBot.walletKeypair || uBot.walletPubkey === walletPubkey)) return;
 
       log(`⚡ [MULTI-USER AUTO-BUY] Executing for user ${uBot.userId.slice(0, 8)} on ${record.name} (${uBot.buySizeSol} SOL)`);
       const buyFill = await uBot.execution.executeBuy({
@@ -432,6 +449,7 @@ export function createDashboardServer(port = 3005) {
         priorityFeeSol: ctx.tradingSettings.priorityFeeSol ?? 0.001,
         gasTipSol: ctx.tradingSettings.gasTipSol ?? (ctx.tradingSettings.jitoTipLamports ? ctx.tradingSettings.jitoTipLamports / 1e9 : 0.01),
         stopLossPercent: ctx.tradingSettings.stopLossPercent ?? ctx.positionManager.stopLossPercent ?? -16,
+        dailyStopLossSol: ctx.tradingSettings.dailyStopLossSol ?? (ctx.positionManager.dailyLossCapSol === Infinity ? 0 : ctx.positionManager.dailyLossCapSol) ?? 0,
         learningEnabled: smartAgent.learningEnabled,
         learningMetrics: smartAgent.getMetrics(),
         vetoes: orchestrator.vetoCount,
@@ -528,6 +546,22 @@ export function createDashboardServer(port = 3005) {
     broadcast('POSITION_CLOSED', data);
   });
 
+  eventBus.on('DAILY_STOP_LOSS_HIT', (data) => {
+    log(`🛑 [DAILY STOP LOSS HIT] Daily realized loss reached ${data.dailyLoss.toFixed(3)} SOL (Cap: ${data.limit} SOL). Halting Auto-Snipe.`);
+    orchestrator.setAutoBuy(false);
+    autoBuyEnabled = false;
+    dbManager.setSetting('auto_buy_enabled', false);
+    for (const [uid, uBot] of userBotRegistry.entries()) {
+      uBot.autoBuyEnabled = false;
+    }
+    broadcast('AUTOBUY_STATUS', { enabled: false });
+    broadcast('DAILY_STOP_LOSS_TRIGGERED', {
+      dailyLoss: data.dailyLoss,
+      limit: data.limit,
+      message: `Daily Stop Loss reached: -${data.dailyLoss.toFixed(3)} SOL loss today (Cap: ${data.limit} SOL). Auto-Snipe halted.`
+    });
+  });
+
   eventBus.on('DEV_DUMP_ALERT', (data) => broadcast('DEV_DUMP_ALERT', data));
   eventBus.on('LEARNING_STATUS_UPDATED', (data) => broadcast('LEARNING_STATUS_UPDATED', data));
 
@@ -540,6 +574,12 @@ export function createDashboardServer(port = 3005) {
       supabase: supabaseManager.connected ? 'CONNECTED' : 'LOCAL_ONLY',
       mode: ctx.currentMode,
       autoBuyEnabled: ctx.autoBuyEnabled,
+      buySizeSol: ctx.buySizeSol,
+      slippagePercent: ctx.tradingSettings.slippagePercent,
+      priorityFeeSol: ctx.tradingSettings.priorityFeeSol,
+      gasTipSol: ctx.tradingSettings.gasTipSol,
+      stopLossPercent: ctx.tradingSettings.stopLossPercent,
+      dailyStopLossSol: ctx.tradingSettings.dailyStopLossSol ?? (ctx.positionManager.dailyLossCapSol === Infinity ? 0 : ctx.positionManager.dailyLossCapSol) ?? 0,
       learningEnabled: smartAgent.learningEnabled,
       learningMetrics: smartAgent.getMetrics(),
       openPositions: ctx.positionManager.positions.size,
@@ -611,7 +651,7 @@ export function createDashboardServer(port = 3005) {
 
   app.get('/api/trades', async (req, res) => {
     const ctx = await getUserContext(req);
-    const limit = parseInt(req.query.limit) || 100;
+    const limit = parseInt(req.query.limit) || 1000;
     const history = ctx.positionManager.tradeHistory ? (limit ? ctx.positionManager.tradeHistory.slice(0, limit) : ctx.positionManager.tradeHistory) : [];
     for (const h of history) {
       if (!h.imageUrl) {
@@ -938,7 +978,17 @@ export function createDashboardServer(port = 3005) {
 
   app.post('/api/toggle-autobuy', async (req, res) => {
     const ctx = await getUserContext(req);
-    ctx.autoBuyEnabled = !ctx.autoBuyEnabled;
+    const targetState = !ctx.autoBuyEnabled;
+    if (targetState && ctx.positionManager && ctx.positionManager.isDailyLossExceeded()) {
+      log(`🛑 [AUTO-BUY BLOCKED] Cannot enable Auto-Snipe: Daily stop loss reached (${ctx.positionManager.getTodayRealizedLossSol().toFixed(3)} / ${ctx.positionManager.dailyLossCapSol} SOL).`);
+      return res.status(400).json({
+        success: false,
+        error: `Daily stop loss reached (-${ctx.positionManager.getTodayRealizedLossSol().toFixed(3)} / ${ctx.positionManager.dailyLossCapSol} SOL). Auto-Snipe cannot be enabled until reset.`,
+        autoBuyEnabled: false,
+        userId: req.userId || null,
+      });
+    }
+    ctx.autoBuyEnabled = targetState;
     autoBuyEnabled = ctx.autoBuyEnabled;
     orchestrator.setAutoBuy(autoBuyEnabled);
     dbManager.setSetting('auto_buy_enabled', autoBuyEnabled);
@@ -953,7 +1003,7 @@ export function createDashboardServer(port = 3005) {
 
   app.post('/api/update-settings', async (req, res) => {
     const ctx = await getUserContext(req);
-    const { buySizeSol: newSize, slippagePercent, priorityFeeSol, gasTipSol, isPaperTrading, tradingMode, stopLossPercent } = req.body;
+    const { buySizeSol: newSize, slippagePercent, priorityFeeSol, gasTipSol, isPaperTrading, tradingMode, stopLossPercent, dailyStopLossSol } = req.body;
     let updated = false;
 
     const paperToggled = isPaperTrading !== undefined ? isPaperTrading : (tradingMode !== undefined ? tradingMode === 'PAPER' : undefined);
@@ -962,22 +1012,18 @@ export function createDashboardServer(port = 3005) {
       ctx.currentMode = paperToggled ? 'PAPER' : 'LIVE';
       ctx.execution.isPaperTrading = paperToggled;
       if (ctx.execution.controller) ctx.execution.controller.isPaperTrading = paperToggled;
-      if (ctx.isLocal) {
-        currentMode = ctx.currentMode;
-        execution.isPaperTrading = paperToggled;
-        if (execution.controller) execution.controller.isPaperTrading = paperToggled;
-        process.env.DRY_RUN = paperToggled ? 'true' : 'false';
-        dbManager.setSetting('trading_mode', currentMode);
-      }
+      currentMode = ctx.currentMode;
+      execution.isPaperTrading = paperToggled;
+      if (execution.controller) execution.controller.isPaperTrading = paperToggled;
+      process.env.DRY_RUN = paperToggled ? 'true' : 'false';
+      dbManager.setSetting('trading_mode', currentMode);
       updated = true;
     }
 
     if (newSize !== undefined && !isNaN(Number(newSize)) && Number(newSize) > 0) {
       ctx.buySizeSol = Number(newSize);
-      if (ctx.isLocal) {
-        buySizeSol = ctx.buySizeSol;
-        orchestrator.setBuySize(buySizeSol);
-      }
+      buySizeSol = ctx.buySizeSol;
+      orchestrator.setBuySize(buySizeSol);
       updated = true;
     }
 
@@ -987,11 +1033,11 @@ export function createDashboardServer(port = 3005) {
       ctx.tradingSettings.slippagePercent = sPct;
       ctx.tradingSettings.slippageBps = bps;
       ctx.execution.defaultSlippageBps = bps;
-      if (ctx.isLocal) {
-        tradingSettings.slippagePercent = sPct;
-        tradingSettings.slippageBps = bps;
-        execution.defaultSlippageBps = bps;
-      }
+      if (ctx.execution.controller) ctx.execution.controller.defaultSlippageBps = bps;
+      tradingSettings.slippagePercent = sPct;
+      tradingSettings.slippageBps = bps;
+      execution.defaultSlippageBps = bps;
+      if (execution.controller) execution.controller.defaultSlippageBps = bps;
       updated = true;
     }
 
@@ -1001,11 +1047,11 @@ export function createDashboardServer(port = 3005) {
       ctx.tradingSettings.priorityFeeSol = pSol;
       ctx.tradingSettings.priorityFeeMicroLamports = microLamports;
       ctx.execution.defaultPriorityFeeMicroLamports = microLamports;
-      if (ctx.isLocal) {
-        tradingSettings.priorityFeeSol = pSol;
-        tradingSettings.priorityFeeMicroLamports = microLamports;
-        execution.defaultPriorityFeeMicroLamports = microLamports;
-      }
+      if (ctx.execution.controller) ctx.execution.controller.defaultPriorityFee = microLamports;
+      tradingSettings.priorityFeeSol = pSol;
+      tradingSettings.priorityFeeMicroLamports = microLamports;
+      execution.defaultPriorityFeeMicroLamports = microLamports;
+      if (execution.controller) execution.controller.defaultPriorityFee = microLamports;
       updated = true;
     }
 
@@ -1015,11 +1061,11 @@ export function createDashboardServer(port = 3005) {
       ctx.tradingSettings.gasTipSol = gSol;
       ctx.tradingSettings.jitoTipLamports = lamports;
       ctx.execution.jitoTipLamports = lamports;
-      if (ctx.isLocal) {
-        tradingSettings.gasTipSol = gSol;
-        tradingSettings.jitoTipLamports = lamports;
-        execution.jitoTipLamports = lamports;
-      }
+      if (ctx.execution.controller) ctx.execution.controller.defaultJitoTipLamports = lamports;
+      tradingSettings.gasTipSol = gSol;
+      tradingSettings.jitoTipLamports = lamports;
+      execution.jitoTipLamports = lamports;
+      if (execution.controller) execution.controller.defaultJitoTipLamports = lamports;
       updated = true;
     }
 
@@ -1030,11 +1076,22 @@ export function createDashboardServer(port = 3005) {
       if (ctx.positionManager && ctx.positionManager.setStopLoss) {
         ctx.positionManager.setStopLoss(slPct);
       }
-      if (ctx.isLocal) {
-        tradingSettings.stopLossPercent = slPct;
-        if (positionManager && positionManager.setStopLoss) {
-          positionManager.setStopLoss(slPct);
-        }
+      tradingSettings.stopLossPercent = slPct;
+      if (positionManager && positionManager.setStopLoss) {
+        positionManager.setStopLoss(slPct);
+      }
+      updated = true;
+    }
+
+    if (dailyStopLossSol !== undefined && !isNaN(Number(dailyStopLossSol))) {
+      const dsl = Math.max(0, Number(dailyStopLossSol));
+      ctx.tradingSettings.dailyStopLossSol = dsl;
+      if (ctx.positionManager && ctx.positionManager.setDailyLossCap) {
+        ctx.positionManager.setDailyLossCap(dsl);
+      }
+      tradingSettings.dailyStopLossSol = dsl;
+      if (positionManager && positionManager.setDailyLossCap) {
+        positionManager.setDailyLossCap(dsl);
       }
       updated = true;
     }
@@ -1058,6 +1115,7 @@ export function createDashboardServer(port = 3005) {
         priorityFeeSol: ctx.tradingSettings.priorityFeeSol,
         gasTipSol: ctx.tradingSettings.gasTipSol,
         stopLossPercent: ctx.tradingSettings.stopLossPercent,
+        dailyStopLossSol: ctx.tradingSettings.dailyStopLossSol,
         userId: req.userId || null,
       };
       broadcast('SETTINGS_UPDATED', payload, req.userId);

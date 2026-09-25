@@ -1,4 +1,4 @@
-﻿# Environment variables and secrets
+# Environment variables and secrets
 .env
 .env.*
 !.env.example
@@ -15,6 +15,10 @@ data/*.db-wal
 data/*.db-shm
 data/*.db-journal
 data/*.sqlite
+data/*.bak
+
+# Scratch & Temporary
+scratch/
 
 # Large dataset dumps (>25MB)
 replay/raw_txs_*.json

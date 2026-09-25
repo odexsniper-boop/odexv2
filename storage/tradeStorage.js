@@ -48,12 +48,8 @@ export class TradeStorage {
       // 1. Persist to JSON file (preserving complete backward compatibility)
       fs.writeFileSync(STORAGE_FILE, JSON.stringify(state, null, 2), 'utf8');
 
-      // 2. Persist to connected SQLite database
+      // 2. Persist active positions to connected SQLite database
       dbManager.savePositions(positions);
-      if (tradeHistory.length > 0) {
-        // Save latest trade
-        dbManager.saveTrade(tradeHistory[0]);
-      }
     } catch (e) {
       log(`[STORAGE ERR] Failed to save state: ${e.message}`);
     }
