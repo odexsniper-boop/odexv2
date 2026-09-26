@@ -640,9 +640,12 @@ export function createDashboardServer(port = 3005) {
     try {
       const tok = orchestrator.tokens.get(mint);
       if (tok && tok.imageUrl) return res.json({ success: true, imageUrl: tok.imageUrl });
-      const meta = await fetchTokenMetadata(mint);
+      const meta = await fetchTokenMetadata(mint, tok?.name, tok?.symbol, tok?.metadataUri);
       if (meta && meta.imageUrl) {
-        if (tok) tok.imageUrl = meta.imageUrl;
+        if (tok) {
+          tok.imageUrl = meta.imageUrl;
+          if (meta.metadataUri && !tok.metadataUri) tok.metadataUri = meta.metadataUri;
+        }
         return res.json({ success: true, imageUrl: meta.imageUrl });
       }
     } catch (e) {}
@@ -1009,7 +1012,17 @@ export function createDashboardServer(port = 3005) {
     const paperToggled = isPaperTrading !== undefined ? isPaperTrading : (tradingMode !== undefined ? tradingMode === 'PAPER' : undefined);
 
     if (paperToggled !== undefined) {
-      ctx.currentMode = paperToggled ? 'PAPER' : 'LIVE';
+      const newMode = paperToggled ? 'PAPER' : 'LIVE';
+      if (ctx.currentMode !== newMode) {
+        if (ctx.positionManager && ctx.positionManager.positions.size > 0) {
+          return res.status(400).json({
+            success: false,
+            error: 'Cannot switch trading modes while you have active open positions. Close all positions first.'
+          });
+        }
+      }
+
+      ctx.currentMode = newMode;
       ctx.execution.isPaperTrading = paperToggled;
       if (ctx.execution.controller) ctx.execution.controller.isPaperTrading = paperToggled;
       currentMode = ctx.currentMode;
@@ -2108,6 +2121,23 @@ export function createDashboardServer(port = 3005) {
       ]
     });
   });
+
+  // Stage 2: Throttled UI broadcast for live volume/buyers (max once every 3s)
+  setInterval(() => {
+    const activeTokens = orchestrator.getAllTokens().filter(t => t.state === 'MONEY_FLOW_WATCH');
+    if (activeTokens.length === 0) return;
+
+    for (const record of activeTokens) {
+      broadcast('MONEY_FLOW_UPDATE', {
+        mint: record.mint,
+        buyVolumeSol: Number(record.buyVolumeSol.toFixed(2)),
+        sellVolumeSol: Number(record.sellVolumeSol.toFixed(2)),
+        uniqueBuyersCount: record.uniqueBuyers ? record.uniqueBuyers.size : 0,
+        txCount: record.txCount,
+        buyerQuality: record.buyerQuality || null,
+      });
+    }
+  }, 3000);
 
   return {
     start: () => {

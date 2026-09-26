@@ -3,7 +3,7 @@ import { CONFIG, log } from '../config.js';
 /**
  * Sends a rich Telegram HTML message (or dry-run console print)
  */
-export async function sendTelegramRaw(text) {
+export async function sendTelegramRaw(text, imageUrl = null) {
   if (CONFIG.DRY_RUN) {
     log('--- [DRY RUN ACTIONABLE ALERT] ---');
     console.log(text.replace(/<br\s*\/?>/gi, '\n').replace(/<\/?[^>]+(>|$)/g, ''));
@@ -17,17 +17,27 @@ export async function sendTelegramRaw(text) {
     return;
   }
 
-  const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+  const endpoint = imageUrl ? 'sendPhoto' : 'sendMessage';
+  const url = `https://api.telegram.org/bot${BOT_TOKEN}/${endpoint}`;
+  
+  const payload = {
+    chat_id: CHAT_ID,
+    parse_mode: 'HTML',
+  };
+
+  if (imageUrl) {
+    payload.photo = imageUrl;
+    payload.caption = text;
+  } else {
+    payload.text = text;
+    payload.disable_web_page_preview = true;
+  }
+
   try {
     const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: CHAT_ID,
-        text,
-        parse_mode: 'HTML',
-        disable_web_page_preview: true,
-      }),
+      body: JSON.stringify(payload),
     });
     const data = await res.json();
     if (!data.ok) {
@@ -120,5 +130,6 @@ ${header}
 [<a href="${dexScreenerUrl}">DEXSCREENER</a>] • [<a href="${solscanUrl}">SOLSCAN</a>] • [<a href="${rugcheckUrl}">RUGCHECK</a>] • [<a href="${bubblemapsUrl}">BUBBLEMAPS</a>]
 `;
 
-  await sendTelegramRaw(text);
+  const imageUrl = audit?.imageUrl || data.imageUrl || null;
+  await sendTelegramRaw(text, imageUrl);
 }

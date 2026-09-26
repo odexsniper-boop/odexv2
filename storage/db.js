@@ -55,10 +55,27 @@ class DatabaseManager {
       if (sbConfig && sbConfig.url && sbConfig.key) {
         supabaseManager.init(sbConfig.url, sbConfig.key);
       }
+
+      this.startMaintenance();
     } catch (err) {
       log(`[DATABASE ERROR] Failed to connect to SQLite: ${err.message}`);
       this.connected = false;
     }
+  }
+
+  startMaintenance() {
+    // Run SQLite Vacuum and Checkpoint every 24 hours to prevent WAL file bloat
+    setInterval(() => {
+      if (!this.connected || !this.db) return;
+      try {
+        log('[DATABASE] Running daily maintenance (WAL checkpoint & VACUUM)...');
+        this.db.exec('PRAGMA wal_checkpoint(TRUNCATE);');
+        this.db.exec('VACUUM;');
+        log('[DATABASE] Daily maintenance complete.');
+      } catch (err) {
+        log(`[DATABASE WARN] Maintenance failed: ${err.message}`);
+      }
+    }, 24 * 60 * 60 * 1000);
   }
 
   _createTables() {

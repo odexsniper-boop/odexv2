@@ -25,6 +25,7 @@ export class TokenRecord {
     this.name = 'Pending...';
     this.symbol = '...';
     this.imageUrl = null;
+    this.metadataUri = null;
     this.creator = 'UNKNOWN';
     this.state = TokenState.DETECTED;
     this.detectedAt = Date.now();

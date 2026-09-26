@@ -91,6 +91,8 @@ export class Orchestrator {
       if (watchlist.length === 0) return;
       
       const now = Date.now();
+      const validMints = [];
+      
       for (const record of watchlist) {
         if (now - record.updatedAt > 7200000) { // 2 hour hard TTL for Watchlist
           this.tokens.delete(record.mint);
@@ -98,11 +100,36 @@ export class Orchestrator {
           if (this.devWatcher) this.devWatcher.unwatchDev(record.mint);
           continue;
         }
-        
-        // TODO: In production, batch REST API call here to check for volume spikes.
-        // If a massive volume spike is detected:
-        // record.transitionTo(TokenState.PATTERN_FORMING, 'LATE BREAKOUT DETECTED');
-        // if (this.curveWatcher) this.curveWatcher.watch(record.mint);
+        validMints.push(record.mint);
+      }
+
+      // Batch check up to 30 at a time via DexScreener
+      for (let i = 0; i < validMints.length; i += 30) {
+        const batch = validMints.slice(i, i + 30);
+        try {
+          const url = `https://api.dexscreener.com/latest/dex/tokens/${batch.join(',')}`;
+          const res = await fetch(url, { signal: AbortSignal.timeout(3000) });
+          if (res.ok) {
+            const json = await res.json();
+            if (json.pairs) {
+              for (const pair of json.pairs) {
+                const mint = pair.baseToken?.address;
+                const m5Volume = pair.volume?.m5 || 0;
+                const txns5m = (pair.txns?.m5?.buys || 0) + (pair.txns?.m5?.sells || 0);
+                
+                // Spike detected: > $3k volume or > 20 txs in 5m
+                if (mint && (m5Volume > 3000 || txns5m > 20)) {
+                  const record = this.tokens.get(mint);
+                  if (record && record.state === TokenState.LIGHTWEIGHT_WATCHLIST) {
+                    log(`🚀 [LATE BREAKOUT] $${record.symbol} waking up! Vol: $${m5Volume}, Txs: ${txns5m}`);
+                    record.transitionTo(TokenState.PATTERN_FORMING, 'LATE BREAKOUT DETECTED');
+                    if (this.curveWatcher) this.curveWatcher.watch(record.mint);
+                  }
+                }
+              }
+            }
+          }
+        } catch (e) {}
       }
     }, 60000); // Scan every 60 seconds
 
@@ -160,6 +187,7 @@ export class Orchestrator {
     record.initialMarketCapSol = eventData.initialMarketCapSol || 30.0;
     record.name = eventData.name || 'Resolving...';
     record.symbol = eventData.symbol || '...';
+    record.metadataUri = eventData.metadataUri || null;
     this.tokens.set(mint, record);
 
     // Preload token program & creator in Execution Cache for 0ms trade construction
@@ -217,16 +245,18 @@ export class Orchestrator {
 
     // Fetch full metadata & socials asynchronously with on-chain name fallback
     try {
-      const meta = await fetchTokenMetadata(mint, record.name, record.symbol);
+      const meta = await fetchTokenMetadata(mint, record.name, record.symbol, record.metadataUri);
       if (meta) {
         if (meta.name) record.name = meta.name;
         if (meta.symbol) record.symbol = meta.symbol;
         if (meta.imageUrl) record.imageUrl = meta.imageUrl;
+        if (meta.metadataUri && !record.metadataUri) record.metadataUri = meta.metadataUri;
         eventBus.emit('TOKEN_METADATA_UPDATED', {
           mint,
           name: record.name,
           symbol: record.symbol,
           imageUrl: record.imageUrl,
+          metadataUri: record.metadataUri,
         });
 
         // Rapid adaptive metadata polling (300ms, 800ms, 1800ms, 3500ms) to catch images and names immediately as indexed
@@ -238,7 +268,7 @@ export class Orchestrator {
               const nameReady = record.name && record.name !== 'Unknown Token' && record.name !== 'Resolving...';
               if (record.imageUrl && nameReady && record.stage1_narrative?.socialsFound > 0) return;
               try {
-                const fresh = await fetchTokenMetadata(mint);
+                const fresh = await fetchTokenMetadata(mint, record.name, record.symbol, record.metadataUri);
                 if (fresh) {
                   let updated = false;
                   if (fresh.imageUrl && fresh.imageUrl !== record.imageUrl) {
@@ -351,7 +381,7 @@ export class Orchestrator {
       record.txCount++;
       if (tick.isBuy) {
         record.buyVolumeSol += tick.solDelta;
-        if (tick.buyerPubkey) {
+        if (tick.buyerPubkey && !tick.isSimulated) {
           record.uniqueBuyers.add(tick.buyerPubkey);
           this.buyerQualityEngine.recordBuy(mint, tick.buyerPubkey, tick.solDelta, tick.timestamp || Date.now(), tick.slot || 0);
         }
@@ -679,6 +709,7 @@ export class Orchestrator {
       name: record.name,
       symbol: record.symbol,
       imageUrl: record.imageUrl || null,
+      metadataUri: record.metadataUri || null,
       creator: record.creator,
       state: record.state,
       detectedAt: record.detectedAt,

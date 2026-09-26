@@ -2,11 +2,11 @@
   "name": "solana-momentum-reclaim-bot",
   "version": "1.0.0",
   "description": "Solana memecoin momentum reclaim signal bot with Telegram notifications",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "bot": "node index.js",
+    "bot": "node server.js",
     "dashboard": "node server.js",
     "test": "node test_signal.js"
   },

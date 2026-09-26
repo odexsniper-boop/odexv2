@@ -125,8 +125,8 @@ export class BondingCurveWatcher {
   startPollingFallback() {
     if (this.pollInterval) clearInterval(this.pollInterval);
     this.pollInterval = setInterval(async () => {
-      // If PumpPortal WebSocket or On-Chain WS is actively streaming, do not spam RPC with polling
-      if ((this.ws && this.pumpPortalStreaming) || this.onLogsSubId != null) return;
+      // If PumpPortal WebSocket is actively streaming, do not spam RPC with polling
+      if (this.ws && this.pumpPortalStreaming) return;
       if (this.watchedMints.size === 0 || !this.connection) return;
 
       const mintsToPoll = Array.from(this.watchedMints).slice(0, 50);
@@ -156,7 +156,8 @@ export class BondingCurveWatcher {
                   vSolInBondingCurve: Number(vSol) / 1e9,
                   vTokensInBondingCurve: Number(vTok) / 1e6,
                   solAmount: solAmount,
-                  traderPublicKey: `rpc_fallback_${Date.now()}_${Math.floor(Math.random()*1000)}`
+                  traderPublicKey: `rpc_fallback`,
+                  isSimulated: true
                 };
                 this.handleTradeEvent(simulatedEvent);
               }
@@ -193,7 +194,7 @@ export class BondingCurveWatcher {
     if (this.positionManager) this.positionManager.updatePrice(mint, vSol, vTok);
     if (this.executionEngine && this.executionEngine.updateCurveState) this.executionEngine.updateCurveState(mint, {virtualSolReserves: vSol, virtualTokenReserves: vTok});
     eventBus.emit('CURVE_TICK', {
-      mint, priceSol, solDelta: d.solAmount || 0, isBuy: d.txType === 'buy', hasTraded: true, buyerPubkey: d.traderPublicKey, virtualSolReserves: vSol, virtualTokenReserves: vTok, timestamp: Date.now()
+      mint, priceSol, solDelta: d.solAmount || 0, isBuy: d.txType === 'buy', hasTraded: true, buyerPubkey: d.traderPublicKey, virtualSolReserves: vSol, virtualTokenReserves: vTok, timestamp: Date.now(), isSimulated: d.isSimulated || false
     });
   }
 }

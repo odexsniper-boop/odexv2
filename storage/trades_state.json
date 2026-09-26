@@ -2,6 +2,40 @@
   "positions": [],
   "tradeHistory": [
     {
+      "mint": "5fFPLbmptEyJkyULjn5GqSRU7wdJcQXwtT6PRVJapump",
+      "name": "FuturesPad",
+      "symbol": "Futures",
+      "imageUrl": "https://pump.mypinata.cloud/ipfs/bafybeic34e3ragzpeqykd6hf4csv6febjchavaweunk76r2akzzqtmurxe",
+      "devPercent": 2,
+      "bundledBuysCount": 49,
+      "entryScore": 77,
+      "entryPriceSol": 1.15715160250116e-7,
+      "exitPriceSol": 1.2172023043660577e-7,
+      "initialSolSpent": 0.50200499996,
+      "actualBuyCost": 0.50200499996,
+      "actualGrossSellProceeds": 0.50719929282,
+      "actualTransactionFees": 0.000005,
+      "actualNetSellProceeds": 0.5053609595199999,
+      "solReceived": 0.5053609595199999,
+      "grossPnlSol": -0.237455079,
+      "grossPnlPercent": -47.49054089459106,
+      "estimatedFeesSol": 0.006468832470000001,
+      "pricePnlPercent": -46.2192514179122,
+      "finalPricePnlPercent": -46.2192514179122,
+      "netProfitSol": 0.0033559595599998993,
+      "profitSol": 0.0033559595599998993,
+      "pnlSol": 0.0033559595599998993,
+      "netPnlSol": 0.0033559595599998993,
+      "netPnlPercent": 0.6685111822127874,
+      "finalPnlPercent": 0.6685111822127874,
+      "pnlPercent": 0.6685111822127874,
+      "status": "SOLD",
+      "reason": "STOP_LOSS",
+      "txHash": "sim_sell_1790384082779_5fFPLbmp",
+      "openedAt": "2026-09-26T00:53:30.426Z",
+      "closedAt": "2026-09-26T00:54:42.779Z"
+    },
+    {
       "mint": "9aVwvhGXujVjT4JbbvNxmSVdQEkDmjUfwZCztxEcpump",
       "name": "Dope",
       "symbol": "DOPE",
@@ -2586,5 +2620,5 @@
     }
   ],
   "vetoCount": 0,
-  "lastSaved": "2026-09-24T22:24:26.244Z"
+  "lastSaved": "2026-09-26T00:54:42.780Z"
 }

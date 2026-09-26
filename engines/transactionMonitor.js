@@ -20,7 +20,7 @@ export class TransactionMonitor {
    * @param {object} context
    * @returns {Promise<object>}
    */
-  track(signature, context = {}) {
+  track(signature, context = {}, wireTransaction = null) {
     eventBus.emit('EXECUTION_PROCESSING', { signature, context });
 
     return new Promise((resolve, reject) => {
@@ -107,17 +107,27 @@ export class TransactionMonitor {
         } catch (_) {}
       }
 
-      // 2. High-frequency RPC polling backup
+      // 2. High-frequency RPC polling backup & UDP Rebroadcast
+      let lastRebroadcastTime = Date.now();
       const pollTimer = setInterval(async () => {
         if (isSettled) return;
 
+        const now = Date.now();
         // Check timeout
-        if (Date.now() - startTime > this.timeoutMs) {
+        if (now - startTime > this.timeoutMs) {
           handleFailure('TRANSACTION_TIMEOUT_NOT_CONFIRMED');
           return;
         }
 
         if (!this.connection) return;
+
+        // Continuous UDP Rebroadcast every ~1.2s to prevent dropped packets
+        if (wireTransaction && (now - lastRebroadcastTime > 1200)) {
+          lastRebroadcastTime = now;
+          try {
+            this.connection.sendRawTransaction(wireTransaction, { skipPreflight: true, maxRetries: 0 }).catch(() => {});
+          } catch (_) {}
+        }
 
         try {
           const res = await this.connection.getSignatureStatuses([signature]);

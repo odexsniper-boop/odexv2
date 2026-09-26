@@ -38,6 +38,19 @@ export class SolanaStreamer {
         try {
           this.portalWs.send(JSON.stringify({ method: 'subscribeNewToken' }));
         } catch (e) {}
+        
+        this.portalWs.isAlive = true;
+        this.portalWs.on('pong', () => { this.portalWs.isAlive = true; });
+        this.heartbeatInterval = setInterval(() => {
+          if (!this.portalWs || this.portalWs.readyState !== WebSocket.OPEN) return;
+          if (this.portalWs.isAlive === false) {
+            log('[STREAMER] PumpPortal WebSocket dead (Ping timeout). Terminating...');
+            this.portalWs.terminate();
+            return;
+          }
+          this.portalWs.isAlive = false;
+          this.portalWs.ping();
+        }, 30000);
       });
 
       this.portalWs.on('message', (data) => {
@@ -50,6 +63,7 @@ export class SolanaStreamer {
       });
 
       this.portalWs.on('close', () => {
+        if (this.heartbeatInterval) clearInterval(this.heartbeatInterval);
         if (this.isRunning) {
           log('[STREAMER] Instant feed disconnected. Reconnecting in 2.5s...');
           setTimeout(() => {
@@ -294,6 +308,10 @@ export class SolanaStreamer {
 
   stop() {
     this.isRunning = false;
+    if (this.heartbeatInterval) {
+      clearInterval(this.heartbeatInterval);
+      this.heartbeatInterval = null;
+    }
     if (this.portalWs) {
       try { this.portalWs.close(); } catch (e) {}
       this.portalWs = null;

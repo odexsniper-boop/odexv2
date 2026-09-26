@@ -9,49 +9,67 @@ export function normalizeIpfsUrl(url) {
   if (!trimmed) return null;
 
   // Extract CID from ipfs://<cid> or https://<gateway>/ipfs/<cid>
-  const match = trimmed.match(/(?:ipfs\/|ipfs:\/\/)([a-zA-Z0-9_-]+)/i);
+  const match = trimmed.match(/(?:ipfs\/|ipfs:\/\/)([a-zA-Z0-9_.-]+)/i);
   if (match && match[1]) {
     return `https://pump.mypinata.cloud/ipfs/${match[1]}`;
+  }
+  if (trimmed.startsWith('Qm') || trimmed.startsWith('baf')) {
+    return `https://pump.mypinata.cloud/ipfs/${trimmed}`;
   }
   return trimmed;
 }
 
 /**
- * Fetches real token name, symbol, and image using pump.fun and DexScreener with fast timeouts
+ * Fetches real token name, symbol, and image using metadataUri, pump.fun, and DexScreener
  */
-export async function fetchTokenMetadata(mintAddress, fallbackName = null, fallbackSymbol = null) {
+export async function fetchTokenMetadata(mintAddress, fallbackName = null, fallbackSymbol = null, metadataUri = null) {
   if (metadataCache.has(mintAddress)) {
     const cached = metadataCache.get(mintAddress);
     if (cached && cached.imageUrl && cached.name && cached.name !== 'Unknown Token' && cached.name !== 'Resolving...') return cached;
+    if (!metadataUri && cached?.metadataUri) metadataUri = cached.metadataUri;
   }
 
-  // 1. Query pump.fun API first for immediate metadata and image (fast 1200ms timeout)
-  try {
-    const pumpUrl = `https://frontend-api-v3.pump.fun/coins/${mintAddress}`;
-    const res = await fetch(pumpUrl, {
-      headers: { 'User-Agent': 'Mozilla/5.0' },
-      signal: AbortSignal.timeout(1200)
-    });
-    if (res.ok) {
-      const data = await res.json();
-      if (data && (data.name || data.image_uri)) {
-        const imageUrl = normalizeIpfsUrl(data.image_uri);
-        const meta = {
-          name: data.name,
-          symbol: data.symbol,
-          imageUrl,
-          description: data.description || '',
-          twitter: data.twitter || null,
-          telegram: data.telegram || null,
-          website: data.website || null,
-          replyCount: data.reply_count || 0,
-          usdMarketCap: data.usd_market_cap || null,
-        };
-        metadataCache.set(mintAddress, meta);
-        return meta;
+  // 1. Direct IPFS metadata JSON resolution (Sub-second resolution for newly minted tokens)
+  if (metadataUri) {
+    const directUrl = normalizeIpfsUrl(metadataUri);
+    if (directUrl) {
+      const gateways = [
+        directUrl,
+        directUrl.replace('pump.mypinata.cloud', 'cf-ipfs.com'),
+        directUrl.replace('pump.mypinata.cloud', 'gateway.pinata.cloud'),
+      ];
+      for (const gw of gateways) {
+        try {
+          const res = await fetch(gw, {
+            headers: { 'User-Agent': 'Mozilla/5.0' },
+            signal: AbortSignal.timeout(1800)
+          });
+          if (res.ok) {
+            const data = await res.json();
+            if (data && (data.name || data.image || data.image_uri)) {
+              const rawImage = data.image || data.image_uri || null;
+              const imageUrl = normalizeIpfsUrl(rawImage);
+              const meta = {
+                name: (data.name && data.name.trim()) || fallbackName,
+                symbol: (data.symbol && data.symbol.trim()) || fallbackSymbol,
+                imageUrl,
+                metadataUri,
+                description: data.description || '',
+                twitter: data.twitter || null,
+                telegram: data.telegram || null,
+                website: data.website || null,
+                replyCount: 0,
+                usdMarketCap: null,
+              };
+              metadataCache.set(mintAddress, meta);
+              return meta;
+            }
+          }
+        } catch (err) {}
       }
     }
-  } catch (err) {}
+  }
+
 
   // 2. Fallback to DexScreener (fast 1200ms timeout)
   try {

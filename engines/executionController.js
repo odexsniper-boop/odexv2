@@ -246,7 +246,7 @@ export class ExecutionController {
       });
 
       // Step C: Decoupled Confirmation Tracking (SENT ≠ EXECUTED)
-      const confirmationPromise = this.monitor.track(signature, context);
+      const confirmationPromise = this.monitor.track(signature, context, wireTransaction);
 
       // Wait for confirmed on-chain fill
       const monitorResult = await confirmationPromise;
@@ -453,7 +453,7 @@ export class ExecutionController {
         dispatchDurationMs: dispatchRes.dispatchDurationMs,
       });
 
-      const monitorResult = await this.monitor.track(signature, context);
+      const monitorResult = await this.monitor.track(signature, context, wireTransaction);
       const totalLatencyMs = Math.round(performance.now() - startTime);
 
       // Derive actual execution proceeds separating gross, fees, and tips (Amendments 4, 6, 21, 22)
