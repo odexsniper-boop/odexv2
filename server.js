@@ -79,7 +79,7 @@ function decryptKey(encText) {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export function createDashboardServer(port = 3005) {
+export async function createDashboardServer(port = 3005) {
   const app = express();
   app.use(express.json());
   app.use((req, res, next) => {
@@ -185,6 +185,23 @@ export function createDashboardServer(port = 3005) {
     } catch (e) { console.error('[AUTO-CAUGHT ERROR]', e.message || e); }
     return null;
   });
+
+  // Apply fix: Restore data from Supabase on real deploy (ephemeral environments) before loading state
+  const stats = dbManager.getStats();
+  if (stats.tradesCount === 0 && stats.positionsCount === 0 && supabaseManager.connected) {
+    try {
+      log('[SYNC] Local database empty. Attempting to restore from Supabase...');
+      const { data: trades } = await supabaseManager.client.from('trades').select('*').order('id', { ascending: true });
+      if (trades) trades.forEach(t => dbManager.saveTrade(t.raw_data || t));
+      
+      const { data: positions } = await supabaseManager.client.from('positions').select('*');
+      if (positions) dbManager.savePositions(positions.map(p => p.raw_data || p));
+      
+      log(`[SYNC] Restored ${trades?.length || 0} trades and ${positions?.length || 0} positions.`);
+    } catch (e) {
+      log(`[SYNC WARN] Failed to restore from Supabase: ${e.message}`);
+    }
+  }
 
   const positionManager = new PositionManager(execution, {
     stopLossPercent: tradingSettings.stopLossPercent !== undefined ? tradingSettings.stopLossPercent : -16,
@@ -2083,7 +2100,7 @@ if (isDirectRun) {
   });
 
   const port = process.env.PORT || 3005;
-  const dashboard = createDashboardServer(port);
+  const dashboard = await createDashboardServer(port);
   dashboard.start();
 }
 
