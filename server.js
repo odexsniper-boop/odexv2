@@ -368,6 +368,7 @@ export function createDashboardServer(port = 3005) {
     try {
       if (uBot.positionManager.positions.size >= 5) return;
       if (uBot.positionManager.positions.has(record.mint)) return;
+      if (autoBuyEnabled && (!uBot.walletKeypair || uBot.walletPubkey === walletPubkey)) return;
 
       log(`⚡ [MULTI-USER AUTO-BUY] Executing for user ${uBot.userId.slice(0, 8)} on ${record.name} (${uBot.buySizeSol} SOL)`);
       const buyFill = await uBot.execution.executeBuy({
@@ -510,6 +511,7 @@ export function createDashboardServer(port = 3005) {
   eventBus.on('TRADE_EXECUTED', (data) => broadcast('TRADE_EXECUTED', data));
   eventBus.on('POSITION_OPENED', (data) => broadcast('POSITION_OPENED', data));
   eventBus.on('POSITION_TICK', (data) => broadcast('POSITION_TICK', data));
+  eventBus.on('MONEY_FLOW_TICK', (data) => broadcast('MONEY_FLOW_TICK', data));
   eventBus.on('POSITION_SCALED_OUT', (data) => broadcast('POSITION_SCALED_OUT', data));
 
   eventBus.on('CURVE_TICK', (data) => {
@@ -540,6 +542,11 @@ export function createDashboardServer(port = 3005) {
       supabase: supabaseManager.connected ? 'CONNECTED' : 'LOCAL_ONLY',
       mode: ctx.currentMode,
       autoBuyEnabled: ctx.autoBuyEnabled,
+      buySizeSol: ctx.buySizeSol,
+      slippagePercent: ctx.tradingSettings.slippagePercent,
+      priorityFeeSol: ctx.tradingSettings.priorityFeeSol,
+      gasTipSol: ctx.tradingSettings.gasTipSol,
+      stopLossPercent: ctx.tradingSettings.stopLossPercent,
       learningEnabled: smartAgent.learningEnabled,
       learningMetrics: smartAgent.getMetrics(),
       openPositions: ctx.positionManager.positions.size,
@@ -600,12 +607,20 @@ export function createDashboardServer(port = 3005) {
     try {
       const tok = orchestrator.tokens.get(mint);
       if (tok && tok.imageUrl) return res.json({ success: true, imageUrl: tok.imageUrl });
+      if (mint && mint.endsWith('pump')) {
+        const pumpImg = `https://images.pump.fun/coin-image/${mint}?variant=256x256`;
+        if (tok) tok.imageUrl = pumpImg;
+        return res.json({ success: true, imageUrl: pumpImg });
+      }
       const meta = await fetchTokenMetadata(mint);
       if (meta && meta.imageUrl) {
         if (tok) tok.imageUrl = meta.imageUrl;
         return res.json({ success: true, imageUrl: meta.imageUrl });
       }
     } catch (e) {}
+    if (mint && mint.endsWith('pump')) {
+      return res.json({ success: true, imageUrl: `https://images.pump.fun/coin-image/${mint}?variant=256x256` });
+    }
     res.json({ success: false, imageUrl: null });
   });
 
@@ -962,22 +977,18 @@ export function createDashboardServer(port = 3005) {
       ctx.currentMode = paperToggled ? 'PAPER' : 'LIVE';
       ctx.execution.isPaperTrading = paperToggled;
       if (ctx.execution.controller) ctx.execution.controller.isPaperTrading = paperToggled;
-      if (ctx.isLocal) {
-        currentMode = ctx.currentMode;
-        execution.isPaperTrading = paperToggled;
-        if (execution.controller) execution.controller.isPaperTrading = paperToggled;
-        process.env.DRY_RUN = paperToggled ? 'true' : 'false';
-        dbManager.setSetting('trading_mode', currentMode);
-      }
+      currentMode = ctx.currentMode;
+      execution.isPaperTrading = paperToggled;
+      if (execution.controller) execution.controller.isPaperTrading = paperToggled;
+      process.env.DRY_RUN = paperToggled ? 'true' : 'false';
+      dbManager.setSetting('trading_mode', currentMode);
       updated = true;
     }
 
     if (newSize !== undefined && !isNaN(Number(newSize)) && Number(newSize) > 0) {
       ctx.buySizeSol = Number(newSize);
-      if (ctx.isLocal) {
-        buySizeSol = ctx.buySizeSol;
-        orchestrator.setBuySize(buySizeSol);
-      }
+      buySizeSol = ctx.buySizeSol;
+      orchestrator.setBuySize(buySizeSol);
       updated = true;
     }
 
@@ -987,11 +998,11 @@ export function createDashboardServer(port = 3005) {
       ctx.tradingSettings.slippagePercent = sPct;
       ctx.tradingSettings.slippageBps = bps;
       ctx.execution.defaultSlippageBps = bps;
-      if (ctx.isLocal) {
-        tradingSettings.slippagePercent = sPct;
-        tradingSettings.slippageBps = bps;
-        execution.defaultSlippageBps = bps;
-      }
+      if (ctx.execution.controller) ctx.execution.controller.defaultSlippageBps = bps;
+      tradingSettings.slippagePercent = sPct;
+      tradingSettings.slippageBps = bps;
+      execution.defaultSlippageBps = bps;
+      if (execution.controller) execution.controller.defaultSlippageBps = bps;
       updated = true;
     }
 
@@ -1001,11 +1012,11 @@ export function createDashboardServer(port = 3005) {
       ctx.tradingSettings.priorityFeeSol = pSol;
       ctx.tradingSettings.priorityFeeMicroLamports = microLamports;
       ctx.execution.defaultPriorityFeeMicroLamports = microLamports;
-      if (ctx.isLocal) {
-        tradingSettings.priorityFeeSol = pSol;
-        tradingSettings.priorityFeeMicroLamports = microLamports;
-        execution.defaultPriorityFeeMicroLamports = microLamports;
-      }
+      if (ctx.execution.controller) ctx.execution.controller.defaultPriorityFee = microLamports;
+      tradingSettings.priorityFeeSol = pSol;
+      tradingSettings.priorityFeeMicroLamports = microLamports;
+      execution.defaultPriorityFeeMicroLamports = microLamports;
+      if (execution.controller) execution.controller.defaultPriorityFee = microLamports;
       updated = true;
     }
 
@@ -1015,11 +1026,11 @@ export function createDashboardServer(port = 3005) {
       ctx.tradingSettings.gasTipSol = gSol;
       ctx.tradingSettings.jitoTipLamports = lamports;
       ctx.execution.jitoTipLamports = lamports;
-      if (ctx.isLocal) {
-        tradingSettings.gasTipSol = gSol;
-        tradingSettings.jitoTipLamports = lamports;
-        execution.jitoTipLamports = lamports;
-      }
+      if (ctx.execution.controller) ctx.execution.controller.defaultJitoTipLamports = lamports;
+      tradingSettings.gasTipSol = gSol;
+      tradingSettings.jitoTipLamports = lamports;
+      execution.jitoTipLamports = lamports;
+      if (execution.controller) execution.controller.defaultJitoTipLamports = lamports;
       updated = true;
     }
 
@@ -1030,11 +1041,9 @@ export function createDashboardServer(port = 3005) {
       if (ctx.positionManager && ctx.positionManager.setStopLoss) {
         ctx.positionManager.setStopLoss(slPct);
       }
-      if (ctx.isLocal) {
-        tradingSettings.stopLossPercent = slPct;
-        if (positionManager && positionManager.setStopLoss) {
-          positionManager.setStopLoss(slPct);
-        }
+      tradingSettings.stopLossPercent = slPct;
+      if (positionManager && positionManager.setStopLoss) {
+        positionManager.setStopLoss(slPct);
       }
       updated = true;
     }

@@ -422,6 +422,15 @@ export class Orchestrator {
       record.stage2_moneyFlow = flowVerdict;
       record.moneyFlowScore = flowVerdict.score;
 
+      eventBus.emit('MONEY_FLOW_TICK', {
+        mint,
+        buyVolumeSol: record.buyVolumeSol,
+        sellVolumeSol: record.sellVolumeSol,
+        uniqueBuyers: record.uniqueBuyers.size,
+        buyerQuality: record.buyerQuality,
+        stage2_moneyFlow: record.stage2_moneyFlow
+      });
+
       if (flowVerdict.passed) {
         log(`💰 [STAGE 2 PASS] Real Money Flow Confirmed for ${record.name}! (Net Delta: +${flowVerdict.netVolumeDeltaSol} SOL, Ratio: ${flowVerdict.buySellRatio}x, Organic Buyers: ${flowVerdict.uniqueBuyersCount}/${rawBuyerCount}, Cluster Risk: ${quality.coordinationRisk})`);
         
@@ -548,7 +557,11 @@ export class Orchestrator {
       log(`⚡ [ORCHESTRATOR BUY] Executing 3-Stage Entry on ${record.name} (${mint.slice(0, 8)}) with ${this.buySizeSol} SOL`);
       
       // Dynamic Jito Tip Escalation: Boost tip by 1.3x for top-tier high-conviction entries (entryScore >= 85)
-      let dynamicTipLamports = this.execution?.jitoTipLamports;
+      let dynamicTipLamports = this.execution?.jitoTipLamports ?? 10_000_000;
+      const maxSensibleTip = Math.max(1_000_000, Math.floor(this.buySizeSol * 1e9 * 0.10));
+      if (dynamicTipLamports > maxSensibleTip && this.buySizeSol < 0.1) {
+        dynamicTipLamports = maxSensibleTip;
+      }
       if (record.entryScore >= 85 && dynamicTipLamports > 0) {
         dynamicTipLamports = Math.round(dynamicTipLamports * 1.3);
       }
@@ -574,6 +587,7 @@ export class Orchestrator {
         devPercent: record.devPercent,
         bundledBuysCount: Math.max(record.uniqueBuyers.size, record.bundledBuysCount),
         imageUrl: record.imageUrl,
+        stopLossPercent: this.positionManager.stopLossPercent,
       });
 
       record.position = position;

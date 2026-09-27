@@ -125,8 +125,8 @@ export class BondingCurveWatcher {
   startPollingFallback() {
     if (this.pollInterval) clearInterval(this.pollInterval);
     this.pollInterval = setInterval(async () => {
-      // If PumpPortal WebSocket or On-Chain WS is actively streaming, do not spam RPC with polling
-      if ((this.ws && this.pumpPortalStreaming) || this.onLogsSubId != null) return;
+      // If PumpPortal WebSocket is actively streaming, do not spam RPC with polling
+      if (this.ws && this.pumpPortalStreaming) return;
       if (this.watchedMints.size === 0 || !this.connection) return;
 
       const mintsToPoll = Array.from(this.watchedMints).slice(0, 50);

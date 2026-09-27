@@ -389,6 +389,15 @@ export class Orchestrator {
       record.stage2_moneyFlow = flowVerdict;
       record.moneyFlowScore = flowVerdict.score;
 
+      eventBus.emit('MONEY_FLOW_TICK', {
+        mint,
+        buyVolumeSol: record.buyVolumeSol,
+        sellVolumeSol: record.sellVolumeSol,
+        uniqueBuyers: record.uniqueBuyers.size,
+        buyerQuality: record.buyerQuality,
+        stage2_moneyFlow: record.stage2_moneyFlow
+      });
+
       if (flowVerdict.passed) {
         log(`💰 [STAGE 2 PASS] Real Money Flow Confirmed for ${record.name}! (Net Delta: +${flowVerdict.netVolumeDeltaSol} SOL, Ratio: ${flowVerdict.buySellRatio}x, Buyers: ${flowVerdict.uniqueBuyersCount})`);
         
