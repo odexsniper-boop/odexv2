@@ -31,7 +31,7 @@ export class SolanaStreamer {
   startInstantFeed() {
     try {
       const wsUrl = 'wss://pumpportal.fun/api/data-api';
-      this.portalWs = new WebSocket(wsUrl);
+      this.portalWs = new WebSocket(wsUrl); this.lastMessageTime = Date.now(); if (this.watchdogInterval) clearInterval(this.watchdogInterval); this.watchdogInterval = setInterval(() => { if (this.isRunning && this.portalWs && Date.now() - this.lastMessageTime > 30000) { try { this.portalWs.terminate(); } catch(e){} } }, 10000);
 
       this.portalWs.on('open', () => {
         log('[STREAMER ⚡] Connected to Ultra-Fast PumpPortal stream (Sub-second / 0ms discovery)');
@@ -40,7 +40,7 @@ export class SolanaStreamer {
         } catch (e) {}
       });
 
-      this.portalWs.on('message', (data) => {
+      this.portalWs.on('message', (data) => { this.lastMessageTime = Date.now();
         try {
           const d = JSON.parse(data.toString());
           if (d.txType === 'create' && d.mint) {

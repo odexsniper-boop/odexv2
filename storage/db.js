@@ -195,10 +195,15 @@ class DatabaseManager {
 
   saveTrade(trade) {
     if (trade) {
-      supabaseManager.saveTrade(trade).catch(() => {});
+      supabaseManager.saveTrade(trade).catch((e) => { log(`[SUPABASE WARN] saveTrade: ${e.message}`); });
     }
     if (!this.connected || !this.db) return;
     try {
+      const mint = trade.mint || '';
+      const closedAt = trade.closedAt || trade.closed_at || new Date().toISOString();
+      const existing = this.db.prepare('SELECT id FROM trades WHERE mint = ? AND closed_at = ?').get(mint, closedAt);
+      if (existing) return;
+
       const stmt = this.db.prepare(`
         INSERT INTO trades (
           mint, symbol, name, entry_price_sol, exit_price_sol,
@@ -207,7 +212,7 @@ class DatabaseManager {
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `);
       stmt.run(
-        trade.mint || '',
+        mint,
         trade.symbol || '',
         trade.name || '',
         Number(trade.entryPriceSol || trade.entry_price_sol || 0),
@@ -217,7 +222,7 @@ class DatabaseManager {
         Number(trade.pnlPercent || trade.pnl_percent || trade.finalPnlPercent || 0),
         trade.exitReason || trade.exit_reason || trade.reason || '',
         trade.openedAt || trade.opened_at || '',
-        trade.closedAt || trade.closed_at || new Date().toISOString(),
+        closedAt,
         JSON.stringify(trade)
       );
     } catch (e) {
@@ -244,7 +249,7 @@ class DatabaseManager {
 
   savePositions(positionsList) {
     if (positionsList) {
-      supabaseManager.savePositions(positionsList).catch(() => {});
+      supabaseManager.savePositions(positionsList).catch((e) => { log(`[SUPABASE WARN] savePositions: ${e.message}`); });
     }
     if (!this.connected || !this.db) return;
     try {
@@ -301,7 +306,7 @@ class DatabaseManager {
 
   saveDetectedToken(token) {
     if (token) {
-      supabaseManager.saveDetectedToken(token).catch(() => {});
+      supabaseManager.saveDetectedToken(token).catch((e) => { log(`[SUPABASE WARN] saveDetectedToken: ${e.message}`); });
     }
     if (!this.connected || !this.db || !token?.mint) return;
     try {
@@ -340,7 +345,7 @@ class DatabaseManager {
 
   recordSnapshot(mint, snapshotData) {
     if (mint && snapshotData) {
-      supabaseManager.recordSnapshot(mint, snapshotData).catch(() => {});
+      supabaseManager.recordSnapshot(mint, snapshotData).catch((e) => { log(`[SUPABASE WARN] recordSnapshot: ${e.message}`); });
     }
     if (!this.connected || !this.db) return;
     try {
@@ -414,7 +419,7 @@ class DatabaseManager {
 
   setSetting(key, value) {
     if (key) {
-      supabaseManager.setSetting(key, value).catch(() => {});
+      supabaseManager.setSetting(key, value).catch((e) => { log(`[SUPABASE WARN] setSetting: ${e.message}`); });
     }
     if (!this.connected || !this.db) return false;
     try {

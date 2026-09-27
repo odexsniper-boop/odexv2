@@ -11,15 +11,17 @@ const STORAGE_FILE = path.join(__dirname, 'trades_state.json');
 export class TradeStorage {
   static loadState() {
     try {
-      if (fs.existsSync(STORAGE_FILE)) {
-        const raw = fs.readFileSync(STORAGE_FILE, 'utf8');
-        return JSON.parse(raw);
-      }
-      // Fallback to database if JSON file is absent
+      // 1. Prioritize SQLite database
       const positions = dbManager.getPositions();
       const tradeHistory = dbManager.getTrades(100);
       if (positions.length > 0 || tradeHistory.length > 0) {
         return { positions, tradeHistory, vetoCount: 0 };
+      }
+
+      // 2. Fallback to JSON file if DB is empty
+      if (fs.existsSync(STORAGE_FILE)) {
+        const raw = fs.readFileSync(STORAGE_FILE, 'utf8');
+        return JSON.parse(raw);
       }
     } catch (e) {
       log(`[STORAGE WARN] Could not load state: ${e.message}`);
@@ -51,8 +53,10 @@ export class TradeStorage {
       // 2. Persist to connected SQLite database
       dbManager.savePositions(positions);
       if (tradeHistory.length > 0) {
-        // Save latest trade
-        dbManager.saveTrade(tradeHistory[0]);
+        // Save all trades (dbManager handles duplicate prevention)
+        for (const trade of tradeHistory) {
+          dbManager.saveTrade(trade);
+        }
       }
     } catch (e) {
       log(`[STORAGE ERR] Failed to save state: ${e.message}`);

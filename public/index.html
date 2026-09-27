@@ -3873,7 +3873,7 @@
 
     function formatTokenAge(timestamp, now = Date.now()) {
       if (!timestamp || isNaN(timestamp)) return '';
-      const diffSec = Math.max(0, Math.floor((now - timestamp) / 1000));
+      const diffSec = Math.max(1, Math.floor((now - timestamp) / 1000));
       if (diffSec < 60) return `${diffSec}s`;
       const diffMin = Math.floor(diffSec / 60);
       if (diffMin < 60) return `${diffMin}m`;

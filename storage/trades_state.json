@@ -2,6 +2,40 @@
   "positions": [],
   "tradeHistory": [
     {
+      "mint": "2YmxrPv9RXz9D6tHPb13L4c2wL7DgBSGyFuGtp9Zpump",
+      "name": "PEPE GOLD",
+      "symbol": "GOLDPEPE",
+      "imageUrl": "",
+      "devPercent": 0.5892091242216,
+      "bundledBuysCount": 7,
+      "entryScore": 83,
+      "entryPriceSol": 1.1429289874272197e-7,
+      "exitPriceSol": 1.6035418005513478e-7,
+      "initialSolSpent": 0.50200499996,
+      "actualBuyCost": 0.50200499996,
+      "actualGrossSellProceeds": 0.34168211154,
+      "actualTransactionFees": 0.000005,
+      "actualNetSellProceeds": 0.58154197202,
+      "solReceived": 0.58154197202,
+      "grossPnlSol": 0.003735386999999979,
+      "grossPnlPercent": 0.7470699293007027,
+      "estimatedFeesSol": 0.00888073713,
+      "pricePnlPercent": 104.77849254596308,
+      "finalPricePnlPercent": 104.77849254596308,
+      "netProfitSol": 0.07953697205999999,
+      "profitSol": 0.07953697205999999,
+      "pnlSol": 0.07953697205999999,
+      "netPnlSol": 0.07953697205999999,
+      "netPnlPercent": 15.843860532532053,
+      "finalPnlPercent": 15.843860532532053,
+      "pnlPercent": 15.843860532532053,
+      "status": "SOLD",
+      "reason": "TAKE_PROFIT_2X",
+      "txHash": "sim_sell_1790498192100_2YmxrPv9",
+      "openedAt": "2026-09-27T08:36:27.717Z",
+      "closedAt": "2026-09-27T08:36:32.101Z"
+    },
+    {
       "mint": "9aVwvhGXujVjT4JbbvNxmSVdQEkDmjUfwZCztxEcpump",
       "name": "Dope",
       "symbol": "DOPE",
@@ -33,7 +67,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1790288666243_9aVwvhGX",
       "openedAt": "2026-09-24T22:22:33.538Z",
-      "closedAt": "2026-09-24T22:24:26.244Z"
+      "closedAt": "2026-09-24T22:24:26.244Z",
+      "id": 88
     },
     {
       "mint": "7gUuHrX99Uyo6Gwq1Rb6K9XZCuoJ9ZgpLo8QA3dcpump",
@@ -67,7 +102,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1790288635433_7gUuHrX9",
       "openedAt": "2026-09-24T22:23:15.578Z",
-      "closedAt": "2026-09-24T22:23:55.433Z"
+      "closedAt": "2026-09-24T22:23:55.433Z",
+      "id": 87
     },
     {
       "mint": "3fJ7yq7kzT3tBdcYaNWbMwLk9ndGUM4sgQryL6Czpump",
@@ -101,7 +137,8 @@
       "reason": "TRAILING_STOP",
       "txHash": "sim_sell_1790288617723_3fJ7yq7k",
       "openedAt": "2026-09-24T22:23:25.296Z",
-      "closedAt": "2026-09-24T22:23:37.723Z"
+      "closedAt": "2026-09-24T22:23:37.723Z",
+      "id": 86
     },
     {
       "mint": "9KpBtyt7VA8ntyiaNZhkGhcYC2BYXiXC2Vm1A1BYpump",
@@ -135,7 +172,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1790288256855_9KpBtyt7",
       "openedAt": "2026-09-24T22:17:03.884Z",
-      "closedAt": "2026-09-24T22:17:36.855Z"
+      "closedAt": "2026-09-24T22:17:36.855Z",
+      "id": 85
     },
     {
       "mint": "6Av5uPd6WEFCCdpZMzpDYFiSiu9g1kKXyNmibUjHpump",
@@ -169,7 +207,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1790288057569_6Av5uPd6",
       "openedAt": "2026-09-24T22:14:06.399Z",
-      "closedAt": "2026-09-24T22:14:17.570Z"
+      "closedAt": "2026-09-24T22:14:17.570Z",
+      "id": 84
     },
     {
       "mint": "KYMVXwNRurvc8gH69zB3DyU7JDhJ4GXep9uw4Ajpump",
@@ -203,7 +242,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789990765765_KYMVXwNR",
       "openedAt": "2026-09-21T11:39:14.226Z",
-      "closedAt": "2026-09-21T11:39:25.765Z"
+      "closedAt": "2026-09-21T11:39:25.765Z",
+      "id": 83
     },
     {
       "mint": "6ThGT4rxkum7DxkXe5uDczbUCQZmyy7QXDbBMfPRpump",
@@ -237,7 +277,8 @@
       "reason": "TRAILING_STOP",
       "txHash": "sim_sell_1789990697974_6ThGT4rx",
       "openedAt": "2026-09-21T11:36:25.534Z",
-      "closedAt": "2026-09-21T11:38:17.974Z"
+      "closedAt": "2026-09-21T11:38:17.974Z",
+      "id": 82
     },
     {
       "mint": "ENaBAaxmUSKaZuPHJdCT4nSeAsuGDqb9cLN8SYippump",
@@ -271,7 +312,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789990131847_ENaBAaxm",
       "openedAt": "2026-09-21T11:28:26.422Z",
-      "closedAt": "2026-09-21T11:28:51.847Z"
+      "closedAt": "2026-09-21T11:28:51.847Z",
+      "id": 81
     },
     {
       "mint": "GQ7fM6LmAtTyaaSTKSLUYhib7U33o7cVeycWb5rTpump",
@@ -305,7 +347,8 @@
       "reason": "TRAILING_STOP",
       "txHash": "sim_sell_1789989805967_GQ7fM6Lm",
       "openedAt": "2026-09-21T11:22:12.483Z",
-      "closedAt": "2026-09-21T11:23:25.967Z"
+      "closedAt": "2026-09-21T11:23:25.967Z",
+      "id": 80
     },
     {
       "mint": "H18byysQfqDvhf6MJWK3ted3gS2ceXzHsrvn1AG3pump",
@@ -339,7 +382,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789989783322_H18byysQ",
       "openedAt": "2026-09-21T11:22:09.402Z",
-      "closedAt": "2026-09-21T11:23:03.322Z"
+      "closedAt": "2026-09-21T11:23:03.322Z",
+      "id": 79
     },
     {
       "mint": "do4MFpEiugk6VHBAyFjGtEm9DZ92fFy7bVy7KR8pump",
@@ -373,7 +417,8 @@
       "reason": "STALE_TIMEOUT",
       "txHash": "sim_sell_1789989388151_do4MFpEi",
       "openedAt": "2026-09-21T11:11:09.090Z",
-      "closedAt": "2026-09-21T11:16:28.151Z"
+      "closedAt": "2026-09-21T11:16:28.151Z",
+      "id": 78
     },
     {
       "mint": "5Dz3oyUyvtjaScqYZCNzW1CpqN1pFS2X64mG1D5ypump",
@@ -407,7 +452,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789989043781_5Dz3oyUy",
       "openedAt": "2026-09-21T11:10:07.284Z",
-      "closedAt": "2026-09-21T11:10:43.781Z"
+      "closedAt": "2026-09-21T11:10:43.781Z",
+      "id": 77
     },
     {
       "mint": "bNVvpkF4gvfcZ3JssmtzDKYW8qAsnSMPJRUe9oBpump",
@@ -441,7 +487,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789988584088_bNVvpkF4",
       "openedAt": "2026-09-21T11:02:21.329Z",
-      "closedAt": "2026-09-21T11:03:04.088Z"
+      "closedAt": "2026-09-21T11:03:04.088Z",
+      "id": 76
     },
     {
       "mint": "C18mMfqAiXgM9fUkh7K9Es1ANMUFXEQnXzCmmmPqpump",
@@ -475,7 +522,8 @@
       "reason": "MANUAL_SELL",
       "txHash": "sim_sell_1789988216981_C18mMfqA",
       "openedAt": "2026-09-21T10:56:28.806Z",
-      "closedAt": "2026-09-21T10:56:56.982Z"
+      "closedAt": "2026-09-21T10:56:56.982Z",
+      "id": 75
     },
     {
       "mint": "M9ms4NvCMxR8wbXCUJ4ctPnXtus3w3Yg4BFXDFFpump",
@@ -509,7 +557,8 @@
       "reason": "TRAILING_STOP",
       "txHash": "sim_sell_1789914129317_M9ms4NvC",
       "openedAt": "2026-09-20T14:21:45.424Z",
-      "closedAt": "2026-09-20T14:22:09.317Z"
+      "closedAt": "2026-09-20T14:22:09.317Z",
+      "id": 74
     },
     {
       "mint": "utrpYQdYCskzi4cftXcFfbF1G8Dz8ngQJvJTVZxpump",
@@ -543,7 +592,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789912724457_utrpYQdY",
       "openedAt": "2026-09-20T13:58:42.463Z",
-      "closedAt": "2026-09-20T13:58:44.457Z"
+      "closedAt": "2026-09-20T13:58:44.457Z",
+      "id": 73
     },
     {
       "mint": "4wTV1YmiEkRvAtNtsSGPtUrqRYQMe5SKy2uB4Jjaxnjf",
@@ -577,7 +627,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789911849879_4wTV1Ymi",
       "openedAt": "2026-09-20T13:44:08.253Z",
-      "closedAt": "2026-09-20T13:44:09.880Z"
+      "closedAt": "2026-09-20T13:44:09.880Z",
+      "id": 72
     },
     {
       "mint": "J9eG5W37S9NZ8ZFQXpB7pJfjCWrUdoi4rg4NDTGFpump",
@@ -611,7 +662,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789911710968_J9eG5W37",
       "openedAt": "2026-09-20T13:41:25.971Z",
-      "closedAt": "2026-09-20T13:41:50.969Z"
+      "closedAt": "2026-09-20T13:41:50.969Z",
+      "id": 71
     },
     {
       "mint": "7NF6QhwDrTB8rs4t7n7evyy8FFx8DgjCxkJbTSaKpump",
@@ -645,7 +697,8 @@
       "reason": "TRAILING_STOP",
       "txHash": "sim_sell_1789910968718_7NF6QhwD",
       "openedAt": "2026-09-20T13:29:12.176Z",
-      "closedAt": "2026-09-20T13:29:28.718Z"
+      "closedAt": "2026-09-20T13:29:28.718Z",
+      "id": 70
     },
     {
       "mint": "9Pi3VxegphThHPPMptKD3WpgVvyKbNed9Q2yDKvupump",
@@ -679,7 +732,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789910758359_9Pi3Vxeg",
       "openedAt": "2026-09-20T13:25:11.461Z",
-      "closedAt": "2026-09-20T13:25:58.360Z"
+      "closedAt": "2026-09-20T13:25:58.360Z",
+      "id": 69
     },
     {
       "mint": "4wTV1YmiEkRvAtNtsSGPtUrqRYQMe5SKy2uB4Jjaxnjf",
@@ -713,7 +767,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789910105662_4wTV1Ymi",
       "openedAt": "2026-09-20T13:15:04.046Z",
-      "closedAt": "2026-09-20T13:15:05.662Z"
+      "closedAt": "2026-09-20T13:15:05.662Z",
+      "id": 68
     },
     {
       "mint": "4CJrZCjuX78ZYapvUXQnbjE5X2RtNswqkezkA2jhpump",
@@ -747,7 +802,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789910081025_4CJrZCju",
       "openedAt": "2026-09-20T13:14:27.574Z",
-      "closedAt": "2026-09-20T13:14:41.025Z"
+      "closedAt": "2026-09-20T13:14:41.025Z",
+      "id": 67
     },
     {
       "mint": "Fs5sMANCkoDVRwBRfCx1B5VgESJHFfAsFnPJvcgWpump",
@@ -781,7 +837,8 @@
       "reason": "MANUAL_SELL",
       "txHash": "sim_sell_1789909520199_Fs5sMANC",
       "openedAt": "2026-09-20T13:04:12.399Z",
-      "closedAt": "2026-09-20T13:05:20.199Z"
+      "closedAt": "2026-09-20T13:05:20.199Z",
+      "id": 66
     },
     {
       "mint": "7gwNYJwQZBWNhXe3yu1g29PCpq9ELZEwNJ1cEWu7pump",
@@ -815,7 +872,8 @@
       "reason": "TRAILING_STOP",
       "txHash": "sim_sell_1789909306540_7gwNYJwQ",
       "openedAt": "2026-09-20T13:00:41.530Z",
-      "closedAt": "2026-09-20T13:01:46.540Z"
+      "closedAt": "2026-09-20T13:01:46.540Z",
+      "id": 65
     },
     {
       "mint": "C2E5WYBa3XNETGTUuYvUc6YoB2kEjUiGry2ZptfSpump",
@@ -849,7 +907,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789908620066_C2E5WYBa",
       "openedAt": "2026-09-20T12:49:37.060Z",
-      "closedAt": "2026-09-20T12:50:20.067Z"
+      "closedAt": "2026-09-20T12:50:20.067Z",
+      "id": 64
     },
     {
       "mint": "4CmMVvNHfcVTr3Wwa7dCGsPYMY1ZFEcC6srfVVaKpump",
@@ -883,7 +942,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789907802700_4CmMVvNH",
       "openedAt": "2026-09-20T12:36:23.063Z",
-      "closedAt": "2026-09-20T12:36:42.700Z"
+      "closedAt": "2026-09-20T12:36:42.700Z",
+      "id": 63
     },
     {
       "mint": "EP59xVrW9sg1GmpUiXJTfcXtrojPcDEtpd4ompu6pump",
@@ -917,7 +977,8 @@
       "reason": "TRAILING_STOP",
       "txHash": "sim_sell_1789864673878_EP59xVrW",
       "openedAt": "2026-09-20T00:37:32.463Z",
-      "closedAt": "2026-09-20T00:37:53.878Z"
+      "closedAt": "2026-09-20T00:37:53.878Z",
+      "id": 62
     },
     {
       "mint": "7ZR9gkaxo3o5a59NbsJxYJgLnXwbxCYTG5AjVoqbpump",
@@ -951,7 +1012,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789864543278_7ZR9gkax",
       "openedAt": "2026-09-20T00:34:33.439Z",
-      "closedAt": "2026-09-20T00:35:43.278Z"
+      "closedAt": "2026-09-20T00:35:43.278Z",
+      "id": 61
     },
     {
       "mint": "34F8ESyyPkcjJuxCKoGsX9sARTG5MW755kL1GqUPpump",
@@ -985,7 +1047,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789863736419_34F8ESyy",
       "openedAt": "2026-09-20T00:21:50.119Z",
-      "closedAt": "2026-09-20T00:22:16.419Z"
+      "closedAt": "2026-09-20T00:22:16.419Z",
+      "id": 60
     },
     {
       "mint": "GrgCZMQL99e5yzQQkv3BKZg5nqdgZRsw68zX7nvPpump",
@@ -1019,7 +1082,8 @@
       "reason": "TRAILING_STOP",
       "txHash": "sim_sell_1789863174413_GrgCZMQL",
       "openedAt": "2026-09-20T00:12:46.768Z",
-      "closedAt": "2026-09-20T00:12:54.414Z"
+      "closedAt": "2026-09-20T00:12:54.414Z",
+      "id": 59
     },
     {
       "mint": "test_grace_mint_2",
@@ -1053,7 +1117,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_tx",
       "openedAt": "2026-09-20T00:02:36.662Z",
-      "closedAt": "2026-09-20T00:02:36.667Z"
+      "closedAt": "2026-09-20T00:02:36.667Z",
+      "id": 58
     },
     {
       "mint": "test_grace_mint",
@@ -1087,7 +1152,8 @@
       "reason": "HONEYPOT_DEV_DUMP",
       "txHash": "sim_test_tx",
       "openedAt": "2026-09-20T00:02:20.352Z",
-      "closedAt": "2026-09-20T00:02:20.357Z"
+      "closedAt": "2026-09-20T00:02:20.357Z",
+      "id": 57
     },
     {
       "mint": "Atn9oURbnN5tqv9rWXWLmnGtaGEBDdk4yQ8Bun7Npump",
@@ -1121,7 +1187,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789862516542_Atn9oURb",
       "openedAt": "2026-09-20T00:01:47.431Z",
-      "closedAt": "2026-09-20T00:01:56.542Z"
+      "closedAt": "2026-09-20T00:01:56.542Z",
+      "id": 56
     },
     {
       "mint": "BniigwB83Y5KUeqmJuxnqKqFxgAUQsgdGadwaFgfpump",
@@ -1148,7 +1215,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789862123783_BniigwB8",
       "openedAt": "2026-09-19T23:55:20.285Z",
-      "closedAt": "2026-09-19T23:55:23.783Z"
+      "closedAt": "2026-09-19T23:55:23.783Z",
+      "id": 55
     },
     {
       "mint": "FKkDMWqFUTZcW6zacy9ikP5cdTb4dbXCtz3WkSyqpump",
@@ -1175,7 +1243,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789861932013_FKkDMWqF",
       "openedAt": "2026-09-19T23:52:11.006Z",
-      "closedAt": "2026-09-19T23:52:12.013Z"
+      "closedAt": "2026-09-19T23:52:12.013Z",
+      "id": 54
     },
     {
       "mint": "2hmi7GaeS3HZhkiAgmbvhq2vKioAxRKtbsPntpoqpump",
@@ -1202,7 +1271,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789861348569_2hmi7Gae",
       "openedAt": "2026-09-19T23:42:25.657Z",
-      "closedAt": "2026-09-19T23:42:28.570Z"
+      "closedAt": "2026-09-19T23:42:28.570Z",
+      "id": 53
     },
     {
       "mint": "7F84GX5dzucBabC4pvF9efbT8gE6fgpVhPqbkZogpump",
@@ -1229,7 +1299,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789861217468_7F84GX5d",
       "openedAt": "2026-09-19T23:40:11.441Z",
-      "closedAt": "2026-09-19T23:40:17.468Z"
+      "closedAt": "2026-09-19T23:40:17.468Z",
+      "id": 52
     },
     {
       "mint": "FrDxE3q5L62mCDxgYiy7n5n3KXePBbrYPB8URG18pump",
@@ -1256,7 +1327,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789861086378_FrDxE3q5",
       "openedAt": "2026-09-19T23:38:05.418Z",
-      "closedAt": "2026-09-19T23:38:06.378Z"
+      "closedAt": "2026-09-19T23:38:06.378Z",
+      "id": 51
     },
     {
       "mint": "3YNr2x9Fozo2cdMU6eGg9d3UVyHJTm2x5UCnsfbBpump",
@@ -1283,7 +1355,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789860970968_3YNr2x9F",
       "openedAt": "2026-09-19T23:36:09.273Z",
-      "closedAt": "2026-09-19T23:36:10.968Z"
+      "closedAt": "2026-09-19T23:36:10.968Z",
+      "id": 50
     },
     {
       "mint": "DvMznVtm76KbJhfpaUyT6bEY5iK5ZBw1h27sjZshpump",
@@ -1310,7 +1383,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789858776875_DvMznVtm",
       "openedAt": "2026-09-19T22:59:13.770Z",
-      "closedAt": "2026-09-19T22:59:36.876Z"
+      "closedAt": "2026-09-19T22:59:36.876Z",
+      "id": 49
     },
     {
       "mint": "36A7rrrEBXarwRBGB39Pcs3hAo4baWHhYf2nu3Kppump",
@@ -1337,7 +1411,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789858636157_36A7rrrE",
       "openedAt": "2026-09-19T22:57:14.187Z",
-      "closedAt": "2026-09-19T22:57:16.157Z"
+      "closedAt": "2026-09-19T22:57:16.157Z",
+      "id": 48
     },
     {
       "mint": "JVoLG4uWsErj5Q3uNwNn7h8zkEZgALGcBemouDFpump",
@@ -1364,7 +1439,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789858527909_JVoLG4uW",
       "openedAt": "2026-09-19T22:55:24.538Z",
-      "closedAt": "2026-09-19T22:55:27.909Z"
+      "closedAt": "2026-09-19T22:55:27.909Z",
+      "id": 47
     },
     {
       "mint": "D8iAxeTcBUVHeU1dZQ8sLtjvNgykiYhcYzi2wygspump",
@@ -1391,7 +1467,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789858130150_D8iAxeTc",
       "openedAt": "2026-09-19T22:48:49.287Z",
-      "closedAt": "2026-09-19T22:48:50.150Z"
+      "closedAt": "2026-09-19T22:48:50.150Z",
+      "id": 46
     },
     {
       "mint": "7rjkrM5s5RhKvW7AEEabeMNnmPfm5tM2aMeRWpkDpump",
@@ -1418,7 +1495,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789857924796_7rjkrM5s",
       "openedAt": "2026-09-19T22:45:23.159Z",
-      "closedAt": "2026-09-19T22:45:24.796Z"
+      "closedAt": "2026-09-19T22:45:24.796Z",
+      "id": 45
     },
     {
       "mint": "GLuKAzQRULc9pHxZWKkitFMS6tWoMX486EQXN5h3pump",
@@ -1445,7 +1523,8 @@
       "reason": "MANUAL_SELL",
       "txHash": "sim_sell_1789857916261_GLuKAzQR",
       "openedAt": "2026-09-19T22:45:03.750Z",
-      "closedAt": "2026-09-19T22:45:16.261Z"
+      "closedAt": "2026-09-19T22:45:16.261Z",
+      "id": 44
     },
     {
       "mint": "GsJ58a6Wfb1eMhSEaHrjKVW3uxYSUZjKzNZXLVWwpump",
@@ -1472,7 +1551,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789857886670_GsJ58a6W",
       "openedAt": "2026-09-19T22:44:45.299Z",
-      "closedAt": "2026-09-19T22:44:46.670Z"
+      "closedAt": "2026-09-19T22:44:46.670Z",
+      "id": 43
     },
     {
       "mint": "Dwbcjr5co6BF8wGKVz55ScX2rL2eNEmra2yKMCu8pump",
@@ -1499,7 +1579,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789857342110_Dwbcjr5c",
       "openedAt": "2026-09-19T22:35:22.026Z",
-      "closedAt": "2026-09-19T22:35:42.110Z"
+      "closedAt": "2026-09-19T22:35:42.110Z",
+      "id": 42
     },
     {
       "mint": "8EiuNW8QAmsvtk3fgmd16U4RRigr1coCSFzbkMh4pump",
@@ -1526,7 +1607,8 @@
       "reason": "TRAILING_STOP",
       "txHash": "sim_sell_1789857321121_8EiuNW8Q",
       "openedAt": "2026-09-19T22:35:15.262Z",
-      "closedAt": "2026-09-19T22:35:21.122Z"
+      "closedAt": "2026-09-19T22:35:21.122Z",
+      "id": 41
     },
     {
       "mint": "Ad881PycCzmgVmSvuvynMVQnhN929QDVykLf9iNLpump",
@@ -1553,7 +1635,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789857192323_Ad881Pyc",
       "openedAt": "2026-09-19T22:32:53.436Z",
-      "closedAt": "2026-09-19T22:33:12.323Z"
+      "closedAt": "2026-09-19T22:33:12.323Z",
+      "id": 40
     },
     {
       "mint": "DVsvPikC29GrQYx6drhzanccnLkc4qFXuvh92EvLpump",
@@ -1580,7 +1663,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789857111287_DVsvPikC",
       "openedAt": "2026-09-19T22:31:37.403Z",
-      "closedAt": "2026-09-19T22:31:51.287Z"
+      "closedAt": "2026-09-19T22:31:51.287Z",
+      "id": 39
     },
     {
       "mint": "3j9JZyEcuGGHCvKayqtDKYhkq6vUKNAcGTpzD4cepump",
@@ -1607,7 +1691,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789857087938_3j9JZyEc",
       "openedAt": "2026-09-19T22:31:25.705Z",
-      "closedAt": "2026-09-19T22:31:27.939Z"
+      "closedAt": "2026-09-19T22:31:27.939Z",
+      "id": 38
     },
     {
       "mint": "4YHCBqijs7T9iHy8NXx2vHU4wR6mg9C9Ng7yR5n1pump",
@@ -1634,7 +1719,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789852275079_4YHCBqij",
       "openedAt": "2026-09-19T21:09:58.284Z",
-      "closedAt": "2026-09-19T21:11:15.079Z"
+      "closedAt": "2026-09-19T21:11:15.079Z",
+      "id": 37
     },
     {
       "mint": "CMaQRfwXpWhXBNx7T3TyN9Ddcbg89zphAuty2Vwtpump",
@@ -1661,7 +1747,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789852253553_CMaQRfwX",
       "openedAt": "2026-09-19T21:10:35.275Z",
-      "closedAt": "2026-09-19T21:10:53.553Z"
+      "closedAt": "2026-09-19T21:10:53.553Z",
+      "id": 36
     },
     {
       "mint": "A1wgnXuhJsGm4Psqso4xMGWd8T3AzQLwVxMYRVYKpump",
@@ -1680,7 +1767,8 @@
       "pnlPercent": -0.009242354624627858,
       "status": "SOLD",
       "reason": "STALE_TIMEOUT",
-      "openedAt": "2026-09-16T09:09:04.347Z"
+      "openedAt": "2026-09-16T09:09:04.347Z",
+      "id": 35
     },
     {
       "mint": "GG7USJf25z4VDbwP1CGuNs8x3kth3yUJ4tyEFvg6pump",
@@ -1707,7 +1795,8 @@
       "reason": "TRAILING_STOP",
       "txHash": "sim_sell_1789549784748_GG7USJf2",
       "openedAt": "2026-09-16T09:09:39.098Z",
-      "closedAt": "2026-09-16T09:09:44.749Z"
+      "closedAt": "2026-09-16T09:09:44.749Z",
+      "id": 34
     },
     {
       "mint": "FMh5opbs4eJbb4DrJfMmoZ6QgnU1xWAPMhSfxikpump",
@@ -1734,7 +1823,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789549749291_FMh5opbs",
       "openedAt": "2026-09-16T09:09:07.566Z",
-      "closedAt": "2026-09-16T09:09:09.291Z"
+      "closedAt": "2026-09-16T09:09:09.291Z",
+      "id": 33
     },
     {
       "mint": "4i5EVSyNe48q1KL3Tkt3X4cQW27DY9hzSL269ct3pump",
@@ -1761,7 +1851,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789549613560_4i5EVSyN",
       "openedAt": "2026-09-16T09:06:22.216Z",
-      "closedAt": "2026-09-16T09:06:53.560Z"
+      "closedAt": "2026-09-16T09:06:53.560Z",
+      "id": 32
     },
     {
       "mint": "AC773uzkxGNT3wWh6xq3vkLU4ZxuLp9J679ixUMvpump",
@@ -1788,7 +1879,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789549589475_AC773uzk",
       "openedAt": "2026-09-16T09:05:58.569Z",
-      "closedAt": "2026-09-16T09:06:29.475Z"
+      "closedAt": "2026-09-16T09:06:29.475Z",
+      "id": 31
     },
     {
       "mint": "JQ2j2Tr7BNksuiJjycgBCBJnnPUYwJHCGVHnSqWpump",
@@ -1815,7 +1907,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789549540323_JQ2j2Tr7",
       "openedAt": "2026-09-16T09:05:38.218Z",
-      "closedAt": "2026-09-16T09:05:40.324Z"
+      "closedAt": "2026-09-16T09:05:40.324Z",
+      "id": 30
     },
     {
       "mint": "5qQTiFhij4naBY1fBETzwRTxDWdx5VSt8EXkhZRKpump",
@@ -1842,7 +1935,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789549054516_5qQTiFhi",
       "openedAt": "2026-09-16T08:57:30.677Z",
-      "closedAt": "2026-09-16T08:57:34.516Z"
+      "closedAt": "2026-09-16T08:57:34.516Z",
+      "id": 29
     },
     {
       "mint": "943bdvrurbN682zb3zYoH17ENJTcjtL34gMd7f87pump",
@@ -1869,7 +1963,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789549038317_943bdvru",
       "openedAt": "2026-09-16T08:57:15.110Z",
-      "closedAt": "2026-09-16T08:57:18.317Z"
+      "closedAt": "2026-09-16T08:57:18.317Z",
+      "id": 28
     },
     {
       "mint": "33pneo67MVBg98u99c97nWWXrBB5E1VinSseztv3pump",
@@ -1896,7 +1991,8 @@
       "reason": "MANUAL_SELL",
       "txHash": "sim_sell_1789548962068_33pneo67",
       "openedAt": "2026-09-16T08:54:30.789Z",
-      "closedAt": "2026-09-16T08:56:02.068Z"
+      "closedAt": "2026-09-16T08:56:02.068Z",
+      "id": 27
     },
     {
       "mint": "D1awhCisRA8Bk2726aEvxP6KBX9pGErDCZNxZxbUpump",
@@ -1923,7 +2019,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789548735006_D1awhCis",
       "openedAt": "2026-09-16T08:52:13.223Z",
-      "closedAt": "2026-09-16T08:52:15.006Z"
+      "closedAt": "2026-09-16T08:52:15.006Z",
+      "id": 26
     },
     {
       "mint": "5fLwM8hzNeaRLiRCh84cqBy4xTBiYwr8PovB6KHcpump",
@@ -1950,7 +2047,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789548308016_5fLwM8hz",
       "openedAt": "2026-09-16T08:45:05.908Z",
-      "closedAt": "2026-09-16T08:45:08.016Z"
+      "closedAt": "2026-09-16T08:45:08.016Z",
+      "id": 25
     },
     {
       "mint": "FDE353qCUhugyWSTD11WHbpvZLnm5Vq2TJve6CYSpump",
@@ -1977,7 +2075,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789548123361_FDE353qC",
       "openedAt": "2026-09-16T08:41:45.571Z",
-      "closedAt": "2026-09-16T08:42:03.362Z"
+      "closedAt": "2026-09-16T08:42:03.362Z",
+      "id": 24
     },
     {
       "mint": "HcLW42Ci17iTT1EGA6VDkiS1radZXRSN83YFUazHpump",
@@ -2004,7 +2103,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789548099993_HcLW42Ci",
       "openedAt": "2026-09-16T08:41:39.059Z",
-      "closedAt": "2026-09-16T08:41:39.993Z"
+      "closedAt": "2026-09-16T08:41:39.993Z",
+      "id": 23
     },
     {
       "mint": "CwLs6x912YuMSBP1Mn94eA1YwA4RArNctSwuydk9pump",
@@ -2031,7 +2131,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789547668573_CwLs6x91",
       "openedAt": "2026-09-16T08:34:27.343Z",
-      "closedAt": "2026-09-16T08:34:28.573Z"
+      "closedAt": "2026-09-16T08:34:28.573Z",
+      "id": 22
     },
     {
       "mint": "3HN4rUSwitpaMB6hsX6mWEjmtJZGE4tWvsR1PAiWpump",
@@ -2058,7 +2159,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789547519298_3HN4rUSw",
       "openedAt": "2026-09-16T08:31:55.239Z",
-      "closedAt": "2026-09-16T08:31:59.298Z"
+      "closedAt": "2026-09-16T08:31:59.298Z",
+      "id": 21
     },
     {
       "mint": "47CsKWzY8SA4QQkh9myFHnnBDj2rErGD6Ssqcn7cpump",
@@ -2085,7 +2187,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789547494178_47CsKWzY",
       "openedAt": "2026-09-16T08:28:29.218Z",
-      "closedAt": "2026-09-16T08:31:34.179Z"
+      "closedAt": "2026-09-16T08:31:34.179Z",
+      "id": 20
     },
     {
       "mint": "J9SusERH44DSv34SvuCYpSqFKTsK7WgMuGvecYaspump",
@@ -2112,7 +2215,8 @@
       "reason": "TAKE_PROFIT_2X",
       "txHash": "sim_sell_1789547133333_J9SusERH",
       "openedAt": "2026-09-16T08:25:28.503Z",
-      "closedAt": "2026-09-16T08:25:33.334Z"
+      "closedAt": "2026-09-16T08:25:33.334Z",
+      "id": 19
     },
     {
       "mint": "9dqQdYEUT4fnxww9FrC1okTMQW8GQ7K3djEoHgqbpump",
@@ -2139,7 +2243,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789546634834_9dqQdYEU",
       "openedAt": "2026-09-16T08:17:13.723Z",
-      "closedAt": "2026-09-16T08:17:14.834Z"
+      "closedAt": "2026-09-16T08:17:14.834Z",
+      "id": 18
     },
     {
       "mint": "7YaVaQkPtEW7b9nNcEKxC19rENPUS5Ark4xTvYj7pump",
@@ -2166,7 +2271,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789546303135_7YaVaQkP",
       "openedAt": "2026-09-16T08:11:39.584Z",
-      "closedAt": "2026-09-16T08:11:43.135Z"
+      "closedAt": "2026-09-16T08:11:43.135Z",
+      "id": 17
     },
     {
       "mint": "AT3ctBUPDayDTVqQzpBADDxRAQKBXrXLVoVCf2J6pump",
@@ -2193,7 +2299,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789546253913_AT3ctBUP",
       "openedAt": "2026-09-16T08:10:40.239Z",
-      "closedAt": "2026-09-16T08:10:53.913Z"
+      "closedAt": "2026-09-16T08:10:53.913Z",
+      "id": 16
     },
     {
       "mint": "DzuNmBzFo2786Qbv1rKApLw1Csz9xp5EcHcfKwMBpump",
@@ -2212,7 +2319,8 @@
       "pnlPercent": 0,
       "status": "SOLD",
       "reason": "STALE_TIMEOUT",
-      "openedAt": "2026-09-16T08:03:06.339Z"
+      "openedAt": "2026-09-16T08:03:06.339Z",
+      "id": 15
     },
     {
       "mint": "56KcQzfmDWN1G5XuwiC1942hVegZi5Bv57cTm9Gpump",
@@ -2239,7 +2347,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789546030688_56KcQzfm",
       "openedAt": "2026-09-16T08:07:06.952Z",
-      "closedAt": "2026-09-16T08:07:10.688Z"
+      "closedAt": "2026-09-16T08:07:10.688Z",
+      "id": 14
     },
     {
       "mint": "DGH4iQd1wZn5y85ynHFCdd3dU6MBaygHRh46VEWLpump",
@@ -2266,7 +2375,8 @@
       "reason": "TAKE_PROFIT_2X",
       "txHash": "sim_sell_1789545913084_DGH4iQd1",
       "openedAt": "2026-09-16T08:02:18.002Z",
-      "closedAt": "2026-09-16T08:05:13.084Z"
+      "closedAt": "2026-09-16T08:05:13.084Z",
+      "id": 13
     },
     {
       "mint": "GmaprAkafMyoqPtAYbXxp9zuBNf6DZ8JVRuTRraUpump",
@@ -2293,7 +2403,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789545860363_GmaprAka",
       "openedAt": "2026-09-16T08:04:18.864Z",
-      "closedAt": "2026-09-16T08:04:20.363Z"
+      "closedAt": "2026-09-16T08:04:20.363Z",
+      "id": 12
     },
     {
       "mint": "FKAugVLrxi8RH7uFstgd1WoJyn9k7sjyqueBHGdDpump",
@@ -2320,7 +2431,8 @@
       "reason": "TRAILING_STOP",
       "txHash": "sim_sell_1789545819042_FKAugVLr",
       "openedAt": "2026-09-16T08:03:31.689Z",
-      "closedAt": "2026-09-16T08:03:39.043Z"
+      "closedAt": "2026-09-16T08:03:39.043Z",
+      "id": 11
     },
     {
       "mint": "trtNcUhp4aSmoA8FvC46b2Ayk7gA4wrZ1t9VQqTpump",
@@ -2347,7 +2459,8 @@
       "reason": "TRAILING_STOP",
       "txHash": "sim_sell_1789545789821_trtNcUhp",
       "openedAt": "2026-09-16T08:02:21.110Z",
-      "closedAt": "2026-09-16T08:03:09.821Z"
+      "closedAt": "2026-09-16T08:03:09.821Z",
+      "id": 10
     },
     {
       "mint": "RFQhDEkMz1ukg2ysGSMdUCWthNNnKqe9XCQ3a5Lpump",
@@ -2374,7 +2487,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789545588263_RFQhDEkM",
       "openedAt": "2026-09-16T07:59:47.394Z",
-      "closedAt": "2026-09-16T07:59:48.263Z"
+      "closedAt": "2026-09-16T07:59:48.263Z",
+      "id": 9
     },
     {
       "mint": "8RnTVEafsHXoEA3pqwhCqsmPb7Vtc1tJDw4snfnpump",
@@ -2401,7 +2515,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789545246411_8RnTVEaf",
       "openedAt": "2026-09-16T07:54:03.170Z",
-      "closedAt": "2026-09-16T07:54:06.411Z"
+      "closedAt": "2026-09-16T07:54:06.411Z",
+      "id": 8
     },
     {
       "mint": "FpoW64syUpgGvAFH8KNQc38T6F1jqopsYaNMufLcpump",
@@ -2420,7 +2535,8 @@
       "pnlPercent": -8.237597285328624,
       "status": "SOLD",
       "reason": "STALE_TIMEOUT",
-      "openedAt": "2026-09-16T07:48:17.524Z"
+      "openedAt": "2026-09-16T07:48:17.524Z",
+      "id": 7
     },
     {
       "mint": "rHbE3phJeAAsxDqZCfx7EYnt1rKXAfKtgJJr62Ypump",
@@ -2447,7 +2563,8 @@
       "reason": "TRAILING_STOP",
       "txHash": "sim_sell_1789545093798_rHbE3phJ",
       "openedAt": "2026-09-16T07:51:15.099Z",
-      "closedAt": "2026-09-16T07:51:33.798Z"
+      "closedAt": "2026-09-16T07:51:33.798Z",
+      "id": 6
     },
     {
       "mint": "3A6HYwxbLLBPA7jHaVtUJ9SxcEUCFEWTYNsNDjnYpump",
@@ -2474,7 +2591,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789544937644_3A6HYwxb",
       "openedAt": "2026-09-16T07:48:56.797Z",
-      "closedAt": "2026-09-16T07:48:57.645Z"
+      "closedAt": "2026-09-16T07:48:57.645Z",
+      "id": 5
     },
     {
       "mint": "48CbBcHbLFusCjJyibsh9hDgp5MrSWdj16XAqWvnpump",
@@ -2501,7 +2619,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789544844352_48CbBcHb",
       "openedAt": "2026-09-16T07:47:23.544Z",
-      "closedAt": "2026-09-16T07:47:24.353Z"
+      "closedAt": "2026-09-16T07:47:24.353Z",
+      "id": 4
     },
     {
       "mint": "KvcFNEKMHKDoZviS441CPQRV4REF3yGQc12zS7kpump",
@@ -2528,7 +2647,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789544609862_KvcFNEKM",
       "openedAt": "2026-09-16T07:43:21.186Z",
-      "closedAt": "2026-09-16T07:43:29.862Z"
+      "closedAt": "2026-09-16T07:43:29.862Z",
+      "id": 3
     },
     {
       "mint": "HJPXJqYLhR78EWkF9UMVFHVHkPdGGUsDy7YzYVdEpump",
@@ -2555,7 +2675,8 @@
       "reason": "STOP_LOSS",
       "txHash": "sim_sell_1789544581338_HJPXJqYL",
       "openedAt": "2026-09-16T07:42:19.371Z",
-      "closedAt": "2026-09-16T07:43:01.338Z"
+      "closedAt": "2026-09-16T07:43:01.338Z",
+      "id": 2
     },
     {
       "mint": "ERHEDi2n8EKSwNgCe7sjzpKTeqJrsHTVQgQfJuCEpump",
@@ -2582,9 +2703,10 @@
       "reason": "MANUAL_SELL",
       "txHash": "sim_sell_1789544502311_ERHEDi2n",
       "openedAt": "2026-09-16T07:40:37.909Z",
-      "closedAt": "2026-09-16T07:41:42.312Z"
+      "closedAt": "2026-09-16T07:41:42.312Z",
+      "id": 1
     }
   ],
   "vetoCount": 0,
-  "lastSaved": "2026-09-24T22:24:26.244Z"
+  "lastSaved": "2026-09-27T08:36:32.101Z"
 }
