@@ -3700,8 +3700,6 @@
         if (!record.imageUrl) {
           if (existing && existing.imageUrl) {
             record.imageUrl = existing.imageUrl;
-          } else if (record.mint && record.mint.endsWith('pump')) {
-            record.imageUrl = `https://images.pump.fun/coin-image/${record.mint}?variant=256x256`;
           }
         }
         tokensMap.set(record.mint, record);
@@ -4220,9 +4218,6 @@
 
         const closedInfo = t.closedData || (Array.isArray(closedTrades) ? closedTrades.find(c => c.mint === t.mint) : null) || null;
         let rawImg = t.imageUrl || t.closedData?.imageUrl || (closedInfo && closedInfo.imageUrl) || '';
-        if (!rawImg && t.mint && t.mint.endsWith('pump')) {
-          rawImg = `https://images.pump.fun/coin-image/${t.mint}?variant=256x256`;
-        }
         const imgSrc = rawImg ? rawImg : fallbackSvg;
 
         if (!t.imageUrl && t.mint && !t._resolvingImg) {
@@ -4971,9 +4966,6 @@
           const tokList = tokensRes.value.tokens;
           if (Array.isArray(tokList)) {
             tokList.forEach(t => {
-              if (!t.imageUrl && t.mint && t.mint.endsWith('pump')) {
-                t.imageUrl = `https://images.pump.fun/coin-image/${t.mint}?variant=256x256`;
-              }
               if (!tokensMap.has(t.mint)) tokensMap.set(t.mint, t);
             });
             saveCachedTokens();

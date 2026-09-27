@@ -607,20 +607,12 @@ export function createDashboardServer(port = 3005) {
     try {
       const tok = orchestrator.tokens.get(mint);
       if (tok && tok.imageUrl) return res.json({ success: true, imageUrl: tok.imageUrl });
-      if (mint && mint.endsWith('pump')) {
-        const pumpImg = `https://images.pump.fun/coin-image/${mint}?variant=256x256`;
-        if (tok) tok.imageUrl = pumpImg;
-        return res.json({ success: true, imageUrl: pumpImg });
-      }
       const meta = await fetchTokenMetadata(mint);
       if (meta && meta.imageUrl) {
         if (tok) tok.imageUrl = meta.imageUrl;
         return res.json({ success: true, imageUrl: meta.imageUrl });
       }
     } catch (e) {}
-    if (mint && mint.endsWith('pump')) {
-      return res.json({ success: true, imageUrl: `https://images.pump.fun/coin-image/${mint}?variant=256x256` });
-    }
     res.json({ success: false, imageUrl: null });
   });
 
@@ -2086,4 +2078,5 @@ if (isDirectRun) {
   const dashboard = createDashboardServer(port);
   dashboard.start();
 }
+
 
