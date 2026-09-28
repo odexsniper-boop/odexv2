@@ -251,12 +251,25 @@ class SupabaseManager {
         syncedPositions = positions.length;
       }
 
+      // 3. Sync Settings
+      let syncedSettings = 0;
+      if (typeof dbManager.getAllSettings === 'function') {
+        const settings = dbManager.getAllSettings();
+        for (const s of settings) {
+          if (s.key && s.key !== 'supabase_config') { // Avoid syncing credentials as plain text if we want, but it's fine.
+            await this.setSetting(s.key, s.value);
+            syncedSettings++;
+          }
+        }
+      }
+
       this.lastSync = new Date().toISOString();
       return {
         success: true,
         syncedTrades,
         syncedPositions,
         syncedTokens,
+        syncedSettings,
         timestamp: this.lastSync,
       };
     } catch (err) {

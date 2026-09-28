@@ -74,6 +74,112 @@
       margin-bottom: 42px;
       border-bottom: 1px solid var(--border);
     }
+
+    /* Header Global Search Bar (Compact Sleek Glassy Style) */
+    .hdr-search-container {
+      flex: 0 1 290px;
+      max-width: 290px;
+      margin: 0 14px;
+      display: flex;
+      align-items: center;
+    }
+    .hdr-search-box {
+      width: 100%;
+      height: 31px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%), rgba(10, 13, 20, 0.75);
+      backdrop-filter: blur(14px) saturate(180%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 0 8px 0 10px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hdr-search-box:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(14, 18, 28, 0.85);
+    }
+    .hdr-search-box:focus-within {
+      border-color: rgba(99, 102, 241, 0.55);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.025) 100%), rgba(15, 19, 30, 0.95);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 3px 14px rgba(0, 0, 0, 0.45), 0 0 12px rgba(99, 102, 241, 0.2);
+    }
+    .hdr-search-icon {
+      color: #64748b;
+      flex-shrink: 0;
+      width: 13px;
+      height: 13px;
+      transition: color 0.15s ease;
+    }
+    .hdr-search-box:focus-within .hdr-search-icon {
+      color: #657FFE;
+    }
+    .hdr-search-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #f1f5f9;
+      font-size: 11.5px;
+      font-family: inherit;
+      width: 100%;
+      min-width: 0;
+    }
+    .hdr-search-input::placeholder {
+      color: #64748b;
+      font-weight: 400;
+    }
+    .hdr-search-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .hdr-search-paste-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 5px;
+      padding: 1.5px 6px;
+      font-size: 10px;
+      font-weight: 500;
+      color: #94a3b8;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s ease;
+      line-height: 1.2;
+    }
+    .hdr-search-paste-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-0.5px);
+    }
+    .hdr-search-kbd {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      padding: 1.5px 5px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #64748b;
+      user-select: none;
+      line-height: 1.2;
+      font-family: inherit;
+    }
+    @media (max-width: 860px) {
+      .main-app-header {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .hdr-search-container {
+        order: 3;
+        width: 100%;
+        max-width: 100%;
+        margin: 6px 0 0 0;
+      }
+    }
     .app-brand {
       display: flex;
       align-items: center;
@@ -140,46 +246,87 @@
       background: #3f3f46;
     }
 
-    /* Top Stats Grid */
+    /* Top Stats Grid - Glassy UI & Responsive */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 14px;
       margin-bottom: 24px;
+      width: 100%;
     }
     .stat-card {
-      background: rgba(15, 16, 21, 0.45);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
+      position: relative;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.065) 0%, rgba(255, 255, 255, 0.015) 100%), rgba(13, 15, 22, 0.62);
+      backdrop-filter: blur(16px) saturate(190%);
+      -webkit-backdrop-filter: blur(16px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
       padding: 14px 16px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-      transition: border-color 0.2s ease, transform 0.15s ease, background 0.2s ease;
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.22), inset 0 0 16px 0 rgba(255, 255, 255, 0.02), 0 10px 30px -8px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.35);
+      transition: border-color 0.25s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease, box-shadow 0.25s ease;
       display: flex;
       align-items: center;
       gap: 14px;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 48%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
+      border-radius: 14px 14px 0 0;
+      pointer-events: none;
+    }
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.45) 50%, transparent 100%);
+      pointer-events: none;
     }
     .stat-card:hover {
-      border-color: rgba(255, 255, 255, 0.15);
-      background: rgba(25, 27, 36, 0.55);
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.22);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%), rgba(20, 23, 33, 0.72);
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.35), inset 0 0 24px 0 rgba(255, 255, 255, 0.04), 0 16px 36px -6px rgba(0, 0, 0, 0.65), 0 0 20px rgba(99, 102, 241, 0.12);
     }
     .stat-icon {
       width: 40px;
       height: 40px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 11px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.22), 0 4px 12px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #94a3b8;
       flex-shrink: 0;
+      transition: all 0.25s ease;
+      position: relative;
+      z-index: 1;
+    }
+    .stat-card:hover .stat-icon {
+      border-color: rgba(255, 255, 255, 0.26);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
+      color: #f1f5f9;
+      transform: scale(1.05);
     }
     .stat-content {
       display: flex;
       flex-direction: column;
       justify-content: center;
+      min-width: 0;
+      position: relative;
+      z-index: 1;
     }
     .stat-card h3 {
       margin: 0;
@@ -187,20 +334,68 @@
       font-weight: 600;
       color: #94a3b8;
       letter-spacing: 0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .stat-val {
-      font-size: 18px;
+      font-size: 19px;
       font-weight: 700;
       letter-spacing: -0.01em;
-      margin: 2px 0 2px 0;
+      margin: 2px 0;
       color: #ffffff;
       font-variant-numeric: tabular-nums lining-nums;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .stat-desc {
       font-size: 10px;
       color: #71717a;
       font-weight: 500;
       letter-spacing: -0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Responsive Breakpoints for Stats Grid */
+    @media (max-width: 1280px) {
+      .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+      }
+    }
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+      .stats-grid .stat-card:last-child {
+        grid-column: span 2;
+      }
+    }
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .stats-grid .stat-card:last-child {
+        grid-column: auto;
+      }
+      .stat-card {
+        padding: 12px 14px;
+        gap: 12px;
+      }
+      .stat-icon {
+        width: 36px;
+        height: 36px;
+      }
+      .stat-val {
+        font-size: 17px;
+      }
     }
 
     /* Crisp High-Definition Token Avatars */
@@ -847,49 +1042,82 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.86);
+      background: radial-gradient(circle at 50% 25%, rgba(20, 24, 38, 0.5) 0%, rgba(4, 5, 8, 0.76) 100%);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
       z-index: 1000;
       display: none;
       align-items: center;
       justify-content: center;
       transform: translateZ(0);
-      will-change: opacity;
+      will-change: opacity, backdrop-filter;
+      transition: backdrop-filter 0.25s ease, background 0.25s ease;
     }
     .settings-modal-backdrop.open {
       display: flex;
     }
     .settings-modal {
-      background: #111111;
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      position: relative;
+      background: linear-gradient(145deg, rgba(22, 26, 38, 0.8) 0%, rgba(10, 13, 20, 0.9) 100%);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
       width: 440px;
       max-width: 90vw;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.85);
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.28), 0 24px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(99, 102, 241, 0.08);
       padding: 24px;
       color: #ffffff;
       transform: translateZ(0);
       backface-visibility: hidden;
       contain: layout style;
+      overflow: hidden;
+      animation: modalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    /* Modern Unified Settings Modal Frame (matching sleek dialog style) */
+    .settings-modal::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.45) 50%, transparent 100%);
+      pointer-events: none;
+      z-index: 10;
+    }
+    /* Modern Unified Settings Modal Frame (matching sleek glassy dialog style) */
     .settings-modal-dialog {
-      background: #0c0f17;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 14px;
+      position: relative;
+      background: linear-gradient(145deg, rgba(22, 26, 38, 0.78) 0%, rgba(10, 13, 20, 0.88) 100%);
+      backdrop-filter: blur(32px) saturate(190%);
+      -webkit-backdrop-filter: blur(32px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
       width: 780px;
       max-width: 95vw;
       height: 600px;
       max-height: 90vh;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 24px 0 rgba(255, 255, 255, 0.02), 0 28px 70px -15px rgba(0, 0, 0, 0.9), 0 0 40px rgba(99, 102, 241, 0.08);
       display: flex;
       flex-direction: column;
       overflow: hidden;
       color: #ffffff;
-      animation: modalFadeIn 0.18s ease-out;
+      animation: modalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .settings-modal-dialog::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.5) 50%, transparent 100%);
+      pointer-events: none;
+      z-index: 10;
     }
     @keyframes modalFadeIn {
-      from { opacity: 0; transform: scale(0.98); }
-      to { opacity: 1; transform: scale(1); }
+      from { opacity: 0; transform: scale(0.97) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
     }
     .settings-topbar {
       height: 54px;
@@ -898,25 +1126,59 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      background: #0c0f17;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%), rgba(12, 15, 22, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       flex-shrink: 0;
     }
     .settings-search-wrapper {
       display: flex;
       align-items: center;
-      gap: 10px;
-      flex: 1;
+      gap: 8px;
+      width: 210px;
+      max-width: 210px;
+      height: 30px;
+      background: rgba(10, 13, 20, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 0 10px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08), 0 2px 6px rgba(0, 0, 0, 0.25);
+    }
+    .settings-search-wrapper:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+      background: rgba(14, 18, 28, 0.8);
+    }
+    .settings-search-wrapper:focus-within {
+      border-color: rgba(99, 102, 241, 0.55);
+      background: rgba(16, 21, 32, 0.92);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.18), 0 0 14px rgba(99, 102, 241, 0.2);
+    }
+    .settings-search-wrapper svg {
+      color: #71717a;
+      flex-shrink: 0;
+      width: 13px;
+      height: 13px;
+      transition: color 0.15s ease;
+    }
+    .settings-search-wrapper:focus-within svg {
+      color: #657FFE;
     }
     .settings-search-input {
-      background: transparent;
-      border: none;
-      outline: none;
-      color: #ffffff;
-      font-size: 14.5px;
+      background: transparent !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      color: #ffffff !important;
+      font-size: 12px;
       font-family: inherit;
       font-weight: 500;
-      width: 100%;
-      max-width: 340px;
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      height: 100% !important;
     }
     .settings-search-input::placeholder {
       color: #71717a;
@@ -972,7 +1234,9 @@
       border-right: 1px solid rgba(255, 255, 255, 0.08);
       padding: 16px 10px;
       overflow-y: auto;
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(6, 8, 14, 0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       display: flex;
       flex-direction: column;
       gap: 14px;
@@ -1003,11 +1267,13 @@
       font-family: inherit;
     }
     .settings-nav-item:hover {
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.06);
       color: #ffffff;
     }
     .settings-nav-item.active {
-      background: #27272a;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%), rgba(39, 39, 42, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
       color: #ffffff;
       font-weight: 600;
     }
@@ -1024,7 +1290,9 @@
     .settings-content-pane {
       padding: 24px 32px;
       overflow-y: auto;
-      background: #0c0f17;
+      background: rgba(10, 13, 20, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
     .settings-section-view {
       display: none;
@@ -1039,18 +1307,22 @@
       gap: 10px;
       padding: 14px 24px;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(0, 0, 0, 0.35);
+      background: rgba(6, 8, 14, 0.55);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       flex-shrink: 0;
     }
     /* Settings Modals Input Styling matching Date Filter */
-    .settings-modal-dialog input[type="number"] {
-      background: #080a10 !important;
+    .settings-modal-dialog input[type="number"], .settings-modal-dialog input[type="text"]:not(#settings-search-input) {
+      background: rgba(6, 8, 14, 0.6) !important;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border: 1px solid rgba(255, 255, 255, 0.14) !important;
     }
     .btn-settings-cancel {
-      background: #27272a;
+      background: rgba(255, 255, 255, 0.07);
       color: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 9999px;
       padding: 8px 20px;
       font-size: 13.5px;
@@ -1058,13 +1330,17 @@
       cursor: pointer;
       transition: all 0.15s ease;
       font-family: inherit;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15);
     }
     .btn-settings-cancel:hover {
-      background: #323236;
-      border-color: rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.22);
+      transform: translateY(-1px);
     }
     .btn-settings-save {
-      background: #ffffff;
+      background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
       color: #000000;
       border: none;
       border-radius: 9999px;
@@ -1074,11 +1350,12 @@
       cursor: pointer;
       transition: all 0.15s ease;
       font-family: inherit;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), 0 4px 14px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.2);
     }
     .btn-settings-save:hover {
-      background: #ececec;
+      background: #ffffff;
       transform: translateY(-1px);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 6px 18px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 255, 255, 0.3);
     }
     .btn-settings-save:active {
       transform: translateY(0);
@@ -1102,7 +1379,9 @@
       align-items: center;
     }
     .settings-clean-input {
-      background: #080a10;
+      background: rgba(6, 8, 14, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 8px;
       padding: 10px 14px;
@@ -1564,10 +1843,13 @@
 
     /* Advanced Dual-Month Date Range Picker Popover (AMOLED Theme) */
     .drp-trigger-btn {
-      background: #0d1017;
+      position: relative;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(13, 16, 23, 0.7);
+      backdrop-filter: blur(14px) saturate(180%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
       color: #f1f5f9;
       border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 8px;
+      border-radius: 9px;
       padding: 6px 14px;
       font-size: 12px;
       font-weight: 600;
@@ -1575,12 +1857,14 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.2), 0 4px 14px rgba(0, 0, 0, 0.45);
     }
     .drp-trigger-btn:hover {
       border-color: rgba(255, 255, 255, 0.28);
-      background: #121620;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%), rgba(18, 22, 32, 0.85);
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.32), 0 6px 18px rgba(0, 0, 0, 0.55);
+      transform: translateY(-1px);
     }
     .drp-popover {
       position: absolute;
@@ -1986,9 +2270,24 @@
           <img src="/icons/Odex.png" alt="ODEX" class="app-header-logo-img" style="height: 40px; width: auto; object-fit: contain; filter: drop-shadow(0 0 14px rgba(0, 255, 163, 0.28));" />
         </div>
 
+        <!-- Global Header Search Bar -->
+        <div class="hdr-search-container">
+          <div class="hdr-search-box">
+            <svg class="hdr-search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="hdr-global-search" class="hdr-search-input" placeholder="Search for tokens or traders..." oninput="handleGlobalSearch(this.value)" autocomplete="off" spellcheck="false" />
+            <div class="hdr-search-actions">
+              <button type="button" class="hdr-search-paste-btn" onclick="pasteToGlobalSearch(event)" title="Paste from clipboard">Paste</button>
+              <kbd class="hdr-search-kbd">/</kbd>
+            </div>
+          </div>
+        </div>
+
         <div style="display: flex; align-items: center; gap: 10px;">
           <!-- Header Deposit Button -->
-          <button class="hdr-deposit-btn" onclick="openWalletModal()" title="Deposit SOL or USDC">Deposit</button>
+          <button class="hdr-deposit-btn" onclick="openDepositModal()" title="Deposit SOL or SPL Tokens">Deposit</button>
 
           <!-- Solana Wallets Manager Pill -->
           <div class="wallet-pill-container" onclick="openWalletModal()" title="Open Solana Wallets Manager">
@@ -2204,7 +2503,7 @@
           </div>
           <div class="stat-content">
             <h3>Realized Net P&L</h3>
-            <div class="stat-val" style="color: #818cf8;" id="stat-total-pnl">+0.000 SOL</div>
+            <div class="stat-val" style="color: #657FFE;" id="stat-total-pnl">+0.000 SOL</div>
             <div class="stat-desc">Actual closed profit/loss</div>
           </div>
         </div>
@@ -2214,7 +2513,7 @@
           </div>
           <div class="stat-content">
             <h3>State Machine Status</h3>
-            <div class="stat-val" style="color: #818cf8; font-size: 16px; text-transform: none;" id="stat-pipeline">Active</div>
+            <div class="stat-val" style="color: #657FFE; font-size: 16px; text-transform: none;" id="stat-pipeline">Active</div>
             <div class="stat-desc">Level 2 Orchestrator</div>
           </div>
         </div>
@@ -2391,7 +2690,7 @@
       <!-- Top Search & Close Bar (matching screenshot) -->
       <div class="settings-topbar">
         <div class="settings-search-wrapper">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
@@ -2690,6 +2989,20 @@
               </div>
               <p class="settings-helper-text">Automatic price stop loss. Exits position if market price drops below threshold from entry.</p>
             </div>
+
+            <div class="settings-card">
+              <div class="settings-card-row">
+                <span class="settings-card-title">Daily Stop Loss (SOL) <span class="settings-info-icon" title="Max cumulative SOL loss permitted per day before auto-halting.">ⓘ</span></span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <input type="number" id="input-daily-stop" value="0.5" step="0.1" min="0.1" max="100" onchange="updateDailyStopLoss(this.value)" style="width: 80px; background: #121214; border: 1px solid rgba(255,255,255,0.12); color: #ffffff; border-radius: 6px; padding: 6px 10px; font-weight: 700; text-align: center; font-family: inherit;">
+                  <button class="btn-preset btn-preset-dailystop" onclick="setDailyStopLoss(0.5)">0.5</button>
+                  <button class="btn-preset btn-preset-dailystop" onclick="setDailyStopLoss(1.0)">1.0</button>
+                  <button class="btn-preset btn-preset-dailystop" onclick="setDailyStopLoss(2.0)">2.0</button>
+                  <button class="btn-preset btn-preset-dailystop" onclick="setDailyStopLoss(5.0)">5.0</button>
+                </div>
+              </div>
+              <p class="settings-helper-text">Max cumulative SOL loss permitted per day before auto-halting.</p>
+            </div>
           </div>
 
           <!-- SECTION: Apps & Integrations -->
@@ -2855,6 +3168,119 @@
     </div>
   </div>
 
+  <!-- Exchange / Deposit Modal (Dedicated Section matching screenshot) -->
+  <div class="settings-modal-backdrop" id="exchange-deposit-modal" onclick="onDepositBackdropClick(event)">
+    <div class="settings-modal" style="width: 410px; max-width: calc(100vw - 28px); padding: 22px 24px; border-radius: 16px; background: rgba(18, 19, 24, 0.96); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.05);">
+      
+      <!-- Modal Header -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+        <h2 style="font-size: 16px; font-weight: 700; color: #ffffff; margin: 0; letter-spacing: -0.01em;">Exchange</h2>
+        <button class="settings-modal-close" onclick="closeDepositModal()" style="font-size: 16px; padding: 4px 8px; color: #9ca3af; background: transparent; border: none; cursor: pointer; border-radius: 6px; transition: color 0.15s ease;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#9ca3af'">✕</button>
+      </div>
+
+      <!-- Segmented Pill Control (Convert, Deposit, Buy) -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; background: #131419; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 4px; gap: 4px; margin-bottom: 20px;">
+        <button type="button" class="exchange-tab-btn" onclick="setExchangeTab('convert')" id="tab-exchange-convert" style="background: transparent; color: #9ca3af; border: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s ease; font-family: inherit;">Convert</button>
+        <button type="button" class="exchange-tab-btn active" onclick="setExchangeTab('deposit')" id="tab-exchange-deposit" style="background: #2c2e3b; color: #ffffff; border: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.15s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.35); font-family: inherit;">Deposit</button>
+        <button type="button" class="exchange-tab-btn" onclick="setExchangeTab('buy')" id="tab-exchange-buy" style="background: transparent; color: #9ca3af; border: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s ease; font-family: inherit;">Buy</button>
+      </div>
+
+      <!-- Tab Content: Deposit Pane -->
+      <div id="exchange-view-deposit">
+        <!-- Selectors Row: Deposit from & Receive on -->
+        <div style="display: flex; gap: 10px; align-items: flex-end; margin-bottom: 12px;">
+          <!-- Deposit from -->
+          <div style="flex: 1;">
+            <div style="font-size: 12px; font-weight: 500; color: #9ca3af; margin-bottom: 6px;">Deposit from</div>
+            <div style="display: flex; align-items: center; justify-content: space-between; background: #16171d; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 8px 12px; user-select: none;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <img src="/icons/solana-sol-icon.svg" width="16" height="16" alt="SOL" style="display: block;">
+                <span style="font-size: 13px; font-weight: 700; color: #ffffff;">SOL</span>
+              </div>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+          </div>
+
+          <!-- Receive on -->
+          <div style="flex: 1;">
+            <div style="font-size: 12px; font-weight: 500; color: #9ca3af; margin-bottom: 6px;">Receive on</div>
+            <div style="display: flex; align-items: center; justify-content: space-between; background: #16171d; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 8px 12px; user-select: none;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <img src="/icons/solana-sol-icon.svg" width="16" height="16" alt="SOL" style="display: block;">
+                <span style="font-size: 13px; font-weight: 700; color: #ffffff;">SOL</span>
+              </div>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+          </div>
+
+          <!-- History Icon Button -->
+          <button type="button" onclick="showDepositHistory()" title="Transaction History" style="background: #16171d; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 0; cursor: pointer; color: #9ca3af; display: flex; align-items: center; justify-content: center; height: 38px; width: 38px; flex-shrink: 0; transition: all 0.15s ease;" onmouseover="this.style.borderColor='rgba(255,255,255,0.25)'; this.style.color='#ffffff';" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'; this.style.color='#9ca3af';">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <p style="font-size: 12px; color: #8e8e93; margin: 0 0 16px 0; line-height: 1.45;">Deposit SOL or SPL tokens directly to your wallet address.</p>
+
+        <!-- Deposit Address & QR Card -->
+        <div style="background: #101116; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 14px 14px; display: flex; gap: 14px; align-items: center; margin-bottom: 16px; position: relative;">
+          <!-- Left: QR code frame with Solana centered circle badge -->
+          <div style="position: relative; width: 130px; height: 130px; flex-shrink: 0; background: #ffffff; border-radius: 10px; padding: 6px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.3);">
+            <img id="exchange-deposit-qr" src="" alt="SOL Deposit QR Code" style="width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; display: block;" />
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 30px; height: 30px; background: #000000; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.6); border: 2px solid #ffffff;">
+              <img src="/icons/solana-sol-icon.svg" width="16" height="16" alt="SOL" style="display: block;">
+            </div>
+          </div>
+
+          <!-- Right: SOL Deposit Address -->
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: space-between; height: 130px; padding: 2px 0;">
+            <div>
+              <div style="font-size: 12px; color: #8e8e93; font-weight: 500; margin-bottom: 6px;">SOL Deposit Address</div>
+              <div id="exchange-deposit-addr" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace; font-size: 12.5px; line-height: 1.45; color: #ffffff; word-break: break-all; font-weight: 600; letter-spacing: 0.2px; user-select: all;">
+                Loading address...
+              </div>
+            </div>
+            <div style="display: flex; justify-content: flex-end; align-items: center;">
+              <button class="copy-btn" onclick="copyDepositAddress(event)" title="Copy Address" style="padding: 4px 7px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; color: #9ca3af; cursor: pointer; transition: all 0.15s ease;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#9ca3af'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Helper link -->
+        <div style="text-align: center; margin-bottom: 18px; font-size: 12.5px; color: #8e8e93;">
+          Don't have any SOL? <a href="https://buy.onramper.com" target="_blank" rel="noopener noreferrer" style="color: #657FFE; text-decoration: none; font-weight: 600;">Buy through Onramper.</a>
+        </div>
+
+        <!-- Primary Action Button -->
+        <button type="button" id="btn-deposit-copy-main" onclick="copyDepositAddress(event)" style="width: 100%; background: #657FFE; color: #ffffff; font-family: inherit; font-size: 14px; font-weight: 700; border: none; border-radius: 12px; padding: 13px; cursor: pointer; transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 16px rgba(101, 127, 254, 0.4); display: flex; align-items: center; justify-content: center; gap: 8px; user-select: none;" onmouseover="this.style.background='#556cf0'; this.style.boxShadow='0 6px 20px rgba(101, 127, 254, 0.55)'" onmouseout="this.style.background='#657FFE'; this.style.boxShadow='0 4px 16px rgba(101, 127, 254, 0.4)'" onmousedown="this.style.transform='scale(0.98)'" onmouseup="this.style.transform=''">
+          Copy Address
+        </button>
+      </div>
+
+      <!-- Convert View (Placeholder / Tab View) -->
+      <div id="exchange-view-convert" style="display: none; padding: 20px 0; text-align: center;">
+        <div style="font-size: 14px; font-weight: 600; color: #ffffff; margin-bottom: 6px;">Instant Token Swap</div>
+        <p style="font-size: 12px; color: #8e8e93; margin-bottom: 16px;">Swap between SOL, USDC, and trending SPL tokens directly via Jupiter DEX aggregator.</p>
+        <button type="button" onclick="setExchangeTab('deposit')" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #ffffff; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; font-family: inherit;">Back to Deposit</button>
+      </div>
+
+      <!-- Buy View (Onramper / Fiat Onramp View) -->
+      <div id="exchange-view-buy" style="display: none; padding: 20px 0; text-align: center;">
+        <div style="font-size: 14px; font-weight: 600; color: #ffffff; margin-bottom: 6px;">Buy Crypto with Fiat</div>
+        <p style="font-size: 12px; color: #8e8e93; margin-bottom: 16px;">Purchase SOL directly via Credit Card, Apple Pay, Google Pay, or SEPA bank transfer.</p>
+        <a href="https://buy.onramper.com" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: #657FFE; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; box-shadow: 0 4px 14px rgba(101,127,254,0.4); font-family: inherit;">Open Onramper Portal</a>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Solana Wallets Manager Modal Section -->
   <div class="settings-modal-backdrop" id="wallet-modal" onclick="onWalletBackdropClick(event)">
     <div class="settings-modal" style="width: 522px; max-width: calc(100vw - 28px); padding: 18px 20px;">
@@ -2880,6 +3306,10 @@
         <div style="display: flex; align-items: center; justify-content: space-between; background: #111111; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 8px 12px; margin-bottom: 10px;">
           <span style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 500; color: #d4d4d8; letter-spacing: 0.3px; -webkit-font-smoothing: antialiased;" id="wm-active-addr">Connecting to wallet...</span>
           <div style="display: flex; gap: 6px;">
+            <button class="copy-btn" onclick="closeWalletModal(); openDepositModal();" title="Deposit SOL or SPL Tokens" style="padding: 3px 8px; display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: #ffffff; background: #657FFE; border: 1px solid #657FFE; border-radius: 6px; cursor: pointer;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+              Deposit
+            </button>
             <button class="copy-btn" onclick="openSendSolModal(activeWalletPubkey)" title="Send SOL to another wallet" style="padding: 3px 8px; display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: #657fff; background: rgba(101, 127, 255, 0.12); border: 1px solid rgba(101, 127, 255, 0.3); border-radius: 6px; cursor: pointer;">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
               Send SOL
@@ -3904,6 +4334,48 @@
       });
     }, 1000);
 
+    let globalSearchQuery = '';
+    function handleGlobalSearch(val) {
+      globalSearchQuery = (val || '').trim();
+      render();
+    }
+
+    async function pasteToGlobalSearch(e) {
+      if (e) e.stopPropagation();
+      try {
+        const text = await navigator.clipboard.readText();
+        if (text) {
+          const input = document.getElementById('hdr-global-search');
+          if (input) {
+            input.value = text.trim();
+            handleGlobalSearch(text.trim());
+            input.focus();
+          }
+        }
+      } catch (err) {
+        console.warn('[SEARCH] Clipboard access not allowed:', err);
+      }
+    }
+
+    // Global keyboard shortcut '/' to quickly focus the header search bar
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) {
+        e.preventDefault();
+        const input = document.getElementById('hdr-global-search');
+        if (input) {
+          input.focus();
+          input.select();
+        }
+      } else if (e.key === 'Escape' && document.activeElement?.id === 'hdr-global-search') {
+        const input = document.getElementById('hdr-global-search');
+        if (input) {
+          input.value = '';
+          handleGlobalSearch('');
+          input.blur();
+        }
+      }
+    });
+
     let renderPending = false;
     let lastRenderTime = 0;
     const RENDER_THROTTLE_MS = 60;
@@ -3983,9 +4455,21 @@
         }
       }
 
+      // Filter by global search query (symbol, name, mint, creator)
+      if (globalSearchQuery) {
+        const q = globalSearchQuery.toLowerCase();
+        filtered = filtered.filter(t => 
+          (t.symbol && t.symbol.toLowerCase().includes(q)) ||
+          (t.name && t.name.toLowerCase().includes(q)) ||
+          (t.mint && t.mint.toLowerCase().includes(q)) ||
+          (t.creator && String(t.creator).toLowerCase().includes(q))
+        );
+      }
+
       if (filtered.length === 0) {
         if (!tbody.querySelector('.empty-state-row')) {
-          tbody.innerHTML = '<tr class="empty-state-row"><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">No tokens in this state</td></tr>';
+          const emptyMsg = globalSearchQuery ? `No tokens matching "${globalSearchQuery.replace(/"/g, '&quot;')}"` : 'No tokens in this state';
+          tbody.innerHTML = `<tr class="empty-state-row"><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">${emptyMsg}</td></tr>`;
         }
         return;
       }
@@ -4739,7 +5223,7 @@
         if (pnlEl) {
           pnlEl.innerText = '+0.000 SOL';
           pnlEl.className = 'stat-val';
-          pnlEl.style.color = '';
+          pnlEl.style.color = '#657FFE';
         }
         if (currentFilter === 'closed') render();
         return;
@@ -4755,7 +5239,7 @@
       const totalPnl = filteredTrades.reduce((acc, t) => acc + (t.netProfitSol || t.profitSol || 0), 0);
       if (pnlEl) {
         pnlEl.innerText = (totalPnl >= 0 ? '+' : '') + totalPnl.toFixed(3) + ' SOL';
-        pnlEl.style.color = totalPnl >= 0 ? 'var(--green-primary)' : 'var(--red-primary)';
+        pnlEl.style.color = totalPnl >= 0 ? '#657FFE' : 'var(--red-primary)';
       }
       if (currentFilter === 'closed') render();
     }
@@ -5109,8 +5593,10 @@
       const v = parseFloat(val);
       if (!isNaN(v) && v > 0) {
         currentDailyStopLoss = v;
-        const el = document.getElementById('trade-input-daily-stop-loss');
-        if (el) el.value = v;
+        const el1 = document.getElementById('trade-input-daily-stop-loss');
+        const el2 = document.getElementById('input-daily-stop');
+        if (el1) el1.value = v;
+        if (el2) el2.value = v;
       }
     }
     function updateDailyStopLoss(val) { syncDailyStopLossInput(val); }
@@ -5827,6 +6313,8 @@
         if (!isNaN(priorityFeeVal)) updatePriorityFee(priorityFeeVal);
         const stopLossVal = parseFloat(document.getElementById('input-stop-loss')?.value);
         if (!isNaN(stopLossVal)) updateStopLoss(stopLossVal);
+        const dailyStopLossVal = parseFloat(document.getElementById('input-daily-stop')?.value);
+        if (!isNaN(dailyStopLossVal)) updateDailyStopLoss(dailyStopLossVal);
         updatedLabels.push('Trading Parameter');
 
         try {
@@ -5839,6 +6327,7 @@
               gasTipSol: currentGasTip,
               priorityFeeSol: currentPriorityFee,
               stopLossPercent: currentStopLoss,
+              dailyStopLossSol: currentDailyStopLoss,
               tradingMode: isPaperModeEnabled ? 'PAPER' : 'LIVE'
             })
           });
@@ -5849,6 +6338,7 @@
               gasTipSol: currentGasTip,
               priorityFeeSol: currentPriorityFee,
               stopLossPercent: currentStopLoss,
+              dailyStopLossSol: currentDailyStopLoss,
               isPaperModeEnabled
             }));
           } catch (e) {}
@@ -6181,6 +6671,108 @@
         closeAvatarMenu();
       }
     });
+
+    /* Dedicated Exchange & Deposit Section (matching user style) */
+    function openDepositModal() {
+      closeWalletModal();
+      const modal = document.getElementById('exchange-deposit-modal');
+      if (modal) {
+        modal.classList.add('open');
+        updateDepositModalUI();
+        setExchangeTab('deposit');
+      }
+    }
+
+    function closeDepositModal() {
+      const modal = document.getElementById('exchange-deposit-modal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function onDepositBackdropClick(e) {
+      if (e.target && e.target.id === 'exchange-deposit-modal') {
+        closeDepositModal();
+      }
+    }
+
+    function updateDepositModalUI() {
+      const addr = activeWalletPubkey || (managedWallets && managedWallets[0] && managedWallets[0].address) || '';
+      const addrEl = document.getElementById('exchange-deposit-addr');
+      const qrEl = document.getElementById('exchange-deposit-qr');
+      if (addrEl) {
+        addrEl.innerText = addr || 'No active wallet connected';
+      }
+      if (qrEl) {
+        if (addr) {
+          qrEl.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(addr)}&margin=4`;
+        } else {
+          qrEl.src = '';
+        }
+      }
+    }
+
+    async function copyDepositAddress(e) {
+      if (e && e.stopPropagation) e.stopPropagation();
+      const addr = activeWalletPubkey || (managedWallets && managedWallets[0] && managedWallets[0].address) || '';
+      if (!addr) {
+        alert('No active wallet address available to copy.');
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(addr);
+      } catch (err) {
+        const ta = document.createElement('textarea');
+        ta.value = addr;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      const mainBtn = document.getElementById('btn-deposit-copy-main');
+      if (mainBtn) {
+        const orig = mainBtn.innerHTML;
+        mainBtn.innerHTML = '✓ Address Copied!';
+        mainBtn.style.background = '#22c55e';
+        setTimeout(() => {
+          mainBtn.innerHTML = orig;
+          mainBtn.style.background = '#657FFE';
+        }, 1800);
+      }
+      appendLog(`📋 Copied SOL deposit address to clipboard: ${addr.slice(0, 6)}...${addr.slice(-6)}`, 'var(--green-primary)');
+    }
+
+    function setExchangeTab(tab) {
+      ['convert', 'deposit', 'buy'].forEach(t => {
+        const btn = document.getElementById(`tab-exchange-${t}`);
+        const view = document.getElementById(`exchange-view-${t}`);
+        if (btn) {
+          if (t === tab) {
+            btn.classList.add('active');
+            btn.style.background = '#2c2e3b';
+            btn.style.color = '#ffffff';
+            btn.style.fontWeight = '700';
+            btn.style.boxShadow = '0 2px 6px rgba(0,0,0,0.35)';
+          } else {
+            btn.classList.remove('active');
+            btn.style.background = 'transparent';
+            btn.style.color = '#9ca3af';
+            btn.style.fontWeight = '600';
+            btn.style.boxShadow = 'none';
+          }
+        }
+        if (view) {
+          view.style.display = (t === tab) ? 'block' : 'none';
+        }
+      });
+    }
+
+    function showDepositHistory() {
+      const addr = activeWalletPubkey || (managedWallets && managedWallets[0] && managedWallets[0].address) || '';
+      if (addr) {
+        window.open(`https://solscan.io/account/${addr}#splTransfers`, '_blank');
+      } else {
+        alert('No active wallet found to view transaction history.');
+      }
+    }
 
     /* Solana Wallets Manager */
     // Note: managedWallets and activeWalletPubkey are initialized at the top of script for instant sync hydration
@@ -6678,6 +7270,7 @@
 
       // Instant UI list re-render (0ms latency)
       renderWallets();
+      updateDepositModalUI();
     }
 
     async function activateWallet(targetAddress) {

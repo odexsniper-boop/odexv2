@@ -417,6 +417,19 @@ class DatabaseManager {
     }
   }
 
+  getAllSettings() {
+    if (!this.connected || !this.db) return [];
+    try {
+      const rows = this.db.prepare('SELECT key, value FROM system_settings').all();
+      return rows.map(r => ({
+        key: r.key,
+        value: JSON.parse(r.value)
+      }));
+    } catch {
+      return [];
+    }
+  }
+
   setSetting(key, value) {
     if (key) {
       supabaseManager.setSetting(key, value).catch((e) => { log(`[SUPABASE WARN] setSetting: ${e.message}`); });

@@ -197,7 +197,34 @@ export async function createDashboardServer(port = 3005) {
       const { data: positions } = await supabaseManager.client.from('positions').select('*');
       if (positions) dbManager.savePositions(positions.map(p => p.raw_data || p));
       
-      log(`[SYNC] Restored ${trades?.length || 0} trades and ${positions?.length || 0} positions.`);
+      const { data: settings } = await supabaseManager.client.from('system_settings').select('*');
+      if (settings) {
+        settings.forEach(s => {
+          if (s.key && s.value) {
+            try {
+              dbManager.db.prepare(`
+                INSERT INTO system_settings (key, value, updated_at)
+                VALUES (?, ?, ?)
+                ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at
+              `).run(s.key, typeof s.value === 'string' ? s.value : JSON.stringify(s.value), new Date().toISOString());
+            } catch (err) {}
+          }
+        });
+      }
+
+      const { data: wallets } = await supabaseManager.client.from('user_wallets').select('*');
+      if (wallets && wallets.length > 0) {
+        // If there are user wallets, make the first active one (or the first one) the global active_wallet
+        const activeW = wallets.find(w => w.is_active) || wallets[0];
+        if (activeW) {
+          dbManager.setSetting('active_wallet', { 
+            pubkey: activeW.public_key, 
+            privateKey: activeW.encrypted_secret || activeW.privateKey || null,
+          });
+        }
+      }
+
+      log(`[SYNC] Restored ${trades?.length || 0} trades, ${positions?.length || 0} positions, and ${settings?.length || 0} settings.`);
     } catch (e) {
       log(`[SYNC WARN] Failed to restore from Supabase: ${e.message}`);
     }
@@ -985,7 +1012,7 @@ export async function createDashboardServer(port = 3005) {
 
   app.post('/api/update-settings', async (req, res) => {
     const ctx = await getUserContext(req);
-    const { buySizeSol: newSize, slippagePercent, priorityFeeSol, gasTipSol, isPaperTrading, tradingMode, stopLossPercent } = req.body;
+    const { buySizeSol: newSize, slippagePercent, priorityFeeSol, gasTipSol, isPaperTrading, tradingMode, stopLossPercent, dailyStopLossSol } = req.body;
     let updated = false;
 
     const paperToggled = isPaperTrading !== undefined ? isPaperTrading : (tradingMode !== undefined ? tradingMode === 'PAPER' : undefined);
@@ -1062,6 +1089,13 @@ export async function createDashboardServer(port = 3005) {
       if (positionManager && positionManager.setStopLoss) {
         positionManager.setStopLoss(slPct);
       }
+      updated = true;
+    }
+
+    if (dailyStopLossSol !== undefined && !isNaN(Number(dailyStopLossSol)) && Number(dailyStopLossSol) > 0) {
+      const dsl = Number(dailyStopLossSol);
+      ctx.tradingSettings.dailyStopLossSol = dsl;
+      tradingSettings.dailyStopLossSol = dsl;
       updated = true;
     }
 
