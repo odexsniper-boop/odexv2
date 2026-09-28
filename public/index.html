@@ -4305,7 +4305,10 @@
       if (!timestamp || isNaN(timestamp)) return '';
       const adjustedNow = now - serverClockOffset;
       let diffSec = Math.floor((adjustedNow - timestamp) / 1000);
-      if (diffSec < 1) diffSec = 1;
+      
+      // Start the timer at 12s instead of 1s for new tokens
+      if (diffSec < 12) diffSec = 12;
+      
       if (diffSec < 60) return `${diffSec}s`;
       const diffMin = Math.floor(diffSec / 60);
       if (diffMin < 60) return `${diffMin}m`;
