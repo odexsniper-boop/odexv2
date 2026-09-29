@@ -1,56 +1,40 @@
 {
-  "positions": [
+  "positions": [],
+  "tradeHistory": [
     {
       "mint": "7sqppcWuBAWMDKy47SkPmVCpn4zJAq4rNs7pwDjvpump",
       "name": "Super Doomer",
       "symbol": "SD",
       "imageUrl": "",
-      "creator": "w9chLfJbiZoFzSibbTTpGo3HPuwijRUXFa1RNHdSJEv",
       "devPercent": 0.035307967414399996,
       "bundledBuysCount": 27,
       "entryScore": 71,
       "entryPriceSol": 2.7904496718574216e-7,
-      "currentPriceSol": 3.8555291247373693e-7,
-      "peakPriceSol": 3.8555291247373693e-7,
+      "exitPriceSol": 3.8555291247373693e-7,
       "initialSolSpent": 0.50200499996,
       "actualBuyCost": 0.50200499996,
-      "buyTransactionFees": 0.000005,
-      "buyPriorityFee": 0.00099999996,
-      "buyJitoTip": 0.001,
-      "tokensHeldRaw": "882433245956",
-      "initialTokensRaw": "1764866491912",
-      "tokensHeldDisplay": 882433.245956,
-      "expectedTokensOut": 1782422.54144,
-      "actualTokensReceived": 1764866.491912,
-      "txHash": "sim_buy_1790639910421_7sqppcWu",
-      "route": "JITO:SENDTRANSACTION",
-      "openedAt": "2026-09-28T23:58:30.421Z",
-      "lastUpdated": "2026-09-28T23:58:58.010Z",
-      "openedTimeMs": 1790639910422,
-      "pricePnlPercent": 38.16873902516913,
-      "priceChangePercent": 38.16873902516913,
+      "actualGrossSellProceeds": 0.33579695061000003,
+      "actualTransactionFees": 0.000005,
+      "actualNetSellProceeds": 0.6679172346200001,
+      "solReceived": 0.6679172346200001,
       "grossPnlSol": 0.17631351699999998,
       "grossPnlPercent": 35.26235077649223,
       "estimatedFeesSol": 0.01060651843,
-      "netPnlSol": 0.16571199856999996,
-      "netPnlPercent": 33.0100294983524,
-      "unrealizedPnlPercent": 33.0100294983524,
-      "unrealizedPnlSol": 0.16571199856999996,
-      "realizedSolGained": 0.33395861731000004,
-      "trailingActive": true,
-      "hitTiers": [
-        0
-      ],
-      "status": "HOLDING",
-      "stopLossPercent": -16,
-      "lastKnownVirtualSol": "111404435570",
-      "lastKnownVirtualTok": "288947202746364",
-      "priceRatio": 1.3816873902516913,
-      "grossSol": 0.676318517,
-      "isExiting": false
-    }
-  ],
-  "tradeHistory": [
+      "pricePnlPercent": 38.16873902516913,
+      "finalPricePnlPercent": 38.16873902516913,
+      "netProfitSol": 0.16591223466000005,
+      "profitSol": 0.16591223466000005,
+      "pnlSol": 0.16591223466000005,
+      "netPnlSol": 0.16591223466000005,
+      "netPnlPercent": 33.0499167684027,
+      "finalPnlPercent": 33.0499167684027,
+      "pnlPercent": 33.0499167684027,
+      "status": "SOLD",
+      "reason": "STALE_TIMEOUT",
+      "txHash": "sim_sell_1790640217903_7sqppcWu",
+      "openedAt": "2026-09-28T23:58:30.421Z",
+      "closedAt": "2026-09-29T00:03:37.904Z"
+    },
     {
       "mint": "DL22mtxuvV3hHTgYNVqShVYBBhhogK6VvDa6eHx5pump",
       "name": "Fund a Normie",
@@ -2657,5 +2641,5 @@
     }
   ],
   "vetoCount": 0,
-  "lastSaved": "2026-09-28T23:58:58.817Z"
+  "lastSaved": "2026-09-29T00:03:37.904Z"
 }
