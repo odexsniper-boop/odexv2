@@ -21,6 +21,7 @@ import { TradeStorage } from './storage/tradeStorage.js';
 import { dbManager, supabaseManager } from './storage/db.js';
 import { getBondingCurvePDA } from './pumpfun.js';
 import { fetchTokenMetadata } from './engines/metadataFetcher.js';
+import { TokenState, TokenRecord } from './engines/stateMachine.js';
 
 
 function hashPassword(password, salt = crypto.randomBytes(16).toString('hex')) {
@@ -198,15 +199,25 @@ export async function createDashboardServer(port = 3005) {
   });
 
   // Apply fix: Restore data from Supabase on real deploy (ephemeral environments) before loading state
-  const stats = dbManager.getStats();
-  if (stats.tradesCount === 0 && stats.positionsCount === 0 && supabaseManager.connected) {
+  if (supabaseManager.connected) {
     try {
-      log('[SYNC] Local database empty. Attempting to restore from Supabase...');
-      const { data: trades } = await supabaseManager.client.from('trades').select('*').order('id', { ascending: true });
-      if (trades) trades.forEach(t => dbManager.saveTrade(t.raw_data || t));
+      log('[SYNC] Checking Supabase for remote trades and positions...');
+      const { data: trades, error: tErr } = await supabaseManager.client.from('trades').select('*').order('id', { ascending: true });
+      if (tErr) {
+        throw new Error(`Trades fetch failed: ${tErr.message}`);
+      }
+      if (trades && trades.length > 0) {
+        log(`[SYNC] Restoring ${trades.length} trades from Supabase...`);
+        trades.forEach(t => dbManager.saveTrade(t.raw_data || t, false));
+      }
       
-      const { data: positions } = await supabaseManager.client.from('positions').select('*');
-      if (positions) dbManager.savePositions(positions.map(p => p.raw_data || p));
+      const { data: positions, error: pErr } = await supabaseManager.client.from('positions').select('*');
+      if (pErr) {
+        log(`[SYNC WARN] Failed to fetch positions from Supabase: ${pErr.message}`);
+      } else if (positions && positions.length > 0) {
+        log(`[SYNC] Restoring ${positions.length} active positions from Supabase...`);
+        dbManager.savePositions(positions.map(p => p.raw_data || p));
+      }
       
       const { data: settings } = await supabaseManager.client.from('system_settings').select('*');
       if (settings) {
@@ -235,7 +246,7 @@ export async function createDashboardServer(port = 3005) {
         }
       }
 
-      log(`[SYNC] Restored ${trades?.length || 0} trades, ${positions?.length || 0} positions, and ${settings?.length || 0} settings.`);
+      log(`[SYNC] Supabase restore completed (${trades?.length || 0} trades, ${positions?.length || 0} positions).`);
     } catch (e) {
       log(`[SYNC WARN] Failed to restore from Supabase: ${e.message}`);
     }
@@ -276,9 +287,18 @@ export async function createDashboardServer(port = 3005) {
   // Link historical closed trades to orchestrator tokens if present
   if (positionManager.tradeHistory && positionManager.tradeHistory.length > 0) {
     for (const h of positionManager.tradeHistory) {
-      const record = orchestrator.tokens.get(h.mint);
-      if (record) {
+      let record = orchestrator.tokens.get(h.mint);
+      if (!record) {
+        record = new TokenRecord(h.mint);
+        record.name = h.name || 'Historical Token';
+        record.symbol = h.symbol || 'HIST';
+        record.imageUrl = h.imageUrl || null;
+        record.state = TokenState.CLOSED;
         record.closedData = h;
+        orchestrator.tokens.set(h.mint, record);
+      } else {
+        record.closedData = h;
+        record.state = TokenState.CLOSED;
       }
     }
   }
@@ -582,6 +602,33 @@ export async function createDashboardServer(port = 3005) {
   eventBus.on('POSITION_CLOSED', (data) => {
     orchestrator.handlePositionClosed(data);
     dbManager.saveTrade(data);
+
+    // Update all active user instances in userBotRegistry
+    for (const [uid, uBot] of userBotRegistry.entries()) {
+      if (uBot.positionManager) {
+        if (uBot.positionManager.positions.has(data.mint)) {
+          uBot.positionManager.positions.delete(data.mint);
+        }
+        if (!uBot.positionManager.tradeHistory) {
+          uBot.positionManager.tradeHistory = [];
+        }
+        const exists = uBot.positionManager.tradeHistory.some(t => t.mint === data.mint && (t.closedAt === data.closedAt || t.closed_at === data.closed_at));
+        if (!exists) {
+          uBot.positionManager.tradeHistory.unshift(data);
+        }
+      }
+      if (supabaseManager.connected) {
+        supabaseManager.saveUserTrade(uid, data).catch((e) => {
+          log(`[SUPABASE WARN] saveUserTrade failed: ${e.message}`);
+        });
+        if (uBot.positionManager) {
+          supabaseManager.saveUserPositions(uid, Array.from(uBot.positionManager.positions.values())).catch((e) => {
+            log(`[SUPABASE WARN] saveUserPositions failed: ${e.message}`);
+          });
+        }
+      }
+    }
+
     broadcast('POSITION_CLOSED', data);
   });
 

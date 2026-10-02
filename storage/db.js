@@ -193,8 +193,8 @@ class DatabaseManager {
     }
   }
 
-  saveTrade(trade) {
-    if (trade) {
+  saveTrade(trade, syncRemote = true) {
+    if (trade && syncRemote) {
       supabaseManager.saveTrade(trade).catch((e) => { log(`[SUPABASE WARN] saveTrade: ${e.message}`); });
     }
     if (!this.connected || !this.db) return;

@@ -664,19 +664,9 @@ export class Orchestrator {
           record: this.serializeToken(record),
         });
       }
-    }
+  }
 
-    handlePositionClosed(tradeRecord) {
-      if (!tradeRecord || !tradeRecord.mint) return;
-      const record = this.tokens.get(tradeRecord.mint);
-      if (record) {
-        record.transitionTo(TokenState.CLOSED, tradeRecord.reason);
-        this.tokens.delete(tradeRecord.mint);
-        this.candleBuilders.delete(tradeRecord.mint);
-      }
-    }
-
-    serializeToken(record) {
+  serializeToken(record) {
     return {
       mint: record.mint,
       name: record.name,

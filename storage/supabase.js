@@ -5,7 +5,7 @@ class SupabaseManager {
   constructor() {
     this.client = null;
     this.url = process.env.SUPABASE_URL || '';
-    this.key = process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+    this.key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || '';
     this.connected = false;
     this.lastSync = null;
     this.lastError = null;
@@ -16,7 +16,7 @@ class SupabaseManager {
     if (customUrl !== null && customUrl !== undefined) this.url = customUrl;
     if (customKey !== null && customKey !== undefined) this.key = customKey;
 
-    if (!this.url || !this.key) {
+    if (!this.url || !this.key || this.url.includes('your-project.supabase.co') || this.key.includes('your_supabase_')) {
       this.connected = false;
       this.client = null;
       log('[SUPABASE] Operating in local SQLite mode (Supabase ready upon config).');
@@ -69,7 +69,7 @@ class SupabaseManager {
 
       const { error } = await this.client
         .from('trades')
-        .insert(payload);
+        .upsert(payload, { onConflict: 'mint,closed_at' });
 
       if (error) {
         log(`[SUPABASE WARN] saveTrade error: ${error.message}`);
@@ -524,7 +524,11 @@ class SupabaseManager {
         closed_at: trade.closedAt || trade.closed_at || new Date().toISOString(),
         raw_data: trade,
       };
-      await this.client.from('user_trades').insert(payload);
+
+      const { error } = await this.client.from('user_trades').insert(payload);
+      if (error) {
+        log(`[SUPABASE WARN] saveUserTrade error: ${error.message}`);
+      }
     } catch (err) {
       log(`[SUPABASE ERROR] saveUserTrade: ${err.message}`);
     }
