@@ -86,7 +86,18 @@ export async function createDashboardServer(port = 3005) {
     res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
     next();
   });
-  app.use(express.static(path.join(__dirname, 'public')));
+
+  // Home Page Route: Use login.html as the primary home page
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+  });
+
+  // Dedicated Trading Dashboard Route
+  app.get('/dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  });
+
+  app.use(express.static(path.join(__dirname, 'public'), { index: false }));
 
   // Multi-User JWT Authentication Middleware (Non-blocking / Backward Compatible)
   app.use(async (req, res, next) => {

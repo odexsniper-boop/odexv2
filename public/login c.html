@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - ODEX Sniper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/icons/Fav.png">
+  <link rel="shortcut icon" href="/icons/Fav.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #06070a;
+      --card-bg: #13141a; /* Exact default color of login section */
+      --border: rgba(255, 255, 255, 0.09);
+      --primary: #4768fb;
+      --primary-hover: #3b5ce8;
+      --text: #ffffff;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Blurred Ambient Background Layer */
+    .bg-blur-wrapper {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+      filter: blur(14px);
+      -webkit-filter: blur(14px);
+      transform: scale(1.05);
+    }
+
+    .bg-glow {
+      position: absolute;
+      width: 650px;
+      height: 650px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(71, 104, 251, 0.16) 0%, rgba(71, 104, 251, 0.03) 45%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Blurred Background Typography */
+    .bg-watermark-top {
+      position: absolute;
+      top: 7vh;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: clamp(22px, 3.2vw, 42px);
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.18);
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .bg-watermark-bottom {
+      position: absolute;
+      bottom: 8vh;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: clamp(24px, 3.8vw, 50px);
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.12);
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    /* Additional subtle backdrop blur */
+    .backdrop-overlay {
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: rgba(6, 7, 10, 0.45);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Centered Login PIN Card (Matches Image 1 layout & Image 2 default color) */
+    .login-modal-card {
+      position: relative;
+      z-index: 10;
+      width: 370px;
+      max-width: 90vw;
+      background: var(--card-bg); /* #13141a - default login section color */
+      border: 1px solid var(--border);
+      border-radius: 42px; /* Smooth rounded shape as in Image 1 */
+      padding: 58px 32px 46px 32px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), 0 0 1px rgba(255, 255, 255, 0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: default;
+    }
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.96) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* Logo as shown in Image 1 */
+    .login-logo-container {
+      margin-bottom: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-logo {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.25));
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* 10 PIN Circles Container */
+    .pin-display-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      cursor: text;
+      padding: 8px 4px;
+      margin-bottom: 34px;
+      user-select: none;
+    }
+
+    /* Individual PIN Circle (Empty vs Filled) */
+    .pin-circle {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.45);
+      background: transparent;
+      transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+      box-sizing: border-box;
+    }
+    .pin-circle.filled {
+      background: #ffffff;
+      border-color: #ffffff;
+      box-shadow: 0 0 7px rgba(255, 255, 255, 0.85);
+      transform: scale(1.05);
+    }
+    .pin-circle.success {
+      background: #10b981 !important;
+      border-color: #10b981 !important;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.9) !important;
+    }
+
+    /* Error Shake Animation */
+    .pin-display-row.shake {
+      animation: shakeCircles 0.42s ease-in-out;
+    }
+    .pin-display-row.error .pin-circle {
+      border-color: #ef4444;
+      background: #ef4444;
+      box-shadow: 0 0 9px rgba(239, 68, 68, 0.85);
+    }
+    @keyframes shakeCircles {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-9px); }
+      40% { transform: translateX(9px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+
+    /* Pill Button (Image 1 style) */
+    .btn-login-pill {
+      background: var(--primary); /* #4768fb - default color */
+      color: #ffffff;
+      border: none;
+      border-radius: 9999px;
+      padding: 8.5px 36px;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(71, 104, 251, 0.35);
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      outline: none;
+    }
+    .btn-login-pill:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 6px 20px rgba(71, 104, 251, 0.5);
+      transform: translateY(-1px);
+    }
+    .btn-login-pill:active {
+      transform: translateY(0);
+    }
+    .btn-login-pill:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Hidden input to capture keystrokes effortlessly */
+    #hidden-pin-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      left: -9999px;
+      top: -9999px;
+      width: 1px;
+      height: 1px;
+    }
+
+    /* Status Toast */
+    .toast-msg {
+      position: fixed;
+      bottom: 26px;
+      left: 50%;
+      transform: translateX(-50%) translateY(50px);
+      background: #191b24;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.7);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 200;
+    }
+    .toast-msg.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Blurred Ambient Layer with Background Watermarks -->
+  <div class="bg-blur-wrapper">
+    <div class="bg-glow"></div>
+    <div class="bg-watermark-top">Axiom is the only trading platform you'll ever need.</div>
+    <div class="bg-watermark-bottom">The only trading platform you need</div>
+  </div>
+
+  <!-- Backdrop blur overlay -->
+  <div class="backdrop-overlay"></div>
+
+  <!-- Hidden input capturing keystrokes -->
+  <input
+    type="password"
+    id="hidden-pin-input"
+    maxlength="10"
+    inputmode="numeric"
+    pattern="[0-9]*"
+    autocomplete="off"
+    autofocus
+  />
+
+  <!-- Main Login Card (Image 1 Style with Default Card Color) -->
+  <div class="login-modal-card" id="login-card" onclick="focusPinInput()">
+    <!-- Top Logo -->
+    <div class="login-logo-container">
+      <img src="/icons/Fav.png" alt="Viking Logo" class="login-logo" />
+    </div>
+
+    <!-- 10 PIN Circles -->
+    <div class="pin-display-row" id="pin-display-row" title="Type 10-digit PIN">
+      <div class="pin-circle" data-idx="0"></div>
+      <div class="pin-circle" data-idx="1"></div>
+      <div class="pin-circle" data-idx="2"></div>
+      <div class="pin-circle" data-idx="3"></div>
+      <div class="pin-circle" data-idx="4"></div>
+      <div class="pin-circle" data-idx="5"></div>
+      <div class="pin-circle" data-idx="6"></div>
+      <div class="pin-circle" data-idx="7"></div>
+      <div class="pin-circle" data-idx="8"></div>
+      <div class="pin-circle" data-idx="9"></div>
+    </div>
+
+    <!-- Pill Button -->
+    <button type="button" class="btn-login-pill" id="btn-login" onclick="submitPin()">
+      LOG IN
+    </button>
+  </div>
+
+  <!-- Status Toast -->
+  <div class="toast-msg" id="toast-msg"></div>
+
+  <script>
+    const input = document.getElementById('hidden-pin-input');
+    const displayRow = document.getElementById('pin-display-row');
+    const circles = Array.from(document.querySelectorAll('.pin-circle'));
+    const btnLogin = document.getElementById('btn-login');
+    let isSubmitting = false;
+
+    function focusPinInput() {
+      if (input) {
+        input.focus();
+      }
+    }
+
+    function showToast(msg, duration = 2800) {
+      const toast = document.getElementById('toast-msg');
+      if (!toast) return;
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), duration);
+    }
+
+    function updateCircles() {
+      const val = input.value || '';
+      circles.forEach((circle, idx) => {
+        if (idx < val.length) {
+          circle.classList.add('filled');
+        } else {
+          circle.classList.remove('filled');
+        }
+      });
+    }
+
+    input.addEventListener('input', (e) => {
+      input.value = input.value.replace(/\D/g, '').slice(0, 10);
+      updateCircles();
+
+      if (displayRow.classList.contains('error')) {
+        displayRow.classList.remove('error', 'shake');
+      }
+
+      if (input.value.length === 10 && !isSubmitting) {
+        setTimeout(submitPin, 120);
+      }
+    });
+
+    document.addEventListener('click', () => {
+      focusPinInput();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        submitPin();
+      }
+    });
+
+    async function submitPin() {
+      const pin = (input.value || '').trim();
+
+      if (pin.length !== 10) {
+        triggerError('Please enter all 10 digits of your PIN');
+        return;
+      }
+
+      if (isSubmitting) return;
+      isSubmitting = true;
+      btnLogin.disabled = true;
+
+      try {
+        const res = await fetch('/api/auth/pin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pin })
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok && data.success) {
+          circles.forEach(c => c.classList.add('success'));
+          const userObj = data.user || { username: 'Odex', email: 'odexsniper@gmail.com' };
+          localStorage.setItem('odex_user', JSON.stringify(userObj));
+          showToast(`✅ Welcome back, ${userObj.username || 'Trader'}!`);
+
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 450);
+        } else {
+          triggerError(data.error || 'Incorrect 10-digit PIN code');
+        }
+      } catch (err) {
+        triggerError('Network error: ' + err.message);
+      } finally {
+        isSubmitting = false;
+        btnLogin.disabled = false;
+      }
+    }
+
+    function triggerError(msg) {
+      displayRow.classList.remove('shake');
+      void displayRow.offsetWidth;
+      displayRow.classList.add('error', 'shake');
+
+      if (navigator.vibrate) {
+        try { navigator.vibrate(200); } catch (e) { console.error('[AUTO-CAUGHT ERROR]', e.message || e); }
+      }
+
+      showToast(`❌ ${msg}`);
+
+      setTimeout(() => {
+        input.value = '';
+        updateCircles();
+        displayRow.classList.remove('error', 'shake');
+        focusPinInput();
+      }, 750);
+    }
+
+    window.addEventListener('load', () => {
+      focusPinInput();
+    });
+  </script>
+</body>
+</html>
