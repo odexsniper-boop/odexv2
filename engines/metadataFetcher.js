@@ -19,33 +19,69 @@ export function normalizeIpfsUrl(url) {
 /**
  * Fetches real token name, symbol, and image using pump.fun and DexScreener with fast timeouts
  */
-export async function fetchTokenMetadata(mintAddress, fallbackName = null, fallbackSymbol = null) {
+export async function fetchTokenMetadata(mintAddress, fallbackName = null, fallbackSymbol = null, metadataUri = null) {
   if (metadataCache.has(mintAddress)) {
     const cached = metadataCache.get(mintAddress);
-    if (cached && cached.imageUrl && cached.name && cached.name !== 'Unknown Token' && cached.name !== 'Resolving...') return cached;
+    if (cached && (cached.twitter || cached.telegram || cached.website || cached.description) && cached.imageUrl) return cached;
   }
 
-  // 1. Query pump.fun API first for immediate metadata and image (fast 1200ms timeout)
+  // 1. Direct IPFS Metadata Fetch if metadataUri is provided (Fastest: 50-150ms)
+  if (metadataUri) {
+    const gateways = [];
+    const pinata = normalizeIpfsUrl(metadataUri);
+    if (pinata) gateways.push(pinata);
+    if (metadataUri && !gateways.includes(metadataUri)) gateways.push(metadataUri);
+
+    for (const gwUrl of gateways) {
+      try {
+        const res = await fetch(gwUrl, {
+          headers: { 'User-Agent': 'Mozilla/5.0' },
+          signal: AbortSignal.timeout(1500)
+        });
+        if (res.ok) {
+          const d = await res.json();
+          if (d && (d.name || d.image || d.description || d.twitter || d.telegram)) {
+            const rawImg = d.image || d.image_uri || d.image_url;
+            const meta = {
+              name: (d.name && d.name.trim()) || fallbackName,
+              symbol: (d.symbol && d.symbol.trim()) || fallbackSymbol || 'UNK',
+              imageUrl: normalizeIpfsUrl(rawImg),
+              description: d.description || '',
+              twitter: d.twitter || null,
+              telegram: d.telegram || null,
+              website: d.website || null,
+              replyCount: 0,
+            };
+            metadataCache.set(mintAddress, meta);
+            return meta;
+          }
+        }
+      } catch (err) {}
+    }
+  }
+
+  // 2. Query pump.fun API using coins query param (fast 1200ms timeout)
   try {
-    const pumpUrl = `https://frontend-api-v3.pump.fun/coins/${mintAddress}`;
+    const pumpUrl = `https://frontend-api-v3.pump.fun/coins?coins=${encodeURIComponent(mintAddress)}`;
     const res = await fetch(pumpUrl, {
       headers: { 'User-Agent': 'Mozilla/5.0' },
       signal: AbortSignal.timeout(1200)
     });
     if (res.ok) {
       const data = await res.json();
-      if (data && (data.name || data.image_uri)) {
-        const imageUrl = normalizeIpfsUrl(data.image_uri);
+      const coin = Array.isArray(data) ? data.find(c => c.mint === mintAddress) || data[0] : data;
+      if (coin && (coin.name || coin.image_uri || coin.description)) {
+        const imageUrl = normalizeIpfsUrl(coin.image_uri);
         const meta = {
-          name: data.name,
-          symbol: data.symbol,
+          name: coin.name || fallbackName,
+          symbol: coin.symbol || fallbackSymbol,
           imageUrl,
-          description: data.description || '',
-          twitter: data.twitter || null,
-          telegram: data.telegram || null,
-          website: data.website || null,
-          replyCount: data.reply_count || 0,
-          usdMarketCap: data.usd_market_cap || null,
+          description: coin.description || '',
+          twitter: coin.twitter || null,
+          telegram: coin.telegram || null,
+          website: coin.website || null,
+          replyCount: coin.reply_count || 0,
+          usdMarketCap: coin.usd_market_cap || null,
         };
         metadataCache.set(mintAddress, meta);
         return meta;

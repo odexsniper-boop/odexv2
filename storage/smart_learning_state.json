@@ -3,78 +3,12 @@
   "effectiveMinCompositeScore": 70,
   "effectiveMaxDevHolding": 8,
   "effectiveMinExternalBuyers": 2,
-  "totalLearnedTrades": 176,
-  "totalWins": 115,
-  "totalLosses": 61,
+  "totalLearnedTrades": 182,
+  "totalWins": 119,
+  "totalLosses": 63,
   "recentWinRate": 90,
   "adaptationsCount": 22,
   "experiences": [
-    {
-      "mint": "vaZB2paUgyn9Lz87kgidkEENTgWETcpWXPLm4GHpump",
-      "name": "joe fart coin",
-      "pnl": 76.3049101,
-      "isWin": true,
-      "reason": "TAKE_PROFIT_2X",
-      "devPercent": 0.2115327702796,
-      "bundleCount": 3,
-      "entryScore": 89,
-      "timestamp": 1788676523941
-    },
-    {
-      "mint": "7jGL66DcuZ7MoPpz17koKLAaaT8GbtaQyd2Ua15npump",
-      "name": "GPTASTRA ",
-      "pnl": 2369.5538167,
-      "isWin": true,
-      "reason": "TRAILING_STOP",
-      "devPercent": 0.8501725757384001,
-      "bundleCount": 3,
-      "entryScore": 84,
-      "timestamp": 1788677088152
-    },
-    {
-      "mint": "63qdRVREtCAbVKQvhjzQY7tdiso9RqPZhKP6xdzXpump",
-      "name": "NiggaCat",
-      "pnl": 387.06017599999996,
-      "isWin": true,
-      "reason": "TAKE_PROFIT_2X",
-      "devPercent": 7.091602164027999,
-      "bundleCount": 3,
-      "entryScore": 74,
-      "timestamp": 1788677564657
-    },
-    {
-      "mint": "HdRBTqNDif6h1gqFLEbyY699jP2RAjR4XERCqWd3pump",
-      "name": "Make America Wealthy Again ",
-      "pnl": 3.5166997605315276,
-      "isWin": true,
-      "reason": "STALE_TIMEOUT",
-      "devPercent": 0.8780451425543002,
-      "bundleCount": 2,
-      "entryScore": 76,
-      "timestamp": 1788678425172
-    },
-    {
-      "mint": "AAEsax1SpKnniwD7SA9eduVbD99B4VMAJfqJjbxtpump",
-      "name": "BUBU",
-      "pnl": 150.22474240000003,
-      "isWin": true,
-      "reason": "TAKE_PROFIT_2X",
-      "devPercent": 0.3520371073923,
-      "bundleCount": 2,
-      "entryScore": 85,
-      "timestamp": 1788678532748
-    },
-    {
-      "mint": "888txyMtJaDRNFMrcDoPMcQ7sPSBrVduvfezec2Mpump",
-      "name": "Recursive Language Model",
-      "pnl": 229.458209,
-      "isWin": true,
-      "reason": "TAKE_PROFIT_2X",
-      "devPercent": 2.1079078023353,
-      "bundleCount": 2,
-      "entryScore": 82,
-      "timestamp": 1788729157674
-    },
     {
       "mint": "F3Kr2uKfJ9btvVJY374xeomLdpeDnkuL9J6mNQ5tpump",
       "name": "stonkscate",
@@ -1108,7 +1042,73 @@
       "bundleCount": 0,
       "entryScore": 74,
       "timestamp": 1788912317930
+    },
+    {
+      "mint": "8VXHX6u3GcSCXNbohxHgW9UmeYWqCmRij57eHFF9pump",
+      "name": "Clippy Coin",
+      "pnl": 21.99552417183059,
+      "isWin": true,
+      "reason": "TRAILING_STOP",
+      "devPercent": 0,
+      "bundleCount": 56,
+      "entryScore": 67,
+      "timestamp": 1790923890447
+    },
+    {
+      "mint": "8VXHX6u3GcSCXNbohxHgW9UmeYWqCmRij57eHFF9pump",
+      "name": "Clippy Coin",
+      "pnl": 21.99552417183059,
+      "isWin": true,
+      "reason": "TRAILING_STOP",
+      "devPercent": 0,
+      "bundleCount": 56,
+      "entryScore": 67,
+      "timestamp": 1790923890447
+    },
+    {
+      "mint": "DCHX1fxukuv9yFxUqfZ5upDRwEvYh64u8rZJwtR5pump",
+      "name": "juswa",
+      "pnl": -13.53717049938046,
+      "isWin": false,
+      "reason": "STOP_LOSS",
+      "devPercent": 5,
+      "bundleCount": 28,
+      "entryScore": 72,
+      "timestamp": 1790997014865
+    },
+    {
+      "mint": "DCHX1fxukuv9yFxUqfZ5upDRwEvYh64u8rZJwtR5pump",
+      "name": "juswa",
+      "pnl": -13.53717049938046,
+      "isWin": false,
+      "reason": "STOP_LOSS",
+      "devPercent": 5,
+      "bundleCount": 28,
+      "entryScore": 72,
+      "timestamp": 1790997014866
+    },
+    {
+      "mint": "29j3CaRVQhvfo39e3qFpPRxxdGR9ntVrSogf3R7Ppump",
+      "name": "Starcloud",
+      "pnl": 23.341259379754472,
+      "isWin": true,
+      "reason": "TRAILING_STOP",
+      "devPercent": 1.7590163934425003,
+      "bundleCount": 36,
+      "entryScore": 74,
+      "timestamp": 1790997258721
+    },
+    {
+      "mint": "29j3CaRVQhvfo39e3qFpPRxxdGR9ntVrSogf3R7Ppump",
+      "name": "Starcloud",
+      "pnl": 23.341259379754472,
+      "isWin": true,
+      "reason": "TRAILING_STOP",
+      "devPercent": 1.7590163934425003,
+      "bundleCount": 36,
+      "entryScore": 74,
+      "timestamp": 1790997258721
     }
   ],
-  "lastUpdated": "2026-09-09T00:05:17.930Z"
+  "lastUpdated": "2026-10-03T03:14:18.722Z"
 }

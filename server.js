@@ -19,7 +19,7 @@ import { DevWatcher } from './engines/devWatcher.js';
 import { SolanaStreamer } from './streamer.js';
 import { TradeStorage } from './storage/tradeStorage.js';
 import { dbManager, supabaseManager } from './storage/db.js';
-import { getBondingCurvePDA } from './pumpfun.js';
+import { getBondingCurvePDA, calculateSpotPriceSol } from './pumpfun.js';
 import { fetchTokenMetadata } from './engines/metadataFetcher.js';
 import { TokenState, TokenRecord } from './engines/stateMachine.js';
 
@@ -259,12 +259,13 @@ export async function createDashboardServer(port = 3005) {
     maxDevPercent: 8.0, // Strict 8% limit
     maxBundleWallets: 3,
     maxBundlePercent: 20.0,
+    allowMissingBundleData: true, // Allow instant feed tokens to enter Stage 1 & 2 while bundle analysis is completed
   });
 
   const smartAgent = new SmartAgent({ minCompositeScore: 70 });
 
   const curveWatcher = new BondingCurveWatcher(conn, positionManager, execution);
-  const devWatcher = new DevWatcher(conn, positionManager);
+  const devWatcher = new DevWatcher(conn, positionManager, dbManager, execution?.tokenResolver);
   positionManager.setCurveWatcher(curveWatcher);
   positionManager.setDevWatcher(devWatcher);
 
@@ -306,11 +307,25 @@ export async function createDashboardServer(port = 3005) {
   const streamer = new SolanaStreamer();
   streamer.start();
 
-  setInterval(() => {
-    positionManager.checkStalePositions();
-  }, 30_000);
-
   const userBotRegistry = new Map();
+
+  // Fix 4: Multi-User Stale Position Sweeper
+  setInterval(() => {
+    try {
+      positionManager.checkStalePositions();
+    } catch (err) {
+      log(`[SWEEPER ERR] Master bot stale sweeper error: ${err.message}`);
+    }
+    for (const [uid, uBot] of userBotRegistry.entries()) {
+      if (uBot && uBot.positionManager && typeof uBot.positionManager.checkStalePositions === 'function') {
+        try {
+          uBot.positionManager.checkStalePositions();
+        } catch (err) {
+          log(`[SWEEPER ERR] User bot ${uid} stale sweeper error: ${err.message}`);
+        }
+      }
+    }
+  }, 30_000);
 
   async function getUserContext(req) {
     const userId = req?.userId;
@@ -439,23 +454,83 @@ export async function createDashboardServer(port = 3005) {
     return userCtx;
   }
 
+  // Per-Mint Order Coordination & Cascade Price Protection (Fix 7)
+  class PerMintBuyCoordinator {
+    constructor() {
+      this.mintQueues = new Map();
+    }
+
+    async enqueue(mint, task) {
+      const prev = this.mintQueues.get(mint) || Promise.resolve();
+      const next = prev.then(async () => {
+        try {
+          await task();
+        } catch (err) {
+          log(`[PER-MINT BUY QUEUE ERROR] Mint ${mint.slice(0, 8)}: ${err.message}`);
+        }
+      }).catch(() => {});
+
+      this.mintQueues.set(mint, next);
+      next.finally(() => {
+        if (this.mintQueues.get(mint) === next) {
+          this.mintQueues.delete(mint);
+        }
+      });
+      return next;
+    }
+  }
+
+  const perMintBuyCoordinator = new PerMintBuyCoordinator();
+
   async function executeUserBuy(uBot, record) {
     try {
       if (uBot.positionManager.positions.size >= 5) return;
       if (uBot.positionManager.positions.has(record.mint)) return;
       if (autoBuyEnabled && (!uBot.walletKeypair || uBot.walletPubkey === walletPubkey)) return;
 
-      log(`⚡ [MULTI-USER AUTO-BUY] Executing for user ${uBot.userId.slice(0, 8)} on ${record.name} (${uBot.buySizeSol} SOL)`);
+      // Re-verify token state before building transaction
+      const liveRecord = orchestrator.tokens.get(record.mint);
+      if (liveRecord && (liveRecord.state === TokenState.REJECTED || liveRecord.state === TokenState.CLOSED)) {
+        log(`[MULTI-USER BUY ABORT] Token ${record.mint.slice(0, 8)} transitioned to ${liveRecord.state}. Order cancelled.`);
+        return;
+      }
+
+      // Query latest fresh reserves from curveWatcher or cache
+      const reserves = curveWatcher.lastKnownReserves.get(record.mint);
+      const vSol = reserves?.vSol || record.lastVirtualSolReserves || 30_000_000_000n;
+      const vTok = reserves?.vTok || record.lastVirtualTokenReserves || 1_073_000_000_000_000n;
+
+      // Check price impact from prior buys in the queue
+      const initialPrice = record.entryPriceSol || calculateSpotPriceSol(record.lastVirtualSolReserves || 30_000_000_000n, record.lastVirtualTokenReserves || 1_073_000_000_000_000n);
+      const currentPrice = calculateSpotPriceSol(vSol, vTok);
+      const userMaxSlippageBps = uBot.slippageBps || 1500;
+
+      if (initialPrice > 0 && currentPrice > initialPrice) {
+        const priceIncreaseBps = Math.round(((currentPrice - initialPrice) / initialPrice) * 10000);
+        if (priceIncreaseBps > userMaxSlippageBps) {
+          log(`[MULTI-USER SLIPPAGE VETO] User ${uBot.userId.slice(0, 8)} on ${record.name}: Price surged +${(priceIncreaseBps / 100).toFixed(1)}% > ${userMaxSlippageBps / 100}% max slippage tolerance. Buy deferred.`);
+          return;
+        }
+      }
+
+      log(`⚡ [MULTI-USER AUTO-BUY] Executing for user ${uBot.userId.slice(0, 8)} on ${record.name} (${uBot.buySizeSol} SOL, Slippage: ${userMaxSlippageBps}bps)`);
       const buyFill = await uBot.execution.executeBuy({
         mint: record.mint,
         solAmount: uBot.buySizeSol,
+        virtualSolReserves: vSol,
+        virtualTokenReserves: vTok,
+        slippageBps: userMaxSlippageBps,
       });
+
       const pos = uBot.positionManager.openPosition(buyFill, {
         name: record.name,
         symbol: record.symbol,
         creator: record.creator,
         riskScore: record.riskScore,
         entryScore: record.entryScore,
+        bundledBuysCount: record.bundledBuysCount || 0,
+        uniqueBuyersCount: record.uniqueBuyers ? record.uniqueBuyers.size : 0,
+        organicBuyersCount: record.buyerQuality?.organicBuyerCount ?? 0,
       });
       broadcast('POSITION_OPENED', pos, uBot.userId);
       if (supabaseManager.connected) {
@@ -569,11 +644,11 @@ export async function createDashboardServer(port = 3005) {
     }
     broadcast('STATE_TRANSITION', data);
 
-    // Multi-User Auto-Snipe dispatch
+    // Multi-User Auto-Snipe dispatch with Per-Mint Order Coordination (Fix 7)
     if (data?.state === 'ENTRY_READY' && data.record) {
       for (const [uid, uBot] of userBotRegistry.entries()) {
         if (uBot.autoBuyEnabled) {
-          executeUserBuy(uBot, data.record);
+          perMintBuyCoordinator.enqueue(data.record.mint, () => executeUserBuy(uBot, data.record));
         }
       }
     }
@@ -632,7 +707,39 @@ export async function createDashboardServer(port = 3005) {
     broadcast('POSITION_CLOSED', data);
   });
 
-  eventBus.on('DEV_DUMP_ALERT', (data) => broadcast('DEV_DUMP_ALERT', data));
+  // Fix 3: Multi-User Developer Rug and Graduation Event Fan-out
+  eventBus.on('DEV_DUMP_ALERT', (data) => {
+    broadcast('DEV_DUMP_ALERT', data);
+    if (!data?.mint) return;
+    for (const [uid, uBot] of userBotRegistry.entries()) {
+      if (uBot && uBot.positionManager && typeof uBot.positionManager.triggerEmergencyFrontrun === 'function') {
+        try {
+          if (data.isMuleDump) {
+            uBot.positionManager.triggerEmergencyFrontrun(data.mint, 'DEV_MULE_DUMP_FRONTRUN');
+          } else {
+            uBot.positionManager.triggerEmergencyFrontrun(data.mint, 'DEV_RUG_FRONTRUN');
+          }
+        } catch (err) {
+          log(`[DEV DUMP FANOUT ERR] Failed triggering frontrun for user ${uid}: ${err.message}`);
+        }
+      }
+    }
+  });
+
+  eventBus.on('BONDING_CURVE_GRADUATED', (data) => {
+    broadcast('BONDING_CURVE_GRADUATED', data);
+    if (!data?.mint) return;
+    for (const [uid, uBot] of userBotRegistry.entries()) {
+      if (uBot && uBot.positionManager && typeof uBot.positionManager.handleCurveGraduated === 'function') {
+        try {
+          uBot.positionManager.handleCurveGraduated(data.mint);
+        } catch (err) {
+          log(`[GRADUATION FANOUT ERR] Failed handling curve graduation for user ${uid}: ${err.message}`);
+        }
+      }
+    }
+  });
+
   eventBus.on('LEARNING_STATUS_UPDATED', (data) => broadcast('LEARNING_STATUS_UPDATED', data));
 
   // REST APIs
@@ -1190,6 +1297,11 @@ export async function createDashboardServer(port = 3005) {
     const { mint } = req.body;
     if (mint) {
       await ctx.positionManager.forceManualExit(mint);
+      if (orchestrator.tokens.has(mint)) {
+        const tok = orchestrator.tokens.get(mint);
+        tok.state = TokenState.CLOSED;
+      }
+      broadcast('POSITION_CLOSED', { mint, reason: 'MANUAL_SELL', finalPnlPercent: 0 });
       if (req.userId && supabaseManager.connected) {
         await supabaseManager.saveUserPositions(req.userId, Array.from(ctx.positionManager.positions.values()));
       }

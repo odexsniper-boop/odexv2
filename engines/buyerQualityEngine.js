@@ -47,10 +47,26 @@ export class BuyerQualityEngine {
     this.tokenBuyers = new Map();
     // Cross-launch co-occurrence tracking: walletA -> Map(walletB -> count)
     this.coOccurrenceRegistry = new Map();
-    // Cache of known funding parents: walletPubkey -> funderPubkey
+    this.maxCoOccurrenceWallets = 2000;
+    this.maxPairsPerWallet = 50;
+    // Cache of known funding parents: walletPubkey -> { funder, cachedAt }
     this.funderCache = new Map();
+    this.maxFunderCache = 3000;
+    this.funderTTL = 3600000; // 1 hour TTL
     // In-flight funding lookup set to prevent duplicate RPC calls
     this.pendingFunderLookups = new Set();
+  }
+
+  /**
+   * Returns operational metrics for memory and cache monitoring
+   */
+  getMetrics() {
+    return {
+      activeTokensTracked: this.tokenBuyers.size,
+      coOccurrenceWalletsCount: this.coOccurrenceRegistry.size,
+      funderCacheSize: this.funderCache.size,
+      pendingFunderLookupsCount: this.pendingFunderLookups.size,
+    };
   }
 
   /**
@@ -89,10 +105,13 @@ export class BuyerQualityEngine {
       };
       bucket.buyers.set(buyerPubkey, buyer);
 
-      // Record cross-launch co-occurrence with already active buyers on this token
+      // Record cross-launch co-occurrence with already active buyers on this token (bounded)
+      let comparisons = 0;
       for (const otherPubkey of bucket.buyers.keys()) {
         if (otherPubkey !== buyerPubkey) {
           this._recordCoOccurrence(buyerPubkey, otherPubkey);
+          comparisons++;
+          if (comparisons >= 20) break; // Bounded fan-out per buy event
         }
       }
 
@@ -112,6 +131,9 @@ export class BuyerQualityEngine {
       timestamp,
       slot
     });
+    if (bucket.recentBuys.length > 500) {
+      bucket.recentBuys.shift();
+    }
 
     // Invalidate cached evaluation
     bucket.lastEval = null;
@@ -119,19 +141,40 @@ export class BuyerQualityEngine {
 
   /**
    * Records that walletA and walletB were observed buying into the same token launch
+   * With bounded size and LRU eviction
    */
   _recordCoOccurrence(walletA, walletB) {
     if (walletA === walletB) return;
+
+    // Enforce outer map capacity
+    if (!this.coOccurrenceRegistry.has(walletA) && this.coOccurrenceRegistry.size >= this.maxCoOccurrenceWallets) {
+      const oldest = this.coOccurrenceRegistry.keys().next().value;
+      this.coOccurrenceRegistry.delete(oldest);
+    }
+
     if (!this.coOccurrenceRegistry.has(walletA)) {
       this.coOccurrenceRegistry.set(walletA, new Map());
     }
     const mapA = this.coOccurrenceRegistry.get(walletA);
+    if (!mapA.has(walletB) && mapA.size >= this.maxPairsPerWallet) {
+      const oldestPair = mapA.keys().next().value;
+      mapA.delete(oldestPair);
+    }
     mapA.set(walletB, (mapA.get(walletB) || 0) + 1);
+
+    if (!this.coOccurrenceRegistry.has(walletB) && this.coOccurrenceRegistry.size >= this.maxCoOccurrenceWallets) {
+      const oldest = this.coOccurrenceRegistry.keys().next().value;
+      this.coOccurrenceRegistry.delete(oldest);
+    }
 
     if (!this.coOccurrenceRegistry.has(walletB)) {
       this.coOccurrenceRegistry.set(walletB, new Map());
     }
     const mapB = this.coOccurrenceRegistry.get(walletB);
+    if (!mapB.has(walletA) && mapB.size >= this.maxPairsPerWallet) {
+      const oldestPair = mapB.keys().next().value;
+      mapB.delete(oldestPair);
+    }
     mapB.set(walletA, (mapB.get(walletA) || 0) + 1);
   }
 
@@ -144,11 +187,26 @@ export class BuyerQualityEngine {
   }
 
   /**
+   * Gets cached funder relationship respecting TTL
+   */
+  _getFunder(walletPubkey) {
+    const entry = this.funderCache.get(walletPubkey);
+    if (!entry) return null;
+    if (typeof entry === 'string') return entry;
+    if (entry.cachedAt && (Date.now() - entry.cachedAt > this.funderTTL)) {
+      this.funderCache.delete(walletPubkey);
+      return null;
+    }
+    return entry.funder || null;
+  }
+
+  /**
    * Asynchronously look up parent funding wallet (SystemProgram.transfer)
    * Non-blocking and rate-limited.
    */
   async _scheduleFunderLookup(walletPubkey) {
-    if (!this.connection || this.funderCache.has(walletPubkey) || this.pendingFunderLookups.has(walletPubkey)) {
+    const existing = this._getFunder(walletPubkey);
+    if (!this.connection || existing || this.pendingFunderLookups.has(walletPubkey)) {
       return;
     }
 
@@ -156,13 +214,11 @@ export class BuyerQualityEngine {
     this.pendingFunderLookups.add(walletPubkey);
 
     try {
-      // Query earliest signatures for the wallet to identify initial funding source
       const { PublicKey } = await import('@solana/web3.js');
       const pubkey = new PublicKey(walletPubkey);
       const sigs = await this.connection.getSignaturesForAddress(pubkey, { limit: 5 });
       
       if (sigs && sigs.length > 0) {
-        // Earliest tx is at the end of the array
         const oldestSig = sigs[sigs.length - 1].signature;
         const tx = await this.connection.getParsedTransaction(oldestSig, { maxSupportedTransactionVersion: 0 });
         
@@ -172,7 +228,11 @@ export class BuyerQualityEngine {
             if (ix.program === 'system' && ix.parsed && ix.parsed.type === 'transfer') {
               const source = ix.parsed.info?.source;
               if (source && source !== walletPubkey) {
-                this.funderCache.set(walletPubkey, source);
+                if (this.funderCache.size >= this.maxFunderCache) {
+                  const oldest = this.funderCache.keys().next().value;
+                  this.funderCache.delete(oldest);
+                }
+                this.funderCache.set(walletPubkey, { funder: source, cachedAt: Date.now() });
                 break;
               }
             }
@@ -180,7 +240,7 @@ export class BuyerQualityEngine {
         }
       }
     } catch (e) {
-      // Silently catch RPC lookup failures - heuristic will still use zero-delay signals
+      // Silently catch RPC lookup failures
     } finally {
       this.pendingFunderLookups.delete(walletPubkey);
     }
@@ -217,7 +277,7 @@ export class BuyerQualityEngine {
     const clusterEvidence = [];
 
     // 1. Same-Slot / Timing Synchronization Clustering
-    // Check if pairs of buyers bought in the exact same slot with similar size (<20% std dev)
+    // Check if pairs of buyers bought in the exact same slot with similar size (<25% std dev)
     const recentBuys = bucket.recentBuys;
     for (let i = 0; i < recentBuys.length; i++) {
       for (let j = i + 1; j < recentBuys.length; j++) {
@@ -225,14 +285,16 @@ export class BuyerQualityEngine {
         const b2 = recentBuys[j];
         if (b1.buyerPubkey === b2.buyerPubkey) continue;
 
-        // Same slot or within 400ms microsecond window
         const sameSlot = b1.slot > 0 && b1.slot === b2.slot;
-        const sub400ms = Math.abs(b1.timestamp - b2.timestamp) <= 400;
+        const sub150ms = Math.abs(b1.timestamp - b2.timestamp) <= 150;
+        // Avoid clustering common UI round presets (e.g., 0.05, 0.1, 0.2, 0.25, 0.5, 1.0, 2.0 SOL) purely on internet latency
+        const isStandardUiPreset = (amt) => [0.05, 0.1, 0.2, 0.25, 0.5, 1.0, 2.0].some(p => Math.abs(amt - p) < 0.001);
+        const isAlgorithmicBotAmount = !isStandardUiPreset(b1.solAmount) && Math.abs(b1.solAmount - b2.solAmount) < 0.0001;
+        const isTimingSynchronized = sameSlot || (b1.slot === 0 && sub150ms && isAlgorithmicBotAmount);
 
-        if (sameSlot || sub400ms) {
+        if (isTimingSynchronized) {
           const ratio = Math.max(b1.solAmount, b2.solAmount) / Math.max(0.0001, Math.min(b1.solAmount, b2.solAmount));
-          // If similar trade sizes (within 25% of each other)
-          if (ratio <= 1.25) {
+          if (ratio <= 1.25) { // within 25% of each other in size
             if (dsu.union(b1.buyerPubkey, b2.buyerPubkey)) {
               clusterEvidence.push(`Synchronized entry (${b1.buyerPubkey.slice(0, 4)}.. & ${b2.buyerPubkey.slice(0, 4)}.. in slot ${b1.slot || 'close-window'})`);
             }
@@ -246,8 +308,8 @@ export class BuyerQualityEngine {
       for (let j = i + 1; j < buyersList.length; j++) {
         const p1 = buyersList[i].pubkey;
         const p2 = buyersList[j].pubkey;
-        const funder1 = this.funderCache.get(p1);
-        const funder2 = this.funderCache.get(p2);
+        const funder1 = this._getFunder(p1);
+        const funder2 = this._getFunder(p2);
 
         if (funder1 && funder2 && funder1 === funder2) {
           if (dsu.union(p1, p2)) {

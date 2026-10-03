@@ -3,31 +3,40 @@ import { eventBus } from '../eventBus.js';
 
 export class HardSafetyFilter {
   constructor(options = {}) {
-    this.maxDevPercent = options.maxDevPercent || 10.0; // Max 10% dev allocation
-    this.maxBundlePercent = options.maxBundlePercent || 20.0; // Max 20% bundled buys
-    this.maxBundleWallets = options.maxBundleWallets || 3; // Max 3 coordinated wallets
+    this.maxDevPercent = options.maxDevPercent !== undefined ? options.maxDevPercent : 8.0; // Strict 8% default
+    this.maxBundlePercent = options.maxBundlePercent !== undefined ? options.maxBundlePercent : 20.0; // Max 20% bundled buys
+    this.maxBundleWallets = options.maxBundleWallets !== undefined ? options.maxBundleWallets : 3; // Max 3 coordinated wallets
+    this.conservativeAdmission = options.conservativeAdmission !== undefined ? options.conservativeAdmission : true;
+    this.allowMissingBundleData = options.allowMissingBundleData !== undefined ? options.allowMissingBundleData : false;
   }
 
   /**
    * Fast In-Memory Hard Gate: Evaluates whether a token is safe to enter (<5ms)
    * @param {Object} tokenInfo
-   * @returns {{ pass: boolean, reason: string, metrics: Object }}
+   * @returns {{ pass: boolean, status: string, reason: string, metrics: Object, timestamp: number }}
    */
-  evaluate(tokenInfo) {
+  evaluate(tokenInfo = {}) {
+    const timestamp = Date.now();
     const metrics = {
-      devPercent: tokenInfo.devPercent || 0,
-      bundlePercent: tokenInfo.bundlePercent || 0,
-      bundledBuysCount: tokenInfo.bundledBuysCount || 0,
+      mint: tokenInfo.mint || 'UNKNOWN',
+      devPercent: typeof tokenInfo.devPercent === 'number' ? tokenInfo.devPercent : 0,
+      bundlePercent: typeof tokenInfo.bundlePercent === 'number' ? tokenInfo.bundlePercent : (tokenInfo.bundlePercent != null ? Number(tokenInfo.bundlePercent) : null),
+      bundledBuysCount: typeof tokenInfo.bundledBuysCount === 'number' ? tokenInfo.bundledBuysCount : (tokenInfo.bundledBuysCount != null ? Number(tokenInfo.bundledBuysCount) : null),
       creator: tokenInfo.creator || 'UNKNOWN',
       isKnownRugger: !!tokenInfo.isKnownRugger,
+      bundleDataStatus: tokenInfo.bundleDataStatus || (tokenInfo.bundlePercent != null || tokenInfo.bundledBuysCount != null ? 'VERIFIED' : 'INSUFFICIENT_DATA'),
+      mintDisabled: tokenInfo.mintDisabled !== undefined ? tokenInfo.mintDisabled : true,
+      freezeDisabled: tokenInfo.freezeDisabled !== undefined ? tokenInfo.freezeDisabled : true,
     };
 
     // 0. Rugger Blacklist Check (Past rug history)
     if (metrics.isKnownRugger) {
       const verdict = {
         pass: false,
+        status: 'REJECT',
         reason: `CREATOR_FLAGGED_RUGGER (${metrics.creator.slice(0, 8)}... has history of rug dumps)`,
         metrics,
+        timestamp,
       };
       eventBus.emit('SAFETY_VERDICT', { mint: tokenInfo.mint, ...verdict });
       return verdict;
@@ -37,30 +46,77 @@ export class HardSafetyFilter {
     if (metrics.devPercent > this.maxDevPercent) {
       const verdict = {
         pass: false,
+        status: 'REJECT',
         reason: `DEV_OVERALLOCATED (${metrics.devPercent.toFixed(1)}% > ${this.maxDevPercent}%)`,
         metrics,
+        timestamp,
       };
       eventBus.emit('SAFETY_VERDICT', { mint: tokenInfo.mint, ...verdict });
       return verdict;
     }
 
-    // 2. Coordinated Bundle Check (same-slot sniper clusters)
-    if (metrics.bundledBuysCount > this.maxBundleWallets) {
+    // 2. Mint/Freeze Authority Check (if explicit audit details provided)
+    if (metrics.mintDisabled === false) {
       const verdict = {
         pass: false,
-        reason: `HIGH_BUNDLE_RISK (${metrics.bundledBuysCount} wallets in launch slot)`,
+        status: 'REJECT',
+        reason: 'MINT_AUTHORITY_ENABLED',
         metrics,
+        timestamp,
+      };
+      eventBus.emit('SAFETY_VERDICT', { mint: tokenInfo.mint, ...verdict });
+      return verdict;
+    }
+    if (metrics.freezeDisabled === false) {
+      const verdict = {
+        pass: false,
+        status: 'REJECT',
+        reason: 'FREEZE_AUTHORITY_ENABLED',
+        metrics,
+        timestamp,
       };
       eventBus.emit('SAFETY_VERDICT', { mint: tokenInfo.mint, ...verdict });
       return verdict;
     }
 
-    // 3. Bundled supply concentration
-    if (metrics.bundlePercent > this.maxBundlePercent) {
+    // 3. Bundle Data Availability Check
+    if (this.conservativeAdmission && !this.allowMissingBundleData) {
+      if (metrics.bundleDataStatus === 'INSUFFICIENT_DATA' || metrics.bundleDataStatus === 'PENDING' || (metrics.bundledBuysCount === null && metrics.bundlePercent === null)) {
+        const verdict = {
+          pass: false,
+          status: 'INSUFFICIENT_DATA',
+          reason: `INSUFFICIENT_BUNDLE_DATA: Bundle metrics ${metrics.bundleDataStatus === 'PENDING' ? 'pending verification' : 'unavailable'} under conservative admission`,
+          metrics,
+          timestamp,
+        };
+        eventBus.emit('SAFETY_VERDICT', { mint: tokenInfo.mint, ...verdict });
+        return verdict;
+      }
+    }
+
+    // 4. Coordinated Bundle Check (same-slot sniper clusters)
+    const effectiveBundledWallets = metrics.bundledBuysCount || 0;
+    if (effectiveBundledWallets > this.maxBundleWallets) {
       const verdict = {
         pass: false,
-        reason: `BUNDLE_SUPPLY_HIGH (${metrics.bundlePercent.toFixed(1)}% > ${this.maxBundlePercent}%)`,
+        status: 'REJECT',
+        reason: `HIGH_BUNDLE_RISK (${effectiveBundledWallets} wallets in launch slot > ${this.maxBundleWallets})`,
         metrics,
+        timestamp,
+      };
+      eventBus.emit('SAFETY_VERDICT', { mint: tokenInfo.mint, ...verdict });
+      return verdict;
+    }
+
+    // 5. Bundled supply concentration
+    const effectiveBundlePercent = metrics.bundlePercent || 0;
+    if (effectiveBundlePercent > this.maxBundlePercent) {
+      const verdict = {
+        pass: false,
+        status: 'REJECT',
+        reason: `BUNDLE_SUPPLY_HIGH (${effectiveBundlePercent.toFixed(1)}% > ${this.maxBundlePercent}%)`,
+        metrics,
+        timestamp,
       };
       eventBus.emit('SAFETY_VERDICT', { mint: tokenInfo.mint, ...verdict });
       return verdict;
@@ -69,8 +125,10 @@ export class HardSafetyFilter {
     // Passed all hard gates
     const verdict = {
       pass: true,
+      status: 'PASS',
       reason: 'CLEAN_LAUNCH_PASSED',
       metrics,
+      timestamp,
     };
     eventBus.emit('SAFETY_VERDICT', { mint: tokenInfo.mint, ...verdict });
     return verdict;

@@ -50,10 +50,16 @@ export class ExecutionController {
   /**
    * Generates a deterministic trade context and checks idempotency
    */
-  createTradeContext(action, mint, amount) {
+  createTradeContext(action, mint, amount, reason = '') {
     const mintStr = typeof mint === 'string' ? mint : mint.toBase58();
+    const isEmergency = action === 'SELL' && (
+      reason.includes('EMERGENCY') ||
+      reason.includes('DEV_RUG') ||
+      reason.includes('FRONTRUN') ||
+      reason.includes('FLASH_DUMP')
+    );
     const executionId = `${action}:${mintStr}:${Date.now()}_${Math.random().toString(36).slice(2, 6)}`;
-    const idempotencyKey = `${action}:${mintStr}`;
+    const idempotencyKey = isEmergency ? `EMERGENCY_SELL:${mintStr}` : `${action}:${mintStr}`;
 
     return {
       executionId,
@@ -61,6 +67,8 @@ export class ExecutionController {
       action,
       mint: mintStr,
       amount,
+      reason,
+      isEmergency,
       createdAt: Date.now(),
     };
   }
@@ -71,8 +79,9 @@ export class ExecutionController {
   validateExecution(context) {
     if (this.inFlightExecutions.has(context.idempotencyKey)) {
       const active = this.inFlightExecutions.get(context.idempotencyKey);
-      // If previous execution is less than 2.5s old, reject duplicate
-      if (Date.now() - active.createdAt < 2500) {
+      // For emergency trades, use 1000ms debounce against duplicate notifications; standard trades use 2500ms
+      const lockWindow = context.isEmergency ? 1000 : 2500;
+      if (Date.now() - active.createdAt < lockWindow) {
         throw new Error(`DUPLICATE_EXECUTION_REJECTED: Active trade in flight for ${context.mint}`);
       }
     }
@@ -107,22 +116,31 @@ export class ExecutionController {
     this.validateExecution(context);
     this.inFlightExecutions.set(context.idempotencyKey, context);
 
+    // Fix 5: Explicit Slippage Input Validation
+    const rawSlippage = Number(slippageBps);
+    if (isNaN(rawSlippage) || !isFinite(rawSlippage) || rawSlippage < 0) {
+      throw new Error(`INVALID_SLIPPAGE: Slippage bps must be a non-negative finite number (got ${slippageBps})`);
+    }
+    const validatedSlippageBps = Math.min(rawSlippage, 5000);
+
     const mintPubkey = typeof mint === 'string' ? new PublicKey(mint) : mint;
     const solLamports = BigInt(Math.floor(solAmount * 1e9));
 
     // Resolve true live curve reserves (Amendment 3)
     let liveSolReserves = virtualSolReserves;
     let liveTokenReserves = virtualTokenReserves;
+    let isStale = false;
 
     if (this.cache) {
-      const cachedReserves = this.cache.getReserves(mint, 5000);
-      if (cachedReserves && !cachedReserves.isStale) {
+      const cachedReserves = this.cache.getReserves(mint, 5000); // 5s max age
+      if (cachedReserves) {
         liveSolReserves = cachedReserves.virtualSolReserves;
         liveTokenReserves = cachedReserves.virtualTokenReserves;
+        isStale = cachedReserves.isStale;
       }
     }
 
-    if (!this.isPaperTrading && this.connection && (!liveSolReserves || liveSolReserves === 30_000_000_000n)) {
+    if (this.connection && (!liveSolReserves || liveSolReserves === 30_000_000_000n || isStale)) {
       try {
         if (typeof this.curveStateProvider === 'function') {
           const liveState = await this.curveStateProvider(mintPubkey);
@@ -130,28 +148,37 @@ export class ExecutionController {
             liveSolReserves = BigInt(liveState.virtualSolReserves);
             liveTokenReserves = BigInt(liveState.virtualTokenReserves);
             this.cache.updateReserves(mint, liveSolReserves, liveTokenReserves, 'provider');
+            isStale = false;
           }
         }
-        if (liveSolReserves === 30_000_000_000n) {
-          const progId = this.tokenResolver.resolveSync(mintPubkey);
+        if (!liveSolReserves || liveSolReserves === 30_000_000_000n || isStale) {
+          // Fix 6: Await authoritative token program resolution before PDA derivation
+          const progId = this.tokenResolver ? (await this.tokenResolver.resolve(mintPubkey)) : TOKEN_PROGRAM_ID;
           const { bc } = this.cache.getMintPDAs(mintPubkey, progId);
           const bcAccount = await this.connection.getAccountInfo(bc, 'confirmed');
           if (bcAccount && bcAccount.data && bcAccount.data.length >= 24) {
             liveTokenReserves = bcAccount.data.readBigUInt64LE(8);
             liveSolReserves = bcAccount.data.readBigUInt64LE(16);
             this.cache.updateReserves(mint, liveSolReserves, liveTokenReserves, 'onchain_direct');
+            isStale = false;
+          } else {
+            throw new Error('RESERVE_RESOLUTION_FAILED: Missing or stale reserves on established token');
           }
         }
-      } catch (_) {}
+      } catch (err) {
+        if (err.message.includes('RESERVE_RESOLUTION_FAILED')) throw err;
+      }
     }
 
     // Pure local math (< 0.1ms) with accurate live reserves
     const expectedTokensOut = calculateTokensOut(solLamports, liveSolReserves, liveTokenReserves);
-    const minTokensOut = (expectedTokensOut * BigInt(10000 - slippageBps)) / 10000n;
+    const slippageFactor = BigInt(Math.max(0, 10000 - validatedSlippageBps));
+    let minTokensOut = (expectedTokensOut * slippageFactor) / 10000n;
+    if (minTokensOut < 0n) minTokensOut = 0n;
     const spotPriceSol = calculateSpotPriceSol(liveSolReserves, liveTokenReserves);
 
     // Amendment 1: Transparent slippage math (NO hidden +5% cushion)
-    const maxSolCostLamports = (solLamports * BigInt(10000 + slippageBps)) / 10000n;
+    const maxSolCostLamports = (solLamports * BigInt(10000 + validatedSlippageBps)) / 10000n;
 
     // Attach debug fields to context for Custom:6002 diagnostics (Amendment 22)
     context.expectedTokensOut = expectedTokensOut.toString();
@@ -321,7 +348,7 @@ export class ExecutionController {
     isMayhemMode = null,
   }) {
     const startTime = performance.now();
-    const context = this.createTradeContext('SELL', mint, tokenAmountRaw);
+    const context = this.createTradeContext('SELL', mint, tokenAmountRaw, reason);
     this.validateExecution(context);
     this.inFlightExecutions.set(context.idempotencyKey, context);
 
@@ -331,16 +358,18 @@ export class ExecutionController {
     // Resolve true live curve reserves
     let liveSolReserves = virtualSolReserves;
     let liveTokenReserves = virtualTokenReserves;
+    let isStale = false;
 
     if (this.cache) {
-      const cachedReserves = this.cache.getReserves(mint, 5000);
-      if (cachedReserves && !cachedReserves.isStale) {
+      const cachedReserves = this.cache.getReserves(mint, 5000); // 5s max age
+      if (cachedReserves) {
         liveSolReserves = cachedReserves.virtualSolReserves;
         liveTokenReserves = cachedReserves.virtualTokenReserves;
+        isStale = cachedReserves.isStale;
       }
     }
 
-    if (!this.isPaperTrading && this.connection && (!liveSolReserves || liveSolReserves === 30_000_000_000n)) {
+    if (this.connection && (!liveSolReserves || liveSolReserves === 30_000_000_000n || isStale)) {
       try {
         if (typeof this.curveStateProvider === 'function') {
           const liveState = await this.curveStateProvider(mintPubkey);
@@ -348,29 +377,49 @@ export class ExecutionController {
             liveSolReserves = BigInt(liveState.virtualSolReserves);
             liveTokenReserves = BigInt(liveState.virtualTokenReserves);
             this.cache.updateReserves(mint, liveSolReserves, liveTokenReserves, 'provider');
+            isStale = false;
           }
         }
-        if (liveSolReserves === 30_000_000_000n) {
-          const progId = this.tokenResolver.resolveSync(mintPubkey);
+        if (!liveSolReserves || liveSolReserves === 30_000_000_000n || isStale) {
+          // Fix 6: Await authoritative token program resolution before PDA derivation
+          const progId = this.tokenResolver ? (await this.tokenResolver.resolve(mintPubkey)) : TOKEN_PROGRAM_ID;
           const { bc } = this.cache.getMintPDAs(mintPubkey, progId);
           const bcAccount = await this.connection.getAccountInfo(bc, 'confirmed');
           if (bcAccount && bcAccount.data && bcAccount.data.length >= 24) {
             liveTokenReserves = bcAccount.data.readBigUInt64LE(8);
             liveSolReserves = bcAccount.data.readBigUInt64LE(16);
             this.cache.updateReserves(mint, liveSolReserves, liveTokenReserves, 'onchain_direct');
+            isStale = false;
+          } else {
+            throw new Error('RESERVE_RESOLUTION_FAILED: Missing or stale reserves on established token');
           }
         }
-      } catch (_) {}
+      } catch (err) {
+        if (err.message.includes('RESERVE_RESOLUTION_FAILED')) throw err;
+      }
     }
 
+    // Fix 5: Explicit Slippage Input Validation & Non-Negative BigInt Floor
+    const rawSlippage = Number(slippageBps);
+    if (isNaN(rawSlippage) || !isFinite(rawSlippage) || rawSlippage < 0) {
+      throw new Error(`INVALID_SLIPPAGE: Slippage bps must be a non-negative finite number (got ${slippageBps})`);
+    }
+
+    // Emergency policy permits up to 10000 bps (100% floor). Standard trades permit max 5000 bps (50%).
+    const maxAllowedSlippage = context.isEmergency ? 10000 : 5000;
+    const validatedSlippageBps = Math.min(rawSlippage, maxAllowedSlippage);
+
     const expectedSolOut = calculateSolOut(tokensBigInt, liveSolReserves, liveTokenReserves);
-    const minSolOut = (expectedSolOut * BigInt(10000 - slippageBps)) / 10000n;
+    const slippageFactor = BigInt(Math.max(0, 10000 - validatedSlippageBps));
+    let minSolOut = (expectedSolOut * slippageFactor) / 10000n;
+    if (minSolOut < 0n) minSolOut = 0n;
+
     const solReceived = Number(expectedSolOut) / 1e9;
     const spotPriceSol = calculateSpotPriceSol(liveSolReserves, liveTokenReserves);
 
     context.expectedSolOut = expectedSolOut.toString();
     context.minSolOut = minSolOut.toString();
-    context.slippageBps = slippageBps;
+    context.slippageBps = validatedSlippageBps;
     context.virtualSolReserves = liveSolReserves.toString();
     context.virtualTokenReserves = liveTokenReserves.toString();
 

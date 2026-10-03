@@ -124,7 +124,7 @@ export function analyzePriceStructure(ohlcvList) {
  * 
  * @param {Array<{open: number, high: number, low: number, close: number, volume: number, timestamp: number}>} candles
  */
-export function evaluateThreeCandlePattern(candles) {
+export function evaluateThreeCandlePattern(candles, options = {}) {
   if (!candles || candles.length < 3) {
     return {
       patternTriggered: false,
@@ -137,6 +137,24 @@ export function evaluateThreeCandlePattern(candles) {
   const c1 = candles[candles.length - 3];
   const c2 = candles[candles.length - 2];
   const c3 = candles[candles.length - 1];
+
+  // Fix 7: Time continuity verification (reject time-warped candles during illiquid periods)
+  if (c1.timestamp !== undefined && c2.timestamp !== undefined && c3.timestamp !== undefined) {
+    const dt1 = Number(c2.timestamp) - Number(c1.timestamp);
+    const dt2 = Number(c3.timestamp) - Number(c2.timestamp);
+    const expectedTimeframe = options.timeframeMs || (options.timeframeSeconds ? options.timeframeSeconds * 1000 : null) || (dt1 > 0 && dt2 > 0 ? Math.min(dt1, dt2) : 15000);
+    const maxAllowedGap = options.maxAllowedGapMs || (expectedTimeframe * 1.5);
+
+    if (dt1 <= 0 || dt2 <= 0 || dt1 > maxAllowedGap || dt2 > maxAllowedGap) {
+      return {
+        patternTriggered: false,
+        stage: 'DISCONTINUOUS_CANDLES',
+        score: 15,
+        reason: `Candles are non-contiguous or time-warped (Intervals: ${dt1}ms, ${dt2}ms vs max allowed ${maxAllowedGap}ms)`,
+        c1, c2, c3,
+      };
+    }
+  }
 
   // 1. Candle 1: Breakout / Strong Buying
   const isC1Bullish = c1.close > c1.open;
@@ -241,7 +259,25 @@ export class CandleBuilder {
     if (!this.currentCandle || this.currentCandle.timestamp !== bucket) {
       if (this.currentCandle) {
         this.candles.push({ ...this.currentCandle });
-        if (this.candles.length > 50) this.candles.shift();
+
+        // Synthesize contiguous flat candles (zero-volume doji bars) for intermediate idle timeframes
+        let nextBucket = this.currentCandle.timestamp + this.timeframeMs;
+        const lastClose = this.currentCandle.close;
+        while (nextBucket < bucket && this.candles.length < 50) {
+          this.candles.push({
+            timestamp: nextBucket,
+            open: lastClose,
+            high: lastClose,
+            low: lastClose,
+            close: lastClose,
+            volume: 0,
+          });
+          nextBucket += this.timeframeMs;
+        }
+
+        if (this.candles.length > 50) {
+          this.candles = this.candles.slice(-50);
+        }
       }
       this.currentCandle = {
         timestamp: bucket,

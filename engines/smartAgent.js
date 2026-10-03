@@ -207,10 +207,12 @@ export class SmartAgent {
     const minBuyers = this.learningEnabled ? this.effectiveMinExternalBuyers : this.baseMinExternalBuyers;
     const minScore = this.learningEnabled ? this.effectiveMinCompositeScore : this.baseMinCompositeScore;
 
+    const effectiveBuyers = Math.max(tokenInfo.uniqueBuyersCount || 0, tokenInfo.bundledBuysCount || 0);
     const telemetry = {
       devPercent: tokenInfo.devPercent || 0,
       bundleCount: tokenInfo.bundledBuysCount || 0,
-      hasBuyers: (tokenInfo.bundledBuysCount >= minBuyers),
+      buyerCount: effectiveBuyers,
+      hasBuyers: (effectiveBuyers >= minBuyers),
       learningActive: this.learningEnabled,
       timestamp: Date.now(),
     };
@@ -235,11 +237,11 @@ export class SmartAgent {
     }
 
     // 2. HARD VETO: Insufficient buyer velocity
-    if (telemetry.bundleCount < minBuyers) {
+    if (telemetry.buyerCount < minBuyers) {
       return {
         shouldTrade: false,
         score: 25,
-        reason: `INSUFFICIENT_BUYERS (${telemetry.bundleCount} < ${minBuyers})`,
+        reason: `INSUFFICIENT_BUYERS (${telemetry.buyerCount} < ${minBuyers})`,
         telemetry,
       };
     }
@@ -253,15 +255,15 @@ export class SmartAgent {
     else if (telemetry.devPercent <= 6.0) score += 10;
 
     // Volume / Buyer velocity (Max +30 pts)
-    if (telemetry.bundleCount >= 4) score += 30;
-    else if (telemetry.bundleCount >= 2) score += 20;
+    if (telemetry.buyerCount >= 4) score += 30;
+    else if (telemetry.buyerCount >= 2) score += 20;
 
     // 4. AI Experience-Based Conviction Boost / Penalty (When Learning Enabled)
     if (this.learningEnabled && this.experiences.length >= 3) {
       // Reward pristine launches that mirror past winners
-      if (telemetry.devPercent <= 2.0 && telemetry.bundleCount >= 4) {
+      if (telemetry.devPercent <= 2.0 && telemetry.buyerCount >= 4) {
         score += 10; // AI High-Probability Pattern Bonus
-      } else if (telemetry.devPercent >= 5.0 && telemetry.bundleCount <= 2) {
+      } else if (telemetry.devPercent >= 5.0 && telemetry.buyerCount <= 2) {
         score -= 15; // AI High-Risk Trap Penalty
       }
     }

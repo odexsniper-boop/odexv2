@@ -38,10 +38,27 @@ export class PositionManager {
     this.minHoldDurationMs = options.minHoldDurationMs !== undefined ? options.minHoldDurationMs : 8000; // 8s grace window
     this.staleTimeoutMs = options.staleTimeoutMs || 5 * 60 * 1000;
 
-    // Daily Loss Cap guardrail disabled for testing
-    this.dailyLossCapSol = Infinity;
+    // Fix 9: Active configurable Daily Loss Cap circuit breaker
+    this.dailyLossCapSol = options.dailyLossCapSol !== undefined ? Number(options.dailyLossCapSol) : Infinity;
     this.dailyRealizedLossSol = 0;
     this.lastLossResetDay = new Date().getUTCDate();
+
+    // Rehydrate today's realized losses from persisted trade history
+    if (this.tradeHistory && this.tradeHistory.length > 0) {
+      const todayStart = new Date();
+      todayStart.setUTCHours(0, 0, 0, 0);
+      const todayStartMs = todayStart.getTime();
+
+      let restoredLoss = 0;
+      for (const th of this.tradeHistory) {
+        const tradeTime = th.closedAt ? new Date(th.closedAt).getTime() : (th.timestamp ? new Date(th.timestamp).getTime() : 0);
+        const pnl = th.netProfitSol !== undefined ? th.netProfitSol : (th.profitSol !== undefined ? th.profitSol : (th.realizedPnlSol || 0));
+        if (tradeTime >= todayStartMs && pnl < 0) {
+          restoredLoss += Math.abs(pnl);
+        }
+      }
+      this.dailyRealizedLossSol = Number(restoredLoss.toFixed(4));
+    }
 
     eventBus.on('TOKEN_METADATA_UPDATED', (data) => {
       if (data?.mint && data?.imageUrl) {
@@ -68,7 +85,15 @@ export class PositionManager {
   }
 
   isDailyLossExceeded() {
+    this._syncDailyLoss();
+    if (this.dailyLossCapSol !== null && this.dailyLossCapSol !== undefined && Number.isFinite(this.dailyLossCapSol)) {
+      return this.dailyRealizedLossSol >= this.dailyLossCapSol;
+    }
     return false;
+  }
+
+  setDailyLossCap(capSol) {
+    this.dailyLossCapSol = capSol !== null && capSol !== undefined ? Number(capSol) : Infinity;
   }
 
   setCurveWatcher(watcher) {
@@ -93,7 +118,10 @@ export class PositionManager {
       imageUrl: tokenMeta.imageUrl || '',
       creator: tokenMeta.creator || 'UNKNOWN',
       devPercent: tokenMeta.devPercent || 0,
-      bundledBuysCount: tokenMeta.bundledBuysCount || 0,
+      bundledBuysCount: tokenMeta.bundledBuysCount !== undefined ? tokenMeta.bundledBuysCount : 0,
+      uniqueBuyersCount: tokenMeta.uniqueBuyersCount !== undefined ? tokenMeta.uniqueBuyersCount : 0,
+      organicBuyersCount: tokenMeta.organicBuyersCount !== undefined ? tokenMeta.organicBuyersCount : 0,
+      bundleDataStatus: tokenMeta.bundleDataStatus || 'VERIFIED',
       entryScore: tokenMeta.entryScore || 0,
       entryPriceSol: buyFill.spotPriceSol,
       currentPriceSol: buyFill.spotPriceSol,
@@ -126,6 +154,9 @@ export class PositionManager {
       trailingActive: false,
       hitTiers: new Set(),
       status: 'HOLDING',
+      executionState: 'OPEN',
+      pendingEmergencyExit: null,
+      isExiting: false,
       stopLossPercent: tokenMeta.stopLossPercent !== undefined ? tokenMeta.stopLossPercent : this.stopLossPercent,
       lastKnownVirtualSol: 30_000_000_000n,
       lastKnownVirtualTok: 1_073_000_000_000_000n,
@@ -188,7 +219,7 @@ export class PositionManager {
       grossSol = (Number(pos.tokensHeldDisplay) || 0) * currentPriceSol;
     }
     const grossBuyCost = Number(pos.solSpent || (pos.initialSolSpent - (pos.buyJitoTip || 0) - (pos.buyPriorityFee || 0)) || pos.initialSolSpent || 0.1);
-    const grossPnlSol = grossSol - grossBuyCost;
+    const grossPnlSol = (grossSol + Number(pos.realizedSolGained || 0)) - grossBuyCost;
     const grossPnlPercent = grossBuyCost > 0 ? (grossPnlSol / grossBuyCost) * 100 : pos.pricePnlPercent;
     pos.grossSol = grossSol;
     pos.grossPnlSol = grossPnlSol;
@@ -205,10 +236,13 @@ export class PositionManager {
     pos.estimatedFeesSol = totalEstimatedFeesSol;
 
     // 3. Net PnL: After all buy/sell fees, Jito tips, priority fees, and protocol fees
+    // Fix 5: Include realizedSolGained from partial scale-outs so cumulative net PnL is accurate
     const estimatedGrossSol = grossSol * 0.99;
     const estimatedNetProceeds = Math.max(0, estimatedGrossSol - (0.000005 + priorityFeeSol + jitoTip));
-    const netProfitSol = estimatedNetProceeds - (pos.initialSolSpent || 0.1);
-    const netPnlPercent = pos.initialSolSpent ? (netProfitSol / pos.initialSolSpent) * 100 : pos.pricePnlPercent;
+    const totalSolRecovered = estimatedNetProceeds + Number(pos.realizedSolGained || 0);
+    const initialSol = Number(pos.initialSolSpent || 0.1);
+    const netProfitSol = totalSolRecovered - initialSol;
+    const netPnlPercent = initialSol > 0 ? (netProfitSol / initialSol) * 100 : pos.pricePnlPercent;
 
     pos.netPnlSol = netProfitSol;
     pos.netPnlPercent = netPnlPercent;
@@ -230,44 +264,48 @@ export class PositionManager {
     });
 
     try {
-      // 1. HARD STOP LOSS: Evaluates strictly on pricePnlPercent (token spot price movement)
-      // Do not include fixed buy/sell Jito tips or priority fees when determining stop trigger
-      // Grace period: do not trigger ordinary STOP_LOSS if hold duration < minHoldDurationMs UNLESS catastrophic flash-dump (<= -25%)
+      // 1. HARD STOP LOSS & FLASH DUMP (Mandatory Protective Exits)
+      // Evaluates strictly on pricePnlPercent (token spot price movement)
+      // Protective stops ignore minHoldDuration constraints
       const effectiveStopLoss = pos.stopLossPercent !== undefined ? pos.stopLossPercent : this.stopLossPercent;
-      if (pos.pricePnlPercent <= effectiveStopLoss) {
-        const openedTime = pos.openedTimeMs || (pos.openedAt ? new Date(pos.openedAt).getTime() : 0);
-        const holdDurationMs = Date.now() - openedTime;
-        const isSevereFlashDump = pos.pricePnlPercent <= -25;
-        if (holdDurationMs < this.minHoldDurationMs && !isSevereFlashDump) {
-          // Grace period active for minor fluctuations: do not trigger ordinary STOP_LOSS
-        } else {
-          log(`[EXIT TRIGGER] Stop Loss hit on ${pos.name} (Price PnL: ${pos.pricePnlPercent.toFixed(1)}% <= ${effectiveStopLoss}%, Hold: ${(holdDurationMs / 1000).toFixed(1)}s >= ${(this.minHoldDurationMs / 1000).toFixed(1)}s${isSevereFlashDump ? ' [FLASH DUMP OVERRIDE]' : ''}) - Executing immediate exit.`);
-          await this.closePosition(mint, virtualSolReserves, virtualTokenReserves, 'STOP_LOSS', 100, 10000);
-          return;
-        }
+      const isSevereFlashDump = pos.pricePnlPercent <= -25;
+      const isStopLossHit = pos.pricePnlPercent <= effectiveStopLoss;
+      
+      const openedTime = pos.openedTimeMs || (pos.openedAt ? new Date(pos.openedAt).getTime() : 0);
+      const holdDurationMs = Date.now() - openedTime;
+
+      if (isSevereFlashDump || isStopLossHit) {
+        const reason = isSevereFlashDump ? 'FLASH_DUMP_EMERGENCY' : 'STOP_LOSS';
+        log(`[EXIT TRIGGER] ${reason} hit on ${pos.name} (Price PnL: ${pos.pricePnlPercent.toFixed(1)}% <= ${isSevereFlashDump ? -25 : effectiveStopLoss}%, Hold: ${(holdDurationMs / 1000).toFixed(1)}s) - Executing immediate protective exit.`);
+        await this.closePosition(mint, virtualSolReserves, virtualTokenReserves, reason, 100, 10000);
+        return;
       }
 
-      // 2. TRAILING STOP LOSS
-      if (priceRatio >= this.trailingStopActivation) {
-        pos.trailingActive = true;
-      }
-      if (pos.trailingActive) {
-        const dropFromPeak = ((currentPriceSol - pos.peakPriceSol) / pos.peakPriceSol) * 100;
-        if (dropFromPeak <= -this.trailingStopDistance) {
-          log(`[EXIT TRIGGER] Trailing Stop hit on ${pos.name} (-${this.trailingStopDistance}%)`);
-          await this.closePosition(mint, virtualSolReserves, virtualTokenReserves, 'TRAILING_STOP', 100, 10000);
-          return;
-        }
-      }
-
-      // 3. TAKE PROFIT TIERS
+      // Fix 2: Take Profit & Trailing Stop - Eligible Immediately!
+      // Take-profit tiers are evaluated immediately regardless of hold duration
       for (let i = 0; i < this.takeProfitTiers.length; i++) {
         const tier = this.takeProfitTiers[i];
         if (priceRatio >= tier.triggerMultiplier && !pos.hitTiers.has(i)) {
           pos.hitTiers.add(i);
-          log(`[EXIT TRIGGER] Take Profit ${tier.triggerMultiplier}x on ${pos.name}`);
+          log(`🎯 [TAKE PROFIT TRIGGER] Tier ${tier.triggerMultiplier}x reached on ${pos.name} (+${pos.pricePnlPercent.toFixed(1)}% at ${(holdDurationMs / 1000).toFixed(1)}s) - Executing exit (${tier.sellPercent}%).`);
           await this.closePosition(mint, virtualSolReserves, virtualTokenReserves, `TAKE_PROFIT_${tier.triggerMultiplier}X`, tier.sellPercent);
-          break;
+          return;
+        }
+      }
+
+      // Trailing-stop activation & execution (active immediately once activation threshold is reached)
+      if (priceRatio >= this.trailingStopActivation) {
+        if (!pos.trailingActive) {
+          pos.trailingActive = true;
+          log(`📈 [TRAILING STOP ACTIVATED] ${pos.name} reached ${this.trailingStopActivation}x threshold (+${pos.pricePnlPercent.toFixed(1)}%). Trailing distance: ${this.trailingStopDistance}%.`);
+        }
+      }
+      if (pos.trailingActive) {
+        const dropFromPeak = ((currentPriceSol - pos.peakPriceSol) / pos.peakPriceSol) * 100;
+        if (dropFromPeak <= -this.trailingStopDistance) {
+          log(`[EXIT TRIGGER] Trailing Stop hit on ${pos.name} (-${this.trailingStopDistance}% from peak ${pos.peakPriceSol.toExponential(4)} SOL)`);
+          await this.closePosition(mint, virtualSolReserves, virtualTokenReserves, 'TRAILING_STOP', 100, 10000);
+          return;
         }
       }
     } catch (err) {
@@ -279,7 +317,19 @@ export class PositionManager {
     const pos = this.positions.get(mint);
     if (!pos || pos.status === 'SOLD') return;
 
-    log(`[EMERGENCY FRONTRUN] Executing sell for ${pos.name}`);
+    if (pos.isExiting) {
+      log(`[EMERGENCY PREEMPTION] Urgent exit requested for ${pos.name} (${reason}) while sell is in-flight. Queuing emergency liquidation.`);
+      pos.pendingEmergencyExit = {
+        reason,
+        slippageBps: 10000,
+        requestedAt: Date.now(),
+      };
+      pos.executionState = 'EMERGENCY_EXIT_PENDING';
+      return;
+    }
+
+    log(`[EMERGENCY FRONTRUN] Executing immediate sell for ${pos.name}`);
+    pos.executionState = 'EMERGENCY_EXIT_IN_FLIGHT';
     try {
       await this.closePosition(mint, pos.lastKnownVirtualSol, pos.lastKnownVirtualTok, reason, 100, 10000);
     } catch (err) {
@@ -352,7 +402,10 @@ export class PositionManager {
       symbol: pos.symbol,
       imageUrl: pos.imageUrl,
       devPercent: pos.devPercent,
-      bundledBuysCount: pos.bundledBuysCount,
+      bundledBuysCount: pos.bundledBuysCount !== undefined ? pos.bundledBuysCount : 0,
+      uniqueBuyersCount: pos.uniqueBuyersCount !== undefined ? pos.uniqueBuyersCount : 0,
+      organicBuyersCount: pos.organicBuyersCount !== undefined ? pos.organicBuyersCount : 0,
+      bundleDataStatus: pos.bundleDataStatus || 'VERIFIED',
       entryScore: pos.entryScore,
       entryPriceSol: pos.entryPriceSol,
       exitPriceSol: pos.currentPriceSol,
@@ -387,6 +440,21 @@ export class PositionManager {
     eventBus.emit('POSITION_CLOSED', tradeRecord);
   }
 
+  handleCurveGraduated(mint) {
+    const pos = this.positions.get(mint);
+    if (!pos || pos.status === 'SOLD') return;
+    pos.curveLifecycle = 'GRADUATED';
+    pos.venue = 'RAYDIUM';
+    log(`🎓 [POSITION VENUE MIGRATION] Position ${pos.name} (${mint.slice(0, 8)}) detected curve graduation. Transitioning venue to Raydium.`);
+    eventBus.emit('POSITION_GRADUATED', {
+      mint,
+      name: pos.name,
+      tokensHeldRaw: pos.tokensHeldRaw.toString(),
+      venue: 'RAYDIUM',
+      timestamp: Date.now(),
+    });
+  }
+
   cleanupWatchers(mint) {
     if (this.curveWatcher) this.curveWatcher.unwatch(mint);
     if (this.devWatcher) this.devWatcher.unwatch(mint);
@@ -395,7 +463,35 @@ export class PositionManager {
   async closePosition(mint, virtualSolReserves, virtualTokenReserves, reason, sellPercent = 100, slippageBps = null) {
     const pos = this.positions.get(mint);
     if (!pos || pos.status === 'SOLD' || pos.isExiting) return;
+
+    // Fix 1: Graduation & Migration Routing Check
+    const isGraduated = (pos.curveLifecycle === 'GRADUATED') || (this.curveWatcher && typeof this.curveWatcher.isGraduated === 'function' && this.curveWatcher.isGraduated(mint));
+    if (isGraduated) {
+      pos.curveLifecycle = 'GRADUATED';
+      pos.venue = 'RAYDIUM';
+      if (typeof this.execution?.executeRaydiumSell === 'function') {
+        // Supported Raydium router available
+      } else {
+        log(`⚠️ [MIGRATION RECONCILING] Bonding curve graduated for ${pos.name}. Destination Raydium pool is resolving/migrating. Preserving active position.`);
+        pos.isExiting = false;
+        pos.executionState = 'RECONCILING';
+        pos.status = 'MIGRATION_PENDING';
+        pos.migrationStatus = 'AWAITING_RAYDIUM_POOL';
+        eventBus.emit('POSITION_MIGRATION_PENDING', {
+          mint,
+          name: pos.name,
+          reason: 'AWAITING_RAYDIUM_POOL',
+          tokensHeldRaw: pos.tokensHeldRaw.toString(),
+          timestamp: Date.now()
+        });
+        return;
+      }
+    }
+
     pos.isExiting = true;
+    pos.executionState = reason.includes('DEV_RUG') || reason.includes('EMERGENCY') || reason.includes('FLASH_DUMP')
+      ? 'EMERGENCY_EXIT_IN_FLIGHT'
+      : (sellPercent < 100 ? 'PARTIAL_EXIT_IN_FLIGHT' : 'EXIT_REQUESTED');
 
     const effectiveSlippageBps = slippageBps !== null ? slippageBps : (this.execution?.defaultSlippageBps || 1500);
     let tokensToSellRaw = (pos.tokensHeldRaw * BigInt(sellPercent)) / 100n;
@@ -413,14 +509,55 @@ export class PositionManager {
         jitoTipLamports: this.execution?.jitoTipLamports,
       });
     } catch (err) {
+      // Fix 1: Catch on-chain curve completion failure and reconcile route
+      const isCurveCompleteErr = err.message && (
+        err.message.includes('0x1774') || 
+        err.message.toLowerCase().includes('complete') || 
+        err.message.includes('BondingCurveComplete')
+      );
+
+      if (isCurveCompleteErr) {
+        log(`🎓 [GRADUATION CAUGHT ON SELL] Pump.fun curve is complete for ${pos.name}. Reconciling route to Raydium.`);
+        pos.curveLifecycle = 'GRADUATED';
+        pos.venue = 'RAYDIUM';
+        pos.executionState = 'RECONCILING';
+        pos.status = 'MIGRATION_PENDING';
+        pos.migrationStatus = 'CURVE_COMPLETED_AWAITING_MIGRATION';
+        pos.isExiting = false;
+        if (this.curveWatcher && this.curveWatcher.curveLifecycles) {
+          this.curveWatcher.curveLifecycles.set(mint, 'GRADUATED');
+        }
+        eventBus.emit('POSITION_MIGRATION_PENDING', {
+          mint,
+          name: pos.name,
+          reason: 'BONDING_CURVE_COMPLETE_RECONCILING',
+          tokensHeldRaw: pos.tokensHeldRaw.toString(),
+          timestamp: Date.now(),
+        });
+        return;
+      }
+
       log(`[POSITION EXIT FAILED] On-chain sell failed for ${pos.name}: ${err.message}. Position remains OPEN.`);
       pos.isExiting = false;
+      pos.executionState = 'OPEN';
+      if (pos.pendingEmergencyExit) {
+        const emergency = pos.pendingEmergencyExit;
+        pos.pendingEmergencyExit = null;
+        log(`[EMERGENCY ESCALATION] Executing queued emergency exit after prior sell failure on ${pos.name}`);
+        setImmediate(() => this.closePosition(mint, virtualSolReserves, virtualTokenReserves, emergency.reason, 100, emergency.slippageBps));
+      }
       return;
     }
 
     if (!sellFill || !sellFill.txHash) {
       log(`[POSITION EXIT ABORTED] Sell did not confirm for ${pos.name}. Position remains OPEN.`);
       pos.isExiting = false;
+      pos.executionState = 'OPEN';
+      if (pos.pendingEmergencyExit) {
+        const emergency = pos.pendingEmergencyExit;
+        pos.pendingEmergencyExit = null;
+        setImmediate(() => this.closePosition(mint, virtualSolReserves, virtualTokenReserves, emergency.reason, 100, emergency.slippageBps));
+      }
       return;
     }
     
@@ -435,6 +572,8 @@ export class PositionManager {
 
     if (pos.tokensHeldRaw === 0n || sellPercent === 100) {
       pos.status = 'SOLD';
+      pos.executionState = 'CLOSED';
+      pos.pendingEmergencyExit = null;
       pos.closedAt = new Date().toISOString();
       this.cleanupWatchers(mint);
 
@@ -452,7 +591,10 @@ export class PositionManager {
         symbol: pos.symbol,
         imageUrl: pos.imageUrl,
         devPercent: pos.devPercent,
-        bundledBuysCount: pos.bundledBuysCount,
+        bundledBuysCount: pos.bundledBuysCount !== undefined ? pos.bundledBuysCount : 0,
+        uniqueBuyersCount: pos.uniqueBuyersCount !== undefined ? pos.uniqueBuyersCount : 0,
+        organicBuyersCount: pos.organicBuyersCount !== undefined ? pos.organicBuyersCount : 0,
+        bundleDataStatus: pos.bundleDataStatus || 'VERIFIED',
         entryScore: pos.entryScore,
         entryPriceSol: pos.entryPriceSol,
         exitPriceSol: sellFill.spotPriceSol,
@@ -480,6 +622,8 @@ export class PositionManager {
         pnlPercent: finalPnl,
         status: 'SOLD',
         reason,
+        venue: pos.venue || 'PUMP_FUN',
+        curveLifecycle: pos.curveLifecycle || 'BONDING',
         txHash: sellFill.txHash,
         route: sellFill.route,
         openedAt: pos.openedAt,
@@ -492,8 +636,16 @@ export class PositionManager {
       TradeStorage.saveState(this.positions, this.tradeHistory);
       eventBus.emit('POSITION_CLOSED', tradeRecord);
     } else {
+      pos.executionState = 'OPEN';
       TradeStorage.saveState(this.positions, this.tradeHistory);
       eventBus.emit('POSITION_SCALED_OUT', { mint: pos.mint, partialFill: sellFill });
+
+      if (pos.pendingEmergencyExit) {
+        const emergency = pos.pendingEmergencyExit;
+        pos.pendingEmergencyExit = null;
+        log(`[EMERGENCY PREEMPTION DISPATCH] Executing queued emergency exit for remaining ${(Number(pos.tokensHeldRaw)/1e6).toFixed(2)} tokens on ${pos.name}`);
+        setImmediate(() => this.closePosition(mint, virtualSolReserves, virtualTokenReserves, emergency.reason, 100, emergency.slippageBps));
+      }
     }
   }
 

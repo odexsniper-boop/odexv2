@@ -11,7 +11,7 @@ export class NarrativeEngine {
       {
         id: 'AI_AGENT_TECH',
         label: 'AI & Autonomous Meta',
-        keywords: ['ai', 'agent', 'gpt', 'deepseek', 'claude', 'bot', 'terminal', 'neural', 'compute', 'singularity', 'virtual', 'model', 'gemini', 'open', 'agi'],
+        keywords: ['ai', 'agent', 'gpt', 'deepseek', 'claude', 'bot', 'terminal', 'neural', 'compute', 'singularity', 'virtual', 'gemini', 'agi', 'openai', 'open ai', 'llm', 'foundation model', 'ai model', 'language model'],
         weight: 35,
       },
       {
@@ -23,7 +23,7 @@ export class NarrativeEngine {
       {
         id: 'INFLUENCER_EVENT_NEWS',
         label: 'Cultural Event & Influencer',
-        keywords: ['elon', 'trump', 'musk', 'tate', 'vitalik', 'cz', 'saylor', 'breaking', 'official', 'news', 'nasa', 'mars'],
+        keywords: ['elon', 'trump', 'musk', 'tate', 'vitalik', 'cz', 'saylor', 'breaking', 'official', 'breaking news', 'crypto news', 'nasa', 'mars'],
         weight: 30,
       },
       {
@@ -180,22 +180,38 @@ export class NarrativeEngine {
     // Normalization (0-100)
     score = Math.max(0, Math.min(100, Math.round(score)));
 
-    let passed = score >= 40;
+    // Eligibility & Evidence Requirements
+    let eligibilityState = 'INSUFFICIENT_DATA';
+    let passed = false;
     let requiresExceptionalMomentum = false;
 
-    // Narrative VIP Bypass: Score 15-39 puts it on probation (requires exceptional on-chain momentum)
-    if (score >= 15 && score < 40) {
+    // Minimum independent positive evidence
+    const hasEvidence = socialsFound > 0 || replies >= 5 || (desc.length > 40 && score >= 40);
+
+    if (score >= 40 && hasEvidence) {
+      eligibilityState = 'VERIFIED';
+      passed = true;
+    } else if (score >= 15 && hasEvidence) {
+      eligibilityState = 'PROBATION';
       passed = true;
       requiresExceptionalMomentum = true;
+      reasons.push('Probationary status: limited evidence, requires exceptional momentum');
+    } else {
+      eligibilityState = score < 15 ? 'REJECTED' : 'INSUFFICIENT_DATA';
+      passed = false;
+      if (!hasEvidence && score >= 15) {
+        reasons.push('Rejected: Insufficient independent positive evidence despite base score');
+      }
     }
 
     return {
       passed,
+      eligibilityState,
       requiresExceptionalMomentum,
       narrativeScore: score,
       theme: detectedTheme,
       reasons,
-      socialsFound: (this._isValidSocialHandle(metadata.twitter, 'twitter') ? 1 : 0) + (this._isValidSocialHandle(metadata.telegram, 'telegram') ? 1 : 0)
+      socialsFound
     };
   }
 }

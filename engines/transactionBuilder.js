@@ -106,8 +106,13 @@ export class TransactionBuilder {
     // 3. Pump.fun Buy instruction data
     const data = Buffer.alloc(24);
     BUY_DISCRIMINATOR.copy(data, 0);
-    data.writeBigUInt64LE(BigInt(tokenAmount), 8);
-    data.writeBigUInt64LE(BigInt(maxSolCostLamports), 16);
+    const tokenAmountBigInt = BigInt(tokenAmount);
+    const maxSolCostBigInt = BigInt(maxSolCostLamports);
+    if (maxSolCostBigInt < 0n || maxSolCostBigInt > 18446744073709551615n) {
+      throw new Error(`SERIALIZATION_FAILED: maxSolCostLamports (${maxSolCostBigInt}) out of u64 range`);
+    }
+    data.writeBigUInt64LE(tokenAmountBigInt, 8);
+    data.writeBigUInt64LE(maxSolCostBigInt, 16);
 
     const buyKeys = [
       { pubkey: PUMP_GLOBAL, isSigner: false, isWritable: false }, // 0
@@ -208,7 +213,13 @@ export class TransactionBuilder {
     const startTime = performance.now();
     const mintPubkey = typeof mint === 'string' ? new PublicKey(mint) : mint;
 
-    const progId = tokenProgramId || (await this.tokenResolver.resolve(mintPubkey));
+    const tokenAmountBigInt = BigInt(tokenAmount);
+    const minSolOutputBigInt = BigInt(minSolOutputLamports);
+    if (minSolOutputBigInt < 0n || minSolOutputBigInt > 18446744073709551615n) {
+      throw new Error(`SERIALIZATION_FAILED: minSolOutputLamports (${minSolOutputBigInt}) out of u64 range`);
+    }
+
+    const progId = tokenProgramId || (this.tokenResolver && typeof this.tokenResolver.resolve === 'function' ? (await this.tokenResolver.resolve(mintPubkey)) : TOKEN_PROGRAM_ID);
 
     let meta = this.cache ? this.cache.getTokenMeta(mintPubkey) : null;
     if ((!meta || !meta.creator) && this.cache && this.cache.connection) {
@@ -241,27 +252,11 @@ export class TransactionBuilder {
     tx.add(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: priorityFeeMicroLamports }));
     tx.add(ComputeBudgetProgram.setComputeUnitLimit({ units: computeUnits }));
 
-    // 2. Idempotent ATA create instruction (with correct token program ID!)
-    tx.add(
-      new TransactionInstruction({
-        programId: ASSOCIATED_TOKEN_PROGRAM_ID,
-        keys: [
-          { pubkey: wallet.publicKey, isSigner: true, isWritable: true },
-          { pubkey: userAta, isSigner: false, isWritable: true },
-          { pubkey: wallet.publicKey, isSigner: false, isWritable: false },
-          { pubkey: mintPubkey, isSigner: false, isWritable: false },
-          { pubkey: SYSTEM_PROGRAM_ID, isSigner: false, isWritable: false },
-          { pubkey: progId, isSigner: false, isWritable: false },
-        ],
-        data: Buffer.from([1]),
-      })
-    );
-
-    // 3. Pump.fun Sell instruction data
+    // 2. Pump.fun Sell instruction data (redundant ATA creation removed: user already holds tokens)
     const data = Buffer.alloc(8 + 8 + 8);
     SELL_DISCRIMINATOR.copy(data, 0);
-    data.writeBigUInt64LE(BigInt(tokenAmount), 8);
-    data.writeBigUInt64LE(BigInt(minSolOutputLamports), 16);
+    data.writeBigUInt64LE(tokenAmountBigInt, 8);
+    data.writeBigUInt64LE(minSolOutputBigInt, 16);
 
     const sellKeys = [
       { pubkey: PUMP_GLOBAL, isSigner: false, isWritable: false }, // 0

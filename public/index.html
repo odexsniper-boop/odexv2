@@ -3688,11 +3688,28 @@
       }
     } catch (e) {}
 
+    // Clean up any test/mock tokens persisted in browser localStorage
+    try {
+      const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken']);
+      ['odex_cached_positions', 'odex_cached_tokens'].forEach(key => {
+        const raw = localStorage.getItem(key);
+        if (raw) {
+          const list = JSON.parse(raw);
+          if (Array.isArray(list)) {
+            const cleanList = list.filter(item => !mockNames.has(item.name));
+            localStorage.setItem(key, JSON.stringify(cleanList));
+          }
+        }
+      });
+    } catch (e) {}
+
     // Restore cached active positions
     try {
+      const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken']);
       const cachedPos = JSON.parse(localStorage.getItem('odex_cached_positions') || '[]');
       if (Array.isArray(cachedPos) && cachedPos.length > 0) {
         cachedPos.forEach(p => {
+          if (mockNames.has(p.name)) return;
           tokensMap.set(p.mint, {
             mint: p.mint,
             name: p.name,
@@ -3708,9 +3725,11 @@
 
     // Restore cached tokens
     try {
+      const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken']);
       const cachedToks = JSON.parse(localStorage.getItem('odex_cached_tokens') || '[]');
       if (Array.isArray(cachedToks) && cachedToks.length > 0) {
         cachedToks.forEach(t => {
+          if (mockNames.has(t.name)) return;
           if (!tokensMap.has(t.mint)) tokensMap.set(t.mint, t);
         });
       }
@@ -4051,7 +4070,7 @@
           const activeMints = new Set(d.positions.map(p => p.mint));
           for (const [m, tok] of tokensMap.entries()) {
             if (tok.state === 'POSITION_OPEN' && !activeMints.has(m)) {
-              tok.state = 'CLOSED';
+              tokensMap.delete(m);
             }
           }
           d.positions.forEach(p => {
@@ -4063,6 +4082,8 @@
             tokensMap.set(p.mint, t);
           });
           try { localStorage.setItem('odex_cached_positions', JSON.stringify(d.positions)); } catch (e) {}
+          saveCachedPositions();
+          saveCachedTokens();
         }
         if (d.tradeHistory) {
           closedTrades = d.tradeHistory;
@@ -4121,7 +4142,8 @@
           appendLog(`⚙️ [CONFIG] Stop Loss updated to ${d.stopLossPercent}%`, 'var(--blue-primary)');
         }
       } else if (type === 'STATE_TRANSITION') {
-        const record = d.record;
+        const record = d.record || d;
+        if (!record || !record.mint) return;
         const isAlreadyClosed = (Array.isArray(closedTrades) && closedTrades.some(c => c.mint === record.mint));
         if (isAlreadyClosed && record.state !== 'CLOSED') {
           record.state = 'CLOSED';
@@ -4195,7 +4217,7 @@
             t.buyVolumeSol = d.buyVolumeSol;
             t.sellVolumeSol = d.sellVolumeSol;
             t.stage2_moneyFlow = d.stage2_moneyFlow;
-            if (t.uniqueBuyers && d.uniqueBuyers !== undefined) t.uniqueBuyers.size = d.uniqueBuyers;
+            if (d.uniqueBuyers !== undefined) t.uniqueBuyers = d.uniqueBuyers;
             if (d.buyerQuality) t.buyerQuality = d.buyerQuality;
             render();
           }
@@ -4290,6 +4312,11 @@
     async function forceExit(mint) {
       if (!confirm(`Are you sure you want to force exit / liquidate position for ${mint.slice(0, 8)}?`)) return;
       appendLog(`⚠️ [MANUAL SELL] Requesting immediate manual exit for ${mint.slice(0, 8)}...`, 'var(--yellow-primary)');
+      // Optimistically clean up immediately on the client
+      tokensMap.delete(mint);
+      saveCachedPositions();
+      saveCachedTokens();
+      render();
       try {
         await fetch('/api/force-exit', {
           method: 'POST',
@@ -4521,13 +4548,14 @@
 
         // 2. Money Flow Cell
         const flow = t.stage2_moneyFlow || {};
+        const bq = t.buyerQuality || {};
         const flowRatio = flow.buySellRatio || (t.sellVolumeSol > 0 ? (t.buyVolumeSol / t.sellVolumeSol).toFixed(2) : 1.0);
         const netDelta = flow.netVolumeDeltaSol !== undefined ? flow.netVolumeDeltaSol : ((t.buyVolumeSol || 0) - (t.sellVolumeSol || 0));
         const deltaColor = netDelta >= 0 ? 'var(--green-primary)' : 'var(--red-primary)';
-        const bq = t.buyerQuality || {};
-        const organicBuyers = bq.organicBuyerCount || flow.organicBuyersCount || flow.uniqueBuyersCount || (t.uniqueBuyers ? t.uniqueBuyers.size : 0);
+        const rawUnique = typeof t.uniqueBuyers === 'number' ? t.uniqueBuyers : (t.uniqueBuyers ? (t.uniqueBuyers.size ?? t.uniqueBuyers) : 0);
+        const organicBuyers = bq.organicBuyerCount || flow.organicBuyersCount || flow.uniqueBuyersCount || rawUnique;
         const rawBuyers = bq.rawBuyerCount || flow.rawBuyersCount || organicBuyers;
-        const hasCluster = bq.clusterCount > 0 || (rawBuyers > organicBuyers);
+        const hasCluster = (bq.clusterCount > 0) || (rawBuyers > organicBuyers);
         const clusterRisk = bq.coordinationRisk || flow.clusterRisk || 'LOW';
 
         const buyerHtml = hasCluster 
@@ -5441,6 +5469,12 @@
         if (positionsRes.status === 'fulfilled' && positionsRes.value?.positions) {
           const pList = positionsRes.value.positions;
           if (Array.isArray(pList)) {
+            const activeMints = new Set(pList.map(p => p.mint));
+            for (const [m, tok] of tokensMap.entries()) {
+              if (tok.state === 'POSITION_OPEN' && !activeMints.has(m)) {
+                tokensMap.delete(m);
+              }
+            }
             pList.forEach(p => {
               const t = tokensMap.get(p.mint) || { mint: p.mint };
               t.name = p.name;
@@ -5450,6 +5484,8 @@
               tokensMap.set(p.mint, t);
             });
             try { localStorage.setItem('odex_cached_positions', JSON.stringify(pList)); } catch (e) {}
+            saveCachedPositions();
+            saveCachedTokens();
             render();
           }
         }

@@ -6,6 +6,8 @@ import { narrativeEngine } from './narrativeEngine.js';
 import { validateMoneyFlow } from './manipulationEngine.js';
 import { evaluateThreeCandlePattern, CandleBuilder } from './priceEngine.js';
 import { BuyerQualityEngine } from './buyerQualityEngine.js';
+import { HardSafetyFilter } from './safetyEngine.js';
+import { calculateSpotPriceSol } from '../pumpfun.js';
 
 /**
  * 3-Stage Deterministic Orchestrator & State Machine:
@@ -52,6 +54,12 @@ export class Orchestrator {
     this.tradeCooldownMs = tradeCooldownMs;
     this.lastTradeTime = 0;
 
+    // Fix 3: Bounded Entry Queue & Deferred Scheduler
+    this.entryQueue = []; // array of { mint, queuedAt, reason, breakoutPriceSol }
+    this.maxQueueSize = 20;
+    this.maxQueueAgeMs = 60000; // 60s max signal validity
+    this.cooldownTimer = null;
+
     // Buyer Quality & Sybil Defense Engine
     this.buyerQualityEngine = new BuyerQualityEngine(curveWatcher?.connection || executionEngine?.connection || null);
 
@@ -64,15 +72,29 @@ export class Orchestrator {
     // Garbage Collection & Late Breakout Watchlist
     setInterval(async () => {
       const now = Date.now();
-      const protectedStates = [TokenState.POSITION_OPEN, TokenState.BUY_PENDING, TokenState.EXIT_PENDING, TokenState.LIGHTWEIGHT_WATCHLIST];
+      const protectedStates = [
+        TokenState.POSITION_OPEN, 
+        TokenState.BUY_PENDING, 
+        TokenState.EXIT_PENDING, 
+        TokenState.WAITING_FOR_CAPACITY,
+        TokenState.WAITING_FOR_COOLDOWN,
+        TokenState.REVALIDATING,
+        TokenState.LIGHTWEIGHT_WATCHLIST
+      ];
       
       for (const [mint, record] of this.tokens.entries()) {
-        // 1. Stale Active Trackers (Move to Watchlist after 60s)
-        if ((record.state === TokenState.MONEY_FLOW_WATCH || record.state === TokenState.PATTERN_FORMING) && (now - record.updatedAt > 60000)) {
+        // 1. Stale Active Trackers (Move to Watchlist after 120s of complete inactivity)
+        if ((record.state === TokenState.MONEY_FLOW_WATCH || record.state === TokenState.PATTERN_FORMING) && (now - record.updatedAt > 120000)) {
           record.transitionTo(TokenState.LIGHTWEIGHT_WATCHLIST, 'Moved to Late Breakout Scanner');
           log(`[WATCHLIST] ${record.name || mint.slice(0,8)} sleeping, moved to Late Breakout Scanner`);
           if (this.curveWatcher) this.curveWatcher.unwatch(mint); // Disconnect WS to save RAM/RPC
           if (this.devWatcher) this.devWatcher.unwatchDev(mint); // Unsubscribe Dev ATA to prevent memory/RPC leak
+          eventBus.emit('STATE_TRANSITION', {
+            mint,
+            state: record.state,
+            reason: record.rejectionReason,
+            record: this.serializeToken(record),
+          });
         } 
         // 2. Hard TTL Deletion (10 mins for rejects/closed)
         else if (!protectedStates.includes(record.state) && (now - record.updatedAt > 600000)) {
@@ -85,13 +107,15 @@ export class Orchestrator {
       }
     }, 30000); // Check every 30 seconds
 
-    // Late Breakout Engine (Scanner)
+    // Late Breakout Engine (Scanner): Periodically checks watchlist tokens for fresh volume surges
     setInterval(async () => {
       const watchlist = Array.from(this.tokens.values()).filter(t => t.state === TokenState.LIGHTWEIGHT_WATCHLIST);
       if (watchlist.length === 0) return;
       
       const now = Date.now();
-      for (const record of watchlist) {
+      const connection = this.curveWatcher?.connection;
+
+      for (const record of watchlist.slice(0, 10)) {
         if (now - record.updatedAt > 7200000) { // 2 hour hard TTL for Watchlist
           this.tokens.delete(record.mint);
           this.candleBuilders.delete(record.mint);
@@ -99,10 +123,27 @@ export class Orchestrator {
           continue;
         }
         
-        // TODO: In production, batch REST API call here to check for volume spikes.
-        // If a massive volume spike is detected:
-        // record.transitionTo(TokenState.PATTERN_FORMING, 'LATE BREAKOUT DETECTED');
-        // if (this.curveWatcher) this.curveWatcher.watch(record.mint);
+        if (connection) {
+          try {
+            const { PublicKey } = await import('@solana/web3.js');
+            const { getBondingCurvePDA } = await import('../pumpfun.js');
+            const pda = getBondingCurvePDA(new PublicKey(record.mint));
+            const acc = await connection.getAccountInfo(pda, 'processed');
+            if (acc && acc.data && acc.data.length >= 24) {
+              const vSol = acc.data.readBigUInt64LE(16);
+              const prevSol = record.lastVirtualSolReserves || 30_000_000_000n;
+              if (vSol > prevSol + 500_000_000n) { // >= 0.5 SOL inflow detected
+                log(`🔥 [LATE BREAKOUT DETECTED] Watchlist token ${record.name || record.mint.slice(0, 8)} woke up (+${(Number(vSol - prevSol) / 1e9).toFixed(2)} SOL)! Resuming tracking.`);
+                record.transitionTo(TokenState.MONEY_FLOW_WATCH, 'LATE_BREAKOUT_INFLOW');
+                if (this.curveWatcher) this.curveWatcher.watch(record.mint);
+                if (this.devWatcher && record.creator && record.creator !== 'UNKNOWN') {
+                  this.devWatcher.watchDev(record.mint, record.creator);
+                }
+                eventBus.emit('STATE_TRANSITION', { mint: record.mint, state: record.state, record: this.serializeToken(record) });
+              }
+            }
+          } catch (e) {}
+        }
       }
     }, 60000); // Scan every 60 seconds
 
@@ -110,8 +151,7 @@ export class Orchestrator {
     eventBus.on('CURVE_TICK', (tick) => this.handleCurveTick(tick));
     eventBus.on('DEV_DUMP_ALERT', (alert) => this.handleDevDumpAlert(alert));
     eventBus.on('POSITION_CLOSED', (tradeRecord) => this.handlePositionClosed(tradeRecord));
-
-
+    eventBus.on('BUNDLE_METRICS_UPDATED', (data) => this.handleBundleMetricsUpdated(data));
   }
 
   setCurveWatcher(watcher) {
@@ -154,6 +194,7 @@ export class Orchestrator {
     record.initialMarketCapSol = eventData.initialMarketCapSol || 30.0;
     record.name = eventData.name || 'Resolving...';
     record.symbol = eventData.symbol || '...';
+    record.metadataUri = eventData.metadataUri || null;
     this.tokens.set(mint, record);
 
     // Preload token program & creator in Execution Cache for 0ms trade construction
@@ -172,26 +213,27 @@ export class Orchestrator {
       record: this.serializeToken(record),
     });
 
-    // Check known ruggers immediately
+    // Authoritative Launch Safety Gate (HardSafetyFilter)
     const isKnownRugger = this.devWatcher ? this.devWatcher.isKnownRugger(record.creator) : false;
-    if (isKnownRugger) {
-      this.vetoCount++;
-      record.transitionTo(TokenState.REJECTED, 'FLAGGED_PREVIOUS_RUGGER');
-      log(`[STAGE 1 VETO] Flagged known rugger creator: ${record.creator.slice(0, 8)}`);
-      eventBus.emit('STATE_TRANSITION', {
-        mint,
-        state: record.state,
-        reason: record.rejectionReason,
-        record: this.serializeToken(record),
-      });
-      return record;
-    }
+    const activeSafetyFilter = this.safetyFilter || new HardSafetyFilter({ maxDevPercent: 8.0, maxBundleWallets: 3, maxBundlePercent: 20.0, allowMissingBundleData: true });
+    const safetyVerdict = activeSafetyFilter.evaluate({
+      mint,
+      creator: record.creator,
+      devPercent: record.devPercent,
+      bundledBuysCount: record.bundledBuysCount,
+      bundlePercent: eventData.bundlePercent,
+      bundleDataStatus: eventData.bundleDataStatus,
+      isKnownRugger,
+      mintDisabled: eventData.mintDisabled,
+      freezeDisabled: eventData.freezeDisabled,
+    });
 
-    // Hard creator holding limit (Strict 8%)
-    if (record.devPercent > 8.0) {
+    record.safetyVerdict = safetyVerdict;
+
+    if (!safetyVerdict.pass) {
       this.vetoCount++;
-      record.transitionTo(TokenState.REJECTED, `DEV_OVERALLOCATED (${record.devPercent.toFixed(1)}% > 8%)`);
-      log(`[STAGE 1 VETO] Dev holding too high: ${record.devPercent.toFixed(1)}%`);
+      record.transitionTo(TokenState.REJECTED, `STAGE 0 HARD SAFETY VETO: ${safetyVerdict.reason}`);
+      log(`[STAGE 0 SAFETY VETO] ${record.name || mint.slice(0, 8)} rejected: ${safetyVerdict.reason}`);
       eventBus.emit('STATE_TRANSITION', {
         mint,
         state: record.state,
@@ -211,11 +253,15 @@ export class Orchestrator {
 
     // Fetch full metadata & socials asynchronously with on-chain name fallback
     try {
-      const meta = await fetchTokenMetadata(mint, record.name, record.symbol);
+      const meta = await fetchTokenMetadata(mint, record.name, record.symbol, record.metadataUri);
       if (meta) {
         if (meta.name) record.name = meta.name;
         if (meta.symbol) record.symbol = meta.symbol;
         if (meta.imageUrl) record.imageUrl = meta.imageUrl;
+        if (meta.description) record.description = meta.description;
+        if (meta.twitter) record.twitter = meta.twitter;
+        if (meta.telegram) record.telegram = meta.telegram;
+        if (meta.website) record.website = meta.website;
         eventBus.emit('TOKEN_METADATA_UPDATED', {
           mint,
           name: record.name,
@@ -223,96 +269,118 @@ export class Orchestrator {
           imageUrl: record.imageUrl,
         });
 
-        // Rapid adaptive metadata polling (300ms, 800ms, 1800ms, 3500ms) to catch images and names immediately as indexed
-        const hasPlaceholderName = !record.name || record.name === 'Unknown Token' || record.name === 'Resolving...';
-        if (!record.imageUrl || hasPlaceholderName || (!meta.twitter && !meta.telegram)) {
-          const delays = [300, 800, 1800, 3500];
-          delays.forEach(delay => {
-            setTimeout(async () => {
-              const nameReady = record.name && record.name !== 'Unknown Token' && record.name !== 'Resolving...';
-              if (record.imageUrl && nameReady && record.stage1_narrative?.socialsFound > 0) return;
-              try {
-                const fresh = await fetchTokenMetadata(mint);
-                if (fresh) {
-                  let updated = false;
-                  if (fresh.imageUrl && fresh.imageUrl !== record.imageUrl) {
-                    record.imageUrl = fresh.imageUrl;
-                    updated = true;
-                  }
-                  if (fresh.name && fresh.name !== record.name && fresh.name !== 'Unknown Token' && fresh.name !== 'Resolving...') {
-                    record.name = fresh.name;
-                    updated = true;
-                  }
-                  if (fresh.symbol && fresh.symbol !== record.symbol && fresh.symbol !== 'UNK') {
-                    record.symbol = fresh.symbol;
-                    updated = true;
-                  }
-                  if (fresh.twitter || fresh.telegram) {
-                    const freshVerdict = narrativeEngine.evaluateNarrative(fresh);
-                    record.stage1_narrative = freshVerdict;
-                    record.narrativeScore = freshVerdict.narrativeScore;
-                    updated = true;
-                  }
-                  if (updated) {
-                    eventBus.emit('TOKEN_METADATA_UPDATED', {
-                      mint,
-                      name: record.name,
-                      symbol: record.symbol,
-                      imageUrl: record.imageUrl,
-                    });
-                  }
-                }
-              } catch (e) {}
-            }, delay);
+        const advanceToStage2 = (verdict) => {
+          if (record.state !== TokenState.NARRATIVE_AUDIT) return;
+          record.stage1_narrative = verdict;
+          record.narrativeScore = verdict.narrativeScore;
+          log(`💡 [STAGE 1 PASS] Narrative Confirmed for ${record.name} (${verdict.theme}, Score: ${verdict.narrativeScore}/100, Socials: ${verdict.socialsFound})`);
+          
+          record.transitionTo(TokenState.MONEY_FLOW_WATCH);
+          record.stageEnteredAt = Date.now();
+          const candleTf = (record.narrativeScore >= 75 || record.bundledBuysCount >= 15) ? 4 : 8;
+          this.candleBuilders.set(mint, new CandleBuilder(candleTf));
+
+          if (this.curveWatcher) {
+            this.curveWatcher.watch(mint);
+          }
+          if (this.devWatcher && record.creator && record.creator !== 'UNKNOWN') {
+            this.devWatcher.watchDev(mint, record.creator);
+          }
+
+          eventBus.emit('STATE_TRANSITION', {
+            mint,
+            state: record.state,
+            record: this.serializeToken(record),
           });
-        }
+        };
 
-        // Evaluate Stage 1: Narrative & Mindshare
-        const narrativeVerdict = narrativeEngine.evaluateNarrative(meta);
-        record.stage1_narrative = narrativeVerdict;
-        record.narrativeScore = narrativeVerdict.narrativeScore;
-
-        if (!narrativeVerdict.passed) {
+        const rejectStage1 = (verdict) => {
+          if (record.state !== TokenState.NARRATIVE_AUDIT) return;
           this.vetoCount++;
+          record.stage1_narrative = verdict;
+          record.narrativeScore = verdict.narrativeScore;
           record.transitionTo(
             TokenState.REJECTED,
-            `STAGE 1 FAILED: WEAK_NARRATIVE (${narrativeVerdict.theme}, Score: ${narrativeVerdict.narrativeScore}/100)`
+            `STAGE 1 FAILED: WEAK_NARRATIVE (${verdict.theme}, Score: ${verdict.narrativeScore}/100)`
           );
-          log(`[STAGE 1 REJECT] ${record.name} dropped: Weak narrative (${narrativeVerdict.theme}, ${narrativeVerdict.narrativeScore}/100)`);
+          log(`[STAGE 1 REJECT] ${record.name} dropped: Weak narrative (${verdict.theme}, ${verdict.narrativeScore}/100)`);
           eventBus.emit('STATE_TRANSITION', {
             mint,
             state: record.state,
             reason: record.rejectionReason,
             record: this.serializeToken(record),
           });
+        };
+
+        // Evaluate Stage 1: Narrative & Mindshare
+        const narrativeVerdict = narrativeEngine.evaluateNarrative(meta);
+        record.stage1_narrative = narrativeVerdict;
+        record.narrativeScore = narrativeVerdict.narrativeScore;
+
+        if (narrativeVerdict.passed) {
+          advanceToStage2(narrativeVerdict);
           return record;
         }
 
-        // Passed Stage 1!
-        log(`💡 [STAGE 1 PASS] Narrative Confirmed for ${record.name} (${narrativeVerdict.theme}, Score: ${narrativeVerdict.narrativeScore}/100, Socials: ${narrativeVerdict.socialsFound})`);
-        
-        // Advance to Stage 2: MONEY_FLOW_WATCH
-        record.transitionTo(TokenState.MONEY_FLOW_WATCH);
-        record.stageEnteredAt = Date.now();
-        // Seed candle builder (Dynamic timeframe: 4s micro-candles for high-velocity/top narrative tokens, 8s standard)
-        const candleTf = (record.narrativeScore >= 75 || record.bundledBuysCount >= 15) ? 4 : 8;
-        this.candleBuilders.set(mint, new CandleBuilder(candleTf));
+        // If not passed initially, check if metadata is still in-flight / propagating on IPFS
+        const isMetadataInFlight = Boolean(record.metadataUri) && (!meta.twitter && !meta.telegram && !meta.description);
 
-        // Start tracking live on-chain bonding curve reserves
-        if (this.curveWatcher) {
-          this.curveWatcher.watch(mint);
-        }
+        // Schedule adaptive metadata polling (400ms, 1000ms, 2000ms, 3200ms) to resolve in-flight metadata
+        const delays = [400, 1000, 2000, 3200];
+        delays.forEach((delay, idx) => {
+          setTimeout(async () => {
+            if (record.state !== TokenState.NARRATIVE_AUDIT) return;
+            try {
+              const fresh = await fetchTokenMetadata(mint, record.name, record.symbol, record.metadataUri);
+              if (fresh) {
+                let updated = false;
+                if (fresh.imageUrl && fresh.imageUrl !== record.imageUrl) {
+                  record.imageUrl = fresh.imageUrl;
+                  updated = true;
+                }
+                if (fresh.name && fresh.name !== record.name && fresh.name !== 'Unknown Token' && fresh.name !== 'Resolving...') {
+                  record.name = fresh.name;
+                  updated = true;
+                }
+                if (fresh.symbol && fresh.symbol !== record.symbol && fresh.symbol !== 'UNK') {
+                  record.symbol = fresh.symbol;
+                  updated = true;
+                }
+                if (fresh.twitter || fresh.telegram || (fresh.description && fresh.description.length > 20)) {
+                  const freshVerdict = narrativeEngine.evaluateNarrative(fresh);
+                  record.stage1_narrative = freshVerdict;
+                  record.narrativeScore = freshVerdict.narrativeScore;
+                  updated = true;
 
-        // Guard against dev dump during Stage 2
-        if (this.devWatcher && record.creator && record.creator !== 'UNKNOWN') {
-          this.devWatcher.watchDev(mint, record.creator);
-        }
+                  if (freshVerdict.passed) {
+                    advanceToStage2(freshVerdict);
+                    return;
+                  }
+                }
+                if (updated) {
+                  eventBus.emit('TOKEN_METADATA_UPDATED', {
+                    mint,
+                    name: record.name,
+                    symbol: record.symbol,
+                    imageUrl: record.imageUrl,
+                  });
+                }
+              }
+            } catch (e) {}
 
-        eventBus.emit('STATE_TRANSITION', {
-          mint,
-          state: record.state,
-          record: this.serializeToken(record),
+            // If final delay reached and still hasn't passed, issue final Stage 1 rejection
+            if (idx === delays.length - 1 && record.state === TokenState.NARRATIVE_AUDIT) {
+              const finalVerdict = record.stage1_narrative || narrativeVerdict;
+              rejectStage1(finalVerdict);
+            }
+          }, delay);
         });
+
+        if (!isMetadataInFlight) {
+          // No off-chain URI pending; reject immediately
+          rejectStage1(narrativeVerdict);
+          return record;
+        }
       } else {
         // Metadata completely missing after timeout
         record.transitionTo(TokenState.REJECTED, 'STAGE 1 FAILED: METADATA_TIMEOUT');
@@ -330,6 +398,52 @@ export class Orchestrator {
     return record;
   }
 
+  handleBundleMetricsUpdated(data) {
+    const mint = data?.mint;
+    if (!mint) return;
+    const record = this.tokens.get(mint);
+    if (!record) return;
+
+    if (data.bundledBuysCount !== undefined && data.bundledBuysCount !== null) {
+      record.bundledBuysCount = data.bundledBuysCount;
+    }
+    if (data.bundlePercent !== undefined && data.bundlePercent !== null) {
+      record.bundlePercent = data.bundlePercent;
+    }
+    record.bundleDataStatus = data.bundleDataStatus || 'VERIFIED';
+
+    // Re-evaluate Stage 0 safety if token hasn't already opened a position or been rejected
+    if (record.state !== TokenState.POSITION_OPEN && record.state !== TokenState.BUY_PENDING && record.state !== TokenState.REJECTED && record.state !== TokenState.CLOSED) {
+      const isKnownRugger = this.devWatcher ? this.devWatcher.isKnownRugger(record.creator) : false;
+      const activeSafetyFilter = this.safetyFilter || new HardSafetyFilter({ maxDevPercent: 8.0, maxBundleWallets: 3, maxBundlePercent: 20.0 });
+      const safetyVerdict = activeSafetyFilter.evaluate({
+        mint,
+        creator: record.creator,
+        devPercent: record.devPercent,
+        bundledBuysCount: record.bundledBuysCount,
+        bundlePercent: record.bundlePercent,
+        bundleDataStatus: record.bundleDataStatus,
+        isKnownRugger,
+        mintDisabled: record.mintDisabled,
+        freezeDisabled: record.freezeDisabled,
+      });
+
+      record.safetyVerdict = safetyVerdict;
+
+      if (!safetyVerdict.pass) {
+        this.vetoCount++;
+        record.transitionTo(TokenState.REJECTED, `STAGE 0 HARD SAFETY VETO (VERIFIED BUNDLE): ${safetyVerdict.reason}`);
+        log(`[STAGE 0 SAFETY VETO] ${record.name || mint.slice(0, 8)} rejected after on-chain bundle verification: ${safetyVerdict.reason}`);
+        eventBus.emit('STATE_TRANSITION', {
+          mint,
+          state: record.state,
+          reason: record.rejectionReason,
+          record: this.serializeToken(record),
+        });
+      }
+    }
+  }
+
   /**
    * Processes live bonding curve ticks for tokens in MONEY_FLOW_WATCH or PATTERN_FORMING
    */
@@ -345,7 +459,7 @@ export class Orchestrator {
       record.txCount++;
       if (tick.isBuy) {
         record.buyVolumeSol += tick.solDelta;
-        if (tick.buyerPubkey) {
+        if (tick.buyerPubkey && tick.traderIdentityStatus === 'VERIFIED') {
           record.uniqueBuyers.add(tick.buyerPubkey);
           this.buyerQualityEngine.recordBuy(mint, tick.buyerPubkey, tick.solDelta, tick.timestamp || Date.now(), tick.slot || 0);
         }
@@ -400,16 +514,26 @@ export class Orchestrator {
       }
 
       // 2. Derive true organic buyer breadth and cleaned organic volume
-      const rawBuyerCount = Math.max(record.uniqueBuyers.size, record.bundledBuysCount);
-      const effectiveOrganicBuyers = quality.organicBuyerCount > 0 ? quality.organicBuyerCount : rawBuyerCount;
-      const effectiveBuyVolume = quality.organicBuyVolumeSol > 0 ? quality.organicBuyVolumeSol : record.buyVolumeSol;
+      const rawBuyerCount = record.uniqueBuyers.size;
+      const bundledCount = record.bundledBuysCount || 0;
+      const totalObservedCount = rawBuyerCount + bundledCount;
+
+      const isQualityPending = quality.reasons.includes('No buyer data recorded');
+      const effectiveOrganicBuyers = isQualityPending 
+        ? Math.max(rawBuyerCount, bundledCount > 0 ? bundledCount : 0)
+        : quality.organicBuyerCount;
+      
+      const effectiveBuyVolume = isQualityPending 
+        ? record.buyVolumeSol 
+        : quality.organicBuyVolumeSol;
 
       const flowVerdict = validateMoneyFlow({
         buyVolumeSol: effectiveBuyVolume,
         sellVolumeSol: record.sellVolumeSol,
-        uniqueBuyersCount: effectiveOrganicBuyers,
+        uniqueBuyersCount: rawBuyerCount,
         organicBuyersCount: effectiveOrganicBuyers,
-        rawBuyersCount: rawBuyerCount,
+        bundledBuysCount: bundledCount,
+        rawBuyersCount: totalObservedCount,
         clusterRisk: quality.coordinationRisk,
         txCount: record.txCount,
         liquiditySol: Number(tick.virtualSolReserves || 30000000000n) / 1e9,
@@ -448,8 +572,8 @@ export class Orchestrator {
 
     // Handle Stage 3: PATTERN_FORMING
     if (record.state === TokenState.PATTERN_FORMING && cb) {
-      const candles = cb.getCandles();
-      const patternVerdict = evaluateThreeCandlePattern(candles);
+      const closedCandles = cb.getClosedCandles();
+      const patternVerdict = evaluateThreeCandlePattern(closedCandles);
       record.stage3_pattern = patternVerdict;
       record.patternScore = patternVerdict.score;
 
@@ -466,10 +590,9 @@ export class Orchestrator {
 
         // AI Learner Gatekeeper - Final Check before buying
         if (this.smartAgent) {
-          const realBuyerCount = Math.max(record.uniqueBuyers.size, record.bundledBuysCount);
           const aiVerdict = this.smartAgent.evaluateEntry({
             devPercent: record.devPercent,
-            bundledBuysCount: realBuyerCount,
+            bundledBuysCount: record.bundledBuysCount || 0,
             devSoldAny: record.devSoldAny,
             buyVolumeSol: record.buyVolumeSol,
             uniqueBuyersCount: record.uniqueBuyers.size,
@@ -516,15 +639,46 @@ export class Orchestrator {
 
     const mint = record.mint;
 
+    if (this.devWatcher && !this.devWatcher.isSafe(mint)) {
+      // If devWatcher is actively reconciling the ATA baseline, give it a brief grace period to resolve
+      const devRec = this.devWatcher.monitoredDevs?.get(mint);
+      if (devRec && devRec.state === 'RECONCILING') {
+        const startWait = Date.now();
+        while (devRec.state === 'RECONCILING' && (Date.now() - startWait) < 1500) {
+          await new Promise(r => setTimeout(r, 100));
+        }
+      }
+
+      if (!this.devWatcher.isSafe(mint)) {
+        log(`[ORCHESTRATOR] Blocking entry for ${record.name}: Developer state is RECONCILING or UNKNOWN.`);
+        record.transitionTo(TokenState.REJECTED, 'DEV_STATE_UNRESOLVED');
+        eventBus.emit('STATE_TRANSITION', {
+          mint,
+          state: record.state,
+          reason: record.rejectionReason,
+          record: this.serializeToken(record),
+        });
+        return;
+      }
+    }
+
     // Guardrail: Daily Loss Cap Protection
     if (this.positionManager.isDailyLossExceeded()) {
       log(`🛑 [DAILY LOSS CAP EXCEEDED] Realized losses reached cap. Blocking new entries.`);
+      record.transitionTo(TokenState.REJECTED, 'DAILY_LOSS_CAP_EXCEEDED');
+      eventBus.emit('STATE_TRANSITION', {
+        mint,
+        state: record.state,
+        reason: record.rejectionReason,
+        record: this.serializeToken(record),
+      });
       return;
     }
 
     // Guardrail: Portfolio Capacity
     if (this.positionManager.positions.size >= this.maxConcurrentPositions) {
-      log(`[ORCHESTRATOR] Portfolio full (${this.maxConcurrentPositions} max active positions). Entry shelved.`);
+      log(`[ORCHESTRATOR] Portfolio full (${this.maxConcurrentPositions} max active positions). Enqueueing ${record.name} for capacity.`);
+      this._enqueueDeferredEntry(record, 'WAITING_FOR_CAPACITY');
       return;
     }
 
@@ -536,12 +690,14 @@ export class Orchestrator {
     const elapsed = Date.now() - this.lastTradeTime;
     if (elapsed < this.tradeCooldownMs) {
       const waitTime = this.tradeCooldownMs - elapsed;
-      log(`[ORCHESTRATOR] Pacing entry for ${record.name}: cooldown active (${Math.ceil(waitTime/1000)}s). Queuing token for retry.`);
-      setTimeout(() => {
-        if (record.state === TokenState.ENTRY_READY) {
-          this.triggerExecution(record);
-        }
-      }, waitTime + 100); // add 100ms padding
+      log(`[ORCHESTRATOR] Pacing entry for ${record.name}: cooldown active (${Math.ceil(waitTime/1000)}s). Enqueueing for cooldown expiration.`);
+      this._enqueueDeferredEntry(record, 'WAITING_FOR_COOLDOWN');
+      if (!this.cooldownTimer) {
+        this.cooldownTimer = setTimeout(() => {
+          this.cooldownTimer = null;
+          this._processEntryQueue().catch(() => {});
+        }, waitTime + 50);
+      }
       return;
     }
 
@@ -585,7 +741,10 @@ export class Orchestrator {
         riskScore: record.riskScore,
         entryScore: record.entryScore,
         devPercent: record.devPercent,
-        bundledBuysCount: Math.max(record.uniqueBuyers.size, record.bundledBuysCount),
+        bundledBuysCount: record.bundledBuysCount || 0,
+        uniqueBuyersCount: record.uniqueBuyers ? record.uniqueBuyers.size : 0,
+        organicBuyersCount: record.buyerQuality?.organicBuyerCount ?? 0,
+        bundleDataStatus: record.safetyVerdict?.metrics?.bundleDataStatus || 'VERIFIED',
         imageUrl: record.imageUrl,
         stopLossPercent: this.positionManager.stopLossPercent,
       });
@@ -611,6 +770,104 @@ export class Orchestrator {
     }
   }
 
+  _enqueueDeferredEntry(record, stateName) {
+    const mint = record.mint;
+    const existingIdx = this.entryQueue.findIndex(item => item.mint === mint);
+    if (existingIdx >= 0) {
+      this.entryQueue[existingIdx].queuedAt = Date.now();
+      this.entryQueue[existingIdx].reason = stateName;
+      return;
+    }
+
+    if (this.entryQueue.length >= this.maxQueueSize) {
+      const evicted = this.entryQueue.shift();
+      const evictedRecord = this.tokens.get(evicted.mint);
+      if (evictedRecord && (evictedRecord.state === TokenState.WAITING_FOR_CAPACITY || evictedRecord.state === TokenState.WAITING_FOR_COOLDOWN)) {
+        evictedRecord.transitionTo(TokenState.EXPIRED, 'ENTRY_QUEUE_OVERFLOW');
+      }
+    }
+
+    const targetState = stateName === 'WAITING_FOR_CAPACITY' ? TokenState.WAITING_FOR_CAPACITY : TokenState.WAITING_FOR_COOLDOWN;
+    record.transitionTo(targetState, `Deferred: ${stateName}`);
+    eventBus.emit('STATE_TRANSITION', { mint, state: record.state, record: this.serializeToken(record) });
+
+    this.entryQueue.push({
+      mint,
+      queuedAt: Date.now(),
+      reason: stateName,
+      breakoutPriceSol: record.lastVirtualSolReserves && record.lastVirtualTokenReserves 
+        ? calculateSpotPriceSol(record.lastVirtualSolReserves, record.lastVirtualTokenReserves)
+        : 0,
+    });
+  }
+
+  async _processEntryQueue() {
+    if (this.entryQueue.length === 0) return;
+    if (!this.autoBuyEnabled) return;
+
+    const now = Date.now();
+    const nextQueue = [];
+
+    for (const item of this.entryQueue) {
+      const record = this.tokens.get(item.mint);
+      if (!record) continue;
+
+      // 1. Check expiration
+      if (now - item.queuedAt > this.maxQueueAgeMs) {
+        log(`⌛ [ENTRY EXPIRED] Breakout signal for ${record.name} expired in queue (${Math.round((now - item.queuedAt)/1000)}s > ${this.maxQueueAgeMs/1000}s).`);
+        record.transitionTo(TokenState.EXPIRED, 'SIGNAL_VALIDITY_EXPIRED');
+        eventBus.emit('STATE_TRANSITION', { mint: item.mint, state: record.state, record: this.serializeToken(record) });
+        if (this.curveWatcher) this.curveWatcher.unwatch(item.mint);
+        if (this.devWatcher) this.devWatcher.unwatchDev(item.mint);
+        continue;
+      }
+
+      // 2. Capacity Check
+      if (this.positionManager.positions.size >= this.maxConcurrentPositions) {
+        nextQueue.push(item);
+        continue;
+      }
+
+      // 3. Cooldown Check
+      const elapsed = now - this.lastTradeTime;
+      if (elapsed < this.tradeCooldownMs) {
+        nextQueue.push(item);
+        const remaining = this.tradeCooldownMs - elapsed;
+        if (!this.cooldownTimer) {
+          this.cooldownTimer = setTimeout(() => {
+            this.cooldownTimer = null;
+            this._processEntryQueue().catch(() => {});
+          }, remaining + 50);
+        }
+        break;
+      }
+
+      // 4. Revalidate Setup Conditions
+      record.transitionTo(TokenState.REVALIDATING);
+      const isDevSafe = this.devWatcher ? this.devWatcher.isSafe(item.mint) : true;
+      const isGraduated = this.curveWatcher ? this.curveWatcher.isGraduated(item.mint) : false;
+      const hasHardVeto = record.buyerQuality?.isHardVeto === true;
+      const devSold = record.devSoldAny === true;
+
+      if (!isDevSafe || isGraduated || hasHardVeto || devSold) {
+        const rejectReason = devSold ? 'DEV_DUMP_WHILE_QUEUED' : (!isDevSafe ? 'DEV_UNSAFE' : (isGraduated ? 'CURVE_GRADUATED' : 'BUYER_QUALITY_VETO'));
+        log(`🛑 [REVALIDATION FAILED] Queued entry for ${record.name} rejected: ${rejectReason}`);
+        record.transitionTo(TokenState.REJECTED, `REVALIDATION_FAILED: ${rejectReason}`);
+        eventBus.emit('STATE_TRANSITION', { mint: item.mint, state: record.state, record: this.serializeToken(record) });
+        if (this.curveWatcher) this.curveWatcher.unwatch(item.mint);
+        if (this.devWatcher) this.devWatcher.unwatchDev(item.mint);
+        continue;
+      }
+
+      // Revalidation passed! Transition to ENTRY_READY and trigger execution
+      record.transitionTo(TokenState.ENTRY_READY);
+      await this.triggerExecution(record);
+      break; // Process one buy per queue cycle to respect pacing
+    }
+
+    this.entryQueue = nextQueue;
+  }
+
   /**
    * Sync position closure with TokenRecord state
    */
@@ -632,6 +889,9 @@ export class Orchestrator {
     if (this.curveWatcher) {
       this.curveWatcher.unwatch(closedData.mint);
     }
+
+    // Fix 3: Re-evaluate queued deferred entries when capacity is freed
+    this._processEntryQueue().catch(() => {});
 
     // Feed trade experience into Smart Agent to enhance win rate
     if (this.smartAgent && typeof this.smartAgent.learnFromTrade === 'function') {
@@ -691,6 +951,7 @@ export class Orchestrator {
       patternScore: record.patternScore,
       buyVolumeSol: Number(record.buyVolumeSol.toFixed(2)),
       sellVolumeSol: Number(record.sellVolumeSol.toFixed(2)),
+      uniqueBuyers: record.uniqueBuyers ? record.uniqueBuyers.size : 0,
       position: record.position ? {
         mint: record.position.mint,
         entryPriceSol: record.position.entryPriceSol,

@@ -1,7 +1,7 @@
 import { Connection, PublicKey } from '@solana/web3.js';
 import WebSocket from 'ws';
 import bs58 from 'bs58';
-import { PUMP_PROGRAM_ID } from './pumpfun.js';
+import { PUMP_PROGRAM_ID, getBondingCurvePDA } from './pumpfun.js';
 import { CONFIG, log } from './config.js';
 import { eventBus } from './eventBus.js';
 
@@ -83,6 +83,7 @@ export class SolanaStreamer {
     const devHoldingTokens = d.initialBuy || 0;
     const devPercent = (devHoldingTokens / 1_000_000_000) * 100;
 
+    // Fix 2: Instant feed has unverified bundle metrics; mark status as PENDING
     const launchEvent = {
       mint,
       name: d.name && d.name.trim() ? d.name.trim() : 'Resolving...',
@@ -92,8 +93,9 @@ export class SolanaStreamer {
       slot: 0,
       signature: d.signature || '',
       devPercent,
-      bundledBuysCount: 0,
-      bundlePercent: 0,
+      bundledBuysCount: null,
+      bundlePercent: null,
+      bundleDataStatus: 'PENDING',
       initialMarketCapSol: Number(d.marketCapSol) || 30.0,
       timestamp: Date.now(),
     };
@@ -148,11 +150,7 @@ export class SolanaStreamer {
     );
 
     if (isCreate) {
-      // If PumpPortal WebSocket is open and providing instant token detection, skip heavy RPC calls
-      if (this.portalWs && this.portalWs.readyState === WebSocket.OPEN) {
-        return;
-      }
-
+      // Fix 2: Do not skip RPC parse when instant portal is open so bundle analysis is always verified
       try {
         const tx = await this.connection.getParsedTransaction(sig, {
           maxSupportedTransactionVersion: 0,
@@ -186,8 +184,8 @@ export class SolanaStreamer {
     const mint = mintPubkey?.toBase58 ? mintPubkey.toBase58() : mintPubkey?.toString();
     if (!mint || !mint.endsWith('pump')) return;
 
-    // Skip if already captured by the ultra-fast instant stream
-    if (this.processedMints.has(mint)) return;
+    // Fix 2: If already captured by instant stream, still proceed to compute authoritative bundle metrics
+    const isUpdate = this.processedMints.has(mint);
     this.processedMints.add(mint);
 
     if (this.processedMints.size > 5000) {
@@ -248,6 +246,11 @@ export class SolanaStreamer {
 
     // Count external buyers in the launch bundle / transaction
     // External buyers are distinct non-creator, non-curve accounts receiving tokens
+    let bondingCurveAddr = null;
+    try {
+      bondingCurveAddr = getBondingCurvePDA(new PublicKey(mint)).toBase58();
+    } catch (e) {}
+
     const postTokenBalances = tx.meta?.postTokenBalances || [];
     let devHoldingTokens = 0;
     const outsideBuyers = new Set();
@@ -257,21 +260,25 @@ export class SolanaStreamer {
         if (tb.owner === creator) {
           devHoldingTokens = tb.uiTokenAmount?.uiAmount || 0;
         } else if (tb.uiTokenAmount?.uiAmount > 0) {
-          // Check if owner is not bonding curve
-          outsideBuyers.add(tb.owner);
+          if (!bondingCurveAddr || tb.owner !== bondingCurveAddr) {
+            outsideBuyers.add(tb.owner);
+          }
         }
       }
     }
 
-    // Count bundled buy instructions that followed create
-    let bundledBuysCount = outsideBuyers.size;
+    // Add unique buyer signers from non-create Pump.fun buy instructions in the launch bundle
     for (const ix of instructions) {
       const prog = ix.programId ? ix.programId.toBase58() : ix.program;
       if (prog === PUMP_PROGRAM_ID.toBase58() && ix !== pumpCreateIx) {
-        bundledBuysCount++;
+        const userAcc = ix.accounts && ix.accounts[6] ? (ix.accounts[6].pubkey ? ix.accounts[6].pubkey.toBase58() : ix.accounts[6].toString()) : null;
+        if (userAcc && userAcc !== creator && (!bondingCurveAddr || userAcc !== bondingCurveAddr)) {
+          outsideBuyers.add(userAcc);
+        }
       }
     }
 
+    const bundledBuysCount = outsideBuyers.size;
     const devPercent = (devHoldingTokens / 1_000_000_000) * 100;
     const bundlePercent = bundledBuysCount > 1 ? bundledBuysCount * 3.5 : 0;
 
@@ -286,10 +293,15 @@ export class SolanaStreamer {
       devPercent,
       bundledBuysCount,
       bundlePercent,
+      bundleDataStatus: 'VERIFIED',
       timestamp: Date.now(),
     };
 
-    eventBus.emit('TOKEN_DETECTED', launchEvent);
+    if (isUpdate) {
+      eventBus.emit('BUNDLE_METRICS_UPDATED', launchEvent);
+    } else {
+      eventBus.emit('TOKEN_DETECTED', launchEvent);
+    }
   }
 
   stop() {
