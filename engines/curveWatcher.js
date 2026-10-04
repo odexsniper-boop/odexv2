@@ -28,6 +28,8 @@ export class BondingCurveWatcher {
     this.recentTrades = new Set();
     this.onLogsSubId = null;
     this.pumpPortalStreaming = false;
+    this.pumpPortalTradeSupported = true;
+    this.hasWarnedUnfundedApiKey = false;
 
     // Fix 1: Explicit Curve Lifecycle State Tracking
     this.curveLifecycles = new Map(); // mint -> CurveLifecycle
@@ -106,7 +108,9 @@ export class BondingCurveWatcher {
         log('[CURVE WATCHER] Connected to PumpPortal Trade Stream');
         this.streamHealth.status = 'HEALTHY';
         this.streamHealth.lastMessageAt = Date.now();
-        for (const mint of this.watchedMints) this.ws.send(JSON.stringify({ method: 'subscribeTokenTrade', keys: [mint] }));
+        if (this.pumpPortalTradeSupported !== false) {
+          for (const mint of this.watchedMints) this.ws.send(JSON.stringify({ method: 'subscribeTokenTrade', keys: [mint] }));
+        }
       });
       this.ws.on('message', (data) => {
         try { 
@@ -114,8 +118,12 @@ export class BondingCurveWatcher {
           const d = JSON.parse(data.toString()); 
           if (d.message) {
             if (d.message.includes('only available when connecting with an API key funded') || d.message.includes('not linked to a valid wallet')) {
-              log(`[CURVE WATCHER] PumpPortal Trade Stream note: ${d.message}. Real-time On-Chain Trade Stream is ACTIVE.`);
               this.pumpPortalStreaming = false;
+              this.pumpPortalTradeSupported = false;
+              if (!this.hasWarnedUnfundedApiKey) {
+                this.hasWarnedUnfundedApiKey = true;
+                log(`[CURVE WATCHER] PumpPortal trade stream requires an API key funded with >=0.02 SOL. On-Chain Trade Stream fallback is ACTIVE.`);
+              }
             } else if (d.message.includes('Successfully subscribed')) {
               this.pumpPortalStreaming = true;
             }
@@ -197,7 +205,8 @@ export class BondingCurveWatcher {
       if (prev !== CurveLifecycle.GRADUATED && prev !== CurveLifecycle.MIGRATING && prev !== CurveLifecycle.MIGRATED) {
         this.curveLifecycles.set(mint, CurveLifecycle.GRADUATED);
         this.graduationMetadata.set(mint, { graduatedAt: Date.now(), realSol, realTok, isComplete: true });
-        log(`🎓 [CURVE GRADUATED] Authoritative on-chain graduation confirmed for ${mint.slice(0, 8)} (complete=true, Real SOL: ${Number(realSol)/1e9})`);
+        const solLabel = (realSol === 0n || realSol === 0) ? 'Reserves migrated to DEX' : `Real SOL: ${Number(realSol)/1e9}`;
+        log(`🎓 [CURVE GRADUATED] Authoritative on-chain graduation confirmed for ${mint.slice(0, 8)} (complete=true, ${solLabel})`);
         eventBus.emit('BONDING_CURVE_GRADUATED', { mint, state: CurveLifecycle.GRADUATED, realSol, realTok, isComplete: true, timestamp: Date.now() });
         eventBus.emit('CURVE_LIFECYCLE_CHANGED', { mint, state: CurveLifecycle.GRADUATED, previousState: prev, isComplete: true });
         if (this.positionManager && typeof this.positionManager.handleCurveGraduated === 'function') {
@@ -219,7 +228,9 @@ export class BondingCurveWatcher {
   async watch(mintAddress) {
     if (this.watchedMints.has(mintAddress)) return;
     this.watchedMints.add(mintAddress);
-    if (this.ws && this.ws.readyState === WebSocket.OPEN) this.ws.send(JSON.stringify({ method: 'subscribeTokenTrade', keys: [mintAddress] }));
+    if (this.ws && this.ws.readyState === WebSocket.OPEN && this.pumpPortalTradeSupported !== false) {
+      this.ws.send(JSON.stringify({ method: 'subscribeTokenTrade', keys: [mintAddress] }));
+    }
   }
 
   unwatch(mintAddress) {

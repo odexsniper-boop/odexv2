@@ -36,7 +36,8 @@ export class NarrativeEngine {
 
     // Generic spam blacklist
     this.spamPatterns = [
-      /^[a-z0-9]{12,}$/i, // Random hash-like name
+      /^[0-9a-f]{16,}$/i, // Random hexadecimal hash-like string
+      /^[bcdfghjklmnpqrstvwxyz0-9]{10,}$/i, // Random consonant/digit string without vowels
       /test/i,
       /airdrop/i,
       /presale/i,
@@ -51,7 +52,8 @@ export class NarrativeEngine {
     const placeholders = [
       'placeholder', 'example', 'username', 'yourhandle', 'yourchannel',
       'channelname', 'mychannel', 'test', 'pumpfun', 'unknown', 'channel',
-      'home', 'null', 'undefined'
+      'home', 'null', 'undefined', 'elonmusk', 'solana', 'phantom', 'toly',
+      'aeyakovenko', 'cz_binance', 'vitalikbuterin'
     ];
 
     if (type === 'twitter') {
@@ -96,13 +98,19 @@ export class NarrativeEngine {
     // 1. Check Spam / Low Effort Patterns
     for (const pat of this.spamPatterns) {
       if (pat.test(name) || pat.test(symbol)) {
-        return {
-          passed: false,
-          narrativeScore: 10,
-          theme: 'SPAM_LOW_EFFORT',
-          reasons: ['Flagged by low-effort spam filter pattern'],
-          socialsFound: 0,
-        };
+        // Guard: Do not flag as spam if token corpus contains valid trending theme keywords
+        const hasThemeKeyword = this.trendingThemes.some(theme =>
+          theme.keywords.some(kw => new RegExp(`\\b${kw}\\b`, 'i').test(textCorpus))
+        );
+        if (!hasThemeKeyword) {
+          return {
+            passed: false,
+            narrativeScore: 10,
+            theme: 'SPAM_LOW_EFFORT',
+            reasons: ['Flagged by low-effort spam filter pattern'],
+            socialsFound: 0,
+          };
+        }
       }
     }
 
@@ -186,12 +194,19 @@ export class NarrativeEngine {
     let requiresExceptionalMomentum = false;
 
     // Minimum independent positive evidence
-    const hasEvidence = socialsFound > 0 || replies >= 5 || (desc.length > 40 && score >= 40);
+    const hasExternalEvidence = socialsFound > 0 || replies >= 5;
+    const hasDescriptionEvidence = desc.length > 40 && score >= 40;
 
-    if (score >= 40 && hasEvidence) {
+    if (score >= 40 && hasExternalEvidence) {
       eligibilityState = 'VERIFIED';
       passed = true;
-    } else if (score >= 15 && hasEvidence) {
+    } else if (score >= 40 && hasDescriptionEvidence) {
+      // Description-only evidence without socials or replies requires exceptional momentum
+      eligibilityState = 'PROBATION';
+      passed = true;
+      requiresExceptionalMomentum = true;
+      reasons.push('Probationary status: description-only evidence, requires exceptional momentum');
+    } else if (score >= 15 && (hasExternalEvidence || hasDescriptionEvidence)) {
       eligibilityState = 'PROBATION';
       passed = true;
       requiresExceptionalMomentum = true;
@@ -199,7 +214,7 @@ export class NarrativeEngine {
     } else {
       eligibilityState = score < 15 ? 'REJECTED' : 'INSUFFICIENT_DATA';
       passed = false;
-      if (!hasEvidence && score >= 15) {
+      if (!hasExternalEvidence && !hasDescriptionEvidence && score >= 15) {
         reasons.push('Rejected: Insufficient independent positive evidence despite base score');
       }
     }

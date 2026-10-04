@@ -55,6 +55,7 @@ export class BuyerQualityEngine {
     this.funderTTL = 3600000; // 1 hour TTL
     // In-flight funding lookup set to prevent duplicate RPC calls
     this.pendingFunderLookups = new Set();
+    this.funderLookupQueue = [];
   }
 
   /**
@@ -66,6 +67,7 @@ export class BuyerQualityEngine {
       coOccurrenceWalletsCount: this.coOccurrenceRegistry.size,
       funderCacheSize: this.funderCache.size,
       pendingFunderLookupsCount: this.pendingFunderLookups.size,
+      funderLookupQueueLength: this.funderLookupQueue.length,
     };
   }
 
@@ -210,7 +212,12 @@ export class BuyerQualityEngine {
       return;
     }
 
-    if (this.pendingFunderLookups.size > 20) return; // RPC rate limit protection
+    if (this.pendingFunderLookups.size >= 20) {
+      if (!this.funderLookupQueue.includes(walletPubkey) && this.funderLookupQueue.length < 100) {
+        this.funderLookupQueue.push(walletPubkey);
+      }
+      return; // RPC rate limit protection with queued retry
+    }
     this.pendingFunderLookups.add(walletPubkey);
 
     try {
@@ -243,6 +250,10 @@ export class BuyerQualityEngine {
       // Silently catch RPC lookup failures
     } finally {
       this.pendingFunderLookups.delete(walletPubkey);
+      if (this.funderLookupQueue.length > 0 && this.pendingFunderLookups.size < 20) {
+        const nextWallet = this.funderLookupQueue.shift();
+        this._scheduleFunderLookup(nextWallet).catch(() => {});
+      }
     }
   }
 

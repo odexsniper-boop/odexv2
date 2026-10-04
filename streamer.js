@@ -253,6 +253,7 @@ export class SolanaStreamer {
 
     const postTokenBalances = tx.meta?.postTokenBalances || [];
     let devHoldingTokens = 0;
+    let outsideHoldingTokens = 0;
     const outsideBuyers = new Set();
 
     for (const tb of postTokenBalances) {
@@ -262,6 +263,7 @@ export class SolanaStreamer {
         } else if (tb.uiTokenAmount?.uiAmount > 0) {
           if (!bondingCurveAddr || tb.owner !== bondingCurveAddr) {
             outsideBuyers.add(tb.owner);
+            outsideHoldingTokens += (tb.uiTokenAmount?.uiAmount || 0);
           }
         }
       }
@@ -280,7 +282,8 @@ export class SolanaStreamer {
 
     const bundledBuysCount = outsideBuyers.size;
     const devPercent = (devHoldingTokens / 1_000_000_000) * 100;
-    const bundlePercent = bundledBuysCount > 1 ? bundledBuysCount * 3.5 : 0;
+    const exactBundlePercent = outsideHoldingTokens > 0 ? (outsideHoldingTokens / 1_000_000_000) * 100 : 0;
+    const bundlePercent = exactBundlePercent > 0 ? exactBundlePercent : (bundledBuysCount > 1 ? bundledBuysCount * 3.5 : 0);
 
     const launchEvent = {
       mint,

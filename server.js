@@ -1297,6 +1297,11 @@ export async function createDashboardServer(port = 3005) {
     const { mint } = req.body;
     if (mint) {
       await ctx.positionManager.forceManualExit(mint);
+      if (ctx.positionManager.positions.has(mint)) {
+        await ctx.positionManager.closePositionDirect(mint, 'MANUAL_SELL');
+        ctx.positionManager.positions.delete(mint);
+        TradeStorage.saveState(ctx.positionManager.positions, ctx.positionManager.tradeHistory);
+      }
       if (orchestrator.tokens.has(mint)) {
         const tok = orchestrator.tokens.get(mint);
         tok.state = TokenState.CLOSED;

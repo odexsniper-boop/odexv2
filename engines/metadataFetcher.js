@@ -1,4 +1,13 @@
 const metadataCache = new Map();
+const MAX_METADATA_CACHE = 5000;
+
+function setMetadataCache(mint, meta) {
+  if (metadataCache.size >= MAX_METADATA_CACHE) {
+    const firstKey = metadataCache.keys().next().value;
+    metadataCache.delete(firstKey);
+  }
+  metadataCache.set(mint, meta);
+}
 
 /**
  * Normalizes all IPFS gateway variants to the fast dedicated pump.mypinata CDN
@@ -19,7 +28,7 @@ export function normalizeIpfsUrl(url) {
 /**
  * Fetches real token name, symbol, and image using pump.fun and DexScreener with fast timeouts
  */
-export async function fetchTokenMetadata(mintAddress, fallbackName = null, fallbackSymbol = null, metadataUri = null) {
+export async function fetchTokenMetadata(mintAddress, fallbackName = null, fallbackSymbol = null, metadataUri = null, fallbackMeta = {}) {
   if (metadataCache.has(mintAddress)) {
     const cached = metadataCache.get(mintAddress);
     if (cached && (cached.twitter || cached.telegram || cached.website || cached.description) && cached.imageUrl) return cached;
@@ -52,7 +61,7 @@ export async function fetchTokenMetadata(mintAddress, fallbackName = null, fallb
               website: d.website || null,
               replyCount: 0,
             };
-            metadataCache.set(mintAddress, meta);
+            setMetadataCache(mintAddress, meta);
             return meta;
           }
         }
@@ -69,7 +78,7 @@ export async function fetchTokenMetadata(mintAddress, fallbackName = null, fallb
     });
     if (res.ok) {
       const data = await res.json();
-      const coin = Array.isArray(data) ? data.find(c => c.mint === mintAddress) || data[0] : data;
+      const coin = Array.isArray(data) ? (data.find(c => c.mint === mintAddress) || null) : (data?.mint === mintAddress ? data : null);
       if (coin && (coin.name || coin.image_uri || coin.description)) {
         const imageUrl = normalizeIpfsUrl(coin.image_uri);
         const meta = {
@@ -83,7 +92,7 @@ export async function fetchTokenMetadata(mintAddress, fallbackName = null, fallb
           replyCount: coin.reply_count || 0,
           usdMarketCap: coin.usd_market_cap || null,
         };
-        metadataCache.set(mintAddress, meta);
+        setMetadataCache(mintAddress, meta);
         return meta;
       }
     }
@@ -121,7 +130,7 @@ export async function fetchTokenMetadata(mintAddress, fallbackName = null, fallb
             txns: pair.txns,
             liquidity: pair.liquidity?.usd,
           };
-          metadataCache.set(mintAddress, meta);
+          setMetadataCache(mintAddress, meta);
           return meta;
         }
       }
@@ -134,12 +143,12 @@ export async function fetchTokenMetadata(mintAddress, fallbackName = null, fallb
     return {
       name: fallbackName,
       symbol: fallbackSymbol || 'UNK',
-      imageUrl: null,
-      description: '',
-      twitter: null,
-      telegram: null,
-      website: null,
-      replyCount: 0,
+      imageUrl: fallbackMeta?.imageUrl || null,
+      description: fallbackMeta?.description || '',
+      twitter: fallbackMeta?.twitter || null,
+      telegram: fallbackMeta?.telegram || null,
+      website: fallbackMeta?.website || null,
+      replyCount: fallbackMeta?.replyCount || 0,
       usdMarketCap: null,
     };
   }

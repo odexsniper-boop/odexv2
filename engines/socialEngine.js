@@ -36,7 +36,7 @@ export class SocialEngine {
     if (twitterUrl) {
       for (const influencer of this.trustedInfluencers) {
         if (twitterUrl.includes(influencer)) {
-          bonusScore += 30; reasons.push(`Backed by Tier-1 Influencer: @${influencer}`); break;
+          bonusScore -= 50; reasons.push(`Flagged Impersonated Celebrity Account: @${influencer}`); break;
         }
       }
       for (const scammer of this.scamInfluencers) {

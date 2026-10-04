@@ -3,67 +3,12 @@
   "effectiveMinCompositeScore": 70,
   "effectiveMaxDevHolding": 8,
   "effectiveMinExternalBuyers": 2,
-  "totalLearnedTrades": 182,
+  "totalLearnedTrades": 187,
   "totalWins": 119,
-  "totalLosses": 63,
-  "recentWinRate": 90,
+  "totalLosses": 68,
+  "recentWinRate": 40,
   "adaptationsCount": 22,
   "experiences": [
-    {
-      "mint": "F3Kr2uKfJ9btvVJY374xeomLdpeDnkuL9J6mNQ5tpump",
-      "name": "stonkscate",
-      "pnl": 264.0731677,
-      "isWin": true,
-      "reason": "TAKE_PROFIT_2X",
-      "devPercent": 1.737651816691,
-      "bundleCount": 3,
-      "entryScore": 73,
-      "timestamp": 1788730152978
-    },
-    {
-      "mint": "9Dog1iTiReBKbttQ5jo67G6zdXCjRRbLTb2GvQCwpump",
-      "name": "dogwifbag",
-      "pnl": 607.451469,
-      "isWin": true,
-      "reason": "TAKE_PROFIT_2X",
-      "devPercent": 0.3520918746848,
-      "bundleCount": 3,
-      "entryScore": 79,
-      "timestamp": 1788730359602
-    },
-    {
-      "mint": "5TQNfsC6eTgqb9nxF7JkgM9yK2QndcYZfhpESrmZpump",
-      "name": "Smoke",
-      "pnl": -75.3544414,
-      "isWin": false,
-      "reason": "STOP_LOSS",
-      "devPercent": 0.1438080052497,
-      "bundleCount": 3,
-      "entryScore": 74,
-      "timestamp": 1788730416932
-    },
-    {
-      "mint": "96JLbLs2j7rGNRv4h2uPuEp7arpL2xuzyL9uVBjzpump",
-      "name": "stonkscate",
-      "pnl": 252.92521689999998,
-      "isWin": true,
-      "reason": "TAKE_PROFIT_2X",
-      "devPercent": 1.737651816691,
-      "bundleCount": 3,
-      "entryScore": 73,
-      "timestamp": 1788730588273
-    },
-    {
-      "mint": "6KoFLu2pzyLYsNQEKfv6sU5sSkmTNvHnE8tiiLGfpump",
-      "name": "Roblox Heist",
-      "pnl": 30.9462229,
-      "isWin": true,
-      "reason": "TRAILING_STOP",
-      "devPercent": 3.0877697777999,
-      "bundleCount": 2,
-      "entryScore": 86,
-      "timestamp": 1788730804159
-    },
     {
       "mint": "B4qRr2XcheovTPUBDfmZPFeoWywBU4KjTMb773Kepump",
       "name": "Martin Shkreli has no motion ",
@@ -1108,7 +1053,72 @@
       "bundleCount": 36,
       "entryScore": 74,
       "timestamp": 1790997258721
+    },
+    {
+      "mint": "NormalMint1111111111111111111111111111111111",
+      "name": "NormalCoin",
+      "pnl": -16,
+      "isWin": false,
+      "reason": "STOP_LOSS",
+      "devPercent": 0,
+      "bundleCount": 0,
+      "uniqueBuyersCount": 0,
+      "organicBuyersCount": 0,
+      "entryScore": 0,
+      "timestamp": 1791087399636
+    },
+    {
+      "mint": "NormalMint1111111111111111111111111111111111",
+      "name": "NormalCoin",
+      "pnl": -16,
+      "isWin": false,
+      "reason": "STOP_LOSS",
+      "devPercent": 0,
+      "bundleCount": 0,
+      "uniqueBuyersCount": 0,
+      "organicBuyersCount": 0,
+      "entryScore": 0,
+      "timestamp": 1791087417384
+    },
+    {
+      "mint": "NormalMint1111111111111111111111111111111111",
+      "name": "NormalCoin",
+      "pnl": -16,
+      "isWin": false,
+      "reason": "STOP_LOSS",
+      "devPercent": 0,
+      "bundleCount": 0,
+      "uniqueBuyersCount": 0,
+      "organicBuyersCount": 0,
+      "entryScore": 0,
+      "timestamp": 1791087453349
+    },
+    {
+      "mint": "NormalMint1111111111111111111111111111111111",
+      "name": "NormalCoin",
+      "pnl": -16,
+      "isWin": false,
+      "reason": "STOP_LOSS",
+      "devPercent": 0,
+      "bundleCount": 0,
+      "uniqueBuyersCount": 0,
+      "organicBuyersCount": 0,
+      "entryScore": 0,
+      "timestamp": 1791087760826
+    },
+    {
+      "mint": "NormalMint1111111111111111111111111111111111",
+      "name": "NormalCoin",
+      "pnl": -16,
+      "isWin": false,
+      "reason": "STOP_LOSS",
+      "devPercent": 0,
+      "bundleCount": 0,
+      "uniqueBuyersCount": 0,
+      "organicBuyersCount": 0,
+      "entryScore": 0,
+      "timestamp": 1791088727249
     }
   ],
-  "lastUpdated": "2026-10-03T03:14:18.722Z"
+  "lastUpdated": "2026-10-04T04:38:47.249Z"
 }

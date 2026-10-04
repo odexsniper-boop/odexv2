@@ -143,7 +143,7 @@ export function evaluateThreeCandlePattern(candles, options = {}) {
     const dt1 = Number(c2.timestamp) - Number(c1.timestamp);
     const dt2 = Number(c3.timestamp) - Number(c2.timestamp);
     const expectedTimeframe = options.timeframeMs || (options.timeframeSeconds ? options.timeframeSeconds * 1000 : null) || (dt1 > 0 && dt2 > 0 ? Math.min(dt1, dt2) : 15000);
-    const maxAllowedGap = options.maxAllowedGapMs || (expectedTimeframe * 1.5);
+    const maxAllowedGap = options.maxAllowedGapMs || Math.max(expectedTimeframe * 2.5, 15000);
 
     if (dt1 <= 0 || dt2 <= 0 || dt1 > maxAllowedGap || dt2 > maxAllowedGap) {
       return {
@@ -263,7 +263,8 @@ export class CandleBuilder {
         // Synthesize contiguous flat candles (zero-volume doji bars) for intermediate idle timeframes
         let nextBucket = this.currentCandle.timestamp + this.timeframeMs;
         const lastClose = this.currentCandle.close;
-        while (nextBucket < bucket && this.candles.length < 50) {
+        let synthCount = 0;
+        while (nextBucket < bucket && this.candles.length < 50 && synthCount < 2) {
           this.candles.push({
             timestamp: nextBucket,
             open: lastClose,
@@ -273,6 +274,7 @@ export class CandleBuilder {
             volume: 0,
           });
           nextBucket += this.timeframeMs;
+          synthCount++;
         }
 
         if (this.candles.length > 50) {

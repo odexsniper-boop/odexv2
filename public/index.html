@@ -3690,13 +3690,14 @@
 
     // Clean up any test/mock tokens persisted in browser localStorage
     try {
-      const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken']);
+      const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken', 'ProfitCoin']);
+      const isMock = item => !item || !item.mint || mockNames.has(item.name) || (item.mint && (item.mint.startsWith('TakeProfitTestMint') || item.mint.startsWith('TestMint'))) || item.status === 'SOLD';
       ['odex_cached_positions', 'odex_cached_tokens'].forEach(key => {
         const raw = localStorage.getItem(key);
         if (raw) {
           const list = JSON.parse(raw);
           if (Array.isArray(list)) {
-            const cleanList = list.filter(item => !mockNames.has(item.name));
+            const cleanList = list.filter(item => !isMock(item));
             localStorage.setItem(key, JSON.stringify(cleanList));
           }
         }
@@ -3705,11 +3706,12 @@
 
     // Restore cached active positions
     try {
-      const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken']);
+      const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken', 'ProfitCoin']);
+      const isMock = item => !item || !item.mint || mockNames.has(item.name) || (item.mint && (item.mint.startsWith('TakeProfitTestMint') || item.mint.startsWith('TestMint'))) || item.status === 'SOLD';
       const cachedPos = JSON.parse(localStorage.getItem('odex_cached_positions') || '[]');
       if (Array.isArray(cachedPos) && cachedPos.length > 0) {
         cachedPos.forEach(p => {
-          if (mockNames.has(p.name)) return;
+          if (isMock(p)) return;
           tokensMap.set(p.mint, {
             mint: p.mint,
             name: p.name,
@@ -3725,11 +3727,12 @@
 
     // Restore cached tokens
     try {
-      const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken']);
+      const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken', 'ProfitCoin']);
+      const isMock = item => !item || !item.mint || mockNames.has(item.name) || (item.mint && (item.mint.startsWith('TakeProfitTestMint') || item.mint.startsWith('TestMint'))) || item.status === 'SOLD';
       const cachedToks = JSON.parse(localStorage.getItem('odex_cached_tokens') || '[]');
       if (Array.isArray(cachedToks) && cachedToks.length > 0) {
         cachedToks.forEach(t => {
-          if (mockNames.has(t.name)) return;
+          if (isMock(t)) return;
           if (!tokensMap.has(t.mint)) tokensMap.set(t.mint, t);
         });
       }
@@ -4067,6 +4070,9 @@
           initTokens.forEach(t => tokensMap.set(t.mint, t));
         }
         if (d.positions) {
+          const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken', 'ProfitCoin']);
+          const isMock = item => !item || !item.mint || mockNames.has(item.name) || (item.mint && (item.mint.startsWith('TakeProfitTestMint') || item.mint.startsWith('TestMint'))) || item.status === 'SOLD';
+          d.positions = d.positions.filter(p => !isMock(p));
           const activeMints = new Set(d.positions.map(p => p.mint));
           for (const [m, tok] of tokensMap.entries()) {
             if (tok.state === 'POSITION_OPEN' && !activeMints.has(m)) {

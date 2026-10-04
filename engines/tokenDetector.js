@@ -42,6 +42,8 @@ export class TokenDetector {
         let bundleCount = 0;
         const buyerAccounts = new Set();
 
+        let totalOutsideTokensRaw = 0n;
+
         // Scan sibling instructions for immediate buys
         for (const siblingIx of instructions) {
           const siblingProg = accountKeys[siblingIx.programIdIndex];
@@ -50,21 +52,31 @@ export class TokenDetector {
             if (siblingData.length >= 8 && siblingData.subarray(0, 8).equals(Buffer.from([102, 6, 61, 18, 1, 218, 235, 234]))) {
               // Buy instruction
               bundleCount++;
+              let boughtTokensRaw = 0n;
+              if (siblingData.length >= 24) {
+                try {
+                  boughtTokensRaw = siblingData.readBigUInt64LE(8);
+                } catch (e) {}
+              }
               const buyer = accountKeys[siblingIx.accountKeyIndexes[6]];
               if (buyer) {
                 buyerAccounts.add(buyer.toBase58());
                 if (creator && buyer.equals(creator)) {
                   // Dev bought
                   devBuySol += 1; // Mark dev participation
+                } else if (boughtTokensRaw > 0n) {
+                  totalOutsideTokensRaw += boughtTokensRaw;
                 }
               }
             }
           }
         }
 
-        // Estimate bundle share (typical curve initial virtual token reserves = 1,073,000,000 tokens)
-        // Bundled buy instructions in same slot
-        const bundlePercent = Math.min(100, bundleCount * 3.5); // ~3.5% per sniper bundle
+        // Calculate exact bundle share (typical curve initial virtual token reserves = 1,073,000,000 tokens)
+        const exactOutsidePercent = totalOutsideTokensRaw > 0n
+          ? Number((totalOutsideTokensRaw * 10000n) / 1_073_000_000_000_000n) / 100
+          : 0;
+        const bundlePercent = exactOutsidePercent > 0 ? exactOutsidePercent : Math.min(100, bundleCount * 3.5);
         const isMultiWalletBundle = bundleCount >= 3 && buyerAccounts.size >= 2;
 
         const launchEvent = {

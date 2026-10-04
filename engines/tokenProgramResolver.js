@@ -16,6 +16,15 @@ export class TokenProgramResolver {
     this.connection = connection;
     this.cache = new Map(); // mintBase58 -> PublicKey (Program ID)
     this.inFlightResolutions = new Map(); // mintBase58 -> Promise<PublicKey>
+    this.maxCacheSize = 5000;
+  }
+
+  _setCache(mintStr, programId) {
+    if (this.cache.size >= this.maxCacheSize) {
+      const firstKey = this.cache.keys().next().value;
+      this.cache.delete(firstKey);
+    }
+    this.cache.set(mintStr, programId);
   }
 
   /**
@@ -78,7 +87,7 @@ export class TokenProgramResolver {
                 if (!SUPPORTED_TOKEN_PROGRAMS.has(ownerStr)) {
                   throw new Error(`UNSUPPORTED_TOKEN_PROGRAM: Mint is owned by unknown program ${ownerStr}`);
                 }
-                this.cache.set(mintStr, mintAcc.owner);
+                this._setCache(mintStr, mintAcc.owner);
                 return mintAcc.owner;
               }
             } catch (err) {
@@ -98,7 +107,7 @@ export class TokenProgramResolver {
             const abc2022 = PublicKey.findProgramAddressSync([bc.toBuffer(), TOKEN_2022_PROGRAM_ID.toBuffer(), mintPubkey.toBuffer()], ASSOCIATED_TOKEN_PROGRAM_ID)[0];
             const abc2022Acc = await this.connection.getAccountInfo(abc2022, 'confirmed');
             if (abc2022Acc) {
-              this.cache.set(mintStr, TOKEN_2022_PROGRAM_ID);
+              this._setCache(mintStr, TOKEN_2022_PROGRAM_ID);
               return TOKEN_2022_PROGRAM_ID;
             }
           } catch (_) {}
@@ -110,7 +119,7 @@ export class TokenProgramResolver {
 
         // Default fallback (only cached if confirmed or running in offline/testing mode without connection)
         if (!this.connection || typeof this.connection.getAccountInfo !== 'function') {
-          this.cache.set(mintStr, TOKEN_PROGRAM_ID);
+          this._setCache(mintStr, TOKEN_PROGRAM_ID);
         }
         return TOKEN_PROGRAM_ID;
       } finally {

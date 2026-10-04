@@ -482,6 +482,7 @@ async function runAllTests() {
   console.log('\n--- TEST SUITE: FIX 9 (CONFIGURABLE DAILY LOSS CAP CIRCUIT BREAKER) ---');
   {
     const pm = new PositionManager(new MockExecutionEngine(), { dailyLossCapSol: 1.0 });
+    pm.dailyRealizedLossSol = 0;
 
     test('9.1: Daily loss cap initializes to configured limit (1.0 SOL)',
       pm.dailyLossCapSol === 1.0 && !pm.isDailyLossExceeded(),

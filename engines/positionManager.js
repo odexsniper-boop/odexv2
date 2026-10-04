@@ -17,6 +17,7 @@ export class PositionManager {
     }
     if (saved.positions && saved.positions.length > 0) {
       saved.positions.forEach(p => {
+        if (!p || !p.mint || p.status === 'SOLD' || p.name === 'ProfitCoin' || p.mint.startsWith('TakeProfitTestMint') || p.mint.startsWith('TestMint')) return;
         // Restore BigInt values
         if (p.tokensHeldRaw) p.tokensHeldRaw = BigInt(p.tokensHeldRaw);
         if (p.initialTokensRaw) p.initialTokensRaw = BigInt(p.initialTokensRaw);
@@ -196,6 +197,7 @@ export class PositionManager {
 
     pos.lastKnownVirtualSol = virtualSolReserves;
     pos.lastKnownVirtualTok = virtualTokenReserves;
+    pos.lastTickTimeMs = Date.now();
 
     const currentPriceSol = calculateSpotPriceSol(virtualSolReserves, virtualTokenReserves);
     pos.currentPriceSol = currentPriceSol;
@@ -347,6 +349,23 @@ export class PositionManager {
         } catch (e) {
           await this.closePositionDirect(mint, 'STALE_TIMEOUT');
         }
+        if (pos.status === 'MIGRATION_PENDING') {
+          await this.closePositionDirect(mint, 'STALE_MIGRATION_TIMEOUT');
+        }
+      } else if (this.curveWatcher?.connection && !pos.isExiting && pos.status === 'HOLDING' && (now - (pos.lastTickTimeMs || pos.openedTimeMs) > 30000)) {
+        // Proactively refresh price on quiet curves (>30s without trade ticks)
+        try {
+          const { PublicKey } = await import('@solana/web3.js');
+          const { getBondingCurvePDA } = await import('../pumpfun.js');
+          const pda = getBondingCurvePDA(new PublicKey(mint));
+          const acc = await this.curveWatcher.connection.getAccountInfo(pda, 'confirmed');
+          if (acc && acc.data && acc.data.length >= 24) {
+            const vTok = acc.data.readBigUInt64LE(8);
+            const vSol = acc.data.readBigUInt64LE(16);
+            pos.lastTickTimeMs = now;
+            await this.updatePrice(mint, vSol, vTok);
+          }
+        } catch (e) {}
       }
     }
   }
@@ -355,7 +374,15 @@ export class PositionManager {
   async forceManualExit(mint) {
     const pos = this.positions.get(mint);
     if (!pos) return;
-    await this.closePosition(mint, pos.lastKnownVirtualSol, pos.lastKnownVirtualTok, 'MANUAL_SELL', 100);
+    try {
+      await this.closePosition(mint, pos.lastKnownVirtualSol, pos.lastKnownVirtualTok, 'MANUAL_SELL', 100);
+    } catch (e) {}
+    // If on-chain sell failed or position remains open, force direct local closure so it is never stuck
+    if (this.positions.has(mint)) {
+      await this.closePositionDirect(mint, 'MANUAL_SELL');
+      this.positions.delete(mint);
+      TradeStorage.saveState(this.positions, this.tradeHistory);
+    }
   }
 
   async closePositionDirect(mint, reason) {
@@ -365,7 +392,7 @@ export class PositionManager {
     if (this.execution && pos.lastKnownVirtualSol && pos.lastKnownVirtualTok) {
       try {
         await this.closePosition(mint, pos.lastKnownVirtualSol, pos.lastKnownVirtualTok, reason, 100);
-        return;
+        if (!this.positions.has(mint)) return; // Successfully closed on-chain
       } catch (e) {}
     }
 
@@ -512,6 +539,8 @@ export class PositionManager {
       // Fix 1: Catch on-chain curve completion failure and reconcile route
       const isCurveCompleteErr = err.message && (
         err.message.includes('0x1774') || 
+        err.message.includes('0x1775') || 
+        err.message.includes('6005') || 
         err.message.toLowerCase().includes('complete') || 
         err.message.includes('BondingCurveComplete')
       );
@@ -540,6 +569,14 @@ export class PositionManager {
       log(`[POSITION EXIT FAILED] On-chain sell failed for ${pos.name}: ${err.message}. Position remains OPEN.`);
       pos.isExiting = false;
       pos.executionState = 'OPEN';
+      if (reason.startsWith('TAKE_PROFIT_') && pos.hitTiers) {
+        const match = reason.match(/TAKE_PROFIT_([0-9.]+)X/);
+        if (match) {
+          const mult = parseFloat(match[1]);
+          const tIdx = this.takeProfitTiers.findIndex(t => Math.abs(t.triggerMultiplier - mult) < 0.001);
+          if (tIdx !== -1) pos.hitTiers.delete(tIdx);
+        }
+      }
       if (pos.pendingEmergencyExit) {
         const emergency = pos.pendingEmergencyExit;
         pos.pendingEmergencyExit = null;
@@ -553,6 +590,14 @@ export class PositionManager {
       log(`[POSITION EXIT ABORTED] Sell did not confirm for ${pos.name}. Position remains OPEN.`);
       pos.isExiting = false;
       pos.executionState = 'OPEN';
+      if (reason.startsWith('TAKE_PROFIT_') && pos.hitTiers) {
+        const match = reason.match(/TAKE_PROFIT_([0-9.]+)X/);
+        if (match) {
+          const mult = parseFloat(match[1]);
+          const tIdx = this.takeProfitTiers.findIndex(t => Math.abs(t.triggerMultiplier - mult) < 0.001);
+          if (tIdx !== -1) pos.hitTiers.delete(tIdx);
+        }
+      }
       if (pos.pendingEmergencyExit) {
         const emergency = pos.pendingEmergencyExit;
         pos.pendingEmergencyExit = null;

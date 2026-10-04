@@ -58,6 +58,14 @@ export class SmartAgent {
           if (data.effectiveMinCompositeScore !== undefined) this.effectiveMinCompositeScore = data.effectiveMinCompositeScore;
           if (data.effectiveMaxDevHolding !== undefined) this.effectiveMaxDevHolding = data.effectiveMaxDevHolding;
           if (data.effectiveMinExternalBuyers !== undefined) this.effectiveMinExternalBuyers = data.effectiveMinExternalBuyers;
+
+          // Compute true recent win rate directly from experiences
+          if (this.experiences.length > 0) {
+            const recent = this.experiences.slice(-20);
+            const wins = recent.filter(e => e.isWin).length;
+            this.recentWinRate = Math.round((wins / recent.length) * 100);
+          }
+
           log(`[AI LEARNER] Loaded knowledge base: ${this.experiences.length} experiences, Win Rate: ${this.recentWinRate}%, Adaptive Min Score: ${this.effectiveMinCompositeScore}`);
         }
       }
@@ -127,6 +135,8 @@ export class SmartAgent {
       reason: tradeRecord.reason || 'UNKNOWN',
       devPercent: Number(tradeRecord.devPercent || 0),
       bundleCount: Number(tradeRecord.bundleCount || tradeRecord.bundledBuysCount || 0),
+      uniqueBuyersCount: Number(tradeRecord.uniqueBuyersCount || 0),
+      organicBuyersCount: Number(tradeRecord.organicBuyersCount || tradeRecord.uniqueBuyersCount || 0),
       entryScore: Number(tradeRecord.entryScore || 0),
       timestamp: Date.now(),
     };
@@ -179,7 +189,12 @@ export class SmartAgent {
     }
 
     // 3. Buyer Velocity Requirements
-    const lowBuyerLosses = lossTrades.filter(t => t.bundleCount <= 2).length;
+    const lowBuyerLosses = lossTrades.filter(t => {
+      const effectiveBuyers = (t.organicBuyersCount !== undefined && t.organicBuyersCount > 0)
+        ? t.organicBuyersCount
+        : ((t.uniqueBuyersCount !== undefined && t.uniqueBuyersCount > 0) ? t.uniqueBuyersCount : (t.bundleCount || 0));
+      return effectiveBuyers <= 2;
+    }).length;
     if (lowBuyerLosses >= 2 && lossTrades.length >= 3) {
       // Require at least 3 initial bundled buyers to confirm momentum
       this.effectiveMinExternalBuyers = 3;
@@ -246,17 +261,21 @@ export class SmartAgent {
       };
     }
 
-    // 3. SCORING FUNNEL (Starts at 40, must hit required score)
-    let score = 40;
+    // 3. SCORING FUNNEL (Evaluates composite entryScore if supplied, or standalone formula)
+    let score = (tokenInfo.entryScore !== undefined && tokenInfo.entryScore !== null)
+      ? Number(tokenInfo.entryScore)
+      : 40;
 
-    // Clean dev allocation (Max +30 pts)
-    if (telemetry.devPercent <= 1.0) score += 30;
-    else if (telemetry.devPercent <= 3.0) score += 20;
-    else if (telemetry.devPercent <= 6.0) score += 10;
+    if (tokenInfo.entryScore === undefined || tokenInfo.entryScore === null) {
+      // Clean dev allocation (Max +30 pts)
+      if (telemetry.devPercent <= 1.0) score += 30;
+      else if (telemetry.devPercent <= 3.0) score += 20;
+      else if (telemetry.devPercent <= 6.0) score += 10;
 
-    // Volume / Buyer velocity (Max +30 pts)
-    if (telemetry.buyerCount >= 4) score += 30;
-    else if (telemetry.buyerCount >= 2) score += 20;
+      // Volume / Buyer velocity (Max +30 pts)
+      if (telemetry.buyerCount >= 4) score += 30;
+      else if (telemetry.buyerCount >= 2) score += 20;
+    }
 
     // 4. AI Experience-Based Conviction Boost / Penalty (When Learning Enabled)
     if (this.learningEnabled && this.experiences.length >= 3) {
@@ -267,6 +286,8 @@ export class SmartAgent {
         score -= 15; // AI High-Risk Trap Penalty
       }
     }
+
+    score = Math.max(0, Math.min(100, Math.round(score)));
 
     const shouldTrade = score >= minScore;
     const reason = shouldTrade ? 'HIGH_CONVICTION_ENTRY' : `SCORE_BELOW_THRESHOLD (${score}/${minScore})`;

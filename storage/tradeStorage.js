@@ -9,19 +9,30 @@ const __dirname = path.dirname(__filename);
 const STORAGE_FILE = path.join(__dirname, 'trades_state.json');
 
 export class TradeStorage {
+  static isTestOrSold(p) {
+    if (!p || !p.mint || p.status === 'SOLD') return true;
+    if (p.name === 'ProfitCoin' || p.mint.startsWith('TakeProfitTestMint') || p.mint.startsWith('TestMint')) return true;
+    return false;
+  }
+
   static loadState() {
     try {
       // 1. Prioritize SQLite database
-      const positions = dbManager.getPositions();
-      const tradeHistory = dbManager.getTrades(100);
+      let positions = dbManager.getPositions();
+      let tradeHistory = dbManager.getTrades(100);
       if (positions.length > 0 || tradeHistory.length > 0) {
+        positions = positions.filter(p => !TradeStorage.isTestOrSold(p));
         return { positions, tradeHistory, vetoCount: 0 };
       }
 
       // 2. Fallback to JSON file if DB is empty
       if (fs.existsSync(STORAGE_FILE)) {
         const raw = fs.readFileSync(STORAGE_FILE, 'utf8');
-        return JSON.parse(raw);
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed.positions)) {
+          parsed.positions = parsed.positions.filter(p => !TradeStorage.isTestOrSold(p));
+        }
+        return parsed;
       }
     } catch (e) {
       log(`[STORAGE WARN] Could not load state: ${e.message}`);
@@ -31,7 +42,9 @@ export class TradeStorage {
 
   static saveState(positionsMap, tradeHistory, vetoCount = 0) {
     try {
-      const positions = Array.from(positionsMap.values()).map(p => ({
+      const positions = Array.from(positionsMap.values())
+        .filter(p => !TradeStorage.isTestOrSold(p))
+        .map(p => ({
         ...p,
         tokensHeldRaw: p.tokensHeldRaw ? p.tokensHeldRaw.toString() : '0',
         initialTokensRaw: p.initialTokensRaw ? p.initialTokensRaw.toString() : '0',
