@@ -774,61 +774,259 @@
     .avatar-menu-item.danger:hover svg {
       color: #fb7185;
     }
-    /* Enhanced Responsive Wallet Styles (657fff theme & Fill Buttons) */
-    .wallet-item-row {
+    /* ========================================================
+       Exact Pixel-Matched Solana Wallets Manager (Screen 2 Glassy)
+       ======================================================== */
+    #wallet-modal.settings-modal-backdrop {
+      background: radial-gradient(circle at 50% 25%, rgba(18, 24, 38, 0.6) 0%, rgba(3, 4, 7, 0.82) 100%) !important;
+      backdrop-filter: blur(28px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+    }
+    #wallet-modal .settings-modal {
+      background: linear-gradient(145deg, rgba(16, 21, 33, 0.84) 0%, rgba(9, 12, 19, 0.92) 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      border-radius: 18px !important;
+      width: 530px !important;
+      max-width: calc(100vw - 28px) !important;
+      padding: 22px 24px !important;
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.16), 0 24px 60px rgba(0, 0, 0, 0.85) !important;
+      backdrop-filter: blur(32px) saturate(190%) !important;
+      -webkit-backdrop-filter: blur(32px) saturate(190%) !important;
+      color: #ffffff !important;
+      zoom: 0.9 !important;
+      transform-origin: center center !important;
+    }
+    @supports not (zoom: 0.9) {
+      #wallet-modal .settings-modal {
+        transform: scale(0.9) !important;
+      }
+    }
+    #wallet-modal .settings-modal::before {
+      display: none !important;
+    }
+    #wallet-modal .settings-modal-header {
+      margin-bottom: 18px;
+      padding-bottom: 0;
+      border-bottom: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .wm-connected-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(13, 21, 32, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+      padding: 3px 10px;
+      margin-left: 4px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .wm-connected-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      display: inline-block;
+      flex-shrink: 0;
+      box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+    }
+    .wm-connected-text {
+      font-size: 11.5px;
+      font-weight: 500;
+      color: #94a3b8;
+      letter-spacing: 0.1px;
+    }
+    .wm-close-btn {
+      font-size: 16px;
+      color: #64748b;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s ease;
+    }
+    .wm-close-btn:hover {
+      color: #ffffff;
+    }
+    /* Unified 1-color glassy containers across all cards and balance boxes */
+    .wm-active-card {
+      background: rgba(14, 19, 30, 0.65) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 14px !important;
+      padding: 16px 18px !important;
+      margin-bottom: 22px !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+    }
+    .wm-balance-box {
+      background: rgba(14, 19, 30, 0.65) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 12px !important;
+      padding: 14px 16px !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04) !important;
+    }
+    .wm-default-badge, .badge-default-wallet {
+      font-size: 11px;
+      font-weight: 500;
+      color: #64748b;
+      background: rgba(21, 28, 40, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      padding: 2px 8px;
+      letter-spacing: 0.2px;
+      display: inline-flex;
+      align-items: center;
+      user-select: none;
+    }
+    .badge-phantom-wallet {
+      font-size: 10px;
+      font-weight: 500;
+      color: #ab9ff2;
+      background: rgba(171, 159, 242, 0.12);
+      border: 1px solid rgba(171, 159, 242, 0.25);
+      border-radius: 6px;
+      padding: 2px 7px;
+      letter-spacing: 0.2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      user-select: none;
+    }
+    .wm-card-action-btn {
+      background: rgba(18, 24, 36, 0.65) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 8px !important;
+      padding: 5px 12px !important;
+      color: #cbd5e1 !important;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 5px !important;
+      cursor: pointer !important;
+      transition: all 0.15s ease !important;
+      font-family: inherit !important;
+      user-select: none !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04) !important;
+    }
+    .wm-card-action-btn:hover {
+      background: rgba(26, 34, 51, 0.8) !important;
+      border-color: rgba(255, 255, 255, 0.16) !important;
+      color: #ffffff !important;
+    }
+    .wm-card-action-btn:active {
+      transform: scale(0.97);
+    }
+    .wm-card-action-icon-btn {
+      background: rgba(18, 24, 36, 0.65) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 8px !important;
+      padding: 6px 8px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      transition: all 0.15s ease !important;
+      text-decoration: none !important;
+      user-select: none !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04) !important;
+    }
+    .wm-card-action-icon-btn:hover {
+      background: rgba(26, 34, 51, 0.8) !important;
+      border-color: rgba(255, 255, 255, 0.16) !important;
+    }
+    .wm-new-wallet-btn {
+      background: rgba(18, 24, 36, 0.65) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 8px !important;
+      padding: 5px 12px !important;
+      color: #ffffff !important;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 5px !important;
+      cursor: pointer !important;
+      transition: all 0.15s ease !important;
+      font-family: inherit !important;
+      user-select: none !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04) !important;
+    }
+    .wm-new-wallet-btn:hover {
+      background: rgba(26, 34, 51, 0.8) !important;
+      border-color: rgba(255, 255, 255, 0.16) !important;
+    }
+    .wm-new-wallet-btn:active {
+      transform: scale(0.97);
+    }
+    .wallet-item-row, .wm-wallet-row {
       display: flex;
       flex-direction: column;
-      gap: 7px;
-      background: #0F1015;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      padding: 11px 14px;
-      transition: background 0.12s ease, border-color 0.12s ease;
+      background: rgba(14, 19, 30, 0.65) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 12px !important;
+      padding: 13px 16px !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04) !important;
+      transition: all 0.15s ease;
       contain: layout style;
-      transform: translateZ(0);
-      backface-visibility: hidden;
+      cursor: default;
     }
-    .wallet-item-row:hover {
-      background: #0e111d;
-      border-color: rgba(101, 127, 255, 0.35);
+    .wallet-item-row:hover, .wm-wallet-row:hover {
+      background: rgba(20, 26, 40, 0.75) !important;
+      border-color: rgba(255, 255, 255, 0.14) !important;
     }
-    .wallet-item-row.active-wallet {
-      border-color: rgba(101, 127, 255, 0.6) !important;
-      background: rgba(101, 127, 255, 0.08) !important;
-      box-shadow: 0 2px 8px rgba(101, 127, 255, 0.15);
+    .wallet-item-row.active-wallet, .wm-wallet-row.active-wallet {
+      border-color: rgba(255, 255, 255, 0.08) !important;
+      background: rgba(14, 19, 30, 0.65) !important;
     }
-    .wallet-item-top {
-      display: flex;
+    .wm-icon-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 3px;
+      cursor: pointer;
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      width: 100%;
+      justify-content: center;
+      transition: color 0.15s ease, transform 0.12s ease;
+      user-select: none;
     }
-    .wallet-item-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      width: 100%;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding-top: 7px;
+    .wm-icon-btn:hover {
+      color: #ffffff;
+      transform: translateY(-1px);
     }
-    .wallet-balance-num {
-      font-size: 14px;
-      font-weight: 700;
-      color: #657fff;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      letter-spacing: -0.2px;
-      white-space: nowrap;
-      -webkit-font-smoothing: antialiased;
+    .wm-icon-btn:active {
+      transform: scale(0.92);
+    }
+    .wm-icon-btn-delete {
+      color: #ef4444 !important;
+    }
+    .wm-icon-btn-delete:hover {
+      color: #f87171 !important;
+      transform: translateY(-1px);
     }
     #wm-wallets-list {
       scrollbar-width: thin;
-      scrollbar-color: rgba(101, 127, 255, 0.35) transparent;
+      scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
       contain: content;
-      will-change: scroll-position;
       overscroll-behavior: contain;
-      -webkit-overflow-scrolling: touch;
     }
     #wm-wallets-list::-webkit-scrollbar {
       width: 4px;
@@ -837,178 +1035,58 @@
       background: transparent;
     }
     #wm-wallets-list::-webkit-scrollbar-thumb {
-      background: rgba(101, 127, 255, 0.35);
+      background: rgba(255, 255, 255, 0.15);
       border-radius: 4px;
     }
     #wm-wallets-list::-webkit-scrollbar-thumb:hover {
-      background: rgba(101, 127, 255, 0.6);
+      background: rgba(255, 255, 255, 0.3);
     }
-    .badge-default-wallet {
-      font-size: 9.5px;
-      padding: 2px 7px;
-      border-radius: 4px;
-      background: rgba(101, 127, 255, 0.18);
-      color: #657fff;
-      font-weight: 700;
-      border: 1px solid rgba(101, 127, 255, 0.4);
-      letter-spacing: 0.3px;
-      text-transform: none;
-    }
-    .badge-phantom-wallet {
-      font-size: 9.5px;
-      padding: 2px 6px;
-      border-radius: 4px;
-      background: rgba(171, 159, 242, 0.18);
-      color: #ab9ff2;
-      font-weight: 700;
-      border: 1px solid rgba(171, 159, 242, 0.35);
-      letter-spacing: 0.3px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      text-transform: none;
-    }
-    .btn-set-default {
-      background: rgba(101, 127, 255, 0.14);
-      color: #657fff;
-      border: 1px solid rgba(101, 127, 255, 0.35);
-      border-radius: 6px;
-      padding: 2px 7px;
-      font-size: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
-      user-select: none;
-    }
-    .btn-set-default:hover {
-      background: #657fff;
-      color: #ffffff;
-      border-color: #657fff;
-      transform: translateY(-1px);
-      box-shadow: 0 2px 8px rgba(101, 127, 255, 0.3);
-    }
-    .btn-set-default:active {
-      transform: scale(0.94);
-      filter: brightness(0.9);
-    }
-    .wallet-item-row .action-icon-btn {
-      width: 26px;
-      height: 26px;
-      font-size: 12px;
-      border-radius: 6px;
-      transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
-      user-select: none;
-    }
-    .wallet-item-row .action-icon-btn:hover {
-      transform: translateY(-1px);
-    }
-    .wallet-item-row .action-icon-btn:active {
-      transform: scale(0.90);
-    }
-    .btn-wallet-fill-phantom {
-      background: #AB9FF2;
-      color: #0d0b1a;
-      border: none;
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 12.5px;
-      font-weight: 600;
-      white-space: nowrap;
-      padding: 9.5px 14px;
+    .wm-bottom-btn {
+      flex: 1;
+      height: 42px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
-      cursor: pointer;
-      transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-      flex: 1;
-      user-select: none;
-    }
-    .btn-wallet-fill-phantom:hover {
-      background: #beb3f7;
-      transform: translateY(-1px);
-    }
-    .btn-wallet-fill-phantom:active {
-      transform: scale(0.96);
-    }
-    .btn-wallet-fill-import {
-      background: #657fff;
-      color: #ffffff;
-      border: none;
-      border-radius: 8px;
+      gap: 8px;
+      font-size: 13px;
       font-family: inherit;
-      font-size: 12.5px;
-      font-weight: 600;
-      white-space: nowrap;
-      padding: 9.5px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
       cursor: pointer;
-      transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-      flex: 1;
+      transition: all 0.15s ease;
       user-select: none;
-    }
-    .btn-wallet-fill-import:hover {
-      background: #7a91ff;
-      transform: translateY(-1px);
-    }
-    .btn-wallet-fill-import:active {
-      transform: scale(0.96);
-    }
-    .btn-wallet-fill-refresh {
-      background: #ffffff;
-      color: #000000;
-      border: none;
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 12.5px;
-      font-weight: 600;
       white-space: nowrap;
-      padding: 9.5px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      cursor: pointer;
-      transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-      flex: 1;
-      user-select: none;
     }
-    .btn-wallet-fill-refresh:hover {
-      background: #f1f5f9;
-      color: #000000;
-      transform: translateY(-1px);
+    .btn-wallet-fill-phantom, .btn-wallet-fill-refresh, .wm-btn-phantom, .wm-btn-refresh {
+      background: rgba(18, 24, 36, 0.65) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      color: #cbd5e1 !important;
+      font-weight: 500 !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04) !important;
     }
-    .btn-wallet-fill-refresh:active {
-      transform: scale(0.96);
-    }
-    .btn-delete-wallet {
-      background: #dc2626 !important;
-      border-color: #ef4444 !important;
+    .btn-wallet-fill-phantom:hover, .btn-wallet-fill-refresh:hover, .wm-btn-phantom:hover, .wm-btn-refresh:hover {
+      background: rgba(26, 34, 51, 0.8) !important;
+      border-color: rgba(255, 255, 255, 0.16) !important;
       color: #ffffff !important;
-      transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
-      user-select: none;
     }
-    .btn-delete-wallet svg {
-      stroke: #ffffff !important;
-      transition: transform 0.12s ease;
+    .btn-wallet-fill-phantom:active, .btn-wallet-fill-refresh:active, .wm-btn-phantom:active, .wm-btn-refresh:active {
+      transform: scale(0.97);
     }
-    .btn-delete-wallet:hover {
-      background: #ef4444 !important;
+    .btn-wallet-fill-import, .wm-btn-import {
+      background: linear-gradient(135deg, #5364ec 0%, #6b7cf6 100%) !important;
+      border: none !important;
       color: #ffffff !important;
-      transform: translateY(-1px);
-      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
+      font-weight: 600 !important;
+      box-shadow: 0 4px 16px rgba(83, 100, 236, 0.35) !important;
     }
-    .btn-delete-wallet:active {
-      transform: scale(0.90);
+    .btn-wallet-fill-import:hover, .wm-btn-import:hover {
+      filter: brightness(1.08) !important;
+      box-shadow: 0 6px 20px rgba(83, 100, 236, 0.5) !important;
+      transform: translateY(-1px) !important;
+    }
+    .btn-wallet-fill-import:active, .wm-btn-import:active {
+      transform: scale(0.97) !important;
     }
     @keyframes spinSync {
       from { transform: rotate(0deg); }
@@ -1755,6 +1833,8 @@
     .badge-buy_pending { background: rgba(245, 158, 11, 0.15); color: #fde047; border: 1px solid rgba(245, 158, 11, 0.4); animation: pulse 1s infinite; }
     .badge-position_open { background: rgba(101, 127, 255, 0.15); color: #8ba2ff; border: 1px solid rgba(101, 127, 255, 0.4); box-shadow: 0 0 10px rgba(101, 127, 255, 0.25); }
     .badge-closed { background: rgba(101, 127, 255, 0.12); color: #8ba2ff; border: 1px solid rgba(101, 127, 255, 0.25); }
+    .badge-entry_blocked_bundle_pending { background: rgba(234, 179, 8, 0.12); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.3); }
+    .badge-entry_waiting_retest { background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
 
     .score-pill {
       font-size: 11px;
@@ -3281,93 +3361,119 @@
     </div>
   </div>
 
-  <!-- Solana Wallets Manager Modal Section -->
+  <!-- Solana Wallets Manager Modal Section (Screen 2 Exact Match) -->
   <div class="settings-modal-backdrop" id="wallet-modal" onclick="onWalletBackdropClick(event)">
-    <div class="settings-modal" style="width: 522px; max-width: calc(100vw - 28px); padding: 18px 20px;">
-      <div class="settings-modal-header" style="margin-bottom: 14px; padding-bottom: 10px;">
-        <h2 style="display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700;">
-          <img src="/icons/solana-sol-icon.svg" width="20" height="20" alt="Solana" style="object-fit: contain; filter: drop-shadow(0 0 6px rgba(101, 127, 255, 0.5));">
-          Solana Wallets Manager
-          <span style="font-size: 9.5px; font-weight: 700; padding: 2px 7px; background: rgba(101, 127, 255, 0.15); color: #657fff; border: 1px solid rgba(101, 127, 255, 0.35); border-radius: 9999px; margin-left: 3px;">Connected</span>
-        </h2>
-        <button class="settings-modal-close" onclick="closeWalletModal()" style="font-size: 16px; padding: 3px 6px;">✕</button>
+    <div class="settings-modal" style="width: 530px; max-width: calc(100vw - 28px); padding: 22px 24px;">
+      <!-- Header -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="/icons/solana-sol-icon.svg" width="22" height="22" alt="Solana" style="object-fit: contain; flex-shrink: 0;">
+          <h2 style="font-size: 16.5px; font-weight: 600; color: #ffffff; margin: 0; letter-spacing: -0.2px;">Solana Wallets Manager</h2>
+          <div class="wm-connected-badge">
+            <span class="wm-connected-dot"></span>
+            <span class="wm-connected-text">Connected</span>
+          </div>
+        </div>
+        <button class="wm-close-btn" onclick="closeWalletModal()">✕</button>
       </div>
 
       <!-- Active Primary Wallet Card -->
-      <div style="background: #0F1015; border: 1px solid rgba(101, 127, 255, 0.3); border-radius: 12px; padding: 13px 15px; margin-bottom: 14px; box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04), 0 4px 14px rgba(101, 127, 255, 0.05);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+      <div class="wm-active-card">
+        <!-- Top Row: Dot + Label + Default Pill -->
+        <div style="display: flex; justify-content: space-between; align-items: center;">
           <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="width: 7px; height: 7px; border-radius: 50%; background: #657fff; box-shadow: 0 0 8px #657fff;"></div>
-            <span style="font-size: 13px; font-weight: 700; color: #ffffff;" id="wm-active-name">Wallet 1 (Main Sniper)</span>
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: #5b6ef8; box-shadow: 0 0 10px rgba(91, 110, 248, 0.7); display: inline-block; flex-shrink: 0;"></span>
+            <span style="font-size: 14px; font-weight: 600; color: #ffffff;" id="wm-active-name">Primary Sniper Wallet (Active)</span>
           </div>
-          <span class="badge-default-wallet" id="wm-mode-tag">Default</span>
+          <span class="wm-default-badge" id="wm-mode-tag">Default</span>
         </div>
 
-        <div style="display: flex; align-items: center; justify-content: space-between; background: #111111; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 8px 12px; margin-bottom: 10px;">
-          <span style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 500; color: #d4d4d8; letter-spacing: 0.3px; -webkit-font-smoothing: antialiased;" id="wm-active-addr">Connecting to wallet...</span>
-          <div style="display: flex; gap: 6px;">
-            <button class="copy-btn" onclick="closeWalletModal(); openDepositModal();" title="Deposit SOL or SPL Tokens" style="padding: 3px 8px; display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: #ffffff; background: #657FFE; border: 1px solid #657FFE; border-radius: 6px; cursor: pointer;">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
-              Deposit
+        <!-- Middle Row: Truncated Address + Copy + Action Buttons (Deposit, Send Sol, Solscan) -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; margin-bottom: 14px;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 13px; font-weight: 500; color: #64748b; letter-spacing: 0.2px;" id="wm-active-addr">3HRyqe...bEapTt</span>
+            <button class="wm-icon-btn" onclick="copyActiveWallet(event)" title="Copy Address">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="13" height="13" x="9" y="9" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
             </button>
-            <button class="copy-btn" onclick="openSendSolModal(activeWalletPubkey)" title="Send SOL to another wallet" style="padding: 3px 8px; display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: #657fff; background: rgba(101, 127, 255, 0.12); border: 1px solid rgba(101, 127, 255, 0.3); border-radius: 6px; cursor: pointer;">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-              Send SOL
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <button class="wm-card-action-btn" onclick="closeWalletModal(); openDepositModal();" title="Deposit SOL or SPL Tokens">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+              <span>Deposit</span>
             </button>
-            <button class="copy-btn" onclick="copyActiveWallet(event)" title="Copy Address" style="padding: 3px 5px;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <button class="wm-card-action-btn" onclick="openSendSolModal(activeWalletPubkey)" title="Send Sol to another wallet">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              <span>Send Sol</span>
             </button>
-            <a id="wm-solscan-link" href="https://solscan.io" target="_blank" class="copy-btn" title="View on Solscan Explorer" style="display: flex; align-items: center; justify-content: center; text-decoration: none; padding: 3px 5px;">
+            <a id="wm-solscan-link" href="https://solscan.io" target="_blank" class="wm-card-action-icon-btn" title="View on Solscan Explorer">
               <img src="/icons/solscan-logo-light.svg" alt="Solscan" width="13" height="13" style="object-fit: contain;">
             </a>
           </div>
         </div>
 
+        <!-- Bottom Row: 2 Balances Grid Cards -->
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-          <div style="background: #111111; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 15px 18px;">
-            <div style="font-size: 15px; font-weight: 600; color: #d4d4d8; margin-bottom: 7px; letter-spacing: 0.2px; display: flex; align-items: center; gap: 8px;">
-              <img src="/icons/solana-sol-icon.svg" width="24" height="24" alt="SOL" style="object-fit: contain; flex-shrink: 0;">
-              Sol balance
+          <!-- Sol balance -->
+          <div class="wm-balance-box">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; color: #94a3b8; font-size: 13px; font-weight: 500;">
+              <img src="/icons/solana-sol-icon.svg" width="18" height="18" alt="SOL" style="object-fit: contain; flex-shrink: 0;">
+              <span>Sol balance</span>
             </div>
-            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 26px; font-weight: 700; color: #657fff; letter-spacing: -0.02em; -webkit-font-smoothing: antialiased;" id="wm-sol-display">0.0000 Sol</div>
+            <div style="font-size: 23px; font-weight: 700; color: #ffffff; letter-spacing: -0.02em;" id="wm-sol-display">0.0000 Sol</div>
           </div>
-          <div style="background: #111111; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 15px 18px;">
-            <div style="font-size: 15px; font-weight: 600; color: #d4d4d8; margin-bottom: 7px; letter-spacing: 0.2px; display: flex; align-items: center; gap: 8px;">
-              <img src="/icons/usdc.svg" width="42" height="31" alt="USDC" style="object-fit: contain; flex-shrink: 0;">
-              Usdc balance
+          <!-- Usdc balance -->
+          <div class="wm-balance-box">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; color: #94a3b8; font-size: 13px; font-weight: 500;">
+              <svg width="20" height="20" viewBox="547.6 135.1 2000 2000" style="flex-shrink: 0;"><path fill="#2775CA" d="M1547.6,2135.1c554.2,0,1000-445.8,1000-1000s-445.8-1000-1000-1000s-1000,445.8-1000,1000 S993.4,2135.1,1547.6,2135.1z"/><path fill="#FFFFFF" d="M1822.6,1293.4c0-145.8-87.5-195.8-262.5-216.7c-125-16.7-150-50-150-108.3s41.7-95.8,125-95.8 c75,0,116.7,25,137.5,87.5c4.2,12.5,16.7,20.8,29.2,20.8h66.7c16.7,0,29.2-12.5,29.2-29.2v-4.2c-16.7-91.7-91.7-162.5-187.5-170.8 v-100c0-16.7-12.5-29.2-33.3-33.3h-62.5c-16.7,0-29.2,12.5-33.3,33.3v95.8c-125,16.7-204.2,100-204.2,204.2 c0,137.5,83.3,191.7,258.3,212.5c116.7,20.8,154.2,45.8,154.2,112.5s-58.3,112.5-137.5,112.5c-108.3,0-145.8-45.8-158.3-108.3 c-4.2-16.7-16.7-25-29.2-25h-70.8c-16.7,0-29.2,12.5-29.2,29.2v4.2c16.7,104.2,83.3,179.2,220.8,200v100c0,16.7,12.5,29.2,33.3,33.3 h62.5c16.7,0,29.2-12.5,33.3-33.3v-100C1739.2,1493.4,1822.6,1405.9,1822.6,1293.4L1822.6,1293.4z"/><path fill="#FFFFFF" d="M1335.1,1730.9c-325-116.7-491.7-479.2-370.8-800c62.5-175,200-308.3,370.8-370.8c16.7-8.3,25-20.8,25-41.7 v-58.3c0-16.7-8.3-29.2-25-33.3c-4.2,0-12.5,0-16.7,4.2c-395.8,125-612.5,545.8-487.5,941.7c75,233.3,254.2,412.5,487.5,487.5 c16.7,8.3,33.3,0,37.5-16.7c4.2-4.2,4.2-8.3,4.2-16.7v-58.3C1360.1,1755.9,1347.6,1739.3,1335.1,1730.9z M1776.7,430.9 c-16.7-8.3-33.3,0-37.5,16.7c-4.2,4.2-4.2,8.3-4.2,16.7v58.3c0,16.7,12.5,33.3,25,41.7c325,116.7,491.7,479.2,370.8,800 c-62.5,175-200,308.3-370.8,370.8c-16.7,8.3-25,20.8-25,41.7v58.3c0,16.7,8.3,29.2,25,33.3c4.2,0,12.5,0,16.7-4.2 c395.8-125,612.5-545.8,487.5-941.7C2189.2,685.1,2005.9,505.9,1776.7,430.9L1776.7,430.9z"/></svg>
+              <span>Usdc balance</span>
             </div>
-            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 26px; font-weight: 700; color: #ffffff; letter-spacing: -0.02em; -webkit-font-smoothing: antialiased;" id="wm-usdc-display">$0.00</div>
+            <div style="font-size: 23px; font-weight: 700; color: #ffffff; letter-spacing: -0.02em;" id="wm-usdc-display">$0</div>
           </div>
         </div>
       </div>
 
-      <!-- Registered Wallets Sub-List -->
-      <div style="margin-bottom: 16px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.2px;">Managed sniper wallets</span>
-          <button class="btn-action" style="padding: 4px 10px; font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 5px; color: #000000; border: 1px solid #ffffff; background: #ffffff; border-radius: 6px; box-shadow: 0 1px 4px rgba(255, 255, 255, 0.15); cursor: pointer; transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1); user-select: none;" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform=''" onmouseleave="this.style.transform=''" onclick="generateNewWallet()">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            New Wallet
+      <!-- Managed Sniper Wallets Section -->
+      <div style="margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <span style="font-size: 11px; font-weight: 700; color: #64748b; letter-spacing: 0.2px;">Managed sniper wallets</span>
+          <button class="wm-new-wallet-btn" onclick="generateNewWallet()" title="Generate new sniper wallet">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>New wallet</span>
           </button>
         </div>
-        <div id="wm-wallets-list" style="display: flex; flex-direction: column; gap: 8px; max-height: 336px; overflow-y: auto; padding-right: 2px;">
+        <div id="wm-wallets-list" style="display: flex; flex-direction: column; gap: 10px; max-height: 250px; overflow-y: auto; padding-right: 2px;">
           <!-- Dynamically filled by renderWallets() -->
         </div>
       </div>
 
-      <!-- Action Buttons (Solid Fill Style with 657fff Theme & Phantom Circle Icon) -->
-      <div style="display: flex; gap: 8px; margin-top: 16px;">
-        <button class="btn-wallet-fill-phantom" onclick="connectPhantomWallet()" title="Connect via Phantom Chrome Extension">
-          <img src="/icons/Phantom-Icon_Circle.svg" width="16" height="16" alt="Phantom" style="border-radius: 50%; display: block; flex-shrink: 0;">
-          <span style="white-space: nowrap;">Connect Phantom</span>
+      <!-- Action Buttons Row (Connect phantom, Import key, Refresh) -->
+      <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <button class="wm-bottom-btn wm-btn-phantom btn-wallet-fill-phantom" onclick="connectPhantomWallet()" title="Connect via Phantom Chrome Extension">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #94a3b8; flex-shrink: 0;">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+          </svg>
+          <span>Connect phantom</span>
         </button>
-        <button class="btn-wallet-fill-import" onclick="promptImportKey()" title="Import Solana Private Key">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="7.5" cy="15.5" r="5.5"></circle><path d="m21 2-9.6 9.6"></path><path d="m15.5 7.5 3 3"></path></svg>
-          <span style="white-space: nowrap;">Import Key</span>
+        <button class="wm-bottom-btn wm-btn-import btn-wallet-fill-import" onclick="promptImportKey()" title="Import Solana private key">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #ffffff; flex-shrink: 0;">
+            <circle cx="7.5" cy="15.5" r="5.5"></circle>
+            <path d="m21 2-9.6 9.6"></path>
+            <path d="m15.5 7.5 3 3"></path>
+          </svg>
+          <span>Import key</span>
         </button>
-        <button class="btn-wallet-fill-refresh" onclick="refreshWalletBalances()" title="Refresh On-Chain Balances">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #000000; flex-shrink: 0;"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path><path d="M16 21h5v-5"></path></svg>
-          <span style="white-space: nowrap;">Refresh</span>
+        <button class="wm-bottom-btn wm-btn-refresh btn-wallet-fill-refresh" onclick="refreshWalletBalances()" title="Refresh on-chain balances">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #94a3b8; flex-shrink: 0;">
+            <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+            <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+            <path d="M16 21h5v-5"></path>
+          </svg>
+          <span>Refresh</span>
         </button>
       </div>
     </div>
@@ -4637,6 +4743,8 @@
             ${exitBadgeHtml}
             ${isRejected ? `<div style="color: var(--red-primary); font-size: 11px; font-weight: 600; margin-top: 4px; max-width: 180px; line-height: 1.3;">🚫 ${formattedRejection}</div>` : ''}
             ${t.state === 'ENTRY_READY' ? `<div style="color: var(--purple-primary); font-size: 11px; font-weight: 700; margin-top: 4px;">🎯 3-Stage Trigger!</div>` : ''}
+            ${t.state === 'ENTRY_BLOCKED_BUNDLE_PENDING' ? `<div style="color: #facc15; font-size: 11px; font-weight: 700; margin-top: 4px;">⏳ Verifying Bundle...</div>` : ''}
+            ${t.state === 'ENTRY_WAITING_RETEST' ? `<div style="color: #38bdf8; font-size: 11px; font-weight: 700; margin-top: 4px;">⏳ Waiting for Retest...</div>` : ''}
           </div>
         `;
 
@@ -6855,6 +6963,9 @@
         const stored = localStorage.getItem('ko_sniper_wallets');
         if (stored) {
           managedWallets = JSON.parse(stored);
+          managedWallets.forEach(w => {
+            if (w.label === 'Wallet 1 (Main Sniper)') w.label = 'Primary Sniper Wallet (Active)';
+          });
         }
       } catch (e) {
         managedWallets = [];
@@ -6924,7 +7035,7 @@
           const wmActiveName = document.getElementById('wm-active-name');
           const currentActive = managedWallets.find(w => w.address === activeWalletPubkey);
           if (wmActiveName && currentActive) {
-            wmActiveName.innerText = currentActive.label || 'Wallet 1 (Main Sniper)';
+            wmActiveName.innerText = (currentActive.label && currentActive.label !== 'Wallet 1 (Main Sniper)') ? currentActive.label : 'Primary Sniper Wallet (Active)';
           }
 
           const solscanLink = document.getElementById('wm-solscan-link');
@@ -7044,48 +7155,55 @@
       listEl.innerHTML = managedWallets.map((w, idx) => {
         const isSelected = w.address === activeWalletPubkey;
         const isPhantom = w.source === 'phantom' || (w.label && w.label.toLowerCase().includes('phantom'));
+        const label = w.label || (idx === 0 ? 'Primary Sniper Wallet (Active)' : `Sniper Wallet ${idx + 1}`);
         return `
-          <div class="wallet-item-row ${isSelected ? 'active-wallet' : ''}">
-            <!-- Top Line: Identity on Left, Balance on Right (Spacious & Responsive) -->
-            <div class="wallet-item-top">
+          <div class="wm-wallet-row ${isSelected ? 'active-wallet' : ''}" ${!isSelected ? `onclick="activateWallet('${w.address}')" style="cursor: pointer;"` : ''}>
+            <!-- Top Line: Identity on Left, Balance on Right -->
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
               <div style="display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1;">
-                <div style="width: 7px; height: 7px; border-radius: 50%; background: ${isSelected ? '#657fff' : 'var(--text-muted)'}; box-shadow: ${isSelected ? '0 0 8px #657fff' : 'none'}; flex-shrink: 0;"></div>
-                <span style="font-size: 13.5px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${w.label || `Wallet ${idx + 1}`}</span>
-                ${isPhantom ? `<span class="badge-phantom-wallet" style="font-size: 9.5px; padding: 2px 7px;"><img src="/icons/Phantom-Icon_Circle.svg" width="13" height="13" alt="Phantom" style="border-radius: 50%; display: inline-block; vertical-align: middle;"> Phantom</span>` : ''}
-                ${isSelected ? '<span class="badge-default-wallet" style="font-size: 9.5px; padding: 2px 7px;">Default</span>' : ''}
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: ${isSelected ? '#5b6ef8' : '#64748b'}; box-shadow: ${isSelected ? '0 0 10px rgba(91, 110, 248, 0.7)' : 'none'}; flex-shrink: 0; display: inline-block;"></span>
+                <span style="font-size: 13.5px; font-weight: 600; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${label}</span>
+                ${isPhantom ? `<span class="badge-phantom-wallet"><img src="/icons/Phantom-Icon_Circle.svg" width="13" height="13" alt="Phantom" style="border-radius: 50%; display: inline-block;"> Phantom</span>` : ''}
+                ${isSelected ? '<span class="wm-default-badge">Default</span>' : ''}
               </div>
-              <div class="wallet-balance-num">
+              <div style="font-size: 13.5px; font-weight: 600; color: #ffffff; white-space: nowrap; letter-spacing: -0.2px;">
                 ${w.balance || '0.00 Sol'}
               </div>
             </div>
 
-            <!-- Bottom Line: Address on Left, Action Buttons on Right -->
-            <div class="wallet-item-bottom">
-              <div style="font-size: 11.5px; font-weight: 500; color: #a1a1aa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; letter-spacing: 0.3px; -webkit-font-smoothing: antialiased;">
-                ${w.address.slice(0, 6)}...${w.address.slice(-6)}
+            <!-- Bottom Line: Address & Copy on Left, Action Buttons on Right -->
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 8px;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="font-size: 12.5px; font-weight: 500; color: #64748b; letter-spacing: 0.2px;">${w.address.slice(0, 6)}...${w.address.slice(-6)}</span>
+                <button class="wm-icon-btn" onclick="event.stopPropagation(); copyAddress(event, '${w.address}')" title="Copy Address">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="13" height="13" x="9" y="9" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                </button>
               </div>
-              <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+              <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
                 ${!isSelected ? `
-                  <button class="btn-set-default" title="Set as Default Sniper Wallet" onclick="setDefaultWallet('${w.address}')">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    Set Default
+                  <button class="wm-icon-btn" title="Set as default sniper wallet" onclick="event.stopPropagation(); setDefaultWallet('${w.address}')" style="color: #64748b;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                   </button>
                 ` : ''}
-                <button class="action-icon-btn btn-send-sol" title="Send SOL to another wallet" onclick="openSendSolModal('${w.address}')" style="color: #657fff; display: flex; align-items: center; justify-content: center;">
+                <button class="wm-icon-btn" title="Send Sol to another wallet" onclick="event.stopPropagation(); openSendSolModal('${w.address}')">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="22" y1="2" x2="11" y2="13"></line>
                     <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                   </svg>
                 </button>
-                <button class="action-icon-btn" title="Copy Address" onclick="copyAddress(event, '${w.address}')">
+                <button class="wm-icon-btn" title="Copy Address" onclick="event.stopPropagation(); copyAddress(event, '${w.address}')">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                    <rect width="13" height="13" x="9" y="9" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                   </svg>
                 </button>
-                <a href="https://solscan.io/account/${w.address}" target="_blank" class="action-icon-btn" title="View on Solscan Explorer" style="display: flex; align-items: center; justify-content: center; text-decoration: none;">
+                <a href="https://solscan.io/account/${w.address}" target="_blank" class="wm-icon-btn" title="View on Solscan Explorer" onclick="event.stopPropagation();">
                   <img src="/icons/solscan-logo-light.svg" alt="Solscan" width="13" height="13" style="object-fit: contain;">
                 </a>
-                <button class="action-icon-btn btn-delete-wallet" title="Delete Wallet" onclick="deleteWallet('${w.address}')">
+                <button class="wm-icon-btn wm-icon-btn-delete" title="Delete Wallet" onclick="event.stopPropagation(); deleteWallet('${w.address}')">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 6h18"></path>
                     <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
@@ -7297,7 +7415,7 @@
 
       const wmActiveName = document.getElementById('wm-active-name');
       if (wmActiveName) {
-        wmActiveName.innerText = target.label || 'Wallet 1 (Main Sniper)';
+        wmActiveName.innerText = (target.label && target.label !== 'Wallet 1 (Main Sniper)') ? target.label : 'Primary Sniper Wallet (Active)';
       }
 
       const solscanLink = document.getElementById('wm-solscan-link');

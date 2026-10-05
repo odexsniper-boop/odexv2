@@ -42,6 +42,7 @@ export class TokenDetector {
         let bundleCount = 0;
         const buyerAccounts = new Set();
 
+        let devTokensRaw = 0n;
         let totalOutsideTokensRaw = 0n;
 
         // Scan sibling instructions for immediate buys
@@ -64,6 +65,9 @@ export class TokenDetector {
                 if (creator && buyer.equals(creator)) {
                   // Dev bought
                   devBuySol += 1; // Mark dev participation
+                  if (boughtTokensRaw > 0n) {
+                    devTokensRaw += boughtTokensRaw;
+                  }
                 } else if (boughtTokensRaw > 0n) {
                   totalOutsideTokensRaw += boughtTokensRaw;
                 }
@@ -77,6 +81,9 @@ export class TokenDetector {
           ? Number((totalOutsideTokensRaw * 10000n) / 1_073_000_000_000_000n) / 100
           : 0;
         const bundlePercent = exactOutsidePercent > 0 ? exactOutsidePercent : Math.min(100, bundleCount * 3.5);
+        const devPercent = devTokensRaw > 0n
+          ? Number((devTokensRaw * 10000n) / 1_000_000_000_000_000n) / 100
+          : 0;
         const isMultiWalletBundle = bundleCount >= 3 && buyerAccounts.size >= 2;
 
         const launchEvent = {
@@ -86,6 +93,7 @@ export class TokenDetector {
           slot: tx.slot,
           blockTime: tx.blockTime,
           devBought: devBuySol > 0,
+          devPercent,
           bundledBuysCount: bundleCount,
           bundlePercent,
           isMultiWalletBundle,

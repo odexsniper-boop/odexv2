@@ -1,3 +1,4 @@
+import { PublicKey } from '@solana/web3.js';
 import { log } from '../config.js';
 import { eventBus } from '../eventBus.js';
 import { TokenState, TokenRecord } from './stateMachine.js';
@@ -7,7 +8,7 @@ import { validateMoneyFlow } from './manipulationEngine.js';
 import { evaluateThreeCandlePattern, CandleBuilder } from './priceEngine.js';
 import { BuyerQualityEngine } from './buyerQualityEngine.js';
 import { HardSafetyFilter } from './safetyEngine.js';
-import { calculateSpotPriceSol } from '../pumpfun.js';
+import { calculateSpotPriceSol, getBondingCurvePDA, getAssociatedBondingCurvePDA } from '../pumpfun.js';
 
 /**
  * 3-Stage Deterministic Orchestrator & State Machine:
@@ -41,6 +42,7 @@ export class Orchestrator {
     buySizeSol = 0.1,
     autoBuyEnabled = false,
     tradeCooldownMs = 3000,
+    bundleVerificationTimeoutMs = 5000,
   }) {
     this.safetyFilter = safetyFilter;
     this.smartAgent = smartAgent;
@@ -52,6 +54,7 @@ export class Orchestrator {
     this.buySizeSol = buySizeSol;
     this.autoBuyEnabled = autoBuyEnabled;
     this.tradeCooldownMs = tradeCooldownMs;
+    this.bundleVerificationTimeoutMs = bundleVerificationTimeoutMs;
     this.lastTradeTime = 0;
 
     // Fix 3: Bounded Entry Queue & Deferred Scheduler
@@ -61,7 +64,8 @@ export class Orchestrator {
     this.cooldownTimer = null;
 
     // Buyer Quality & Sybil Defense Engine
-    this.buyerQualityEngine = new BuyerQualityEngine(curveWatcher?.connection || executionEngine?.connection || null);
+    this.connection = curveWatcher?.connection || executionEngine?.connection || null;
+    this.buyerQualityEngine = new BuyerQualityEngine(this.connection);
 
     // Active tokens map (mint -> TokenRecord)
     this.tokens = new Map();
@@ -79,7 +83,9 @@ export class Orchestrator {
         TokenState.WAITING_FOR_CAPACITY,
         TokenState.WAITING_FOR_COOLDOWN,
         TokenState.REVALIDATING,
-        TokenState.LIGHTWEIGHT_WATCHLIST
+        TokenState.LIGHTWEIGHT_WATCHLIST,
+        TokenState.ENTRY_BLOCKED_BUNDLE_PENDING,
+        TokenState.ENTRY_WAITING_RETEST,
       ];
       
       for (const [mint, record] of this.tokens.entries()) {
@@ -144,11 +150,17 @@ export class Orchestrator {
                 record.lastVirtualSolReserves = vSol;
                 record.lastVirtualTokenReserves = vTok;
                 record.transitionTo(TokenState.MONEY_FLOW_WATCH, 'LATE_BREAKOUT_INFLOW');
+                const candleTf = (record.narrativeScore >= 75 || record.bundledBuysCount >= 15) ? 4 : 8;
+                this.candleBuilders.set(record.mint, new CandleBuilder(candleTf));
                 if (this.curveWatcher) this.curveWatcher.watch(record.mint);
                 if (this.devWatcher && record.creator && record.creator !== 'UNKNOWN') {
                   this.devWatcher.watchDev(record.mint, record.creator);
                 }
                 eventBus.emit('STATE_TRANSITION', { mint: record.mint, state: record.state, record: this.serializeToken(record) });
+              } else if (vSol < prevSol) {
+                // Track downward reserve drift to update baseline so new inflows are not missed
+                record.lastVirtualSolReserves = vSol;
+                record.lastVirtualTokenReserves = vTok;
               }
             }
           } catch (e) {}
@@ -161,6 +173,7 @@ export class Orchestrator {
     eventBus.on('DEV_DUMP_ALERT', (alert) => this.handleDevDumpAlert(alert));
     eventBus.on('POSITION_CLOSED', (tradeRecord) => this.handlePositionClosed(tradeRecord));
     eventBus.on('BUNDLE_METRICS_UPDATED', (data) => this.handleBundleMetricsUpdated(data));
+    eventBus.on('TRIGGER_CONFIRMED', (data) => this._handleTriggerConfirmed(data));
   }
 
   setCurveWatcher(watcher) {
@@ -209,6 +222,7 @@ export class Orchestrator {
     record.telegram = eventData.telegram || null;
     record.website = eventData.website || null;
     record.imageUrl = eventData.imageUrl || null;
+    record.bundleDataStatus = eventData.bundleDataStatus || (eventData.bundlePercent != null || eventData.bundledBuysCount != null ? 'VERIFIED' : 'PENDING');
     this.tokens.set(mint, record);
 
     // Preload token program & creator in Execution Cache for 0ms trade construction
@@ -322,6 +336,7 @@ export class Orchestrator {
           
           record.transitionTo(TokenState.MONEY_FLOW_WATCH);
           record.stageEnteredAt = Date.now();
+          this.refreshTopHolders(record).catch(() => {});
           const candleTf = (record.narrativeScore >= 75 || record.bundledBuysCount >= 15) ? 4 : 8;
           this.candleBuilders.set(mint, new CandleBuilder(candleTf));
 
@@ -465,6 +480,12 @@ export class Orchestrator {
     if (data.bundlePercent !== undefined && data.bundlePercent !== null) {
       record.bundlePercent = data.bundlePercent;
     }
+    if (data.devPercent !== undefined && data.devPercent !== null) {
+      record.devPercent = data.devPercent;
+    }
+    if (data.creator && data.creator !== 'UNKNOWN' && (!record.creator || record.creator === 'UNKNOWN')) {
+      record.creator = data.creator;
+    }
     record.bundleDataStatus = data.bundleDataStatus || 'VERIFIED';
 
     // Re-evaluate Stage 0 safety if token hasn't already opened a position or been rejected
@@ -495,7 +516,100 @@ export class Orchestrator {
           reason: record.rejectionReason,
           record: this.serializeToken(record),
         });
+        return;
       }
+
+      // If token was waiting in ENTRY_BLOCKED_BUNDLE_PENDING, check if it can now enter:
+      if (record.state === TokenState.ENTRY_BLOCKED_BUNDLE_PENDING) {
+        if (record._bundleTimeoutTimer) {
+          clearTimeout(record._bundleTimeoutTimer);
+          record._bundleTimeoutTimer = null;
+        }
+
+        const gate = this.canEnterTrade(record);
+        if (gate.allow) {
+          log(`✅ [BUNDLE RESOLVED] ${record.name || mint.slice(0, 8)} bundle verified cleanly (${record.bundleDataStatus})! Resuming entry execution.`);
+          record.transitionTo(TokenState.ENTRY_READY);
+          eventBus.emit('STATE_TRANSITION', {
+            mint,
+            state: record.state,
+            record: this.serializeToken(record),
+          });
+          this.triggerExecution(record).catch(e => log(`[ENTRY RESUME ERR] ${e.message}`));
+        } else if (!gate.wait) {
+          this.vetoCount++;
+          record.transitionTo(TokenState.REJECTED, gate.reason);
+          log(`🛑 [BUNDLE VETO] ${record.name || mint.slice(0, 8)} rejected after bundle resolution: ${gate.reason}`);
+          if (this.curveWatcher) this.curveWatcher.unwatch(mint);
+          if (this.devWatcher) this.devWatcher.unwatchDev(mint);
+          eventBus.emit('STATE_TRANSITION', {
+            mint,
+            state: record.state,
+            reason: record.rejectionReason,
+            record: this.serializeToken(record),
+          });
+        }
+      }
+    }
+  }
+
+  /**
+   * Refreshes top holder supply concentration via on-chain largest accounts audit
+   * Excludes the bonding curve pool PDA/ATA and checks if concentration > 35%
+   */
+  async refreshTopHolders(record) {
+    if (!record || !record.mint) return 0;
+    const conn = this.connection || this.curveWatcher?.connection || this.execution?.connection;
+    if (!conn || typeof conn.getTokenLargestAccounts !== 'function') {
+      return record.topHoldersPercent || 0;
+    }
+
+    try {
+      const mintPubkey = typeof record.mint === 'string' ? new PublicKey(record.mint) : record.mint;
+      const bondingCurvePDA = getBondingCurvePDA(mintPubkey);
+      const bondingCurveATA = getAssociatedBondingCurvePDA(mintPubkey, bondingCurvePDA);
+      const bcAddress = bondingCurveATA.toBase58();
+      const pdaAddress = bondingCurvePDA.toBase58();
+
+      const largest = await conn.getTokenLargestAccounts(mintPubkey, 'processed');
+      if (!largest || !largest.value || !Array.isArray(largest.value)) {
+        return record.topHoldersPercent || 0;
+      }
+
+      // Total supply for Pump.fun tokens is fixed at 1,000,000,000 tokens (1B)
+      const TOTAL_SUPPLY = 1_000_000_000;
+      let nonCurveSum = 0;
+
+      for (const acc of largest.value) {
+        const addr = acc.address ? (typeof acc.address === 'string' ? acc.address : acc.address.toBase58()) : '';
+        if (addr === bcAddress || addr === pdaAddress) {
+          continue; // Exclude bonding curve pool reserves
+        }
+        const uiAmount = acc.uiAmount != null ? acc.uiAmount : (Number(acc.amount || 0) / (10 ** (acc.decimals || 6)));
+        nonCurveSum += uiAmount;
+      }
+
+      const pct = parseFloat(((nonCurveSum / TOTAL_SUPPLY) * 100).toFixed(2));
+      record.topHoldersPercent = pct;
+
+      // Stage 2 Hard Veto if top holders concentration > 35%
+      if (pct > 35 && record.state === TokenState.MONEY_FLOW_WATCH) {
+        this.vetoCount++;
+        record.transitionTo(TokenState.REJECTED, `STAGE 2 VETO: HIGH_SUPPLY_CONCENTRATION (Top non-curve holders control ${pct.toFixed(1)}% of supply > 35%)`);
+        log(`🚨 [STAGE 2 VETO] High supply concentration rejected on ${record.name || record.mint.slice(0, 8)}! (Top non-curve holders: ${pct.toFixed(1)}%)`);
+        if (this.curveWatcher) this.curveWatcher.unwatch(record.mint);
+        if (this.devWatcher) this.devWatcher.unwatchDev(record.mint);
+        eventBus.emit('STATE_TRANSITION', {
+          mint: record.mint,
+          state: record.state,
+          reason: record.rejectionReason,
+          record: this.serializeToken(record),
+        });
+      }
+
+      return pct;
+    } catch (err) {
+      return record.topHoldersPercent || 0;
     }
   }
 
@@ -550,6 +664,12 @@ export class Orchestrator {
 
     // Handle Stage 2: MONEY_FLOW_WATCH
     if (record.state === TokenState.MONEY_FLOW_WATCH) {
+      // Periodic top holder distribution check (rate-limited every 20s)
+      if (!record.lastHolderCheck || (Date.now() - record.lastHolderCheck > 20000)) {
+        record.lastHolderCheck = Date.now();
+        this.refreshTopHolders(record).catch(() => {});
+      }
+
       const quality = this.buyerQualityEngine.evaluateBuyerQuality(mint);
       record.buyerQuality = quality;
 
@@ -580,7 +700,7 @@ export class Orchestrator {
         : rawBuyerCount;
 
       const effectiveOrganicBuyers = isQualityPending 
-        ? Math.max(fallbackBuyers, bundledCount > 0 ? bundledCount : 0)
+        ? fallbackBuyers
         : Math.max(quality.organicBuyerCount, fallbackBuyers);
       
       const effectiveBuyVolume = isQualityPending 
@@ -607,6 +727,22 @@ export class Orchestrator {
       record.stage2_moneyFlow = flowVerdict;
       record.moneyFlowScore = flowVerdict.score;
 
+      // 1b. HARD VETO: High Supply Concentration (Top non-curve holders > 35%)
+      if (flowVerdict.reason === 'HIGH_SUPPLY_CONCENTRATION' || record.topHoldersPercent > 35) {
+        this.vetoCount++;
+        record.transitionTo(TokenState.REJECTED, `STAGE 2 VETO: HIGH_SUPPLY_CONCENTRATION (${flowVerdict.reasons?.[0] || `Top holders control ${record.topHoldersPercent}% of supply > 35%`})`);
+        log(`🚨 [STAGE 2 VETO] High supply concentration rejected on ${record.name || mint.slice(0, 8)}! (Top non-curve holders: ${record.topHoldersPercent}%)`);
+        if (this.curveWatcher) this.curveWatcher.unwatch(mint);
+        if (this.devWatcher) this.devWatcher.unwatchDev(mint);
+        eventBus.emit('STATE_TRANSITION', {
+          mint,
+          state: record.state,
+          reason: record.rejectionReason,
+          record: this.serializeToken(record),
+        });
+        return;
+      }
+
       eventBus.emit('MONEY_FLOW_TICK', {
         mint,
         buyVolumeSol: record.buyVolumeSol,
@@ -617,6 +753,48 @@ export class Orchestrator {
       });
 
       if (flowVerdict.passed) {
+        // Enforce Cluster Risk: CRITICAL and HIGH checks
+        if (quality.coordinationRisk === 'CRITICAL') {
+          this.vetoCount++;
+          record.transitionTo(TokenState.REJECTED, `STAGE 2 VETO: CRITICAL_SYBIL_CLUSTER (${quality.reasons?.[0] || 'Cartel cluster controls excessive volume'})`);
+          log(`🚨 [STAGE 2 VETO] Coordinated sybil cluster rejected on ${record.name || mint.slice(0, 8)}! Stopped tracking.`);
+          if (this.curveWatcher) this.curveWatcher.unwatch(mint);
+          if (this.devWatcher) this.devWatcher.unwatchDev(mint);
+          eventBus.emit('STATE_TRANSITION', {
+            mint,
+            state: record.state,
+            reason: record.rejectionReason,
+            record: this.serializeToken(record),
+          });
+          return;
+        }
+
+        if (quality.coordinationRisk === 'HIGH') {
+          const hasElevatedConfirmation = (
+            (flowVerdict.uniqueBuyersCount >= 12 || quality.organicBuyerCount >= 12) &&
+            flowVerdict.netVolumeDeltaSol >= 2.0 &&
+            flowVerdict.buySellRatio >= 2.0 &&
+            (record.narrativeScore >= 70 || record.stage1_narrative?.score >= 70)
+          );
+
+          if (!hasElevatedConfirmation) {
+            this.vetoCount++;
+            const reason = `STAGE 2 VETO: ENTRY_BLOCKED_CLUSTER_HIGH (Unresolved cluster risk: requires organic buyers >= 12, net delta >= +2.0 SOL, ratio >= 2.0x; Got ${quality.organicBuyerCount} buyers, +${flowVerdict.netVolumeDeltaSol.toFixed(2)} SOL, ${flowVerdict.buySellRatio}x)`;
+            record.transitionTo(TokenState.REJECTED, reason);
+            log(`🚨 [STAGE 2 VETO] ${record.name || mint.slice(0, 8)} blocked due to high cluster risk without elevated confirmation.`);
+            if (this.curveWatcher) this.curveWatcher.unwatch(mint);
+            if (this.devWatcher) this.devWatcher.unwatchDev(mint);
+            eventBus.emit('STATE_TRANSITION', {
+              mint,
+              state: record.state,
+              reason: record.rejectionReason,
+              record: this.serializeToken(record),
+            });
+            return;
+          }
+          log(`⚠️ [STAGE 2 ELEVATED PASS] ${record.name} passed HIGH cluster risk with elevated confirmation (${quality.organicBuyerCount} organic buyers, +${flowVerdict.netVolumeDeltaSol.toFixed(2)} SOL)`);
+        }
+
         log(`💰 [STAGE 2 PASS] Real Money Flow Confirmed for ${record.name}! (Net Delta: +${flowVerdict.netVolumeDeltaSol} SOL, Ratio: ${flowVerdict.buySellRatio}x, Organic Buyers: ${flowVerdict.uniqueBuyersCount}/${rawBuyerCount}, Cluster Risk: ${quality.coordinationRisk})`);
         
         // Advance to Stage 3: PATTERN_FORMING
@@ -657,56 +835,237 @@ export class Orchestrator {
       record.stage3_pattern = patternVerdict;
       record.patternScore = patternVerdict.score;
 
-      if (patternVerdict.patternTriggered) {
-        log(`🎯 [STAGE 3 TRIGGER CONFIRMED] ${record.name}: 3-Candle Breakout-Retest Complete!`);
-        log(`   -> ${patternVerdict.reason}`);
-
-        // Calculate composite entry score
-        record.entryScore = Math.round(
-          record.narrativeScore * 0.3 +
-          record.moneyFlowScore * 0.35 +
-          record.patternScore * 0.35
-        );
-
-        // AI Learner Gatekeeper - Final Check before buying
-        if (this.smartAgent) {
-          const aiVerdict = this.smartAgent.evaluateEntry({
-            devPercent: record.devPercent,
-            bundledBuysCount: record.bundledBuysCount || 0,
-            devSoldAny: record.devSoldAny,
-            buyVolumeSol: record.buyVolumeSol,
-            uniqueBuyersCount: record.uniqueBuyers.size,
-            entryScore: record.entryScore,
-          });
-          
-          if (!aiVerdict.shouldTrade) {
-            this.vetoCount++;
-            record.transitionTo(TokenState.REJECTED, `STAGE 3 VETO (AI LEARNER): ${aiVerdict.reason}`);
-            log(`[AI LEARNER VETO] Blocked entry on ${record.name}: ${aiVerdict.reason}`);
-            if (this.curveWatcher) this.curveWatcher.unwatch(mint);
-            if (this.devWatcher) this.devWatcher.unwatchDev(mint);
-            eventBus.emit('STATE_TRANSITION', {
-              mint,
-              state: record.state,
-              reason: record.rejectionReason,
-              record: this.serializeToken(record),
-            });
-            return;
-          }
-        }
-
-        record.transitionTo(TokenState.ENTRY_READY);
-
+      if (patternVerdict.parabolicExtension) {
+        record.parabolicExtension = true;
+        record.transitionTo(TokenState.ENTRY_WAITING_RETEST, patternVerdict.reason);
+        log(`⏳ [STAGE 3 RETEST REQUIRED] ${record.name || mint.slice(0, 8)}: ${patternVerdict.reason}`);
         eventBus.emit('STATE_TRANSITION', {
           mint,
           state: record.state,
+          reason: record.rejectionReason,
           record: this.serializeToken(record),
         });
+        return;
+      }
 
-        // Trigger execution if Auto-Snipe is active
-        await this.triggerExecution(record);
+      if (patternVerdict.patternTriggered) {
+        await this._handleTriggerConfirmed({
+          mint,
+          patternTriggered: true,
+          stage: 'C3_ENTRY_TRIGGERED',
+          score: patternVerdict.score,
+          reason: patternVerdict.reason,
+        });
       }
     }
+  }
+
+  /**
+   * Handles confirmed Stage 3 pattern trigger and passes through Centralized Entry Gate
+   */
+  async _handleTriggerConfirmed(data) {
+    const mint = data.mint;
+    const record = this.tokens.get(mint);
+    if (!record) return;
+
+    if (data.patternTriggered) {
+      log(`🎯 [STAGE 3 TRIGGER CONFIRMED] ${record.name || mint.slice(0, 8)}: 3-Candle Breakout-Retest Complete!`);
+      log(`   -> ${data.reason || 'Pattern triggered'}`);
+
+      // Calculate composite entry score
+      record.entryScore = Math.round(
+        (record.narrativeScore || 0) * 0.3 +
+        (record.moneyFlowScore || 0) * 0.35 +
+        (record.patternScore || data.score || 0) * 0.35
+      );
+
+      // AI Learner Gatekeeper - Final Check before buying
+      if (this.smartAgent) {
+        const aiVerdict = this.smartAgent.evaluateEntry({
+          devPercent: record.devPercent || 0,
+          bundledBuysCount: record.bundledBuysCount || 0,
+          devSoldAny: !!record.devSoldAny,
+          buyVolumeSol: record.buyVolumeSol || 0,
+          uniqueBuyersCount: record.uniqueBuyers ? record.uniqueBuyers.size : 0,
+          entryScore: record.entryScore,
+        });
+        
+        if (!aiVerdict.shouldTrade) {
+          this.vetoCount++;
+          record.transitionTo(TokenState.REJECTED, `STAGE 3 VETO (AI LEARNER): ${aiVerdict.reason}`);
+          log(`[AI LEARNER VETO] Blocked entry on ${record.name || mint.slice(0, 8)}: ${aiVerdict.reason}`);
+          if (this.curveWatcher) this.curveWatcher.unwatch(mint);
+          if (this.devWatcher) this.devWatcher.unwatchDev(mint);
+          eventBus.emit('STATE_TRANSITION', {
+            mint,
+            state: record.state,
+            reason: record.rejectionReason,
+            record: this.serializeToken(record),
+          });
+          return;
+        }
+      }
+
+      // Authoritative Centralized Entry Gate check
+      const gateVerdict = this.canEnterTrade(record);
+
+      if (gateVerdict.wait) {
+        if (gateVerdict.status === 'ENTRY_BLOCKED_BUNDLE_PENDING') {
+          record.bundlePendingSince = record.bundlePendingSince || Date.now();
+          record.transitionTo(TokenState.ENTRY_BLOCKED_BUNDLE_PENDING, gateVerdict.reason);
+          log(`⏳ [ENTRY BLOCKED] ${record.name || mint.slice(0, 8)} waiting: ${gateVerdict.reason}`);
+          this._scheduleBundlePendingTimeout(record);
+        } else if (gateVerdict.status === 'ENTRY_WAITING_RETEST') {
+          record.transitionTo(TokenState.ENTRY_WAITING_RETEST, gateVerdict.reason);
+          log(`⏳ [ENTRY BLOCKED] ${record.name || mint.slice(0, 8)} waiting: ${gateVerdict.reason}`);
+        }
+        eventBus.emit('STATE_TRANSITION', {
+          mint,
+          state: record.state,
+          reason: record.rejectionReason,
+          record: this.serializeToken(record),
+        });
+        return;
+      }
+
+      if (!gateVerdict.allow) {
+        this.vetoCount++;
+        record.transitionTo(TokenState.REJECTED, gateVerdict.reason);
+        log(`🛑 [CENTRALIZED ENTRY VETO] Blocked entry on ${record.name || mint.slice(0, 8)}: ${gateVerdict.reason}`);
+        if (this.curveWatcher) this.curveWatcher.unwatch(mint);
+        if (this.devWatcher) this.devWatcher.unwatchDev(mint);
+        eventBus.emit('STATE_TRANSITION', {
+          mint,
+          state: record.state,
+          reason: record.rejectionReason,
+          record: this.serializeToken(record),
+        });
+        return;
+      }
+
+      record.transitionTo(TokenState.ENTRY_READY);
+
+      eventBus.emit('STATE_TRANSITION', {
+        mint,
+        state: record.state,
+        record: this.serializeToken(record),
+      });
+
+      // Trigger execution if Auto-Snipe is active
+      await this.triggerExecution(record);
+    }
+  }
+
+  /**
+   * Centralized Entry Gate — All 8 risk pillars evaluated synchronously
+   * before ANY capital execution (Orchestrator or Multi-User).
+   */
+  canEnterTrade(record) {
+    if (!record || !record.mint) {
+      return { allow: false, reason: 'INVALID_TOKEN_RECORD' };
+    }
+    const mint = record.mint;
+
+    // 1. Hard Safety Gate
+    if (record.safetyVerdict && !record.safetyVerdict.pass) {
+      return { allow: false, reason: `HARD_SAFETY_FAILED: ${record.safetyVerdict.reason}` };
+    }
+
+    // 2. Bonding Curve Graduation Check (Hard Veto)
+    if (this.curveWatcher && typeof this.curveWatcher.isGraduated === 'function' && this.curveWatcher.isGraduated(mint)) {
+      return { allow: false, reason: 'CURVE_ALREADY_GRADUATED' };
+    }
+
+    // 3. Daily Loss Cap Check (Portfolio Hard Veto)
+    if (this.positionManager && typeof this.positionManager.isDailyLossExceeded === 'function' && this.positionManager.isDailyLossExceeded()) {
+      return { allow: false, reason: 'DAILY_LOSS_CAP_EXCEEDED' };
+    }
+
+    // 4. Dev Known Rugger
+    if (this.devWatcher && this.devWatcher.isKnownRugger(record.creator)) {
+      return { allow: false, reason: 'DEV_KNOWN_RUGGER' };
+    }
+
+    // 5. Continuous Developer Behavior Risk
+    if (this.devWatcher) {
+      const devRisk = this.devWatcher.getDevRisk(mint);
+      record.devRisk = devRisk;
+      if (!devRisk.safeForEntry) {
+        return { 
+          allow: false, 
+          status: devRisk.status,
+          reason: `ENTRY_BLOCKED_DEV_RISK: ${devRisk.reason}` 
+        };
+      }
+    }
+
+    // 6. Bundle Verification Status Gate
+    const bundleStatus = record.bundleDataStatus || record.safetyVerdict?.metrics?.bundleDataStatus;
+    if (bundleStatus === 'PENDING' || bundleStatus === 'INSUFFICIENT_DATA') {
+      return { 
+        allow: false, 
+        wait: true, 
+        status: 'ENTRY_BLOCKED_BUNDLE_PENDING', 
+        reason: 'ENTRY_BLOCKED_BUNDLE_PENDING: Bundle verification pending on-chain analysis' 
+      };
+    }
+    if (bundleStatus === 'SUSPICIOUS' || bundleStatus === 'CRITICAL' || bundleStatus === 'HIGH') {
+      return { 
+        allow: false, 
+        reason: `ENTRY_BLOCKED_BUNDLE_RISK: Bundle flagged as ${bundleStatus}` 
+      };
+    }
+
+    // 7. Cluster / Sybil Risk Gate
+    if (record.buyerQuality) {
+      if (record.buyerQuality.coordinationRisk === 'CRITICAL') {
+        return { allow: false, reason: 'ENTRY_BLOCKED_CLUSTER_CRITICAL: Coordinated sybil cartel' };
+      }
+      if (record.buyerQuality.coordinationRisk === 'HIGH') {
+        const netSol = record.stage2_moneyFlow?.netVolumeDeltaSol ?? 0;
+        const orgBuyers = record.buyerQuality.organicBuyerCount ?? 0;
+        const ratio = record.stage2_moneyFlow?.buySellRatio ?? 1.0;
+        if (orgBuyers < 12 || netSol < 2.0 || ratio < 2.0) {
+          return { 
+            allow: false, 
+            reason: `ENTRY_BLOCKED_CLUSTER_HIGH: Insufficient volume/buyers to overcome high cluster risk (${orgBuyers} buyers < 12, ${netSol.toFixed(2)} SOL < 2.0 SOL, ${ratio}x < 2.0x)` 
+          };
+        }
+      }
+    }
+
+    // 8. Parabolic Extension / Retest Check
+    if (record.stage3_pattern?.parabolicExtension || record.parabolicExtension) {
+      return { 
+        allow: false, 
+        wait: true, 
+        status: 'ENTRY_WAITING_RETEST', 
+        reason: 'ENTRY_BLOCKED_PARABOLIC_EXTENSION: Extreme momentum requires pullback/retest before entry' 
+      };
+    }
+
+    return { allow: true, reason: 'ALL_GATES_PASSED' };
+  }
+
+  _scheduleBundlePendingTimeout(record) {
+    const mint = record.mint;
+    if (record._bundleTimeoutTimer) return;
+    record._bundleTimeoutTimer = setTimeout(() => {
+      record._bundleTimeoutTimer = null;
+      const liveRec = this.tokens.get(mint);
+      if (liveRec && liveRec.state === TokenState.ENTRY_BLOCKED_BUNDLE_PENDING) {
+        log(`⏰ [BUNDLE TIMEOUT] ${liveRec.name || mint.slice(0, 8)} bundle verification timed out (${this.bundleVerificationTimeoutMs}ms). Expiring opportunity.`);
+        liveRec.transitionTo(TokenState.EXPIRED, `ENTRY_EXPIRED_BUNDLE_TIMEOUT: Verification unresolved after ${this.bundleVerificationTimeoutMs}ms`);
+        if (this.curveWatcher) this.curveWatcher.unwatch(mint);
+        if (this.devWatcher) this.devWatcher.unwatchDev(mint);
+        eventBus.emit('STATE_TRANSITION', {
+          mint,
+          state: liveRec.state,
+          reason: liveRec.rejectionReason,
+          record: this.serializeToken(liveRec),
+        });
+      }
+    }, this.bundleVerificationTimeoutMs || 5000);
   }
 
   /**
@@ -719,6 +1078,35 @@ export class Orchestrator {
     }
 
     const mint = record.mint;
+
+    // Synchronous Authoritative Gate Check right before dispatch (skip if already BUY_PENDING in-flight)
+    if (record.state !== TokenState.BUY_PENDING) {
+      const gateVerdict = this.canEnterTrade(record);
+      if (!gateVerdict.allow) {
+        log(`🛑 [CENTRALIZED ENTRY GATE ABORT] Buy aborted on ${record.name || mint.slice(0, 8)}: ${gateVerdict.reason}`);
+        if (gateVerdict.wait) {
+          record.transitionTo(TokenState[gateVerdict.status] || TokenState.REJECTED, gateVerdict.reason);
+        } else {
+          record.transitionTo(TokenState.REJECTED, gateVerdict.reason);
+        }
+        if (this.curveWatcher) this.curveWatcher.unwatch(mint);
+        if (this.devWatcher) this.devWatcher.unwatchDev(mint);
+        eventBus.emit('STATE_TRANSITION', {
+          mint,
+          state: record.state,
+          reason: record.rejectionReason,
+          record: this.serializeToken(record),
+        });
+        return;
+      }
+    }
+
+    // Refresh reserves from curveWatcher if available to ensure accurate pricing and zero stale slippage
+    if (this.curveWatcher && typeof this.curveWatcher.lastKnownReserves?.get === 'function') {
+      const liveRes = this.curveWatcher.lastKnownReserves.get(mint);
+      if (liveRes?.vSol) record.lastVirtualSolReserves = liveRes.vSol;
+      if (liveRes?.vTok) record.lastVirtualTokenReserves = liveRes.vTok;
+    }
 
     if (this.devWatcher && !this.devWatcher.isSafe(mint)) {
       // If devWatcher is actively reconciling the ATA baseline, give it a brief grace period to resolve
@@ -797,7 +1185,6 @@ export class Orchestrator {
       return;
     }
 
-    this.lastTradeTime = Date.now();
     record.transitionTo(TokenState.BUY_PENDING);
     eventBus.emit('STATE_TRANSITION', {
       mint,
@@ -842,6 +1229,8 @@ export class Orchestrator {
         organicBuyersCount: record.buyerQuality?.organicBuyerCount ?? 0,
         bundleDataStatus: record.safetyVerdict?.metrics?.bundleDataStatus || 'VERIFIED',
         imageUrl: record.imageUrl,
+        virtualSolReserves: record.lastVirtualSolReserves,
+        virtualTokenReserves: record.lastVirtualTokenReserves,
         stopLossPercent: this.positionManager.stopLossPercent,
       });
 
@@ -871,6 +1260,10 @@ export class Orchestrator {
         reason: record.rejectionReason,
         record: this.serializeToken(record),
       });
+      // Drain remaining items in entry queue so they don't starve on execution failure
+      setImmediate(() => this._processEntryQueue().catch(() => {}));
+    } finally {
+      this.lastTradeTime = Date.now();
     }
   }
 
@@ -1110,6 +1503,7 @@ export class Orchestrator {
       buyVolumeSol: Number(record.buyVolumeSol.toFixed(2)),
       sellVolumeSol: Number(record.sellVolumeSol.toFixed(2)),
       uniqueBuyers: record.uniqueBuyers ? record.uniqueBuyers.size : 0,
+      topHoldersPercent: record.topHoldersPercent || 0,
       position: record.position ? {
         mint: record.position.mint,
         entryPriceSol: record.position.entryPriceSol,

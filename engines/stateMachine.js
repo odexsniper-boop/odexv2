@@ -21,6 +21,8 @@ export const TokenState = {
   REJECTED: 'REJECTED',
   EXPIRED: 'EXPIRED',
   LIGHTWEIGHT_WATCHLIST: 'LIGHTWEIGHT_WATCHLIST',
+  ENTRY_BLOCKED_BUNDLE_PENDING: 'ENTRY_BLOCKED_BUNDLE_PENDING',
+  ENTRY_WAITING_RETEST: 'ENTRY_WAITING_RETEST',
 };
 
 export class TokenRecord {
@@ -34,6 +36,12 @@ export class TokenRecord {
     this.detectedAt = Date.now();
     this.updatedAt = Date.now();
     
+    // Bundle & Risk Tracking
+    this.bundleDataStatus = null;
+    this.bundlePendingSince = null;
+    this.devRisk = { status: 'DEV_NORMAL', riskLevel: 'NONE', safeForEntry: true, reason: 'No dev risk detected' };
+    this.parabolicExtension = false;
+
     // 3-Stage Strategy Verdicts
     this.stage1_narrative = { pass: false, score: 0, theme: 'GENERIC', reasons: [], socialsFound: 0 };
     this.stage2_moneyFlow = { pass: false, score: 0, buySellRatio: 1.0, netVolumeDeltaSol: 0, uniqueBuyers: 0, reasons: [] };

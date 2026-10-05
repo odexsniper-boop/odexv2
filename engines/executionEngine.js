@@ -188,6 +188,27 @@ export class ExecutionEngine {
   }
 
   /**
+   * Executes a Raydium / Jupiter Sell order for graduated tokens (dispatches to ExecutionController)
+   */
+  async executeRaydiumSell({
+    mint,
+    tokenAmountRaw,
+    slippageBps = this.defaultSlippageBps,
+    reason = 'GRADUATION_RAYDIUM_EXIT',
+    priorityFee = this.defaultPriorityFeeMicroLamports,
+    jitoTipLamports = this.jitoTipLamports,
+  }) {
+    return await this.controller.executeRaydiumSell({
+      mint,
+      tokenAmountRaw,
+      slippageBps,
+      reason,
+      priorityFee,
+      jitoTipLamports,
+    });
+  }
+
+  /**
    * Clean shutdown
    */
   shutdown() {

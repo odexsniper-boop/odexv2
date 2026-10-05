@@ -1,4 +1,4 @@
-import { PublicKey } from '@solana/web3.js';
+import { PublicKey, VersionedTransaction } from '@solana/web3.js';
 import { calculateTokensOut, calculateSolOut, calculateSpotPriceSol } from '../pumpfun.js';
 import { eventBus } from '../eventBus.js';
 import { log } from '../config.js';
@@ -577,6 +577,257 @@ export class ExecutionController {
         this.dispatcher.cleanup(context.executionId);
       }
       log(`[SELL FAILED] ${err.message}`);
+      throw err;
+    }
+  }
+
+  /**
+   * Coordinates Raydium / Jupiter Sell Execution for graduated tokens
+   */
+  async executeRaydiumSell({
+    mint,
+    tokenAmountRaw,
+    slippageBps = this.defaultSlippageBps,
+    reason = 'GRADUATION_RAYDIUM_EXIT',
+    priorityFee = this.defaultPriorityFee,
+    jitoTipLamports = this.defaultJitoTipLamports,
+  }) {
+    const startTime = performance.now();
+    const context = this.createTradeContext('SELL', mint, tokenAmountRaw, reason);
+    this.validateExecution(context);
+    this.inFlightExecutions.set(context.idempotencyKey, context);
+
+    try {
+      const mintPubkey = typeof mint === 'string' ? new PublicKey(mint) : mint;
+      const mintStr = mintPubkey.toBase58();
+      const tokensBigInt = BigInt(tokenAmountRaw);
+
+      // Validate slippage
+      const rawSlippage = Number(slippageBps);
+      const validatedSlippageBps = (isNaN(rawSlippage) || rawSlippage < 0) ? this.defaultSlippageBps : Math.min(rawSlippage, context.isEmergency ? 10000 : 5000);
+
+      // 1. Paper Mode Simulation
+      if (this.isPaperTrading) {
+        let solReceived = 0;
+        let spotPriceSol = 0.000000032; // Default Pump.fun graduation spot price (~85 SOL / 206M tokens)
+
+        try {
+          const jupUrl = `https://quote-api.jup.ag/v6/quote?inputMint=${mintStr}&outputMint=So11111111111111111111111111111111111111112&amount=${tokensBigInt.toString()}&slippageBps=${validatedSlippageBps}`;
+          const res = await fetch(jupUrl, { headers: { 'Accept': 'application/json' }, signal: AbortSignal.timeout(3000) });
+          if (res.ok) {
+            const quote = await res.json();
+            if (quote && quote.outAmount) {
+              solReceived = Number(quote.outAmount) / 1e9;
+              spotPriceSol = solReceived / (Number(tokensBigInt) / 1e6);
+            }
+          }
+        } catch (_) {}
+
+        if (solReceived <= 0) {
+          solReceived = (Number(tokensBigInt) / 1e6) * spotPriceSol;
+        }
+
+        const simulatedLatency = 800;
+        await new Promise(resolve => setTimeout(resolve, simulatedLatency));
+
+        const actualGrossSellProceeds = solReceived * 0.9975; // 0.25% pool swap fee
+        const actualTransactionFees = 0.000005;
+        const actualPriorityFee = ((priorityFee || this.defaultPriorityFee) * 100_000) / 1e15;
+        const actualJitoTip = jitoTipLamports > 0 ? (jitoTipLamports / 1e9) : 0;
+        const totalFees = actualTransactionFees + actualPriorityFee + actualJitoTip;
+        const actualNetSellProceeds = Math.max(0, actualGrossSellProceeds - totalFees);
+
+        const fill = {
+          mode: 'PAPER',
+          action: 'SELL',
+          venue: 'RAYDIUM',
+          reason,
+          executionId: context.executionId,
+          mint: mintStr,
+          tokensSold: Number(tokensBigInt) / 1e6,
+          expectedSolReceived: solReceived,
+          actualGrossSellProceeds,
+          actualTransactionFees,
+          priorityFee: actualPriorityFee,
+          jitoTip: actualJitoTip,
+          actualNetSellProceeds,
+          solReceived: actualNetSellProceeds,
+          actualSolReceived: actualNetSellProceeds,
+          spotPriceSol,
+          slippageBps: validatedSlippageBps,
+          latencyMs: Math.round(performance.now() - startTime + simulatedLatency),
+          timestamp: new Date().toISOString(),
+          txHash: `sim_raydium_sell_${Date.now()}_${mintStr.slice(0, 8)}`,
+        };
+
+        this.inFlightExecutions.delete(context.idempotencyKey);
+        eventBus.emit('TRADE_EXECUTED', fill);
+        log(`🎓 [PAPER RAYDIUM SELL] ${reason}: Sold ${fill.tokensSold.toFixed(2)} tokens on Raydium for ${actualNetSellProceeds.toFixed(4)} SOL`);
+        return fill;
+      }
+
+      // 2. Live Trading Route (Jupiter -> PumpPortal Raydium fallback)
+      let signedTx = null;
+      let routeName = 'JUPITER_RAYDIUM';
+      let expectedSolOut = 0;
+
+      try {
+        const jupQuoteUrl = `https://quote-api.jup.ag/v6/quote?inputMint=${mintStr}&outputMint=So11111111111111111111111111111111111111112&amount=${tokensBigInt.toString()}&slippageBps=${validatedSlippageBps}`;
+        const quoteRes = await fetch(jupQuoteUrl, { headers: { 'Accept': 'application/json' }, signal: AbortSignal.timeout(4000) });
+        if (quoteRes.ok) {
+          const quoteData = await quoteRes.json();
+          if (quoteData && quoteData.outAmount) {
+            expectedSolOut = Number(quoteData.outAmount) / 1e9;
+            const swapRes = await fetch('https://quote-api.jup.ag/v6/swap', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                quoteResponse: quoteData,
+                userPublicKey: this.wallet.publicKey.toBase58(),
+                wrapAndUnwrapSol: true,
+                prioritizationFeeLamports: priorityFee > 0 ? priorityFee : 'auto',
+                dynamicComputeUnitLimit: true,
+              }),
+              signal: AbortSignal.timeout(5000),
+            });
+            if (swapRes.ok) {
+              const swapData = await swapRes.json();
+              if (swapData.swapTransaction) {
+                const tx = VersionedTransaction.deserialize(Buffer.from(swapData.swapTransaction, 'base64'));
+                tx.sign([this.wallet]);
+                signedTx = tx;
+                routeName = 'JUPITER_RAYDIUM';
+              }
+            }
+          }
+        }
+      } catch (jupErr) {
+        log(`[RAYDIUM JUPITER WARN] Jupiter quote/swap unavailable for ${mintStr.slice(0, 8)}: ${jupErr.message}. Attempting PumpPortal Raydium router.`);
+      }
+
+      if (!signedTx) {
+        try {
+          const portalRes = await fetch('https://pumpportal.fun/api/trade-local', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              publicKey: this.wallet.publicKey.toBase58(),
+              action: 'sell',
+              mint: mintStr,
+              amount: '100%',
+              denominatedInSol: 'false',
+              slippage: Math.round(validatedSlippageBps / 100),
+              priorityFee: Number(priorityFee) / 1e9,
+              pool: 'raydium',
+            }),
+            signal: AbortSignal.timeout(5000),
+          });
+          if (portalRes.ok) {
+            const data = await portalRes.arrayBuffer();
+            const tx = VersionedTransaction.deserialize(new Uint8Array(data));
+            tx.sign([this.wallet]);
+            signedTx = tx;
+            routeName = 'PUMPPORTAL_RAYDIUM';
+          } else {
+            throw new Error(`PumpPortal Raydium HTTP ${portalRes.status}: ${await portalRes.text()}`);
+          }
+        } catch (portalErr) {
+          throw new Error(`RAYDIUM_ROUTING_FAILED: All Raydium routes failed (${portalErr.message})`);
+        }
+      }
+
+      const wireTransaction = Buffer.from(signedTx.serialize());
+      const dispatchRes = await this.dispatcher.dispatch({
+        wireTransaction,
+        transaction: signedTx,
+        executionId: context.executionId,
+      });
+
+      const signature = dispatchRes.signature;
+      context.route = `${routeName}_${dispatchRes.route}`;
+
+      eventBus.emit('ORDER_DISPATCHED', {
+        action: 'SELL',
+        venue: 'RAYDIUM',
+        mint: mintStr,
+        signature,
+        route: context.route,
+        jitoAccepted: dispatchRes.jitoAccepted,
+        dispatchDurationMs: dispatchRes.dispatchDurationMs,
+      });
+
+      const monitorResult = await this.monitor.track(signature, context);
+      const totalLatencyMs = Math.round(performance.now() - startTime);
+
+      let actualGrossSellProceeds = expectedSolOut || ((Number(tokensBigInt) / 1e6) * 0.000000032);
+      let actualTransactionFees = 0.000005;
+      let actualPriorityFee = (priorityFee * 100_000) / 1e15;
+      let actualJitoTip = dispatchRes.route.includes('JITO') ? (jitoTipLamports / 1e9) : 0;
+
+      try {
+        if (this.connection && signature) {
+          const parsedTx = await this.connection.getParsedTransaction(signature, {
+            maxSupportedTransactionVersion: 0,
+            commitment: 'confirmed',
+          });
+          if (parsedTx && parsedTx.meta) {
+            actualTransactionFees = (parsedTx.meta.fee || 5000) / 1e9;
+            const accountKeys = parsedTx.transaction.message.accountKeys.map(k => (typeof k === 'string' ? k : k.pubkey?.toBase58()));
+            const walletStr = this.wallet.publicKey.toBase58();
+            const walletIndex = accountKeys.indexOf(walletStr);
+            if (walletIndex !== -1 && parsedTx.meta.preBalances && parsedTx.meta.postBalances) {
+              const walletPre = BigInt(parsedTx.meta.preBalances[walletIndex]);
+              const walletPost = BigInt(parsedTx.meta.postBalances[walletIndex]);
+              const solDelta = Number(walletPost - walletPre) / 1e9;
+              const recoveredGross = solDelta + actualTransactionFees + actualJitoTip;
+              if (recoveredGross > 0) actualGrossSellProceeds = recoveredGross;
+            }
+          }
+        }
+      } catch (_) {}
+
+      const totalFees = actualTransactionFees + actualJitoTip;
+      const actualNetSellProceeds = Math.max(0, actualGrossSellProceeds - totalFees);
+      const spotPriceSol = actualGrossSellProceeds / (Number(tokensBigInt) / 1e6);
+
+      const fill = {
+        mode: 'LIVE',
+        action: 'SELL',
+        venue: 'RAYDIUM',
+        reason,
+        executionId: context.executionId,
+        mint: mintStr,
+        tokensSold: Number(tokensBigInt) / 1e6,
+        expectedSolReceived: expectedSolOut,
+        actualGrossSellProceeds,
+        actualTransactionFees,
+        priorityFee: actualPriorityFee,
+        jitoTip: actualJitoTip,
+        actualNetSellProceeds,
+        solReceived: actualNetSellProceeds,
+        actualSolReceived: actualNetSellProceeds,
+        spotPriceSol,
+        slippageBps: validatedSlippageBps,
+        latencyMs: totalLatencyMs,
+        timestamp: new Date().toISOString(),
+        txHash: signature,
+        route: context.route,
+      };
+
+      this.inFlightExecutions.delete(context.idempotencyKey);
+      if (this.dispatcher && this.dispatcher.cleanup) {
+        this.dispatcher.cleanup(context.executionId);
+      }
+
+      eventBus.emit('TRADE_EXECUTED', fill);
+      log(`🎓 [LIVE RAYDIUM SELL CONFIRMED] TX: ${signature} in ${totalLatencyMs}ms`);
+      return fill;
+    } catch (err) {
+      this.inFlightExecutions.delete(context.idempotencyKey);
+      if (this.dispatcher && this.dispatcher.cleanup) {
+        this.dispatcher.cleanup(context.executionId);
+      }
+      log(`[RAYDIUM SELL FAILED] ${err.message}`);
       throw err;
     }
   }

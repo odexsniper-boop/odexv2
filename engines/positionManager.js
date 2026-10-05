@@ -159,8 +159,8 @@ export class PositionManager {
       pendingEmergencyExit: null,
       isExiting: false,
       stopLossPercent: tokenMeta.stopLossPercent !== undefined ? tokenMeta.stopLossPercent : this.stopLossPercent,
-      lastKnownVirtualSol: 30_000_000_000n,
-      lastKnownVirtualTok: 1_073_000_000_000_000n,
+      lastKnownVirtualSol: buyFill.virtualSolReserves ? BigInt(buyFill.virtualSolReserves) : (tokenMeta.virtualSolReserves ? BigInt(tokenMeta.virtualSolReserves) : 30_000_000_000n),
+      lastKnownVirtualTok: buyFill.virtualTokenReserves ? BigInt(buyFill.virtualTokenReserves) : (tokenMeta.virtualTokenReserves ? BigInt(tokenMeta.virtualTokenReserves) : 1_073_000_000_000_000n),
     };
 
     this.positions.set(position.mint, position);
@@ -350,7 +350,11 @@ export class PositionManager {
           await this.closePositionDirect(mint, 'STALE_TIMEOUT');
         }
         if (pos.status === 'MIGRATION_PENDING') {
-          await this.closePositionDirect(mint, 'STALE_MIGRATION_TIMEOUT');
+          if (typeof this.execution?.executeRaydiumSell === 'function') {
+            await this.closePosition(mint, pos.lastKnownVirtualSol, pos.lastKnownVirtualTok, 'STALE_MIGRATION_TIMEOUT', 100);
+          } else {
+            await this.closePositionDirect(mint, 'STALE_MIGRATION_TIMEOUT');
+          }
         }
       } else if (this.curveWatcher?.connection && !pos.isExiting && pos.status === 'HOLDING' && (now - (pos.lastTickTimeMs || pos.openedTimeMs) > 30000)) {
         // Proactively refresh price on quiet curves (>30s without trade ticks)
@@ -389,7 +393,8 @@ export class PositionManager {
     const pos = this.positions.get(mint);
     if (!pos || pos.status === 'SOLD') return;
 
-    if (this.execution && pos.lastKnownVirtualSol && pos.lastKnownVirtualTok) {
+    const isGraduated = pos.curveLifecycle === 'GRADUATED' || (this.curveWatcher && typeof this.curveWatcher.isGraduated === 'function' && this.curveWatcher.isGraduated(mint));
+    if (this.execution && ((pos.lastKnownVirtualSol && pos.lastKnownVirtualTok) || (isGraduated && typeof this.execution?.executeRaydiumSell === 'function'))) {
       try {
         await this.closePosition(mint, pos.lastKnownVirtualSol, pos.lastKnownVirtualTok, reason, 100);
         if (!this.positions.has(mint)) return; // Successfully closed on-chain
@@ -496,9 +501,7 @@ export class PositionManager {
     if (isGraduated) {
       pos.curveLifecycle = 'GRADUATED';
       pos.venue = 'RAYDIUM';
-      if (typeof this.execution?.executeRaydiumSell === 'function') {
-        // Supported Raydium router available
-      } else {
+      if (typeof this.execution?.executeRaydiumSell !== 'function') {
         log(`⚠️ [MIGRATION RECONCILING] Bonding curve graduated for ${pos.name}. Destination Raydium pool is resolving/migrating. Preserving active position.`);
         pos.isExiting = false;
         pos.executionState = 'RECONCILING';
@@ -524,17 +527,28 @@ export class PositionManager {
     let tokensToSellRaw = (pos.tokensHeldRaw * BigInt(sellPercent)) / 100n;
     let sellFill = null;
     try {
-      sellFill = await this.execution.executeSell({
-        mint,
-        tokenAmountRaw: tokensToSellRaw.toString(),
-        virtualSolReserves,
-        virtualTokenReserves,
-        slippageBps: effectiveSlippageBps,
-        reason,
-        creator: pos.creator,
-        priorityFee: this.execution?.defaultPriorityFeeMicroLamports,
-        jitoTipLamports: this.execution?.jitoTipLamports,
-      });
+      if (isGraduated && typeof this.execution?.executeRaydiumSell === 'function') {
+        sellFill = await this.execution.executeRaydiumSell({
+          mint,
+          tokenAmountRaw: tokensToSellRaw.toString(),
+          slippageBps: effectiveSlippageBps,
+          reason,
+          priorityFee: this.execution?.defaultPriorityFeeMicroLamports,
+          jitoTipLamports: this.execution?.jitoTipLamports,
+        });
+      } else {
+        sellFill = await this.execution.executeSell({
+          mint,
+          tokenAmountRaw: tokensToSellRaw.toString(),
+          virtualSolReserves,
+          virtualTokenReserves,
+          slippageBps: effectiveSlippageBps,
+          reason,
+          creator: pos.creator,
+          priorityFee: this.execution?.defaultPriorityFeeMicroLamports,
+          jitoTipLamports: this.execution?.jitoTipLamports,
+        });
+      }
     } catch (err) {
       // Fix 1: Catch on-chain curve completion failure and reconcile route
       const isCurveCompleteErr = err.message && (
@@ -549,6 +563,10 @@ export class PositionManager {
         log(`🎓 [GRADUATION CAUGHT ON SELL] Pump.fun curve is complete for ${pos.name}. Reconciling route to Raydium.`);
         pos.curveLifecycle = 'GRADUATED';
         pos.venue = 'RAYDIUM';
+        pos.isExiting = false;
+        if (typeof this.execution?.executeRaydiumSell === 'function') {
+          return await this.closePosition(mint, virtualSolReserves, virtualTokenReserves, reason, sellPercent, slippageBps);
+        }
         pos.executionState = 'RECONCILING';
         pos.status = 'MIGRATION_PENDING';
         pos.migrationStatus = 'CURVE_COMPLETED_AWAITING_MIGRATION';
@@ -670,6 +688,8 @@ export class PositionManager {
         venue: pos.venue || 'PUMP_FUN',
         curveLifecycle: pos.curveLifecycle || 'BONDING',
         txHash: sellFill.txHash,
+        sellTxHash: sellFill.txHash,
+        buyTxHash: pos.buyTxHash || null,
         route: sellFill.route,
         openedAt: pos.openedAt,
         closedAt: pos.closedAt,

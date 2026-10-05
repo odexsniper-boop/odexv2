@@ -1,4 +1,4 @@
-﻿# Environment variables and secrets
+# Environment variables and secrets
 .env
 .env.*
 !.env.example
@@ -27,3 +27,4 @@ replay/raw_txs_*.json
 .DS_Store
 Thumbs.db
 *.log
+scratch/*.png

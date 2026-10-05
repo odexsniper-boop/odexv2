@@ -38,11 +38,11 @@ export class NarrativeEngine {
     this.spamPatterns = [
       /^[0-9a-f]{16,}$/i, // Random hexadecimal hash-like string
       /^[bcdfghjklmnpqrstvwxyz0-9]{10,}$/i, // Random consonant/digit string without vowels
-      /test/i,
-      /airdrop/i,
-      /presale/i,
-      /dev rug/i,
-      /free sol/i,
+      /\btests?\b/i,
+      /\bairdrops?\b/i,
+      /\bpresales?\b/i,
+      /\bdev rug\b/i,
+      /\bfree sol\b/i,
     ];
   }
 
@@ -65,7 +65,7 @@ export class NarrativeEngine {
     }
 
     if (type === 'telegram') {
-      const match = clean.match(/(?:t\.me|telegram\.me)\/([a-z0-9_]+)/i);
+      const match = clean.match(/(?:t\.me|telegram\.me)\/(?:\+|joinchat\/)?([a-z0-9_+]+)/i);
       if (!match || !match[1]) return false;
       const handle = match[1];
       if (handle.length < 3 || placeholders.includes(handle)) return false;

@@ -58,12 +58,108 @@ export class DevWatcher {
     log(`[DEV WATCHER] Blacklisted dev wallet for past rug behavior: ${creatorAddress.slice(0, 8)}...`);
   }
 
+  getDevRisk(mintAddress) {
+    const record = this.monitoredDevs.get(mintAddress);
+    if (!record) {
+      return {
+        status: 'DEV_NORMAL',
+        riskLevel: 'NONE',
+        holdingTokens: 0,
+        holdingPercent: 0,
+        cumulativeDumpedTokens: 0,
+        cumulativeDumpPercent: 0,
+        hasSoldAny: false,
+        safeForEntry: true,
+        reason: 'Dev not tracked or already unmonitored'
+      };
+    }
+
+    if (record.state === 'RECONCILING' || record.state === 'UNKNOWN') {
+      return {
+        status: 'DEV_WATCH',
+        riskLevel: 'ELEVATED',
+        holdingTokens: Number(record.lastBalance > 0n ? record.lastBalance : 0n) / 1e6,
+        holdingPercent: Number(record.lastBalance > 0n ? record.lastBalance : 0n) / 1e7,
+        cumulativeDumpedTokens: Number(record.cumulativeDumpedTokens || 0n) / 1e6,
+        cumulativeDumpPercent: 0,
+        hasSoldAny: false,
+        safeForEntry: false,
+        reason: `Dev ATA state is ${record.state}`
+      };
+    }
+
+    const currentBal = record.lastBalance > 0n ? record.lastBalance : 0n;
+    const baseline = record.peakBalance > 0n ? record.peakBalance : (record.initialBalance > 0n ? record.initialBalance : currentBal);
+    const cumulativePercent = baseline > 0n ? Number((record.cumulativeDumpedTokens * 100n) / baseline) : 0;
+    const cumulativeDumpPercent = cumulativePercent;
+    const isDepleted = record.isDepleted || currentBal === 0n || (baseline > 0n && (currentBal * 100n / baseline <= 5n) && cumulativePercent >= 90);
+
+    const holdingTokens = Number(currentBal) / 1e6;
+    const holdingPercent = Number(currentBal) / 1e7; // % of 1B total supply
+    const hasSoldAny = record.cumulativeDumpedTokens > 0n;
+
+    if (isDepleted) {
+      return {
+        status: 'DEV_DUMP_DETECTED',
+        riskLevel: 'FULL_DEPLETION',
+        holdingTokens,
+        holdingPercent,
+        cumulativeDumpedTokens: Number(record.cumulativeDumpedTokens) / 1e6,
+        cumulativeDumpPercent,
+        hasSoldAny: true,
+        safeForEntry: false,
+        reason: 'Dev completely dumped allocation (FULL_DEPLETION)'
+      };
+    }
+
+    if (cumulativePercent >= 20 || record.riskLevel === 'CRITICAL' || record.riskLevel === 'ELEVATED') {
+      return {
+        status: 'DEV_DUMP_DETECTED',
+        riskLevel: record.riskLevel || 'CRITICAL',
+        holdingTokens,
+        holdingPercent,
+        cumulativeDumpedTokens: Number(record.cumulativeDumpedTokens) / 1e6,
+        cumulativeDumpPercent,
+        hasSoldAny: true,
+        safeForEntry: false,
+        reason: `Dev dumped ${cumulativePercent.toFixed(1)}% of allocation`
+      };
+    }
+
+    if (hasSoldAny && cumulativePercent >= 5) {
+      return {
+        status: 'DEV_DUMP_RISK',
+        riskLevel: 'EARLY_WARNING',
+        holdingTokens,
+        holdingPercent,
+        cumulativeDumpedTokens: Number(record.cumulativeDumpedTokens) / 1e6,
+        cumulativeDumpPercent,
+        hasSoldAny: true,
+        safeForEntry: false,
+        reason: `Dev actively selling before entry (${cumulativePercent.toFixed(1)}% dumped)`
+      };
+    }
+
+    return {
+      status: 'DEV_NORMAL',
+      riskLevel: 'NONE',
+      holdingTokens,
+      holdingPercent,
+      cumulativeDumpedTokens: Number(record.cumulativeDumpedTokens) / 1e6,
+      cumulativeDumpPercent,
+      hasSoldAny: false,
+      safeForEntry: true,
+      reason: 'Dev holdings stable, zero dump risk'
+    };
+  }
+
   isSafe(mintAddress) {
     const record = this.monitoredDevs.get(mintAddress);
     if (!record) return true; // if we aren't tracking, assume safe or N/A
     // Unsafe if we are still reconciling or couldn't fetch a baseline
     if (record.state === 'RECONCILING' || record.state === 'UNKNOWN') return false;
-    return true;
+    const devRisk = this.getDevRisk(mintAddress);
+    return devRisk.safeForEntry;
   }
 
   async watchDev(mintAddress, creatorAddress) {

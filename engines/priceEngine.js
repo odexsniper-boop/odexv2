@@ -156,12 +156,83 @@ export function evaluateThreeCandlePattern(candles, options = {}) {
     }
   }
 
+  // If 4 or more candles available, first check Setup B4: Parabolic Surge -> Retest -> Reclaim
+  if (candles.length >= 4) {
+    const c1_4 = candles[candles.length - 4];
+    const c2_4 = candles[candles.length - 3];
+    const c3_4 = candles[candles.length - 2];
+    const c4_4 = candles[candles.length - 1];
+
+    const c1_4Gain = c1_4.open > 0 ? ((c1_4.close - c1_4.open) / c1_4.open) * 100 : 0;
+    const c2_4Gain = c2_4.open > 0 ? ((c2_4.close - c2_4.open) / c2_4.open) * 100 : 0;
+    const isParabolicB = (c1_4Gain + c2_4Gain) >= 25.0 || c2_4Gain >= 22.0;
+    const c1_4Base = c1_4.open;
+
+    if (isParabolicB) {
+      const isC3Retest = c3_4.close <= c2_4.close || c3_4.open >= c3_4.close;
+      const c3HeldSupport = c3_4.low >= (c1_4Base * 0.98) && c3_4.close >= (c1_4.close * 0.95);
+      const isC4Bullish = c4_4.close > c4_4.open;
+      const c4Reclaims = (c4_4.close >= c3_4.high) || (c4_4.high > c3_4.high && c4_4.close >= (c3_4.high * 0.995));
+      const c4TotalRange = c4_4.high - c4_4.low;
+      const c4UpperWick = c4_4.high - Math.max(c4_4.open, c4_4.close);
+      const isC4Exhaustion = c4TotalRange > 0 && (c4UpperWick / c4TotalRange) > 0.55;
+
+      if (isC3Retest && c3HeldSupport && isC4Bullish && c4Reclaims && !isC4Exhaustion) {
+        return {
+          patternTriggered: true,
+          parabolicExtension: false,
+          stage: 'C3_ENTRY_TRIGGERED',
+          score: 96,
+          reason: `Setup B4 (Momentum Retest): Parabolic surge (+${(c1_4Gain + c2_4Gain).toFixed(1)}%) held structural support at C3 -> C4 breakout reclaim confirmed!`,
+          c1: c1_4,
+          c2: c3_4,
+          c3: c4_4,
+        };
+      }
+    }
+  }
+
   // 1. Candle 1: Breakout / Strong Buying
   const isC1Bullish = c1.close > c1.open;
   const c1GainPercent = c1.open > 0 ? ((c1.close - c1.open) / c1.open) * 100 : 0;
   const isC1Breakout = isC1Bullish && c1GainPercent >= 2.0;
 
   if (!isC1Breakout) {
+    // Multi-Candle Consolidation: Check 4-candle setup if C1 (L-3) was a consolidation candle
+    if (candles.length >= 4) {
+      const c1_4 = candles[candles.length - 4];
+      const c2_4 = candles[candles.length - 3];
+      const c3_4 = candles[candles.length - 2];
+      const c4_4 = candles[candles.length - 1];
+
+      const c1_4Gain = c1_4.open > 0 ? ((c1_4.close - c1_4.open) / c1_4.open) * 100 : 0;
+      const isC1_4Breakout = c1_4.close > c1_4.open && c1_4Gain >= 2.0;
+      const c1_4Base = c1_4.open;
+      const c1_4Mid = c1_4.open + (c1_4.close - c1_4.open) * 0.35;
+
+      const c2_4Held = c2_4.low >= (c1_4Base * 0.98) && c2_4.close >= c1_4Mid;
+      const c3_4Held = c3_4.low >= (c1_4Base * 0.98) && c3_4.close >= c1_4Mid;
+      const isC4Bullish = c4_4.close > c4_4.open;
+      const resHigh = Math.max(c2_4.high, c3_4.high);
+      const c4BreaksRes = (c4_4.close >= resHigh) || (c4_4.high > resHigh && c4_4.close >= (resHigh * 0.995));
+      const c4TotalRange = c4_4.high - c4_4.low;
+      const c4UpperWick = c4_4.high - Math.max(c4_4.open, c4_4.close);
+      const isC4Exhaustion = c4TotalRange > 0 && (c4UpperWick / c4TotalRange) > 0.55;
+
+      if (isC1_4Breakout && c2_4Held && c3_4Held && isC4Bullish && c4BreaksRes && !isC4Exhaustion) {
+        return {
+          patternTriggered: true,
+          parabolicExtension: false,
+          stage: 'C3_ENTRY_TRIGGERED',
+          score: 93,
+          reason: `Setup A4 (Extended Pullback): C1 breakout (+${c1_4Gain.toFixed(1)}%) -> C2/C3 held support -> C4 breakout confirmed!`,
+          c1: c1_4,
+          c2: c3_4,
+          c3: c4_4,
+        };
+      }
+    }
+
     return {
       patternTriggered: false,
       stage: 'WAITING_C1_BREAKOUT',
@@ -172,6 +243,10 @@ export function evaluateThreeCandlePattern(candles, options = {}) {
 
   // Common C3 checks
   const isC3Bullish = c3.close > c3.open;
+  const c3TotalRange = c3.high - c3.low;
+  const c3UpperWick = c3.high - Math.max(c3.open, c3.close);
+  // Rejection check: upper wick exceeds 55% of the total candle range (shooting star / seller absorption)
+  const isC3ExhaustionWick = c3TotalRange > 0 && (c3UpperWick / c3TotalRange) > 0.55;
 
   // ============================================
   // SETUP B: MOMENTUM (God Candles / Acceleration)
@@ -180,10 +255,27 @@ export function evaluateThreeCandlePattern(candles, options = {}) {
   const c2GainPercent = c2.open > 0 ? ((c2.close - c2.open) / c2.open) * 100 : 0;
   
   if (isC2Bullish && c2GainPercent >= 0.5) {
-    // If it's a straight momentum setup, we just need C3 to push higher
-    if (isC3Bullish && (c3.close >= c2.high || c3.high > c2.high)) {
+    const twoCandleGain = c1GainPercent + c2GainPercent;
+    const isParabolic = twoCandleGain >= 25.0 || c2GainPercent >= 22.0;
+
+    // Parabolic Extension Protection: If momentum is vertical/parabolic, block immediate buy and require retest
+    if (isParabolic) {
+      return {
+        patternTriggered: false,
+        parabolicExtension: true,
+        stage: 'PARABOLIC_EXTENSION',
+        score: 60,
+        reason: `Setup B Parabolic Extension: +${twoCandleGain.toFixed(1)}% 2-candle surge exceeds 25% threshold. Waiting for pullback/retest.`,
+        c1, c2, c3,
+      };
+    }
+
+    // Normal non-parabolic momentum continuation
+    const breaksC2 = (c3.close >= c2.high) || (c3.high > c2.high && c3.close >= c2.close);
+    if (isC3Bullish && breaksC2 && !isC3ExhaustionWick) {
       return {
         patternTriggered: true,
+        parabolicExtension: false,
         stage: 'C3_ENTRY_TRIGGERED',
         score: 98,
         reason: `Setup B (Momentum): 3 consecutive green candles! (C1: +${c1GainPercent.toFixed(1)}%, C2: +${c2GainPercent.toFixed(1)}%) -> C3 accelerating!`,
@@ -210,8 +302,8 @@ export function evaluateThreeCandlePattern(candles, options = {}) {
       };
     }
 
-    const breaksC2High = c3.close >= c2.high || c3.high > c2.high;
-    if (isC3Bullish && breaksC2High) {
+    const breaksC2High = (c3.close >= c2.high) || (c3.high > c2.high && c3.close >= (c2.high * 0.995));
+    if (isC3Bullish && breaksC2High && !isC3ExhaustionWick) {
       return {
         patternTriggered: true,
         stage: 'C3_ENTRY_TRIGGERED',

@@ -490,9 +490,18 @@ export async function createDashboardServer(port = 3005) {
 
       // Re-verify token state before building transaction
       const liveRecord = orchestrator.tokens.get(record.mint);
-      if (liveRecord && (liveRecord.state === TokenState.REJECTED || liveRecord.state === TokenState.CLOSED)) {
+      if (liveRecord && (liveRecord.state === TokenState.REJECTED || liveRecord.state === TokenState.CLOSED || liveRecord.state === TokenState.ENTRY_BLOCKED_BUNDLE_PENDING || liveRecord.state === TokenState.ENTRY_WAITING_RETEST || liveRecord.state === TokenState.EXPIRED)) {
         log(`[MULTI-USER BUY ABORT] Token ${record.mint.slice(0, 8)} transitioned to ${liveRecord.state}. Order cancelled.`);
         return;
+      }
+
+      // Authoritative centralized gate check
+      if (typeof orchestrator.canEnterTrade === 'function') {
+        const gate = orchestrator.canEnterTrade(liveRecord || record);
+        if (!gate.allow) {
+          log(`[MULTI-USER BUY ABORT] Centralized gate blocked user buy on ${record.mint.slice(0, 8)}: ${gate.reason}`);
+          return;
+        }
       }
 
       // Query latest fresh reserves from curveWatcher or cache
