@@ -85,12 +85,11 @@ export class Orchestrator {
         TokenState.REVALIDATING,
         TokenState.LIGHTWEIGHT_WATCHLIST,
         TokenState.ENTRY_BLOCKED_BUNDLE_PENDING,
-        TokenState.ENTRY_WAITING_RETEST,
       ];
       
       for (const [mint, record] of this.tokens.entries()) {
         // 1. Stale Active Trackers (Move to Watchlist after 120s of complete inactivity)
-        if ((record.state === TokenState.MONEY_FLOW_WATCH || record.state === TokenState.PATTERN_FORMING) && (now - record.updatedAt > 120000)) {
+        if ((record.state === TokenState.MONEY_FLOW_WATCH || record.state === TokenState.PATTERN_FORMING || record.state === TokenState.ENTRY_WAITING_RETEST) && (now - record.updatedAt > 120000)) {
           record.transitionTo(TokenState.LIGHTWEIGHT_WATCHLIST, 'Moved to Late Breakout Scanner');
           log(`[WATCHLIST] ${record.name || mint.slice(0,8)} sleeping, moved to Late Breakout Scanner`);
           if (this.curveWatcher) this.curveWatcher.unwatch(mint); // Disconnect WS to save RAM/RPC
@@ -632,6 +631,10 @@ export class Orchestrator {
         if (tick.buyerPubkey && tick.traderIdentityStatus === 'VERIFIED') {
           record.uniqueBuyers.add(tick.buyerPubkey);
           this.buyerQualityEngine.recordBuy(mint, tick.buyerPubkey, tick.solDelta, tick.timestamp || Date.now(), tick.slot || 0);
+        } else if (!tick.buyerPubkey && (tick.eventSource === 'RESERVE_POLL' || tick.traderIdentityStatus === 'UNKNOWN')) {
+          const pseudoBuyer = `POLL_${mint.slice(0, 4)}_${record.txCount}`;
+          record.uniqueBuyers.add(pseudoBuyer);
+          this.buyerQualityEngine.recordBuy(mint, pseudoBuyer, tick.solDelta, tick.timestamp || Date.now(), 0);
         }
       } else {
         record.sellVolumeSol += tick.solDelta;
@@ -695,8 +698,8 @@ export class Orchestrator {
       const totalObservedCount = rawBuyerCount + bundledCount;
 
       const isQualityPending = quality.reasons.includes('No buyer data recorded');
-      const fallbackBuyers = (rawBuyerCount === 0 && record.txCount >= 5 && record.buyVolumeSol >= 1.5)
-        ? Math.min(record.txCount, Math.max(3, Math.floor(record.buyVolumeSol / 0.5)))
+      const fallbackBuyers = (rawBuyerCount === 0 && record.txCount >= 3 && record.buyVolumeSol >= 0.8)
+        ? Math.min(record.txCount, Math.max(2, Math.floor(record.buyVolumeSol / 0.4)))
         : rawBuyerCount;
 
       const effectiveOrganicBuyers = isQualityPending 
@@ -837,6 +840,7 @@ export class Orchestrator {
 
       if (patternVerdict.parabolicExtension) {
         record.parabolicExtension = true;
+        record.retestStartedAt = Date.now();
         record.transitionTo(TokenState.ENTRY_WAITING_RETEST, patternVerdict.reason);
         log(`⏳ [STAGE 3 RETEST REQUIRED] ${record.name || mint.slice(0, 8)}: ${patternVerdict.reason}`);
         eventBus.emit('STATE_TRANSITION', {
@@ -849,6 +853,61 @@ export class Orchestrator {
       }
 
       if (patternVerdict.patternTriggered) {
+        await this._handleTriggerConfirmed({
+          mint,
+          patternTriggered: true,
+          stage: 'C3_ENTRY_TRIGGERED',
+          score: patternVerdict.score,
+          reason: patternVerdict.reason,
+        });
+      }
+    }
+
+    // Handle Stage 3: ENTRY_WAITING_RETEST (Setup B4 Parabolic Retest Reclaim)
+    if (record.state === TokenState.ENTRY_WAITING_RETEST && cb) {
+      const retestAge = Date.now() - (record.retestStartedAt || record.stageEnteredAt || record.updatedAt);
+      if (retestAge > 60000) {
+        log(`⏳ [RETEST TIMEOUT] ${record.name || mint.slice(0, 8)} retest window expired (${Math.round(retestAge / 1000)}s > 60s). Moving to Watchlist.`);
+        record.parabolicExtension = false;
+        record.transitionTo(TokenState.LIGHTWEIGHT_WATCHLIST, 'RETEST_TIMEOUT_MOVED_TO_WATCHLIST');
+        if (this.curveWatcher) this.curveWatcher.unwatch(mint);
+        if (this.devWatcher) this.devWatcher.unwatchDev(mint);
+        eventBus.emit('STATE_TRANSITION', {
+          mint,
+          state: record.state,
+          reason: record.rejectionReason,
+          record: this.serializeToken(record),
+        });
+        return;
+      }
+
+      if (record.sellVolumeSol >= 3.0 && record.sellVolumeSol > record.buyVolumeSol * 2.0) {
+        this.vetoCount++;
+        record.parabolicExtension = false;
+        record.transitionTo(TokenState.REJECTED, `STAGE 3 VETO: SEVERE_SELL_PRESSURE_DURING_RETEST`);
+        log(`🚨 [STAGE 3 RETEST VETO] Severe sell pressure during retest on ${record.name || mint.slice(0, 8)}! Stopped tracking.`);
+        if (this.curveWatcher) this.curveWatcher.unwatch(mint);
+        if (this.devWatcher) this.devWatcher.unwatchDev(mint);
+        eventBus.emit('STATE_TRANSITION', {
+          mint,
+          state: record.state,
+          reason: record.rejectionReason,
+          record: this.serializeToken(record),
+        });
+        return;
+      }
+
+      const closedCandles = cb.getClosedCandles();
+      const patternVerdict = evaluateThreeCandlePattern(closedCandles, {
+        timeframeMs: cb.timeframeMs,
+        maxAllowedGapMs: Math.max(cb.timeframeMs * 3.5, 20000),
+      });
+      record.stage3_pattern = patternVerdict;
+      record.patternScore = patternVerdict.score;
+
+      if (patternVerdict.patternTriggered) {
+        log(`🎯 [STAGE 3 RETEST CONFIRMED] ${record.name || mint.slice(0, 8)}: Setup B4 retest & reclaim complete!`);
+        record.parabolicExtension = false;
         await this._handleTriggerConfirmed({
           mint,
           patternTriggered: true,
@@ -916,6 +975,7 @@ export class Orchestrator {
           log(`⏳ [ENTRY BLOCKED] ${record.name || mint.slice(0, 8)} waiting: ${gateVerdict.reason}`);
           this._scheduleBundlePendingTimeout(record);
         } else if (gateVerdict.status === 'ENTRY_WAITING_RETEST') {
+          record.retestStartedAt = Date.now();
           record.transitionTo(TokenState.ENTRY_WAITING_RETEST, gateVerdict.reason);
           log(`⏳ [ENTRY BLOCKED] ${record.name || mint.slice(0, 8)} waiting: ${gateVerdict.reason}`);
         }
@@ -1054,6 +1114,25 @@ export class Orchestrator {
       record._bundleTimeoutTimer = null;
       const liveRec = this.tokens.get(mint);
       if (liveRec && liveRec.state === TokenState.ENTRY_BLOCKED_BUNDLE_PENDING) {
+        // Fallback for congested / rate-limited RPC when creator metrics are clean
+        const allowBypass = this.safetyFilter?.allowMissingBundleData || !this.safetyFilter?.conservativeAdmission;
+        const devSafe = (liveRec.devPercent <= (this.safetyFilter?.maxDevPercent || 8.0)) && !liveRec.devSoldAny;
+        if (allowBypass && devSafe) {
+          log(`⚡ [BUNDLE TIMEOUT BYPASS] ${liveRec.name || mint.slice(0, 8)} bundle unconfirmed after ${this.bundleVerificationTimeoutMs}ms under RPC congestion, but dev is safe (${liveRec.devPercent.toFixed(1)}% <= 8%). Proceeding with entry.`);
+          liveRec.bundleDataStatus = 'VERIFIED_FALLBACK';
+          const gate = this.canEnterTrade(liveRec);
+          if (gate.allow) {
+            liveRec.transitionTo(TokenState.ENTRY_READY);
+            eventBus.emit('STATE_TRANSITION', {
+              mint,
+              state: liveRec.state,
+              record: this.serializeToken(liveRec),
+            });
+            this.triggerExecution(liveRec).catch(e => log(`[ENTRY RESUME ERR] ${e.message}`));
+            return;
+          }
+        }
+
         log(`⏰ [BUNDLE TIMEOUT] ${liveRec.name || mint.slice(0, 8)} bundle verification timed out (${this.bundleVerificationTimeoutMs}ms). Expiring opportunity.`);
         liveRec.transitionTo(TokenState.EXPIRED, `ENTRY_EXPIRED_BUNDLE_TIMEOUT: Verification unresolved after ${this.bundleVerificationTimeoutMs}ms`);
         if (this.curveWatcher) this.curveWatcher.unwatch(mint);
@@ -1111,9 +1190,9 @@ export class Orchestrator {
     if (this.devWatcher && !this.devWatcher.isSafe(mint)) {
       // If devWatcher is actively reconciling the ATA baseline, give it a brief grace period to resolve
       const devRec = this.devWatcher.monitoredDevs?.get(mint);
-      if (devRec && devRec.state === 'RECONCILING') {
+      if (devRec && (devRec.state === 'RECONCILING' || devRec.state === 'UNKNOWN')) {
         const startWait = Date.now();
-        while (devRec.state === 'RECONCILING' && (Date.now() - startWait) < 1500) {
+        while ((devRec.state === 'RECONCILING' || devRec.state === 'UNKNOWN') && (Date.now() - startWait) < 1500) {
           await new Promise(r => setTimeout(r, 100));
         }
       }

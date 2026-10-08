@@ -252,6 +252,56 @@ export async function createDashboardServer(port = 3005) {
     }
   }
 
+  // Re-read authoritative settings from dbManager after Supabase sync to eliminate cold-boot desynchronization
+  autoBuyEnabled = dbManager.getSetting('auto_buy_enabled', autoBuyEnabled);
+  buySizeSol = dbManager.getSetting('buy_size_sol', buySizeSol);
+  const syncedTradingMode = dbManager.getSetting('trading_mode', null);
+  if (syncedTradingMode) {
+    currentMode = syncedTradingMode;
+  }
+  const freshSettings = dbManager.getSetting('trading_settings', null);
+  if (freshSettings && typeof freshSettings === 'object') {
+    Object.assign(tradingSettings, freshSettings);
+  }
+
+  // Rehydrate active wallet if restored from Supabase into SQLite
+  if (!walletKeypair) {
+    const freshWallet = dbManager.getSetting('active_wallet', null);
+    if (freshWallet?.privateKey) {
+      try {
+        const decrypted = decryptKey(freshWallet.privateKey.trim()) || freshWallet.privateKey.trim();
+        const secret = decrypted.startsWith('[') ? Uint8Array.from(JSON.parse(decrypted)) : bs58.decode(decrypted);
+        walletKeypair = Keypair.fromSecretKey(secret);
+        walletPubkey = walletKeypair.publicKey.toBase58();
+        log(`[SYNC] Rehydrated restored active wallet: ${walletPubkey}`);
+      } catch (e) {}
+    } else if (freshWallet?.pubkey && !walletPubkey) {
+      walletPubkey = freshWallet.pubkey;
+    }
+  }
+
+  // Synchronize execution engine parameters with fresh database values
+  if (execution) {
+    execution.isPaperTrading = (currentMode === 'PAPER');
+    if (execution.controller) execution.controller.isPaperTrading = (currentMode === 'PAPER');
+    if (walletKeypair) {
+      execution.wallet = walletKeypair;
+      if (execution.controller) execution.controller.wallet = walletKeypair;
+    }
+    if (tradingSettings.slippageBps) {
+      execution.defaultSlippageBps = tradingSettings.slippageBps;
+      if (execution.controller) execution.controller.defaultSlippageBps = tradingSettings.slippageBps;
+    }
+    if (tradingSettings.priorityFeeMicroLamports) {
+      execution.defaultPriorityFeeMicroLamports = tradingSettings.priorityFeeMicroLamports;
+      if (execution.controller) execution.controller.defaultPriorityFee = tradingSettings.priorityFeeMicroLamports;
+    }
+    if (tradingSettings.jitoTipLamports) {
+      execution.jitoTipLamports = tradingSettings.jitoTipLamports;
+      if (execution.controller) execution.controller.defaultJitoTipLamports = tradingSettings.jitoTipLamports;
+    }
+  }
+
   const positionManager = new PositionManager(execution, {
     stopLossPercent: tradingSettings.stopLossPercent !== undefined ? tradingSettings.stopLossPercent : -16,
   });
@@ -556,7 +606,7 @@ export async function createDashboardServer(port = 3005) {
   setInterval(() => {
     const activeUserIds = new Set([...clients].filter(c => c.readyState === 1 && c.userId).map(c => c.userId));
     for (const [uid, uBot] of userBotRegistry.entries()) {
-      if (!activeUserIds.has(uid) && uBot.positionManager.positions.size === 0) {
+      if (!activeUserIds.has(uid) && uBot.positionManager.positions.size === 0 && !uBot.autoBuyEnabled) {
         userBotRegistry.delete(uid);
       }
     }
@@ -824,22 +874,16 @@ export async function createDashboardServer(port = 3005) {
     const { mint } = req.params;
     try {
       const tok = orchestrator.tokens.get(mint);
-      if (tok && tok.imageUrl) return res.json({ success: true, imageUrl: tok.imageUrl });
-      if (mint && mint.endsWith('pump')) {
-        const pumpImg = `https://images.pump.fun/coin-image/${mint}?variant=256x256`;
-        if (tok) tok.imageUrl = pumpImg;
-        return res.json({ success: true, imageUrl: pumpImg });
+      if (tok && tok.imageUrl && !tok.imageUrl.includes('coin-image')) {
+        return res.json({ success: true, imageUrl: tok.imageUrl });
       }
       const meta = await fetchTokenMetadata(mint);
-      if (meta && meta.imageUrl) {
+      if (meta && meta.imageUrl && !meta.imageUrl.includes('coin-image')) {
         if (tok) tok.imageUrl = meta.imageUrl;
         return res.json({ success: true, imageUrl: meta.imageUrl });
       }
     } catch (e) {}
-    if (mint && mint.endsWith('pump')) {
-      return res.json({ success: true, imageUrl: `https://images.pump.fun/coin-image/${mint}?variant=256x256` });
-    }
-    res.json({ success: false, imageUrl: null });
+    res.json({ success: true, imageUrl: '/ICO.webp' });
   });
 
   app.get('/api/trades', async (req, res) => {
@@ -2297,9 +2341,9 @@ export async function createDashboardServer(port = 3005) {
 
   return {
     start: () => {
-      server.listen(port, () => {
+      server.listen(port, '0.0.0.0', () => {
         log(`[DATABASE] SQLite database connected: ${dbManager.connected ? 'ACTIVE' : 'OFFLINE'}`);
-        log(`[WEB DASHBOARD] Deterministic Orchestrator live at: http://localhost:${port}`);
+        log(`[WEB DASHBOARD] Deterministic Orchestrator live at: http://0.0.0.0:${port}`);
         log(`[WEB DASHBOARD] Mode: ${currentMode} | Auto-Snipe: ${autoBuyEnabled ? 'ENABLED' : 'DISABLED'}`);
       });
     },

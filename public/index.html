@@ -6,6 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="/icons/Fav.png?v=2">
   <link rel="shortcut icon" href="/icons/Fav.png?v=2">
+  <script>
+    (function() {
+      try {
+        const user = localStorage.getItem('odex_user');
+        const token = localStorage.getItem('supabase_token');
+        if (!user && !token) {
+          window.location.replace('/login');
+        }
+      } catch (e) {
+        window.location.replace('/login');
+      }
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -178,6 +191,22 @@
         width: 100%;
         max-width: 100%;
         margin: 6px 0 0 0;
+      }
+      .top-bar {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .filter-tabs {
+        overflow-x: auto;
+        max-width: 100%;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .filter-tabs::-webkit-scrollbar {
+        display: none;
+      }
+      .tokens-section {
+        padding: 0 16px 24px 16px;
       }
     }
     .app-brand {
@@ -683,26 +712,24 @@
       color: #ffffff;
     }
     .wallet-avatar-badge {
-      width: 26px;
-      height: 26px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #7c3aed, #a855f7, #f43f5e);
+      background: linear-gradient(165deg, #2d4a77 0%, #1e2a4f 55%, #251e44 100%);
       color: #ffffff;
-      font-size: 11px;
-      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 10px rgba(45, 74, 119, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       flex-shrink: 0;
-      font-variant-numeric: tabular-nums;
       cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
     }
     .wallet-avatar-badge:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 14px rgba(168, 85, 247, 0.6);
+      transform: scale(1.06);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), 0 0 14px rgba(49, 81, 130, 0.45);
+      border-color: rgba(255, 255, 255, 0.3);
     }
 
     /* Avatar Profile Dropdown Menu */
@@ -1675,10 +1702,29 @@
       margin-top: 16px;
       margin-bottom: 24px;
       box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04), 0 4px 24px rgba(0, 0, 0, 0.6);
-      overflow: clip;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: #27272a #0c0e14;
+    }
+    .table-container::-webkit-scrollbar {
+      height: 6px;
+    }
+    .table-container::-webkit-scrollbar-track {
+      background: #0c0e14;
+      border-radius: 0 0 14px 14px;
+    }
+    .table-container::-webkit-scrollbar-thumb {
+      background: #27272a;
+      border-radius: 3px;
+    }
+    .table-container::-webkit-scrollbar-thumb:hover {
+      background: #3f3f46;
     }
     table {
       width: 100%;
+      min-width: 960px;
       border-collapse: collapse;
       text-align: left;
       font-variant-numeric: tabular-nums lining-nums;
@@ -1891,32 +1937,42 @@
 
     /* Architecture Log Panel */
     .arch-panel {
-      background: #101114;
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%), rgba(13, 15, 22, 0.62);
+      backdrop-filter: blur(16px) saturate(190%);
+      -webkit-backdrop-filter: blur(16px) saturate(190%);
+      border: none;
       border-radius: 14px;
-      padding: 18px 20px;
-      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04), 0 4px 20px rgba(0, 0, 0, 0.6);
+      padding: 14px 18px;
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.12), inset 0 0 16px 0 rgba(255, 255, 255, 0.02), 0 10px 30px -8px rgba(0, 0, 0, 0.55);
+      margin-bottom: 24px;
     }
     .arch-panel h2 {
-      margin: 0 0 12px 0;
-      font-size: 13px;
-      color: var(--text-muted);
-      text-transform: none;
-      letter-spacing: 0.2px;
-      display: flex;
-      justify-content: space-between;
+      display: none;
     }
     .log-box {
       height: 170px;
       overflow-y: auto;
-      background: #111111;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
       font-family: 'Geist Mono', 'SF Mono', Consolas, monospace;
       font-size: 11px;
       color: #e4e4e7;
       font-variant-numeric: tabular-nums;
+    }
+    .log-box::-webkit-scrollbar {
+      width: 6px;
+    }
+    .log-box::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .log-box::-webkit-scrollbar-thumb {
+      background: #27272a;
+      border-radius: 3px;
+    }
+    .log-box::-webkit-scrollbar-thumb:hover {
+      background: #3f3f46;
     }
     .log-entry { margin-bottom: 4px; line-height: 1.4; }
     .log-time { color: var(--text-muted); margin-right: 8px; }
@@ -2337,6 +2393,376 @@
       box-shadow: 0 0 14px rgba(163, 230, 53, 0.28);
       transform: scale(1.05);
     }
+
+    /* Bottom Application Status Bar */
+    .app-status-bar {
+      flex-shrink: 0;
+      height: 32px;
+      background: #06070a;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      font-size: 11.5px;
+      font-weight: 500;
+      color: #9ca3af;
+      user-select: none;
+      z-index: 40;
+      position: relative;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    .status-bar-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-indicator-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      flex-shrink: 0;
+      display: inline-block;
+      animation: statusDotPulse 2.5s infinite ease-in-out;
+    }
+
+    @keyframes statusDotPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.15); }
+    }
+
+    .status-indicator-text {
+      color: #9ca3af;
+      letter-spacing: 0.01em;
+      font-weight: 500;
+    }
+
+    .status-bar-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .status-bar-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #9ca3af;
+    }
+
+    .status-bar-item.solana-item span {
+      color: #d1d5db;
+    }
+
+    .status-bar-item.block-item span {
+      color: #9ca3af;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .status-bar-item.ping-item {
+      color: #9ca3af;
+      gap: 4px;
+    }
+
+    .status-bar-item.ping-item svg {
+      color: #9ca3af;
+    }
+
+    .status-bar-divider {
+      color: rgba(255, 255, 255, 0.15);
+      font-weight: 300;
+      user-select: none;
+    }
+
+    @media (max-width: 640px) {
+      .app-status-bar {
+        padding: 0 12px;
+        font-size: 10.5px;
+        height: 30px;
+      }
+      .status-bar-right {
+        gap: 8px;
+      }
+    }
+
+    /* PNL Calendar (Solana) Modal UI/UX */
+    #stat-card-pnl-calendar {
+      cursor: pointer !important;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #stat-card-pnl-calendar:hover {
+      border-color: rgba(34, 197, 94, 0.45) !important;
+      background: rgba(34, 197, 94, 0.04) !important;
+      transform: translateY(-1px);
+    }
+    .pnl-calendar-dialog {
+      position: relative;
+      background: radial-gradient(ellipse 90% 45% at 50% 120%, rgba(16, 185, 129, 0.22) 0%, rgba(17, 20, 27, 0.98) 75%), #11141b;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      width: 700px;
+      max-width: calc(100vw - 32px);
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 22px 24px 26px 24px;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(16, 185, 129, 0.08);
+      display: flex;
+      flex-direction: column;
+      color: #ffffff;
+      animation: modalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .pnl-calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .pnl-calendar-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+    .pnl-mode-selector {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+      padding: 2px;
+      gap: 2px;
+      margin-left: 10px;
+    }
+    .pnl-mode-tab {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      line-height: 1.2;
+    }
+    .pnl-mode-tab:hover {
+      color: #ffffff;
+    }
+    .pnl-mode-tab#pnl-tab-paper.active {
+      background: rgba(99, 102, 241, 0.25);
+      color: #818cf8;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+    }
+    .pnl-mode-tab#pnl-tab-real.active {
+      background: rgba(34, 197, 94, 0.22);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.35);
+    }
+    .pnl-calendar-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .pnl-month-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pnl-nav-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      border-radius: 4px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .pnl-nav-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .pnl-month-label {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #ffffff;
+      min-width: 76px;
+      text-align: center;
+      user-select: none;
+    }
+    .pnl-icon-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      border-radius: 6px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .pnl-icon-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .pnl-close-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 15px;
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 4px;
+      transition: color 0.15s, background 0.15s;
+      line-height: 1;
+    }
+    .pnl-close-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .pnl-month-total-text {
+      text-align: center;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #94a3b8;
+      margin-bottom: 12px;
+    }
+    .pnl-val-green {
+      color: #22c55e;
+      font-weight: 700;
+    }
+    .pnl-val-red {
+      color: #ef4444;
+      font-weight: 700;
+    }
+    .pnl-bar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .pnl-bar-win {
+      color: #22c55e;
+    }
+    .pnl-bar-loss {
+      color: #ef4444;
+    }
+    .pnl-ratio-bar {
+      height: 3.5px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .pnl-bar-green {
+      background: #22c55e;
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+    .pnl-bar-red {
+      background: #ef4444;
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+    .pnl-weekdays-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 7px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+    .pnl-calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 7px;
+    }
+    .pnl-day-cell {
+      position: relative;
+      height: 64px;
+      border-radius: 8px;
+      padding: 6px 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+      cursor: default;
+    }
+    .pnl-day-cell:hover {
+      transform: translateY(-1.5px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+    .pnl-day-empty {
+      height: 64px;
+      visibility: hidden;
+    }
+    .pnl-day-num {
+      font-size: 11px;
+      font-weight: 500;
+      color: #64748b;
+      line-height: 1;
+    }
+    .pnl-day-val {
+      font-size: 12.5px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .pnl-day-cell.profit {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.22);
+    }
+    .pnl-day-cell.profit .pnl-day-val {
+      color: #22c55e;
+    }
+    .pnl-day-cell.profit:hover {
+      border-color: rgba(34, 197, 94, 0.55);
+    }
+    .pnl-day-cell.loss {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.22);
+    }
+    .pnl-day-cell.loss .pnl-day-val {
+      color: #ef4444;
+    }
+    .pnl-day-cell.loss:hover {
+      border-color: rgba(239, 68, 68, 0.55);
+    }
+    .pnl-day-cell.peak {
+      background: rgba(245, 158, 11, 0.22);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+    }
+    .pnl-day-cell.peak .pnl-day-val {
+      color: #fbbf24;
+    }
+    .pnl-day-cell.peak:hover {
+      border-color: rgba(245, 158, 11, 0.85);
+    }
+    .pnl-day-cell.neutral {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .pnl-day-cell.neutral .pnl-day-val {
+      color: #475569;
+      font-size: 11.5px;
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
@@ -2417,7 +2843,12 @@
 
           <!-- Avatar / User Profile Dropdown Trigger & Menu -->
           <div class="avatar-dropdown-wrapper" id="avatar-wrapper">
-            <div class="wallet-avatar-badge" id="hdr-wallet-count" onclick="toggleAvatarMenu(event)" title="User Profile & Settings">2</div>
+            <div class="wallet-avatar-badge" id="hdr-user-avatar" onclick="toggleAvatarMenu(event)" title="User Profile & Settings">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
+                <circle cx="12" cy="7.5" r="3.2"></circle>
+                <path d="M5.5 19c0-3.3 2.9-6 6.5-6s6.5 2.7 6.5 6"></path>
+              </svg>
+            </div>
             <div class="avatar-dropdown-menu" id="avatar-menu">
               <button class="avatar-menu-item" onclick="openProfileSection('Account')">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2587,14 +3018,13 @@
             <div class="stat-desc">Actual closed profit/loss</div>
           </div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card" id="stat-card-pnl-calendar" onclick="openPnlCalendarModal()" title="Open PNL Calendar (Solana)">
           <div class="stat-icon">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
           </div>
           <div class="stat-content">
-            <h3>State Machine Status</h3>
-            <div class="stat-val" style="color: #657FFE; font-size: 16px; text-transform: none;" id="stat-pipeline">Active</div>
-            <div class="stat-desc">Level 2 Orchestrator</div>
+            <h3>PNL Calendar (Solana)</h3>
+            <div class="stat-desc" style="font-size: 12px; color: #94a3b8; margin-top: 4px;" id="stat-pipeline">Total PnL for the month</div>
           </div>
         </div>
       </div>
@@ -2629,6 +3059,88 @@
             </svg>
           </button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PNL Calendar (Solana) Modal -->
+  <div class="settings-modal-backdrop" id="pnl-calendar-modal" onclick="onPnlCalendarBackdropClick(event)">
+    <div class="pnl-calendar-dialog" onclick="event.stopPropagation()">
+      <!-- Top Header -->
+      <div class="pnl-calendar-header">
+        <div style="display: flex; align-items: center;">
+          <div class="pnl-calendar-title">PNL Calendar (Solana)</div>
+          <div class="pnl-mode-selector">
+            <button type="button" class="pnl-mode-tab active" id="pnl-tab-paper" onclick="setPnlTradeMode('PAPER')">Paper</button>
+            <button type="button" class="pnl-mode-tab" id="pnl-tab-real" onclick="setPnlTradeMode('REAL')">Real SOL</button>
+          </div>
+        </div>
+        <div class="pnl-calendar-controls">
+          <div class="pnl-month-nav">
+            <button class="pnl-nav-btn" onclick="changePnlMonth(-1)" title="Previous Month">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <span class="pnl-month-label" id="pnl-month-display">Sep 2026</span>
+            <button class="pnl-nav-btn" onclick="changePnlMonth(1)" title="Next Month">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+          
+          <button class="pnl-icon-btn" id="pnl-currency-toggle-btn" onclick="togglePnlCurrency()" title="Switch currency to SOL/ETH">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"></circle>
+              <circle cx="12" cy="12" r="3"></circle>
+              <line x1="12" y1="3" x2="12" y2="7"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+              <line x1="3" y1="12" x2="7" y2="12"></line>
+              <line x1="17" y1="12" x2="21" y2="12"></line>
+            </svg>
+          </button>
+
+          <button class="pnl-icon-btn pnl-trophy-btn" title="Monthly Performance & Win Streak" style="color: #eab308;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+              <path d="M4 22h16"></path>
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path>
+            </svg>
+          </button>
+
+          <button class="pnl-close-btn" onclick="closePnlCalendarModal()" title="Close">✕</button>
+        </div>
+      </div>
+
+      <!-- Total PnL for the month -->
+      <div class="pnl-month-total-text">
+        Total PnL for the month: <span id="pnl-month-total-val" class="pnl-val-green">+$161.12K</span>
+      </div>
+
+      <!-- Ratio Bar & Stats -->
+      <div class="pnl-bar-header">
+        <span class="pnl-bar-win" id="pnl-bar-win-label">25 / +$161.12K</span>
+        <span class="pnl-bar-loss" id="pnl-bar-loss-label">0 / $0.00</span>
+      </div>
+      <div class="pnl-ratio-bar">
+        <div class="pnl-bar-green" id="pnl-bar-green-fill" style="width: 100%;"></div>
+        <div class="pnl-bar-red" id="pnl-bar-red-fill" style="width: 0%;"></div>
+      </div>
+
+      <!-- Days of Week Header -->
+      <div class="pnl-weekdays-row">
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+        <div>Sun</div>
+      </div>
+
+      <!-- Calendar Days Grid -->
+      <div class="pnl-calendar-grid" id="pnl-calendar-days">
+        <!-- Rendered dynamically -->
       </div>
     </div>
   </div>
@@ -3664,48 +4176,132 @@
           </button>
         </aside>
 
-        <!-- Main Token Monitoring Table -->
-        <div class="table-container" style="flex: 1; min-width: 0;">
-          <table>
-            <thead>
-              <tr>
-                <th>Token</th>
-                <th>Stage 1: Narrative</th>
-                <th>Stage 2: Money Flow</th>
-                <th>Stage 3: 3-Candle Trigger</th>
-                <th>Pipeline State</th>
-                <th>Position / Actions</th>
-              </tr>
-            </thead>
-            <tbody id="token-table-body">
-              <tr>
-                <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 40px;">
-                  Connecting to Solana RPC stream & 3-stage state machine...
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+        <!-- Main Token Table & Event Stream Column (Matched Width) -->
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
+          <div class="table-container" style="margin-top: 0; margin-bottom: 16px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Token</th>
+                  <th>Stage 1: Narrative</th>
+                  <th>Stage 2: Money Flow</th>
+                  <th>Stage 3: 3-Candle Trigger</th>
+                  <th>Pipeline State</th>
+                  <th>Position / Actions</th>
+                </tr>
+              </thead>
+              <tbody id="token-table-body">
+                <tr>
+                  <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 40px;">
+                    Connecting to Solana RPC stream & 3-stage state machine...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-      <!-- Engine Event Log -->
-      <div class="arch-panel">
-        <h2>
-          <span>Deterministic State Machine Event Stream</span>
-          <span style="font-size: 11px; color: var(--green-primary); font-weight: 600;">Level 2 Orchestrator Connected</span>
-        </h2>
-        <div class="log-box" id="log-container"></div>
+          <!-- Engine Event Log (Glassy, Borderless, Results Only) -->
+          <div class="arch-panel">
+            <div class="log-box" id="log-container"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- Fixed Bottom App Status Bar -->
+  <footer class="app-status-bar" id="app-status-bar">
+    <div class="status-bar-left">
+      <span class="status-indicator-dot"></span>
+      <span class="status-indicator-text">System Online</span>
+    </div>
+    <div class="status-bar-right">
+      <div class="status-bar-item solana-item">
+        <svg width="14" height="11" viewBox="0 0 508.07 398.17" fill="none" style="flex-shrink: 0;">
+          <defs>
+            <linearGradient id="sol-footer-g1" x1="463" y1="205.16" x2="182.39" y2="742.62" gradientTransform="translate(0 -198)" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#00ffa3"/>
+              <stop offset="1" stop-color="#dc1fff"/>
+            </linearGradient>
+            <linearGradient id="sol-footer-g2" x1="340.31" y1="141.1" x2="59.71" y2="678.57" gradientTransform="translate(0 -198)" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#00ffa3"/>
+              <stop offset="1" stop-color="#dc1fff"/>
+            </linearGradient>
+            <linearGradient id="sol-footer-g3" x1="401.26" y1="172.92" x2="120.66" y2="710.39" gradientTransform="translate(0 -198)" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#00ffa3"/>
+              <stop offset="1" stop-color="#dc1fff"/>
+            </linearGradient>
+          </defs>
+          <path fill="url(#sol-footer-g1)" d="M84.53,358.89A16.63,16.63,0,0,1,96.28,354H501.73a8.3,8.3,0,0,1,5.87,14.18l-80.09,80.09a16.61,16.61,0,0,1-11.75,4.86H10.31A8.31,8.31,0,0,1,4.43,439Z" transform="translate(-1.98 -55)"/>
+          <path fill="url(#sol-footer-g2)" d="M84.53,59.85A17.08,17.08,0,0,1,96.28,55H501.73a8.3,8.3,0,0,1,5.87,14.18l-80.09,80.09a16.61,16.61,0,0,1-11.75,4.86H10.31A8.31,8.31,0,0,1,4.43,140Z" transform="translate(-1.98 -55)"/>
+          <path fill="url(#sol-footer-g3)" d="M427.51,208.42a16.61,16.61,0,0,0-11.75-4.86H10.31a8.31,8.31,0,0,0-5.88,14.18l80.1,80.09a16.6,16.6,0,0,0,11.75,4.86H501.73a8.3,8.3,0,0,0,5.87-14.18Z" transform="translate(-1.98 -55)"/>
+        </svg>
+        <span>Solana</span>
+      </div>
+      <span class="status-bar-divider">|</span>
+      <div class="status-bar-item block-item" title="Tokens blocked by Gate 1-3 safety filters">
+        <span id="footer-block-num">Blocked Tokens: 0</span>
+      </div>
+      <span class="status-bar-divider">|</span>
+      <div class="status-bar-item ping-item" title="Live connection latency">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+        </svg>
+        <span id="footer-latency-val">--ms</span>
+      </div>
+    </div>
+  </footer>
+
   <script>
+    // Live Footer Status Bar Streamer & Accurate Connection Ping
+    async function updateFooterConnectionPing() {
+      const pingEl = document.getElementById('footer-latency-val');
+      try {
+        const start = performance.now();
+        const res = await fetch('/api/rpc/ping', { method: 'POST' });
+        const roundtrip = Math.round(performance.now() - start);
+        if (res.ok) {
+          const data = await res.json();
+          const ms = (data && typeof data.latencyMs === 'number') ? Math.round(data.latencyMs) : roundtrip;
+          if (pingEl) pingEl.textContent = `${ms}ms`;
+          const rpcVal = document.getElementById('rpc-latency-val');
+          if (rpcVal) rpcVal.innerText = `${ms}ms`;
+        } else {
+          if (pingEl) pingEl.textContent = `${roundtrip}ms`;
+        }
+      } catch (err) {
+        if (pingEl) pingEl.textContent = '--ms';
+      }
+    }
+
     let currentFilter = localStorage.getItem('odex_active_tab') || 'all';
     let tokensMap = new Map(); // mint -> TokenRecord
     let autoBuyEnabled = false;
     let learningEnabled = true;
     let closedTrades = []; let serverClockOffset = 0;
     let vetoCount = 0;
+
+    function updateBlockedTokensCount(count) {
+      if (count !== undefined && count !== null) {
+        vetoCount = Number(count) || 0;
+      }
+      const formatted = (vetoCount || 0).toLocaleString();
+      const el = document.getElementById('stat-vetoes');
+      if (el) el.innerText = formatted;
+      const footerEl = document.getElementById('footer-block-num');
+      if (footerEl) footerEl.textContent = 'Blocked Tokens: ' + formatted;
+    }
+
+    (function initFooterStatusBar() {
+      try {
+        const cached = localStorage.getItem('odex_cached_vetoes');
+        const initialCount = cached !== null ? parseInt(cached, 10) : 0;
+        updateBlockedTokensCount(initialCount);
+      } catch (e) {}
+
+      updateFooterConnectionPing();
+      setInterval(updateFooterConnectionPing, 3000);
+    })();
     let managedWallets = [];
     let activeWalletPubkey = '';
 
@@ -3769,9 +4365,7 @@
     try {
       const savedVetoes = localStorage.getItem('odex_cached_vetoes');
       if (savedVetoes !== null) {
-        vetoCount = parseInt(savedVetoes, 10) || 0;
-        const el = document.getElementById('stat-vetoes');
-        if (el) el.innerText = vetoCount;
+        updateBlockedTokensCount(parseInt(savedVetoes, 10) || 0);
       }
     } catch (e) {}
 
@@ -3839,6 +4433,7 @@
       if (Array.isArray(cachedToks) && cachedToks.length > 0) {
         cachedToks.forEach(t => {
           if (isMock(t)) return;
+          if (t.imageUrl && t.imageUrl.includes('coin-image')) t.imageUrl = '/ICO.webp';
           if (!tokensMap.has(t.mint)) tokensMap.set(t.mint, t);
         });
       }
@@ -3891,6 +4486,20 @@
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
     }
+
+    window.handleTokenImgError = function(imgEl, mint) {
+      if (!imgEl) return;
+      imgEl.onerror = null;
+      imgEl.src = '/ICO.webp';
+      if (mint && typeof tokensMap !== 'undefined') {
+        const t = tokensMap.get(mint);
+        if (t) {
+          t._imageFailed = true;
+          t.imageUrl = '/ICO.webp';
+          if (t.closedData) t.closedData.imageUrl = '/ICO.webp';
+        }
+      }
+    };
 
     function formatLogText(msg) {
       if (!msg || typeof msg !== 'string') return msg;
@@ -4224,9 +4833,7 @@
           updateHistoricalWinRate();
         }
         if (d.vetoes !== undefined) {
-          vetoCount = d.vetoes;
-          const el = document.getElementById('stat-vetoes');
-          if (el) el.innerText = vetoCount;
+          updateBlockedTokensCount(d.vetoes);
           try { localStorage.setItem('odex_cached_vetoes', vetoCount.toString()); } catch (e) {}
         }
         saveCachedTokens();
@@ -4261,11 +4868,16 @@
           record.state = 'CLOSED';
         }
         const existing = tokensMap.get(record.mint);
-        if (!record.imageUrl) {
-          if (existing && existing.imageUrl) {
+        if (existing) {
+          if (!record.detectedAt && existing.detectedAt) record.detectedAt = existing.detectedAt;
+          if (!record.createdAt && existing.createdAt) record.createdAt = existing.createdAt;
+          if (!record.timestamp && existing.timestamp) record.timestamp = existing.timestamp;
+        }
+        if (!record.imageUrl || record.imageUrl.includes('coin-image')) {
+          if (existing && existing.imageUrl && !existing.imageUrl.includes('coin-image')) {
             record.imageUrl = existing.imageUrl;
-          } else if (record.mint && record.mint.endsWith('pump')) {
-            record.imageUrl = `https://images.pump.fun/coin-image/${record.mint}?variant=256x256`;
+          } else {
+            record.imageUrl = '/ICO.webp';
           }
         }
         tokensMap.set(record.mint, record);
@@ -4281,8 +4893,7 @@
         }
 
         if (record.state === 'REJECTED') {
-          vetoCount++;
-          document.getElementById('stat-vetoes').innerText = vetoCount;
+          updateBlockedTokensCount(vetoCount + 1);
           try { localStorage.setItem('odex_cached_vetoes', vetoCount.toString()); } catch (e) {}
           appendLog(`❌ [Rejected] ${record.name || record.mint.slice(0, 8)}: ${record.rejectionReason || 'Vetoed'}`, 'var(--red-primary)');
         } else if (record.state === 'ENTRY_READY') {
@@ -4325,7 +4936,7 @@
           render();
         } else if (type === 'MONEY_FLOW_TICK') {
           let t = tokensMap.get(d.mint);
-          if (t && t.state === 'MONEY_FLOW_WATCH') {
+          if (t) {
             t.buyVolumeSol = d.buyVolumeSol;
             t.sellVolumeSol = d.sellVolumeSol;
             t.stage2_moneyFlow = d.stage2_moneyFlow;
@@ -4537,7 +5148,22 @@
     function executeRender() {
       const tbody = document.getElementById('token-table-body');
       if (!tbody) return;
-      const allList = Array.from(tokensMap.values()).sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+
+      const getLaunchTimestamp = (t) => {
+        if (!t) return 0;
+        let ts = t.detectedAt || t.timestamp || t.openedAt;
+        if (!ts && t.closedData) {
+          ts = t.closedData.openedAt || t.closedData.timestamp;
+        }
+        if (!ts) ts = t.updatedAt;
+        if (!ts) return 0;
+        let num = Number(ts);
+        if (isNaN(num)) num = new Date(ts).getTime();
+        if (num < 10000000000) num *= 1000;
+        return num;
+      };
+
+      const allList = Array.from(tokensMap.values()).sort((a, b) => getLaunchTimestamp(b) - getLaunchTimestamp(a));
 
       const activePositions = allList.filter(t => t.state === 'POSITION_OPEN').length;
       const statPosEl = document.getElementById('stat-positions');
@@ -4848,21 +5474,25 @@
 
         const closedInfo = t.closedData || (Array.isArray(closedTrades) ? closedTrades.find(c => c.mint === t.mint) : null) || null;
         let rawImg = t.imageUrl || t.closedData?.imageUrl || (closedInfo && closedInfo.imageUrl) || '';
-        if (!rawImg && t.mint && t.mint.endsWith('pump')) {
-          rawImg = `https://images.pump.fun/coin-image/${t.mint}?variant=256x256`;
+        if (!rawImg || rawImg.includes('coin-image') || t._imageFailed) {
+          rawImg = fallbackSvg;
         }
-        const imgSrc = rawImg ? rawImg : fallbackSvg;
+        const imgSrc = rawImg;
 
-        if (!t.imageUrl && t.mint && !t._resolvingImg) {
+        if ((!t.imageUrl || t.imageUrl.includes('coin-image') || t.imageUrl === fallbackSvg) && t.mint && !t._resolvingImg && !t._imageFailed) {
           t._resolvingImg = true;
           fetch(`/api/token-image/${t.mint}`).then(r => r.json()).then(d => {
-            if (d && d.imageUrl) {
+            if (d && d.imageUrl && !d.imageUrl.includes('coin-image') && d.imageUrl !== fallbackSvg) {
               t.imageUrl = d.imageUrl;
               if (t.closedData) t.closedData.imageUrl = d.imageUrl;
               const imgEl = tbody.querySelector(`tr[data-mint="${t.mint}"] .token-img`);
-              if (imgEl) imgEl.src = d.imageUrl;
+              if (imgEl && !t._imageFailed) imgEl.src = d.imageUrl;
+            } else {
+              t.imageUrl = fallbackSvg;
             }
-          }).catch(() => {});
+          }).catch(() => {
+            t.imageUrl = fallbackSvg;
+          });
         }
 
         let closedTimeHtml = '';
@@ -4937,7 +5567,7 @@
                      loading="lazy" 
                      fetchpriority="auto" 
                      decoding="async" 
-                     onerror="this.onerror=null;this.src='${fallbackSvg}';">
+                     onerror="window.handleTokenImgError(this, '${t.mint}');">
                 <div class="token-meta">
                   <span class="token-name">${nameClean}</span>
                   <span class="token-symbol">${symClean}</span>
@@ -4969,7 +5599,13 @@
             const symEl = cells[0].querySelector('.token-symbol');
             if (symEl && symEl.innerHTML !== symClean) symEl.innerHTML = symClean;
             const imgEl = cells[0].querySelector('.token-img');
-            if (imgEl && imgSrc !== fallbackSvg && imgEl.src !== imgSrc) imgEl.src = imgSrc;
+            if (imgEl) {
+              if (t._imageFailed || imgSrc === fallbackSvg) {
+                if (imgEl.getAttribute('src') !== fallbackSvg) imgEl.src = fallbackSvg;
+              } else if (imgEl.getAttribute('src') !== imgSrc) {
+                imgEl.src = imgSrc;
+              }
+            }
             const timeEl = cells[0].querySelector('.token-time');
             if (timeEl) {
               timeEl.setAttribute('data-ts', launchTs);
@@ -5457,6 +6093,273 @@
       }
     }
 
+    // ========================================================
+    // PNL Calendar (Solana) Modal & Real Trade PnL Engine
+    // ========================================================
+    let pnlCalendarState = {
+      year: 2026,
+      month: 8, // September 2026 (or 0-indexed month)
+      currency: 'USD', // 'USD' or 'SOL'
+      tradeMode: 'PAPER', // 'PAPER' or 'REAL'
+      solPriceUsd: 155.0
+    };
+
+    function isTradePaper(t) {
+      if (!t) return true;
+      if (t.mode === 'LIVE' || t.isLive === true) return false;
+      if (t.mode === 'PAPER' || t.isPaper === true) return true;
+      if (t.txHash && !t.txHash.startsWith('sim') && !t.txHash.startsWith('Paper') && t.txHash.length >= 64) {
+        return false;
+      }
+      return true;
+    }
+
+    function setPnlTradeMode(mode) {
+      pnlCalendarState.tradeMode = mode;
+      const paperTab = document.getElementById('pnl-tab-paper');
+      const realTab = document.getElementById('pnl-tab-real');
+      if (paperTab && realTab) {
+        if (mode === 'PAPER') {
+          paperTab.classList.add('active');
+          realTab.classList.remove('active');
+        } else {
+          realTab.classList.add('active');
+          paperTab.classList.remove('active');
+        }
+      }
+      renderPnlCalendar();
+    }
+
+    function openPnlCalendarModal() {
+      const modal = document.getElementById('pnl-calendar-modal');
+      if (modal) {
+        modal.classList.add('open');
+        renderPnlCalendar();
+      }
+    }
+
+    function closePnlCalendarModal() {
+      const modal = document.getElementById('pnl-calendar-modal');
+      if (modal) {
+        modal.classList.remove('open');
+      }
+    }
+
+    function onPnlCalendarBackdropClick(e) {
+      if (e.target.id === 'pnl-calendar-modal') {
+        closePnlCalendarModal();
+      }
+    }
+
+    function changePnlMonth(delta) {
+      pnlCalendarState.month += delta;
+      if (pnlCalendarState.month < 0) {
+        pnlCalendarState.month = 11;
+        pnlCalendarState.year--;
+      } else if (pnlCalendarState.month > 11) {
+        pnlCalendarState.month = 0;
+        pnlCalendarState.year++;
+      }
+      renderPnlCalendar();
+    }
+
+    function togglePnlCurrency() {
+      pnlCalendarState.currency = pnlCalendarState.currency === 'USD' ? 'SOL' : 'USD';
+      const btn = document.getElementById('pnl-currency-toggle-btn');
+      if (btn) {
+        btn.title = pnlCalendarState.currency === 'USD' ? 'Switch currency to SOL/ETH' : 'Switch currency to USD';
+      }
+      renderPnlCalendar();
+    }
+
+    function formatPnlAmount(valUsd, isCurrencyUsd) {
+      if (isCurrencyUsd) {
+        const sign = valUsd > 0 ? '+' : (valUsd < 0 ? '-' : '');
+        const absVal = Math.abs(valUsd);
+        if (absVal >= 1000) {
+          return `${sign}$${(absVal / 1000).toFixed(2)}K`;
+        } else if (absVal > 0) {
+          return `${sign}$${absVal.toFixed(2)}`;
+        } else {
+          return '$0.00';
+        }
+      } else {
+        // SOL currency
+        const valSol = valUsd / (pnlCalendarState.solPriceUsd || 155.0);
+        const sign = valSol > 0 ? '+' : (valSol < 0 ? '-' : '');
+        const absVal = Math.abs(valSol);
+        if (absVal >= 1000) {
+          return `${sign}${(absVal / 1000).toFixed(2)}K SOL`;
+        } else if (absVal >= 1) {
+          return `${sign}${absVal.toFixed(2)} SOL`;
+        } else if (absVal > 0) {
+          return `${sign}${absVal.toFixed(3)} SOL`;
+        } else {
+          return '0.00 SOL';
+        }
+      }
+    }
+
+    function renderPnlCalendar() {
+      const { year, month, currency, tradeMode, solPriceUsd } = pnlCalendarState;
+      const isUsd = currency === 'USD';
+
+      // Sync active state on paper/real tabs
+      const paperTab = document.getElementById('pnl-tab-paper');
+      const realTab = document.getElementById('pnl-tab-real');
+      if (paperTab && realTab) {
+        if (tradeMode === 'PAPER') {
+          paperTab.classList.add('active');
+          realTab.classList.remove('active');
+        } else {
+          realTab.classList.add('active');
+          paperTab.classList.remove('active');
+        }
+      }
+
+      // Update Month Title
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const monthLabelEl = document.getElementById('pnl-month-display');
+      if (monthLabelEl) {
+        monthLabelEl.innerText = `${monthNames[month]} ${year}`;
+      }
+
+      // Collect daily profits purely from real closedTrades (NO DUMMY DATA)
+      const dayProfits = {};
+      const dayTradeCounts = {};
+
+      if (Array.isArray(closedTrades)) {
+        closedTrades.forEach(t => {
+          const isPaper = isTradePaper(t);
+          if (tradeMode === 'PAPER' && !isPaper) return;
+          if (tradeMode === 'REAL' && isPaper) return;
+
+          const dateStr = t.closedAt || t.timestamp || t.openedAt;
+          if (!dateStr) return;
+          const d = new Date(dateStr);
+          if (d.getFullYear() === year && d.getMonth() === month) {
+            const dayNum = d.getDate();
+            const profitSol = Number(t.netProfitSol !== undefined ? t.netProfitSol : (t.profitSol !== undefined ? t.profitSol : (t.pnlSol || 0)));
+            const profitUsd = profitSol * solPriceUsd;
+            dayProfits[dayNum] = (dayProfits[dayNum] || 0) + profitUsd;
+            dayTradeCounts[dayNum] = (dayTradeCounts[dayNum] || 0) + 1;
+          }
+        });
+      }
+
+      // Calculate totals
+      let totalPnlUsd = 0;
+      let winDaysCount = 0;
+      let winTotalUsd = 0;
+      let lossDaysCount = 0;
+      let lossTotalUsd = 0;
+      let peakDay = null;
+      let peakValUsd = 0;
+
+      Object.entries(dayProfits).forEach(([day, val]) => {
+        totalPnlUsd += val;
+        if (val > 0) {
+          winDaysCount++;
+          winTotalUsd += val;
+          if (val > peakValUsd) {
+            peakValUsd = val;
+            peakDay = parseInt(day, 10);
+          }
+        } else if (val < 0) {
+          lossDaysCount++;
+          lossTotalUsd += Math.abs(val);
+        }
+      });
+
+      // Update Month Total display
+      const totalValEl = document.getElementById('pnl-month-total-val');
+      if (totalValEl) {
+        totalValEl.innerText = formatPnlAmount(totalPnlUsd, isUsd);
+        totalValEl.className = totalPnlUsd > 0 ? 'pnl-val-green' : (totalPnlUsd < 0 ? 'pnl-val-red' : '');
+        if (totalPnlUsd === 0) totalValEl.style.color = '#94a3b8';
+        else totalValEl.style.color = '';
+      }
+
+      // Update win/loss labels
+      const winLabelEl = document.getElementById('pnl-bar-win-label');
+      if (winLabelEl) {
+        winLabelEl.innerText = `${winDaysCount} / ${formatPnlAmount(winTotalUsd, isUsd)}`;
+      }
+      const lossLabelEl = document.getElementById('pnl-bar-loss-label');
+      if (lossLabelEl) {
+        lossLabelEl.innerText = `${lossDaysCount} / ${isUsd ? '$' + lossTotalUsd.toFixed(2) : (lossTotalUsd / solPriceUsd).toFixed(2) + ' SOL'}`;
+      }
+
+      // Update ratio bar fill
+      const greenFillEl = document.getElementById('pnl-bar-green-fill');
+      const redFillEl = document.getElementById('pnl-bar-red-fill');
+      const totalActiveDays = winDaysCount + lossDaysCount;
+      if (greenFillEl && redFillEl) {
+        if (totalActiveDays === 0) {
+          greenFillEl.style.width = '0%';
+          redFillEl.style.width = '0%';
+        } else {
+          const winPct = (winDaysCount / totalActiveDays) * 100;
+          greenFillEl.style.width = `${winPct}%`;
+          redFillEl.style.width = `${100 - winPct}%`;
+        }
+      }
+
+      // Build calendar grid
+      const gridEl = document.getElementById('pnl-calendar-days');
+      if (!gridEl) return;
+      gridEl.innerHTML = '';
+
+      // Month calculation (Monday-first)
+      const firstDay = new Date(year, month, 1);
+      let startOffset = firstDay.getDay() - 1; // 0 for Mon, 6 for Sun
+      if (startOffset === -1) startOffset = 6;
+
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      // Empty leading slots
+      for (let i = 0; i < startOffset; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.className = 'pnl-day-empty';
+        gridEl.appendChild(emptyCell);
+      }
+
+      // Active month days
+      for (let day = 1; day <= daysInMonth; day++) {
+        const cell = document.createElement('div');
+        cell.className = 'pnl-day-cell';
+
+        const hasTrades = dayProfits[day] !== undefined;
+        const val = hasTrades ? dayProfits[day] : 0;
+        const tradeCount = dayTradeCounts[day] || 0;
+
+        let statusClass = 'neutral';
+        if (hasTrades) {
+          if (day === peakDay && val > 0) {
+            statusClass = 'peak';
+          } else if (val > 0) {
+            statusClass = 'profit';
+          } else if (val < 0) {
+            statusClass = 'loss';
+          }
+        }
+        cell.classList.add(statusClass);
+
+        const formattedVal = hasTrades ? formatPnlAmount(val, isUsd) : (isUsd ? '$0.00' : '0.00 SOL');
+
+        cell.innerHTML = `
+          <div class="pnl-day-num">${day}</div>
+          <div class="pnl-day-val">${formattedVal}</div>
+        `;
+
+        if (hasTrades) {
+          cell.title = `Day ${day} (${monthNames[month]} ${year}): ${tradeCount} trade${tradeCount > 1 ? 's' : ''} | PnL: ${formatPnlAmount(val, isUsd)} (${formatPnlAmount(val, !isUsd)})`;
+        }
+
+        gridEl.appendChild(cell);
+      }
+    }
+
     function openTradingSettingsModal() {
       const modal = document.getElementById('trading-settings-modal');
       if (modal) {
@@ -5514,9 +6417,7 @@
         if (statusRes.status === 'fulfilled' && statusRes.value) {
           const s = statusRes.value;
           if (s.vetoes !== undefined) {
-            vetoCount = s.vetoes;
-            const el = document.getElementById('stat-vetoes');
-            if (el) el.innerText = vetoCount;
+            updateBlockedTokensCount(s.vetoes);
             try { localStorage.setItem('odex_cached_vetoes', vetoCount.toString()); } catch (e) {}
           }
           if (s.autoBuyEnabled !== undefined) {
@@ -5608,8 +6509,8 @@
           const tokList = tokensRes.value.tokens;
           if (Array.isArray(tokList)) {
             tokList.forEach(t => {
-              if (!t.imageUrl && t.mint && t.mint.endsWith('pump')) {
-                t.imageUrl = `https://images.pump.fun/coin-image/${t.mint}?variant=256x256`;
+              if (!t.imageUrl || t.imageUrl.includes('coin-image')) {
+                t.imageUrl = '/ICO.webp';
               }
               if (!tokensMap.has(t.mint)) tokensMap.set(t.mint, t);
             });
@@ -5960,6 +6861,8 @@
           badge.innerText = `🟢 CONNECTED (${ms}ms)`;
           badge.style.color = 'var(--green-primary)';
         }
+        const pingEl = document.getElementById('footer-latency-val');
+        if (pingEl) pingEl.textContent = `${ms}ms`;
         appendLog(`⚡ Solana RPC Node Ping: ${ms}ms`, 'var(--green-primary)');
       } catch (e) {
         if (badge) {
@@ -6615,6 +7518,7 @@
     // Handle Esc key globally to close settings modal
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
+        closePnlCalendarModal();
         closeTradingSettingsModal();
         closeSettingsModal();
         closeWalletModal();

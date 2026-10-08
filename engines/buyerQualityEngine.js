@@ -406,11 +406,11 @@ export class BuyerQualityEngine {
       coordinationRisk = 'CRITICAL';
       qualityScore = 15;
       reasons.push(`CRITICAL SYBIL CLUSTER: ${largestClusterSize} wallets control ${(largestClusterVolumeShare * 100).toFixed(0)}% of buy volume`);
-    } else if (largestClusterSize >= 3 || largestClusterVolumeShare > 0.35 || hhi > 4000) {
+    } else if (largestClusterSize >= 3 || (largestClusterSize >= 2 && largestClusterVolumeShare > 0.35) || (rawBuyerCount >= 5 && largestClusterSize >= 2 && hhi > 4000)) {
       coordinationRisk = 'HIGH';
       qualityScore = 35;
       reasons.push(`HIGH COORDINATION: ${largestClusterSize}-wallet cluster detected (HHI: ${hhi})`);
-    } else if (largestClusterSize >= 2 || hhi > 2500) {
+    } else if (largestClusterSize >= 2 || (rawBuyerCount >= 5 && hhi > 2500)) {
       coordinationRisk = 'MEDIUM';
       qualityScore = 55;
       reasons.push(`MODERATE CLUSTER: ${largestClusterSize} wallets grouped into 1 entity`);

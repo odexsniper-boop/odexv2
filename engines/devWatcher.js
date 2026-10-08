@@ -256,6 +256,29 @@ export class DevWatcher {
         const activeRecord = this.monitoredDevs.get(mintAddress);
         if (activeRecord) {
           activeRecord.state = 'UNKNOWN';
+          setTimeout(async () => {
+            const retryRec = this.monitoredDevs.get(mintAddress);
+            if (retryRec && retryRec.state === 'UNKNOWN' && this.connection) {
+              try {
+                const acc = await this.connection.getAccountInfo(devAta, 'confirmed');
+                if (acc && acc.data && acc.data.length >= 72) {
+                  const bal = acc.data.readBigUInt64LE(64);
+                  retryRec.initialBalance = bal;
+                  retryRec.peakBalance = bal;
+                  retryRec.totalAcquired = bal;
+                  retryRec.lastBalance = bal;
+                  retryRec.state = 'KNOWN';
+                } else {
+                  retryRec.initialBalance = 0n;
+                  retryRec.peakBalance = 0n;
+                  retryRec.totalAcquired = 0n;
+                  retryRec.lastBalance = 0n;
+                  retryRec.state = 'UNINITIALIZED';
+                }
+                log(`[DEV WATCHER RETRY] Resolved dev balance for ${mintAddress.slice(0, 8)} on retry: state=${retryRec.state}`);
+              } catch (_) {}
+            }
+          }, 800);
         }
         log(`[DEV WATCHER ERR] Could not fetch initial balance for ${mintAddress}: ${e.message}`);
       }

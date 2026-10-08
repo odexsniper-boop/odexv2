@@ -356,7 +356,8 @@ export class CandleBuilder {
         let nextBucket = this.currentCandle.timestamp + this.timeframeMs;
         const lastClose = this.currentCandle.close;
         let synthCount = 0;
-        while (nextBucket < bucket && this.candles.length < 50 && synthCount < 2) {
+        const maxSyntheticCandles = 15;
+        while (nextBucket < bucket && this.candles.length < 50 && synthCount < maxSyntheticCandles) {
           this.candles.push({
             timestamp: nextBucket,
             open: lastClose,
