@@ -71,6 +71,12 @@ async function runTests() {
     recA.name = 'Test Pending Bundle';
     recA.bundleDataStatus = 'PENDING';
     recA.safetyVerdict = { pass: true, metrics: { bundleDataStatus: 'PENDING' } };
+    
+    // Mock passed pipeline stages to satisfy strict blind spot fix
+    recA.stage1_narrative = { passed: true, score: 80 };
+    recA.stage2_moneyFlow = { passed: true, score: 80 };
+    recA.stage3_pattern = { patternTriggered: true, score: 95 };
+    
     orch.tokens.set(mintA, recA);
 
     // Trigger Stage 3 pattern confirmation while bundle is PENDING
@@ -122,6 +128,7 @@ async function runTests() {
     recB.name = 'Test Bundle Timeout';
     recB.bundleDataStatus = 'PENDING';
     recB.safetyVerdict = { pass: true, metrics: { bundleDataStatus: 'PENDING' } };
+    recB.stage1_narrative = { passed: true, score: 80 }; recB.stage2_moneyFlow = { passed: true, score: 80 }; recB.stage3_pattern = { patternTriggered: true, score: 95 };
     orch.tokens.set(mintB, recB);
 
     await orch._handleTriggerConfirmed({
@@ -198,6 +205,7 @@ async function runTests() {
     recC.creator = creatorC;
     recC.bundleDataStatus = 'VERIFIED';
     recC.safetyVerdict = { pass: true };
+    recC.stage1_narrative = { passed: true, score: 80 }; recC.stage2_moneyFlow = { passed: true, score: 80 }; recC.stage3_pattern = { patternTriggered: true, score: 95 };
     orch.tokens.set(mintC, recC);
 
     await orch._handleTriggerConfirmed({
@@ -265,6 +273,7 @@ async function runTests() {
     recE1.safetyVerdict = { pass: true };
     recE1.buyerQuality = { coordinationRisk: 'HIGH', organicBuyerCount: 6, reasons: ['High coordination'] };
     recE1.stage2_moneyFlow = { passed: true, netVolumeDeltaSol: 0.698, buySellRatio: 1.74, uniqueBuyersCount: 6 };
+    recE1.stage1_narrative = { passed: true, score: 80 }; recE1.stage3_pattern = { patternTriggered: true, score: 95 };
     orch.tokens.set(mintE1, recE1);
 
     await orch._handleTriggerConfirmed({
@@ -287,6 +296,7 @@ async function runTests() {
     recE2.narrativeScore = 85;
     recE2.buyerQuality = { coordinationRisk: 'HIGH', organicBuyerCount: 15 };
     recE2.stage2_moneyFlow = { passed: true, netVolumeDeltaSol: 3.2, buySellRatio: 2.5, uniqueBuyersCount: 15 };
+    recE2.stage1_narrative = { passed: true, score: 80 }; recE2.stage3_pattern = { patternTriggered: true, score: 95 };
     orch.tokens.set(mintE2, recE2);
 
     await orch._handleTriggerConfirmed({
@@ -307,6 +317,7 @@ async function runTests() {
     recF.bundleDataStatus = 'VERIFIED';
     recF.safetyVerdict = { pass: true };
     recF.buyerQuality = { coordinationRisk: 'CRITICAL', organicBuyerCount: 20 };
+    recF.stage1_narrative = { passed: true, score: 80 }; recF.stage2_moneyFlow = { passed: true, score: 80 }; recF.stage3_pattern = { patternTriggered: true, score: 95 };
     orch.tokens.set(mintF, recF);
 
     await orch._handleTriggerConfirmed({
@@ -340,6 +351,7 @@ async function runTests() {
     recG.bundleDataStatus = 'VERIFIED';
     recG.safetyVerdict = { pass: true };
     recG.state = TokenState.ENTRY_READY; // Token marked ENTRY_READY earlier
+    recG.stage1_narrative = { passed: true, score: 80 }; recG.stage2_moneyFlow = { passed: true, score: 80 }; recG.stage3_pattern = { patternTriggered: true, score: 95 };
     orch.tokens.set(mintG, recG);
 
     // Suddenly before triggerExecution executes, dev rugs or bundle status is flagged

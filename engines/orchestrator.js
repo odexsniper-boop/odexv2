@@ -1024,6 +1024,12 @@ export class Orchestrator {
     if (!record || !record.mint) {
       return { allow: false, reason: 'INVALID_TOKEN_RECORD' };
     }
+    
+    // STRICT BLIND SPOT FIX: Ensure all 3 pipeline stages are completed successfully
+    if (!record.stage1_narrative.passed || !record.stage2_moneyFlow.passed || !record.stage3_pattern.patternTriggered) {
+      return { allow: false, reason: 'PIPELINE_INCOMPLETE' };
+    }
+    
     const mint = record.mint;
 
     // 1. Hard Safety Gate

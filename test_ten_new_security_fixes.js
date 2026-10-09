@@ -509,6 +509,7 @@ async function runAllTests() {
     const testMint = Keypair.generate().publicKey.toBase58();
     const tokenRec = new TokenRecord(testMint);
     tokenRec.name = 'LossBlockedToken';
+    tokenRec.stage1_narrative = { passed: true, score: 80 }; tokenRec.stage2_moneyFlow = { passed: true, score: 80 }; tokenRec.stage3_pattern = { patternTriggered: true, score: 95 };
     orch.tokens.set(testMint, tokenRec);
 
     // Call entry trigger logic

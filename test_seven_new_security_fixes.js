@@ -283,6 +283,7 @@ async function main() {
     rec.devPercent = 2.0;
     rec.lastVirtualSolReserves = 30_000_000_000n;
     rec.lastVirtualTokenReserves = 1_073_000_000_000_000n;
+    rec.stage1_narrative = { passed: true, score: 80 }; rec.stage2_moneyFlow = { passed: true, score: 80 }; rec.stage3_pattern = { patternTriggered: true, score: 95 };
     orch.tokens.set(candidateMint, rec);
 
     // Trigger execution while at capacity

@@ -84,6 +84,7 @@ async function runTests() {
     const record = new TokenRecord(testMint);
     record.state = TokenState.BUY_PENDING;
     record.name = 'PendingRugCoin';
+    record.stage1_narrative = { passed: true, score: 80 }; record.stage2_moneyFlow = { passed: true, score: 80 }; record.stage3_pattern = { patternTriggered: true, score: 95 };
     orch.tokens.set(testMint, record);
 
     // Dev dump arrives while buy is still pending
@@ -188,6 +189,7 @@ async function runTests() {
     const gradRecord = new TokenRecord(gradMint);
     gradRecord.name = 'MoonedCoin';
     gradRecord.state = TokenState.ENTRY_READY;
+    gradRecord.stage1_narrative = { passed: true, score: 80 }; gradRecord.stage2_moneyFlow = { passed: true, score: 80 }; gradRecord.stage3_pattern = { patternTriggered: true, score: 95 };
     orch.tokens.set(gradMint, gradRecord);
 
     await orch.triggerExecution(gradRecord);
