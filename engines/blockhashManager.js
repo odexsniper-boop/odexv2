@@ -15,6 +15,7 @@ export class BlockhashManager {
     this.lastFetchedAt = 0;
     this.timer = null;
     this.isFetching = false;
+    this._fetchPromise = null;
     this.fallbackConnections = options.fallbackConnections || [];
   }
 
@@ -116,47 +117,52 @@ export class BlockhashManager {
    * Actively refreshes blockhash and block height from the RPC connection with fallback
    */
   async refreshBlockhash() {
-    if (this.isFetching || !this.connection) return;
+    if (this._fetchPromise) return this._fetchPromise;
+    if (!this.connection) return;
     this.isFetching = true;
-    try {
-      const heightPromise = typeof this.connection.getBlockHeight === 'function'
-        ? this.connection.getBlockHeight('confirmed').catch(() => null)
-        : Promise.resolve(null);
+    this._fetchPromise = (async () => {
+      try {
+        const heightPromise = typeof this.connection.getBlockHeight === 'function'
+          ? this.connection.getBlockHeight('confirmed').catch(() => null)
+          : Promise.resolve(null);
 
-      const [res, currentHeight] = await Promise.all([
-        this.connection.getLatestBlockhash('confirmed'),
-        heightPromise,
-      ]);
+        const [res, currentHeight] = await Promise.all([
+          this.connection.getLatestBlockhash('confirmed'),
+          heightPromise,
+        ]);
 
-      if (res && res.blockhash) {
-        this.latestBlockhash = res.blockhash;
-        this.lastValidBlockHeight = res.lastValidBlockHeight;
-        this.currentBlockHeight = currentHeight || (res.lastValidBlockHeight ? res.lastValidBlockHeight - 150 : null);
-        this.lastFetchedAt = Date.now();
+        if (res && res.blockhash) {
+          this.latestBlockhash = res.blockhash;
+          this.lastValidBlockHeight = res.lastValidBlockHeight;
+          this.currentBlockHeight = currentHeight || (res.lastValidBlockHeight ? res.lastValidBlockHeight - 150 : null);
+          this.lastFetchedAt = Date.now();
+        }
+      } catch (err) {
+        // Try fallback connections if configured
+        for (const fallback of this.fallbackConnections) {
+          try {
+            const heightPromise = typeof fallback.getBlockHeight === 'function'
+              ? fallback.getBlockHeight('confirmed').catch(() => null)
+              : Promise.resolve(null);
+
+            const [res, currentHeight] = await Promise.all([
+              fallback.getLatestBlockhash('confirmed'),
+              heightPromise,
+            ]);
+            if (res && res.blockhash) {
+              this.latestBlockhash = res.blockhash;
+              this.lastValidBlockHeight = res.lastValidBlockHeight;
+              this.currentBlockHeight = currentHeight || (res.lastValidBlockHeight ? res.lastValidBlockHeight - 150 : null);
+              this.lastFetchedAt = Date.now();
+              break;
+            }
+          } catch (_) {}
+        }
+      } finally {
+        this.isFetching = false;
+        this._fetchPromise = null;
       }
-    } catch (err) {
-      // Try fallback connections if configured
-      for (const fallback of this.fallbackConnections) {
-        try {
-          const heightPromise = typeof fallback.getBlockHeight === 'function'
-            ? fallback.getBlockHeight('confirmed').catch(() => null)
-            : Promise.resolve(null);
-
-          const [res, currentHeight] = await Promise.all([
-            fallback.getLatestBlockhash('confirmed'),
-            heightPromise,
-          ]);
-          if (res && res.blockhash) {
-            this.latestBlockhash = res.blockhash;
-            this.lastValidBlockHeight = res.lastValidBlockHeight;
-            this.currentBlockHeight = currentHeight || (res.lastValidBlockHeight ? res.lastValidBlockHeight - 150 : null);
-            this.lastFetchedAt = Date.now();
-            break;
-          }
-        } catch (_) {}
-      }
-    } finally {
-      this.isFetching = false;
-    }
+    })();
+    return this._fetchPromise;
   }
 }

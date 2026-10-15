@@ -62,6 +62,8 @@ export class Orchestrator {
     this.maxQueueSize = 20;
     this.maxQueueAgeMs = 60000; // 60s max signal validity
     this.cooldownTimer = null;
+    this.inFlightBuys = new Set();
+    this.isProcessingQueue = false;
 
     // Buyer Quality & Sybil Defense Engine
     this.connection = curveWatcher?.connection || executionEngine?.connection || null;
@@ -126,6 +128,13 @@ export class Orchestrator {
       for (const record of sortedWatchlist.slice(0, 10)) {
         record.lastWatchlistScannedAt = now;
         if (now - record.updatedAt > 7200000) { // 2 hour hard TTL for Watchlist
+          record.transitionTo(TokenState.EXPIRED, 'WATCHLIST_TTL_EXPIRED');
+          eventBus.emit('STATE_TRANSITION', {
+            mint: record.mint,
+            state: record.state,
+            reason: record.rejectionReason,
+            record: this.serializeToken(record),
+          });
           this.tokens.delete(record.mint);
           this.candleBuilders.delete(record.mint);
           this.buyerQualityEngine.cleanupToken(record.mint);
@@ -143,7 +152,7 @@ export class Orchestrator {
             if (acc && acc.data && acc.data.length >= 24) {
               const vTok = acc.data.readBigUInt64LE(8);
               const vSol = acc.data.readBigUInt64LE(16);
-              const prevSol = record.lastVirtualSolReserves || 30_000_000_000n;
+              const prevSol = record.lastVirtualSolReserves ? BigInt(record.lastVirtualSolReserves) : 30_000_000_000n;
               if (vSol > prevSol + 500_000_000n) { // >= 0.5 SOL inflow detected
                 log(`🔥 [LATE BREAKOUT DETECTED] Watchlist token ${record.name || record.mint.slice(0, 8)} woke up (+${(Number(vSol - prevSol) / 1e9).toFixed(2)} SOL)! Resuming tracking.`);
                 record.lastVirtualSolReserves = vSol;
@@ -309,7 +318,8 @@ export class Orchestrator {
           // If another token with the identical name is already actively tracked in Stage 2/3/Watchlist,
           // reject subsequent clone mints to protect against copycat spam & liquidity traps
           const normName = (record.name || '').trim().toLowerCase();
-          if (normName.length >= 3 && normName !== 'resolving...' && normName !== 'unknown token') {
+          const placeholderNames = ['resolving...', 'unknown token', 'pending...', '...', 'unknown'];
+          if (normName.length >= 3 && !placeholderNames.includes(normName)) {
             for (const [otherMint, otherRec] of this.tokens.entries()) {
               if (otherMint === mint) continue;
               const isActive = otherRec.state === TokenState.MONEY_FLOW_WATCH ||
@@ -482,13 +492,18 @@ export class Orchestrator {
     if (data.devPercent !== undefined && data.devPercent !== null) {
       record.devPercent = data.devPercent;
     }
-    if (data.creator && data.creator !== 'UNKNOWN' && (!record.creator || record.creator === 'UNKNOWN')) {
+    const hadUnknownCreator = !record.creator || record.creator === 'UNKNOWN';
+    if (data.creator && data.creator !== 'UNKNOWN' && hadUnknownCreator) {
       record.creator = data.creator;
+      // Start watching dev ATA if token has already advanced into active stages
+      if (this.devWatcher && (record.state === TokenState.MONEY_FLOW_WATCH || record.state === TokenState.PATTERN_FORMING || record.state === TokenState.ENTRY_WAITING_RETEST)) {
+        this.devWatcher.watchDev(mint, record.creator);
+      }
     }
     record.bundleDataStatus = data.bundleDataStatus || 'VERIFIED';
 
-    // Re-evaluate Stage 0 safety if token hasn't already opened a position or been rejected
-    if (record.state !== TokenState.POSITION_OPEN && record.state !== TokenState.BUY_PENDING && record.state !== TokenState.REJECTED && record.state !== TokenState.CLOSED) {
+    // Re-evaluate Stage 0 safety if token hasn't already opened a position or been rejected/expired
+    if (record.state !== TokenState.POSITION_OPEN && record.state !== TokenState.BUY_PENDING && record.state !== TokenState.REJECTED && record.state !== TokenState.CLOSED && record.state !== TokenState.EXPIRED) {
       const isKnownRugger = this.devWatcher ? this.devWatcher.isKnownRugger(record.creator) : false;
       const activeSafetyFilter = this.safetyFilter || new HardSafetyFilter({ maxDevPercent: 8.0, maxBundleWallets: 3, maxBundlePercent: 20.0 });
       const safetyVerdict = activeSafetyFilter.evaluate({
@@ -509,6 +524,8 @@ export class Orchestrator {
         this.vetoCount++;
         record.transitionTo(TokenState.REJECTED, `STAGE 0 HARD SAFETY VETO (VERIFIED BUNDLE): ${safetyVerdict.reason}`);
         log(`[STAGE 0 SAFETY VETO] ${record.name || mint.slice(0, 8)} rejected after on-chain bundle verification: ${safetyVerdict.reason}`);
+        if (this.curveWatcher) this.curveWatcher.unwatch(mint);
+        if (this.devWatcher) this.devWatcher.unwatchDev(mint);
         eventBus.emit('STATE_TRANSITION', {
           mint,
           state: record.state,
@@ -564,6 +581,11 @@ export class Orchestrator {
     }
 
     try {
+      const now = Date.now();
+      if (this._lastHolderCheck && (now - this._lastHolderCheck < 2000)) {
+        return record.topHoldersPercent || 0; // Throttle RPC calls to prevent 429 rate limiting
+      }
+      this._lastHolderCheck = now;
       const mintPubkey = typeof record.mint === 'string' ? new PublicKey(record.mint) : record.mint;
       const bondingCurvePDA = getBondingCurvePDA(mintPubkey);
       const bondingCurveATA = getAssociatedBondingCurvePDA(mintPubkey, bondingCurvePDA);
@@ -1026,11 +1048,24 @@ export class Orchestrator {
     }
     
     // STRICT BLIND SPOT FIX: Ensure all 3 pipeline stages are completed successfully
-    if (!record.stage1_narrative.passed || !record.stage2_moneyFlow.passed || !record.stage3_pattern.patternTriggered) {
+    const stage1Pass = Boolean(record.stage1_narrative?.passed ?? record.stage1_narrative?.pass);
+    const stage2Pass = Boolean(record.stage2_moneyFlow?.passed ?? record.stage2_moneyFlow?.pass);
+    const stage3Pass = Boolean(record.stage3_pattern?.patternTriggered ?? record.stage3_pattern?.pass);
+    if (!stage1Pass || !stage2Pass || !stage3Pass) {
       return { allow: false, reason: 'PIPELINE_INCOMPLETE' };
     }
     
     const mint = record.mint;
+
+    // 0. Developer Sold Into Market (Absolute Hard Stop)
+    if (record.devSoldAny) {
+      return { allow: false, reason: 'DEV_SOLD_INTO_MARKET' };
+    }
+
+    // 0b. Supply Concentration Check (Whales/Cartels > 35%)
+    if (record.topHoldersPercent > 35) {
+      return { allow: false, reason: 'HIGH_SUPPLY_CONCENTRATION' };
+    }
 
     // 1. Hard Safety Gate
     if (record.safetyVerdict && !record.safetyVerdict.pass) {
@@ -1084,7 +1119,7 @@ export class Orchestrator {
 
     // 7. Cluster / Sybil Risk Gate
     if (record.buyerQuality) {
-      if (record.buyerQuality.coordinationRisk === 'CRITICAL') {
+      if (record.buyerQuality.isHardVeto || record.buyerQuality.coordinationRisk === 'CRITICAL') {
         return { allow: false, reason: 'ENTRY_BLOCKED_CLUSTER_CRITICAL: Coordinated sybil cartel' };
       }
       if (record.buyerQuality.coordinationRisk === 'HIGH') {
@@ -1193,7 +1228,7 @@ export class Orchestrator {
       if (liveRes?.vTok) record.lastVirtualTokenReserves = liveRes.vTok;
     }
 
-    if (this.devWatcher && !this.devWatcher.isSafe(mint)) {
+    if (this.devWatcher && !this.devWatcher.isSafe(mint, record.creator)) {
       // If devWatcher is actively reconciling the ATA baseline, give it a brief grace period to resolve
       const devRec = this.devWatcher.monitoredDevs?.get(mint);
       if (devRec && (devRec.state === 'RECONCILING' || devRec.state === 'UNKNOWN')) {
@@ -1203,7 +1238,7 @@ export class Orchestrator {
         }
       }
 
-      if (!this.devWatcher.isSafe(mint)) {
+      if (!this.devWatcher.isSafe(mint, record.creator)) {
         log(`[ORCHESTRATOR] Blocking entry for ${record.name}: Developer state is RECONCILING or UNKNOWN.`);
         record.transitionTo(TokenState.REJECTED, 'DEV_STATE_UNRESOLVED');
         eventBus.emit('STATE_TRANSITION', {
@@ -1244,14 +1279,15 @@ export class Orchestrator {
       return;
     }
 
-    // Guardrail: Portfolio Capacity
-    if (this.positionManager.positions.size >= this.maxConcurrentPositions) {
+    // Guardrail: Portfolio Capacity (Active + In-Flight)
+    const currentActiveCount = (this.positionManager?.positions?.size ?? 0) + this.inFlightBuys.size;
+    if (currentActiveCount >= this.maxConcurrentPositions) {
       log(`[ORCHESTRATOR] Portfolio full (${this.maxConcurrentPositions} max active positions). Enqueueing ${record.name} for capacity.`);
       this._enqueueDeferredEntry(record, 'WAITING_FOR_CAPACITY');
       return;
     }
 
-    if (this.positionManager.positions.has(mint)) {
+    if (this.positionManager?.positions?.has(mint) || this.inFlightBuys.has(mint)) {
       return;
     }
 
@@ -1270,6 +1306,7 @@ export class Orchestrator {
       return;
     }
 
+    this.inFlightBuys.add(mint);
     record.transitionTo(TokenState.BUY_PENDING);
     eventBus.emit('STATE_TRANSITION', {
       mint,
@@ -1348,6 +1385,7 @@ export class Orchestrator {
       // Drain remaining items in entry queue so they don't starve on execution failure
       setImmediate(() => this._processEntryQueue().catch(() => {}));
     } finally {
+      this.inFlightBuys.delete(mint);
       this.lastTradeTime = Date.now();
     }
   }
@@ -1384,96 +1422,105 @@ export class Orchestrator {
   }
 
   async _processEntryQueue() {
+    if (this.isProcessingQueue) return;
     if (this.entryQueue.length === 0) return;
     if (!this.autoBuyEnabled) return;
 
-    const now = Date.now();
-    const nextQueue = [];
+    this.isProcessingQueue = true;
+    try {
+      const now = Date.now();
+      const nextQueue = [];
 
-    for (let i = 0; i < this.entryQueue.length; i++) {
-      const item = this.entryQueue[i];
-      const record = this.tokens.get(item.mint);
-      if (!record) continue;
+      for (let i = 0; i < this.entryQueue.length; i++) {
+        const item = this.entryQueue[i];
+        const record = this.tokens.get(item.mint);
+        if (!record) continue;
 
-      // 1. Check expiration
-      if (now - item.queuedAt > this.maxQueueAgeMs) {
-        log(`⌛ [ENTRY EXPIRED] Breakout signal for ${record.name} expired in queue (${Math.round((now - item.queuedAt)/1000)}s > ${this.maxQueueAgeMs/1000}s).`);
-        record.transitionTo(TokenState.EXPIRED, 'SIGNAL_VALIDITY_EXPIRED');
-        eventBus.emit('STATE_TRANSITION', { mint: item.mint, state: record.state, record: this.serializeToken(record) });
-        if (this.curveWatcher) this.curveWatcher.unwatch(item.mint);
-        if (this.devWatcher) this.devWatcher.unwatchDev(item.mint);
-        continue;
-      }
-
-      // 2. Capacity Check
-      if (this.positionManager.positions.size >= this.maxConcurrentPositions) {
-        nextQueue.push(item);
-        continue;
-      }
-
-      // 3. Cooldown Check
-      const elapsed = now - this.lastTradeTime;
-      if (elapsed < this.tradeCooldownMs) {
-        nextQueue.push(item);
-        // Preserve any remaining queued items that were not yet evaluated
-        for (let j = i + 1; j < this.entryQueue.length; j++) {
-          nextQueue.push(this.entryQueue[j]);
-        }
-        const remaining = this.tradeCooldownMs - elapsed;
-        if (!this.cooldownTimer) {
-          this.cooldownTimer = setTimeout(() => {
-            this.cooldownTimer = null;
-            this._processEntryQueue().catch(() => {});
-          }, remaining + 50);
-        }
-        break;
-      }
-
-      // 4. Revalidate Setup Conditions
-      record.transitionTo(TokenState.REVALIDATING);
-      const isDevSafe = this.devWatcher ? this.devWatcher.isSafe(item.mint) : true;
-      const isGraduated = this.curveWatcher ? this.curveWatcher.isGraduated(item.mint) : false;
-      const hasHardVeto = record.buyerQuality?.isHardVeto === true;
-      const devSold = record.devSoldAny === true;
-
-      if (!isDevSafe || isGraduated || hasHardVeto || devSold) {
-        const rejectReason = devSold ? 'DEV_DUMP_WHILE_QUEUED' : (!isDevSafe ? 'DEV_UNSAFE' : (isGraduated ? 'CURVE_GRADUATED' : 'BUYER_QUALITY_VETO'));
-        log(`🛑 [REVALIDATION FAILED] Queued entry for ${record.name} rejected: ${rejectReason}`);
-        record.transitionTo(TokenState.REJECTED, `REVALIDATION_FAILED: ${rejectReason}`);
-        eventBus.emit('STATE_TRANSITION', { mint: item.mint, state: record.state, record: this.serializeToken(record) });
-        if (this.curveWatcher) this.curveWatcher.unwatch(item.mint);
-        if (this.devWatcher) this.devWatcher.unwatchDev(item.mint);
-        continue;
-      }
-
-      // Check excessive price drift against breakout price while queued
-      const currentPrice = record.lastVirtualSolReserves && record.lastVirtualTokenReserves
-        ? calculateSpotPriceSol(record.lastVirtualSolReserves, record.lastVirtualTokenReserves)
-        : 0;
-      if (item.breakoutPriceSol > 0 && currentPrice > 0) {
-        const priceDriftPct = ((currentPrice - item.breakoutPriceSol) / item.breakoutPriceSol) * 100;
-        if (priceDriftPct > 25 || priceDriftPct < -20) {
-          log(`🛑 [REVALIDATION FAILED] Queued entry for ${record.name} drifted ${priceDriftPct > 0 ? '+' : ''}${priceDriftPct.toFixed(1)}% vs breakout trigger. Rejecting stale signal.`);
-          record.transitionTo(TokenState.REJECTED, `REVALIDATION_FAILED: EXCESSIVE_PRICE_DRIFT_${priceDriftPct.toFixed(0)}%`);
+        // 1. Check expiration
+        if (now - item.queuedAt > this.maxQueueAgeMs) {
+          log(`⌛ [ENTRY EXPIRED] Breakout signal for ${record.name} expired in queue (${Math.round((now - item.queuedAt)/1000)}s > ${this.maxQueueAgeMs/1000}s).`);
+          record.transitionTo(TokenState.EXPIRED, 'SIGNAL_VALIDITY_EXPIRED');
           eventBus.emit('STATE_TRANSITION', { mint: item.mint, state: record.state, record: this.serializeToken(record) });
           if (this.curveWatcher) this.curveWatcher.unwatch(item.mint);
           if (this.devWatcher) this.devWatcher.unwatchDev(item.mint);
           continue;
         }
+
+        // 2. Capacity Check (Active + In-Flight)
+        const currentActiveCount = (this.positionManager?.positions?.size ?? 0) + (this.inFlightBuys ? this.inFlightBuys.size : 0);
+        if (currentActiveCount >= this.maxConcurrentPositions) {
+          nextQueue.push(item);
+          continue;
+        }
+
+        // 3. Cooldown Check
+        const elapsed = now - this.lastTradeTime;
+        if (elapsed < this.tradeCooldownMs) {
+          nextQueue.push(item);
+          // Preserve any remaining queued items that were not yet evaluated
+          for (let j = i + 1; j < this.entryQueue.length; j++) {
+            nextQueue.push(this.entryQueue[j]);
+          }
+          const remaining = this.tradeCooldownMs - elapsed;
+          if (!this.cooldownTimer) {
+            this.cooldownTimer = setTimeout(() => {
+              this.cooldownTimer = null;
+              this._processEntryQueue().catch(() => {});
+            }, remaining + 50);
+          }
+          break;
+        }
+
+        // 4. Revalidate Setup Conditions
+        record.transitionTo(TokenState.REVALIDATING);
+        const isDevSafe = this.devWatcher ? this.devWatcher.isSafe(item.mint, record.creator) : true;
+        const isGraduated = this.curveWatcher ? this.curveWatcher.isGraduated(item.mint) : false;
+        const hasHardVeto = record.buyerQuality?.isHardVeto === true || record.buyerQuality?.coordinationRisk === 'CRITICAL';
+        const devSold = record.devSoldAny === true;
+        const isDailyLossExceeded = this.positionManager && typeof this.positionManager.isDailyLossExceeded === 'function' && this.positionManager.isDailyLossExceeded();
+
+        if (!isDevSafe || isGraduated || hasHardVeto || devSold || isDailyLossExceeded) {
+          const rejectReason = devSold ? 'DEV_DUMP_WHILE_QUEUED' : (isDailyLossExceeded ? 'DAILY_LOSS_CAP_EXCEEDED' : (!isDevSafe ? 'DEV_UNSAFE' : (isGraduated ? 'CURVE_GRADUATED' : 'BUYER_QUALITY_VETO')));
+          log(`🛑 [REVALIDATION FAILED] Queued entry for ${record.name} rejected: ${rejectReason}`);
+          record.transitionTo(TokenState.REJECTED, `REVALIDATION_FAILED: ${rejectReason}`);
+          eventBus.emit('STATE_TRANSITION', { mint: item.mint, state: record.state, record: this.serializeToken(record) });
+          if (this.curveWatcher) this.curveWatcher.unwatch(item.mint);
+          if (this.devWatcher) this.devWatcher.unwatchDev(item.mint);
+          continue;
+        }
+
+        // Check excessive price drift against breakout price while queued
+        const currentPrice = record.lastVirtualSolReserves && record.lastVirtualTokenReserves
+          ? calculateSpotPriceSol(record.lastVirtualSolReserves, record.lastVirtualTokenReserves)
+          : 0;
+        const baseBreakoutPrice = (item.breakoutPriceSol > 0 ? item.breakoutPriceSol : (record.stage3_pattern?.c3?.close || 0));
+        if (baseBreakoutPrice > 0 && currentPrice > 0) {
+          const priceDriftPct = ((currentPrice - baseBreakoutPrice) / baseBreakoutPrice) * 100;
+          if (priceDriftPct > 25 || priceDriftPct < -20) {
+            log(`🛑 [REVALIDATION FAILED] Queued entry for ${record.name} drifted ${priceDriftPct > 0 ? '+' : ''}${priceDriftPct.toFixed(1)}% vs breakout trigger. Rejecting stale signal.`);
+            record.transitionTo(TokenState.REJECTED, `REVALIDATION_FAILED: EXCESSIVE_PRICE_DRIFT_${priceDriftPct.toFixed(0)}%`);
+            eventBus.emit('STATE_TRANSITION', { mint: item.mint, state: record.state, record: this.serializeToken(record) });
+            if (this.curveWatcher) this.curveWatcher.unwatch(item.mint);
+            if (this.devWatcher) this.devWatcher.unwatchDev(item.mint);
+            continue;
+          }
+        }
+
+        // Revalidation passed! Transition to ENTRY_READY and trigger execution
+        record.transitionTo(TokenState.ENTRY_READY);
+        await this.triggerExecution(record);
+
+        // Preserve any remaining queued items that were not yet evaluated
+        for (let j = i + 1; j < this.entryQueue.length; j++) {
+          nextQueue.push(this.entryQueue[j]);
+        }
+        break; // Process one buy per queue cycle to respect pacing
       }
 
-      // Revalidation passed! Transition to ENTRY_READY and trigger execution
-      record.transitionTo(TokenState.ENTRY_READY);
-      await this.triggerExecution(record);
-
-      // Preserve any remaining queued items that were not yet evaluated
-      for (let j = i + 1; j < this.entryQueue.length; j++) {
-        nextQueue.push(this.entryQueue[j]);
-      }
-      break; // Process one buy per queue cycle to respect pacing
+      this.entryQueue = nextQueue;
+    } finally {
+      this.isProcessingQueue = false;
     }
-
-    this.entryQueue = nextQueue;
   }
 
   /**
@@ -1493,9 +1540,12 @@ export class Orchestrator {
       });
     }
 
-    // Stop watching curve if no open position remains
+    // Stop watching curve and dev if no open position remains
     if (this.curveWatcher) {
       this.curveWatcher.unwatch(closedData.mint);
+    }
+    if (this.devWatcher) {
+      this.devWatcher.unwatchDev(closedData.mint);
     }
 
     // Fix 3: Re-evaluate queued deferred entries when capacity is freed

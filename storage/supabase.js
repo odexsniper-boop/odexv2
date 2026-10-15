@@ -116,6 +116,12 @@ class SupabaseManager {
         .from('positions')
         .upsert(rows, { onConflict: 'mint' });
 
+      // Clean up closed positions in Supabase that are no longer active
+      const activeMints = positionsList.map(p => p.mint).filter(Boolean);
+      if (activeMints.length > 0) {
+        await this.client.from('positions').delete().not('mint', 'in', `(${activeMints.join(',')})`);
+      }
+
       if (error) {
         log(`[SUPABASE WARN] savePositions error: ${error.message}`);
         this.lastError = error.message;

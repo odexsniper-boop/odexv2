@@ -70,11 +70,16 @@ export class RpcBlastDispatcher {
       const timeoutId = setTimeout(() => controller.abort(), this.timeoutMs);
       
       try {
+        const isJito = url.includes('jito.wtf');
+        const endpointPayload = isJito
+          ? JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'sendTransaction', params: [wireBase64] })
+          : payload;
+
         // Standard JSON-RPC fetch
         const res = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: payload,
+          body: endpointPayload,
           signal: controller.signal
         });
         

@@ -53,11 +53,11 @@ export class NarrativeEngine {
       'placeholder', 'example', 'username', 'yourhandle', 'yourchannel',
       'channelname', 'mychannel', 'test', 'pumpfun', 'unknown', 'channel',
       'home', 'null', 'undefined', 'elonmusk', 'solana', 'phantom', 'toly',
-      'aeyakovenko', 'cz_binance', 'vitalikbuterin'
+      'aeyakovenko', 'cz_binance', 'vitalikbuterin', 'none', 'n/a', 'na'
     ];
 
     if (type === 'twitter') {
-      const match = clean.match(/(?:twitter\.com|x\.com)\/([a-z0-9_]+)/i);
+      const match = clean.match(/(?:twitter\.com|x\.com)\/@?([a-z0-9_]+)/i) || (clean.startsWith('@') ? clean.match(/^@([a-z0-9_]{3,30})$/i) : null);
       if (!match || !match[1]) return false;
       const handle = match[1];
       if (handle.length < 3 || placeholders.includes(handle)) return false;
@@ -65,7 +65,7 @@ export class NarrativeEngine {
     }
 
     if (type === 'telegram') {
-      const match = clean.match(/(?:t\.me|telegram\.me)\/(?:\+|joinchat\/)?([a-z0-9_+]+)/i);
+      const match = clean.match(/(?:t\.me|telegram\.me)\/(?:\+|joinchat\/)?@?([a-z0-9_+]+)/i) || (clean.startsWith('@') ? clean.match(/^@([a-z0-9_+]{3,35})$/i) : null);
       if (!match || !match[1]) return false;
       const handle = match[1];
       if (handle.length < 3 || placeholders.includes(handle)) return false;
@@ -73,10 +73,10 @@ export class NarrativeEngine {
     }
 
     if (type === 'website') {
-      return clean.startsWith('http://') || clean.startsWith('https://');
+      return (clean.startsWith('http://') || clean.startsWith('https://')) && !placeholders.some(p => clean.includes(p));
     }
 
-    return clean.length > 5;
+    return clean.length > 5 && !placeholders.includes(clean);
   }
 
   /**

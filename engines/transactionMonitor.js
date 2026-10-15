@@ -26,6 +26,8 @@ export class TransactionMonitor {
     return new Promise((resolve, reject) => {
       const startTime = Date.now();
       let isSettled = false;
+      let wsSubId = null;
+      let pollTimer = null;
 
       const cleanup = () => {
         isSettled = true;
@@ -90,7 +92,6 @@ export class TransactionMonitor {
       };
 
       // 1. WebSocket signature subscription for instant notification
-      let wsSubId = null;
       if (this.connection && this.connection.onSignature) {
         try {
           wsSubId = this.connection.onSignature(
@@ -108,7 +109,7 @@ export class TransactionMonitor {
       }
 
       // 2. High-frequency RPC polling backup
-      const pollTimer = setInterval(async () => {
+      pollTimer = setInterval(async () => {
         if (isSettled) return;
 
         // Check timeout

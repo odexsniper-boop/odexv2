@@ -40,22 +40,26 @@ export class DevWatcher {
 
   isKnownRugger(creatorAddress) {
     if (!creatorAddress || creatorAddress === 'UNKNOWN') return false;
-    return this.knownRuggers.has(creatorAddress);
+    const addr = (typeof creatorAddress === 'object' && creatorAddress?.toBase58 ? creatorAddress.toBase58() : String(creatorAddress || '')).trim();
+    if (!addr || addr === 'UNKNOWN') return false;
+    return this.knownRuggers.has(addr);
   }
 
   flagRugger(creatorAddress) {
     if (!creatorAddress || creatorAddress === 'UNKNOWN') return;
+    const addr = (typeof creatorAddress === 'object' && creatorAddress?.toBase58 ? creatorAddress.toBase58() : String(creatorAddress || '')).trim();
+    if (!addr || addr === 'UNKNOWN') return;
     if (this.knownRuggers.size >= 5000) {
       const first = this.knownRuggers.values().next().value;
       this.knownRuggers.delete(first);
     }
-    this.knownRuggers.add(creatorAddress);
+    this.knownRuggers.add(addr);
     if (this.db && typeof this.db.setSetting === 'function') {
       try {
         this.db.setSetting('known_ruggers', Array.from(this.knownRuggers));
       } catch (e) {}
     }
-    log(`[DEV WATCHER] Blacklisted dev wallet for past rug behavior: ${creatorAddress.slice(0, 8)}...`);
+    log(`[DEV WATCHER] Blacklisted dev wallet for past rug behavior: ${addr.slice(0, 8)}...`);
   }
 
   getDevRisk(mintAddress) {
@@ -153,8 +157,10 @@ export class DevWatcher {
     };
   }
 
-  isSafe(mintAddress) {
+  isSafe(mintAddress, creatorAddress = null) {
     const record = this.monitoredDevs.get(mintAddress);
+    const creator = creatorAddress || (record?.creatorPubkey ? (typeof record.creatorPubkey === 'string' ? record.creatorPubkey : record.creatorPubkey.toBase58()) : null);
+    if (creator && this.isKnownRugger(creator)) return false;
     if (!record) return true; // if we aren't tracking, assume safe or N/A
     // Unsafe if we are still reconciling or couldn't fetch a baseline
     if (record.state === 'RECONCILING' || record.state === 'UNKNOWN') return false;
@@ -166,7 +172,7 @@ export class DevWatcher {
     if (!creatorAddress || creatorAddress === 'UNKNOWN') return;
     if (this.monitoredDevs.has(mintAddress)) return;
 
-    const MAX_MONITORED_DEVS = 25;
+    const MAX_MONITORED_DEVS = 100;
     if (this.monitoredDevs.size >= MAX_MONITORED_DEVS) {
       for (const [candidateMint] of this.monitoredDevs.entries()) {
         const hasOpenPos = this.positionManager?.positions?.has(candidateMint);

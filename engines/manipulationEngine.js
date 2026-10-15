@@ -130,6 +130,9 @@ export function validateMoneyFlow({
   const reasons = [];
   let score = 50;
 
+  const cleanBuyVol = Number.isFinite(Number(buyVolumeSol)) ? Math.max(0, Number(buyVolumeSol)) : 0;
+  const cleanSellVol = Number.isFinite(Number(sellVolumeSol)) ? Math.max(0, Number(sellVolumeSol)) : 0;
+
   // Use organic buyers count if supplied, otherwise fallback to uniqueBuyersCount
   const effectiveBuyers = organicBuyersCount !== null ? organicBuyersCount : uniqueBuyersCount;
 
@@ -141,7 +144,7 @@ export function validateMoneyFlow({
       reason: 'DEV_OR_INSIDER_SOLD',
       reasons: ['Dev wallet or initial creator sold tokens into market'],
       buySellRatio: 0,
-      netVolumeDeltaSol: buyVolumeSol - sellVolumeSol,
+      netVolumeDeltaSol: cleanBuyVol - cleanSellVol,
       uniqueBuyersCount: effectiveBuyers,
       rawBuyersCount: rawBuyersCount || effectiveBuyers,
     };
@@ -154,8 +157,8 @@ export function validateMoneyFlow({
       score: 15,
       reason: 'HIGH_SUPPLY_CONCENTRATION',
       reasons: [`Top non-curve holders control ${topHoldersPercent.toFixed(1)}% of supply (> 35%)`],
-      buySellRatio: buyVolumeSol / (sellVolumeSol || 0.001),
-      netVolumeDeltaSol: buyVolumeSol - sellVolumeSol,
+      buySellRatio: cleanBuyVol / (cleanSellVol || 0.001),
+      netVolumeDeltaSol: cleanBuyVol - cleanSellVol,
       uniqueBuyersCount: effectiveBuyers,
       rawBuyersCount: rawBuyersCount || effectiveBuyers,
     };
@@ -171,8 +174,8 @@ export function validateMoneyFlow({
   }
 
   // 4. Buy Volume vs Sell Volume (Net Delta)
-  const netDelta = buyVolumeSol - sellVolumeSol;
-  const ratio = sellVolumeSol > 0 ? buyVolumeSol / sellVolumeSol : (buyVolumeSol > 0 ? 5.0 : 1.0);
+  const netDelta = cleanBuyVol - cleanSellVol;
+  const ratio = cleanSellVol > 0 ? cleanBuyVol / cleanSellVol : (cleanBuyVol > 0 ? 5.0 : 1.0);
 
   if (ratio >= 1.5 && netDelta > 0) {
     score += 25;
@@ -234,12 +237,12 @@ export function validateMoneyFlow({
   }
 
   // Adaptive Buyer Check (Allow 3-4 organic buyers ONLY IF cluster risk is LOW and volume is genuinely high)
-  if (!requiresExceptionalMomentum && clusterRisk === 'LOW' && effectiveBuyers >= 3 && effectiveBuyers < 5 && buyVolumeSol >= 2.0 && ratio >= 1.5) {
+  if (!requiresExceptionalMomentum && clusterRisk === 'LOW' && effectiveBuyers >= 3 && effectiveBuyers < 5 && cleanBuyVol >= 2.0 && ratio >= 1.5) {
     requiredBuyers = effectiveBuyers;
-    reasons.push(`ADAPTIVE BUYER EXCEPTION: Allowed ${effectiveBuyers} buyers due to massive ${buyVolumeSol.toFixed(1)} SOL organic volume`);
+    reasons.push(`ADAPTIVE BUYER EXCEPTION: Allowed ${effectiveBuyers} buyers due to massive ${cleanBuyVol.toFixed(1)} SOL organic volume`);
   }
 
-  const hasMinVolume = buyVolumeSol >= requiredVolume;
+  const hasMinVolume = cleanBuyVol >= requiredVolume;
   const hasMinActivity = txCount >= requiredTxs;
   const hasMinBuyers = effectiveBuyers >= requiredBuyers;
   
@@ -249,7 +252,7 @@ export function validateMoneyFlow({
   if (clusterRisk === 'CRITICAL') failureReason = 'CRITICAL_CLUSTER_RISK';
   else if (ratio < 1.0) failureReason = 'NET_SELL_PRESSURE';
   else if (!hasMinBuyers) failureReason = `INSUFFICIENT_ORGANIC_BUYERS (${effectiveBuyers}/${requiredBuyers})`;
-  else if (!hasMinVolume) failureReason = `INSUFFICIENT_BUY_VOLUME (${buyVolumeSol.toFixed(2)}/${requiredVolume.toFixed(2)} SOL)`;
+  else if (!hasMinVolume) failureReason = `INSUFFICIENT_BUY_VOLUME (${cleanBuyVol.toFixed(2)}/${requiredVolume.toFixed(2)} SOL)`;
   else if (!hasMinActivity) failureReason = `INSUFFICIENT_ACTIVITY (${txCount}/${requiredTxs} txs)`;
 
   return {

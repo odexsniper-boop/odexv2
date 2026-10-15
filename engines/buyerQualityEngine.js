@@ -1,3 +1,4 @@
+import { PublicKey } from '@solana/web3.js';
 import { log } from '../config.js';
 
 /**
@@ -221,7 +222,6 @@ export class BuyerQualityEngine {
     this.pendingFunderLookups.add(walletPubkey);
 
     try {
-      const { PublicKey } = await import('@solana/web3.js');
       const pubkey = new PublicKey(walletPubkey);
       const sigs = await this.connection.getSignaturesForAddress(pubkey, { limit: 5 });
       
@@ -278,6 +278,10 @@ export class BuyerQualityEngine {
         isHardVeto: false,
         reasons: ['No buyer data recorded']
       };
+    }
+
+    if (bucket.lastEval) {
+      return bucket.lastEval;
     }
 
     const buyersList = Array.from(bucket.buyers.values());

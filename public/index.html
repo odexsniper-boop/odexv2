@@ -4390,8 +4390,8 @@
 
     // Clean up any test/mock tokens persisted in browser localStorage
     try {
-      const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken', 'ProfitCoin']);
-      const isMock = item => !item || !item.mint || mockNames.has(item.name) || (item.mint && (item.mint.startsWith('TakeProfitTestMint') || item.mint.startsWith('TestMint'))) || item.status === 'SOLD';
+      const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'Token1', 'Token2', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken', 'ProfitCoin']);
+      const isMock = item => !item || !item.mint || mockNames.has(item.name) || (item.mint && (item.mint.startsWith('TakeProfitTestMint') || item.mint.startsWith('TestMint') || item.mint === 'Adz7ZwC4hRhYZ3NcexAUDUoqtPM38XLv5Ew2aES4qFDL')) || (item.txHash && (item.txHash.includes('test') || item.txHash.includes('sim'))) || (item.buyTxHash && (item.buyTxHash.includes('test') || item.buyTxHash.includes('sim'))) || item.status === 'SOLD';
       ['odex_cached_positions', 'odex_cached_tokens'].forEach(key => {
         const raw = localStorage.getItem(key);
         if (raw) {
@@ -4406,8 +4406,8 @@
 
     // Restore cached active positions
     try {
-      const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken', 'ProfitCoin']);
-      const isMock = item => !item || !item.mint || mockNames.has(item.name) || (item.mint && (item.mint.startsWith('TakeProfitTestMint') || item.mint.startsWith('TestMint'))) || item.status === 'SOLD';
+      const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'Token1', 'Token2', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken', 'ProfitCoin']);
+      const isMock = item => !item || !item.mint || mockNames.has(item.name) || (item.mint && (item.mint.startsWith('TakeProfitTestMint') || item.mint.startsWith('TestMint') || item.mint === 'Adz7ZwC4hRhYZ3NcexAUDUoqtPM38XLv5Ew2aES4qFDL')) || (item.txHash && (item.txHash.includes('test') || item.txHash.includes('sim'))) || (item.buyTxHash && (item.buyTxHash.includes('test') || item.buyTxHash.includes('sim'))) || item.status === 'SOLD';
       const cachedPos = JSON.parse(localStorage.getItem('odex_cached_positions') || '[]');
       if (Array.isArray(cachedPos) && cachedPos.length > 0) {
         cachedPos.forEach(p => {
@@ -4427,8 +4427,8 @@
 
     // Restore cached tokens
     try {
-      const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken', 'ProfitCoin']);
-      const isMock = item => !item || !item.mint || mockNames.has(item.name) || (item.mint && (item.mint.startsWith('TakeProfitTestMint') || item.mint.startsWith('TestMint'))) || item.status === 'SOLD';
+      const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'Token1', 'Token2', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken', 'ProfitCoin']);
+      const isMock = item => !item || !item.mint || mockNames.has(item.name) || (item.mint && (item.mint.startsWith('TakeProfitTestMint') || item.mint.startsWith('TestMint') || item.mint === 'Adz7ZwC4hRhYZ3NcexAUDUoqtPM38XLv5Ew2aES4qFDL')) || (item.txHash && (item.txHash.includes('test') || item.txHash.includes('sim'))) || (item.buyTxHash && (item.buyTxHash.includes('test') || item.buyTxHash.includes('sim'))) || item.status === 'SOLD';
       const cachedToks = JSON.parse(localStorage.getItem('odex_cached_tokens') || '[]');
       if (Array.isArray(cachedToks) && cachedToks.length > 0) {
         cachedToks.forEach(t => {
@@ -4785,8 +4785,8 @@
           initTokens.forEach(t => tokensMap.set(t.mint, t));
         }
         if (d.positions) {
-          const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken', 'ProfitCoin']);
-          const isMock = item => !item || !item.mint || mockNames.has(item.name) || (item.mint && (item.mint.startsWith('TakeProfitTestMint') || item.mint.startsWith('TestMint'))) || item.status === 'SOLD';
+          const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'Token1', 'Token2', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken', 'ProfitCoin']);
+          const isMock = item => !item || !item.mint || mockNames.has(item.name) || (item.mint && (item.mint.startsWith('TakeProfitTestMint') || item.mint.startsWith('TestMint') || item.mint === 'Adz7ZwC4hRhYZ3NcexAUDUoqtPM38XLv5Ew2aES4qFDL')) || (item.txHash && (item.txHash.includes('test') || item.txHash.includes('sim'))) || (item.buyTxHash && (item.buyTxHash.includes('test') || item.buyTxHash.includes('sim'))) || item.status === 'SOLD';
           d.positions = d.positions.filter(p => !isMock(p));
           const activeMints = new Set(d.positions.map(p => p.mint));
           for (const [m, tok] of tokensMap.entries()) {
@@ -5295,7 +5295,6 @@
         const rawBuyers = bq.rawBuyerCount || flow.rawBuyersCount || organicBuyers;
         const hasCluster = (bq.clusterCount > 0) || (rawBuyers > organicBuyers);
         const clusterRisk = bq.coordinationRisk || flow.clusterRisk || 'LOW';
-
         const buyerHtml = hasCluster 
           ? `<span title="${bq.reasons ? bq.reasons.join(' | ') : 'Clustered wallets detected'}">👥 ${organicBuyers}/${rawBuyers} Organic</span> <span style="font-size: 9.5px; padding: 1px 4px; border-radius: 3px; background: ${clusterRisk === 'CRITICAL' ? 'rgba(239, 68, 68, 0.2)' : clusterRisk === 'HIGH' ? 'rgba(245, 158, 11, 0.2)' : 'rgba(59, 130, 246, 0.15)'}; color: ${clusterRisk === 'CRITICAL' ? 'var(--red-primary)' : clusterRisk === 'HIGH' ? 'var(--yellow-primary)' : '#60a5fa'}; font-weight: 700;">${clusterRisk === 'CRITICAL' ? '⚠️ Sybil' : clusterRisk === 'HIGH' ? '⚠️ Cluster' : '🔗 Grouped'}</span>`
           : `👥 ${organicBuyers} unique buyers`;
@@ -6482,7 +6481,9 @@
         }
 
         if (positionsRes.status === 'fulfilled' && positionsRes.value?.positions) {
-          const pList = positionsRes.value.positions;
+          const mockNames = new Set(['QueuedCandidate', 'ScaledToken', 'TokenPos1', 'Token1', 'Token2', 'OrganicToken', 'BundledToken', 'BlockingPos', 'TrailingToken', 'ProfitCoin']);
+          const isMock = item => !item || !item.mint || mockNames.has(item.name) || (item.mint && (item.mint.startsWith('TakeProfitTestMint') || item.mint.startsWith('TestMint') || item.mint === 'Adz7ZwC4hRhYZ3NcexAUDUoqtPM38XLv5Ew2aES4qFDL')) || (item.txHash && (item.txHash.includes('test') || item.txHash.includes('sim'))) || (item.buyTxHash && (item.buyTxHash.includes('test') || item.buyTxHash.includes('sim'))) || item.status === 'SOLD';
+          const pList = (positionsRes.value.positions || []).filter(p => !isMock(p));
           if (Array.isArray(pList)) {
             const activeMints = new Set(pList.map(p => p.mint));
             for (const [m, tok] of tokensMap.entries()) {

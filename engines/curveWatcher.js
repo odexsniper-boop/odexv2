@@ -34,6 +34,7 @@ export class BondingCurveWatcher {
     // Fix 1: Explicit Curve Lifecycle State Tracking
     this.curveLifecycles = new Map(); // mint -> CurveLifecycle
     this.graduationMetadata = new Map(); // mint -> { graduatedAt, realSol, realTok, isComplete }
+    this.graduatedMints = new Set(); // permanent cache of graduated mints
 
     // Fix 4: Resilient Stream Health and Liveness Monitoring
     this.streamHealth = {
@@ -57,6 +58,7 @@ export class BondingCurveWatcher {
   }
 
   isGraduated(mint) {
+    if (this.graduatedMints && this.graduatedMints.has(mint)) return true;
     const state = this.getLifecycle(mint);
     return state === CurveLifecycle.GRADUATED || state === CurveLifecycle.MIGRATING || state === CurveLifecycle.MIGRATED;
   }
@@ -202,6 +204,15 @@ export class BondingCurveWatcher {
   _updateLifecycleFromAccount(mint, isComplete, realSol, realTok) {
     const prev = this.getLifecycle(mint);
     if (isComplete) {
+      if (this.graduatedMints) {
+        this.graduatedMints.add(mint);
+        if (this.graduatedMints.size > 2000) {
+          const first = this.graduatedMints.values().next().value;
+          this.graduatedMints.delete(first);
+          this.graduationMetadata.delete(first);
+          this.curveLifecycles.delete(first);
+        }
+      }
       if (prev !== CurveLifecycle.GRADUATED && prev !== CurveLifecycle.MIGRATING && prev !== CurveLifecycle.MIGRATED) {
         this.curveLifecycles.set(mint, CurveLifecycle.GRADUATED);
         this.graduationMetadata.set(mint, { graduatedAt: Date.now(), realSol, realTok, isComplete: true });
@@ -237,43 +248,54 @@ export class BondingCurveWatcher {
     if (this.watchedMints.has(mintAddress)) {
       this.watchedMints.delete(mintAddress);
       this.lastKnownReserves.delete(mintAddress);
-      this.curveLifecycles.delete(mintAddress);
-      this.graduationMetadata.delete(mintAddress);
+      const isGrad = this.isGraduated(mintAddress);
+      if (!isGrad) {
+        this.curveLifecycles.delete(mintAddress);
+        this.graduationMetadata.delete(mintAddress);
+      }
       if (this.ws && this.ws.readyState === WebSocket.OPEN) this.ws.send(JSON.stringify({ method: 'unsubscribeTokenTrade', keys: [mintAddress] }));
     }
   }
 
   startPollingFallback() {
     if (this.pollInterval) clearInterval(this.pollInterval);
+    this._isPolling = false;
     this.pollInterval = setInterval(async () => {
-      if (this.watchedMints.size === 0 || !this.connection) return;
-
-      // Priority scheduling: Open positions first, then tokens approaching graduation (vSol >= 70 SOL)
-      const priorityMints = [];
-      if (this.positionManager && this.positionManager.positions) {
-        for (const mint of this.positionManager.positions.keys()) {
-          if (this.watchedMints.has(mint)) priorityMints.push(mint);
-        }
-      }
-      for (const [m, res] of this.lastKnownReserves.entries()) {
-        if (!priorityMints.includes(m) && res.vSol && res.vSol >= 70_000_000_000n && this.watchedMints.has(m)) {
-          priorityMints.push(m);
-        }
-      }
-
-      // If PumpPortal WebSocket is actively streaming, ONLY poll priority mints (open positions & near-graduation)
-      // to detect on-chain graduation without spamming RPC for all exploratory tokens
-      if (this.ws && this.pumpPortalStreaming && priorityMints.length === 0) return;
-
-      const otherMints = (this.ws && this.pumpPortalStreaming)
-        ? []
-        : Array.from(this.watchedMints).filter(m => !priorityMints.includes(m));
-      const mintsToPoll = [...priorityMints, ...otherMints].slice(0, 50);
-      if (mintsToPoll.length === 0) return;
+      if (this.watchedMints.size === 0 || !this.connection || this._isPolling) return;
+      this._isPolling = true;
 
       try {
+        // Priority scheduling: Open positions first, then tokens approaching graduation (vSol >= 70 SOL)
+        const priorityMints = [];
+        if (this.positionManager && this.positionManager.positions) {
+          for (const mint of this.positionManager.positions.keys()) {
+            if (this.watchedMints.has(mint)) priorityMints.push(mint);
+          }
+        }
+        for (const [m, res] of this.lastKnownReserves.entries()) {
+          if (!priorityMints.includes(m) && res.vSol && res.vSol >= 70_000_000_000n && this.watchedMints.has(m)) {
+            priorityMints.push(m);
+          }
+        }
+
+        // If PumpPortal WebSocket is actively streaming, ONLY poll priority mints (open positions & near-graduation)
+        // to detect on-chain graduation without spamming RPC for all exploratory tokens
+        if (this.ws && this.pumpPortalStreaming && priorityMints.length === 0) return;
+
+        const otherMints = (this.ws && this.pumpPortalStreaming)
+          ? []
+          : Array.from(this.watchedMints).filter(m => !priorityMints.includes(m));
+        const mintsToPoll = [...priorityMints, ...otherMints].slice(0, 50);
+        if (mintsToPoll.length === 0) return;
+
         const pdas = mintsToPoll.map(m => getBondingCurvePDA(new PublicKey(m)));
-        const accounts = await this.connection.getMultipleAccountsInfo(pdas, 'confirmed');
+        const BATCH_SIZE = 10;
+        const accounts = [];
+        for (let b = 0; b < pdas.length; b += BATCH_SIZE) {
+          const chunk = pdas.slice(b, b + BATCH_SIZE);
+          const chunkAccs = await this.connection.getMultipleAccountsInfo(chunk, 'confirmed');
+          accounts.push(...(chunkAccs || []));
+        }
 
         for (let i = 0; i < mintsToPoll.length; i++) {
           const mint = mintsToPoll[i];
@@ -288,11 +310,33 @@ export class BondingCurveWatcher {
             this._updateLifecycleFromAccount(mint, isComplete, realSol, realTok);
 
             const last = this.lastKnownReserves.get(mint);
-            if (!last || last.vSol !== vSol) {
+            if (!last) {
+              // First time observing this curve:
+              // Standard curve starts with 30 SOL. Excess is initial buy volume (dev / sniper).
+              // Low-reserve / Mayhem curve (< 25 SOL) uses its own vSol as starting point to avoid fake sell spikes.
+              const baselineSol = (vSol >= 25_000_000_000n) ? 30_000_000_000n : vSol;
               this.lastKnownReserves.set(mint, { vSol, vTok, timestamp: Date.now() });
 
-              if (last) {
-                const solDeltaN = vSol - last.vSol;
+              const solDeltaN = vSol - baselineSol;
+              if (solDeltaN > 0n) {
+                const solAmount = Number(solDeltaN) / 1e9;
+                const simulatedEvent = {
+                  mint,
+                  txType: 'buy',
+                  vSolInBondingCurve: Number(vSol) / 1e9,
+                  vTokensInBondingCurve: Number(vTok) / 1e6,
+                  solAmount,
+                  traderPublicKey: null,
+                  eventSource: 'RESERVE_POLL',
+                  traderIdentityStatus: 'UNKNOWN'
+                };
+                this.handleTradeEvent(simulatedEvent);
+              }
+            } else if (last.vSol !== vSol) {
+              const solDeltaN = vSol - last.vSol;
+              this.lastKnownReserves.set(mint, { vSol, vTok, timestamp: Date.now() });
+
+              if (solDeltaN !== 0n) {
                 const isBuy = solDeltaN > 0n;
                 const solAmount = Math.abs(Number(solDeltaN) / 1e9);
 
@@ -301,7 +345,7 @@ export class BondingCurveWatcher {
                   txType: isBuy ? 'buy' : 'sell',
                   vSolInBondingCurve: Number(vSol) / 1e9,
                   vTokensInBondingCurve: Number(vTok) / 1e6,
-                  solAmount: solAmount,
+                  solAmount,
                   traderPublicKey: null,
                   eventSource: 'RESERVE_POLL',
                   traderIdentityStatus: 'UNKNOWN'
@@ -313,8 +357,11 @@ export class BondingCurveWatcher {
         }
       } catch (e) {
         this.streamHealth.errorCount++;
+        log(`[CURVE WATCHER POLL WARN] Failed to poll bonding curves: ${e.message}`);
+      } finally {
+        this._isPolling = false;
       }
-    }, 5000); // Poll every 5s only as a fallback
+    }, 3000); // Poll every 3s as fallback
   }
 
   handleTradeEvent(d) {
@@ -374,5 +421,31 @@ export class BondingCurveWatcher {
         this._updateLifecycleFromAccount(mint, isComplete, realSol, realTok);
       }
     } catch (e) {}
+  }
+
+  /**
+   * Clean shutdown of WebSocket, polling loops, and onLogs subscriptions
+   */
+  stop() {
+    if (this.pollInterval) {
+      clearInterval(this.pollInterval);
+      this.pollInterval = null;
+    }
+    if (this.healthCheckInterval) {
+      clearInterval(this.healthCheckInterval);
+      this.healthCheckInterval = null;
+    }
+    if (this.reconnectTimeout) {
+      clearTimeout(this.reconnectTimeout);
+      this.reconnectTimeout = null;
+    }
+    if (this.ws) {
+      try { this.ws.close(); } catch (_) {}
+      this.ws = null;
+    }
+    if (this.onLogsSubId != null && this.connection && typeof this.connection.removeOnLogsListener === 'function') {
+      try { this.connection.removeOnLogsListener(this.onLogsSubId); } catch (_) {}
+      this.onLogsSubId = null;
+    }
   }
 }

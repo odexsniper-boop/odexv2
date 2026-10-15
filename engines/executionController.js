@@ -293,12 +293,22 @@ export class ExecutionController {
         }
       } catch (_) {}
 
+      const actualTransactionFees = 0.000005;
+      const actualPriorityFee = ((priorityFee || this.defaultPriorityFee) * 120_000) / 1e15;
+      const actualJitoTip = dispatchRes.route.includes('JITO') ? (jitoTipLamports / 1e9) : 0;
+      const totalSolSpent = solAmount + actualTransactionFees + actualPriorityFee + actualJitoTip;
+
       const fill = {
         mode: 'LIVE',
         action: 'BUY',
         executionId: context.executionId,
         mint: mintPubkey.toBase58(),
         solSpent: solAmount,
+        actualBuyCost: totalSolSpent,
+        totalSolSpent,
+        actualTransactionFees,
+        priorityFee: actualPriorityFee,
+        jitoTip: actualJitoTip,
         tokensReceived: Number(actualTokensReceived) / 1e6,
         rawTokensReceived: actualTokensReceived.toString(),
         expectedTokensReceived: Number(expectedTokensOut) / 1e6,
@@ -312,6 +322,7 @@ export class ExecutionController {
         latencyMs: totalLatencyMs,
         timestamp: new Date().toISOString(),
         txHash: signature,
+        route: dispatchRes.route,
       };
 
       this.inFlightExecutions.delete(context.idempotencyKey);

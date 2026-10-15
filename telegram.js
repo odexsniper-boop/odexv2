@@ -44,17 +44,27 @@ export async function sendTelegramMessage(text) {
   }
 }
 
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 /**
  * Formats signal parameters into a rich HTML alert and broadcasts it
  * @param {object} signal - Signal data containing symbol, mint, metrics, targets, risk checks, etc.
  */
 export async function sendSignal(signal) {
-  const dsUrl = `https://dexscreener.com/solana/${signal.mint}`;
-  const beUrl = `https://birdeye.so/token/${signal.mint}?chain=solana`;
+  const safeMint = escapeHtml(signal.mint);
+  const safeSymbol = escapeHtml(signal.symbol);
+  const dsUrl = `https://dexscreener.com/solana/${safeMint}`;
+  const beUrl = `https://birdeye.so/token/${safeMint}?chain=solana`;
   
   const text = `
-🟢 <b>MOMENTUM RECLAIM SIGNAL: $${signal.symbol}</b>
-<code>${signal.mint}</code>
+🟢 <b>MOMENTUM RECLAIM SIGNAL: $${safeSymbol}</b>
+<code>${safeMint}</code>
 
 📊 <b>Market Data</b>
 • Market Cap (FDV): <b>$${signal.marketCap.toLocaleString(undefined, { maximumFractionDigits: 0 })}</b>

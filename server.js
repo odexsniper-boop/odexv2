@@ -484,6 +484,7 @@ export async function createDashboardServer(port = 3005) {
       user: req?.user,
       execution: userExecution,
       positionManager: userPositionManager,
+      orchestrator,
       walletKeypair: userWalletKeypair,
       walletPubkey: userWalletPubkey,
       autoBuyEnabled: Boolean(userSettings.auto_buy_enabled ?? userSettings.autoBuyEnabled ?? false),
@@ -534,6 +535,7 @@ export async function createDashboardServer(port = 3005) {
 
   async function executeUserBuy(uBot, record) {
     try {
+      if (!uBot.autoBuyEnabled) return;
       if (uBot.positionManager.positions.size >= 5) return;
       if (uBot.positionManager.positions.has(record.mint)) return;
       if (autoBuyEnabled && (!uBot.walletKeypair || uBot.walletPubkey === walletPubkey)) return;
@@ -833,7 +835,8 @@ export async function createDashboardServer(port = 3005) {
 
   app.get('/api/tokens', async (req, res) => {
     const ctx = await getUserContext(req);
-    const tokensList = Array.from(ctx.orchestrator.tokens.values()).map(t => ctx.orchestrator.serializeToken(t));
+    const orch = ctx?.orchestrator || orchestrator;
+    const tokensList = Array.from(orch.tokens.values()).map(t => orch.serializeToken(t));
     res.json({
       success: true,
       count: tokensList.length,

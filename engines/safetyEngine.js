@@ -17,14 +17,53 @@ export class HardSafetyFilter {
    */
   evaluate(tokenInfo = {}) {
     const timestamp = Date.now();
+    const rawDev = tokenInfo.devPercent != null ? Number(tokenInfo.devPercent) : 0;
+    if (tokenInfo.devPercent != null && !Number.isFinite(rawDev)) {
+      const verdict = {
+        pass: false,
+        status: 'REJECT',
+        reason: 'CORRUPT_METRICS_DEV_PERCENT_NAN',
+        metrics: { mint: tokenInfo.mint || 'UNKNOWN', devPercent: NaN },
+        timestamp,
+      };
+      eventBus.emit('SAFETY_VERDICT', { mint: tokenInfo.mint, ...verdict });
+      return verdict;
+    }
+
+    const rawBundlePercent = tokenInfo.bundlePercent != null ? Number(tokenInfo.bundlePercent) : null;
+    if (tokenInfo.bundlePercent != null && !Number.isFinite(rawBundlePercent)) {
+      const verdict = {
+        pass: false,
+        status: 'REJECT',
+        reason: 'CORRUPT_METRICS_BUNDLE_PERCENT_NAN',
+        metrics: { mint: tokenInfo.mint || 'UNKNOWN', bundlePercent: NaN },
+        timestamp,
+      };
+      eventBus.emit('SAFETY_VERDICT', { mint: tokenInfo.mint, ...verdict });
+      return verdict;
+    }
+
+    const rawBundleCount = tokenInfo.bundledBuysCount != null ? Number(tokenInfo.bundledBuysCount) : null;
+    if (tokenInfo.bundledBuysCount != null && !Number.isFinite(rawBundleCount)) {
+      const verdict = {
+        pass: false,
+        status: 'REJECT',
+        reason: 'CORRUPT_METRICS_BUNDLE_COUNT_NAN',
+        metrics: { mint: tokenInfo.mint || 'UNKNOWN', bundledBuysCount: NaN },
+        timestamp,
+      };
+      eventBus.emit('SAFETY_VERDICT', { mint: tokenInfo.mint, ...verdict });
+      return verdict;
+    }
+
     const metrics = {
       mint: tokenInfo.mint || 'UNKNOWN',
-      devPercent: typeof tokenInfo.devPercent === 'number' ? tokenInfo.devPercent : 0,
-      bundlePercent: typeof tokenInfo.bundlePercent === 'number' ? tokenInfo.bundlePercent : (tokenInfo.bundlePercent != null ? Number(tokenInfo.bundlePercent) : null),
-      bundledBuysCount: typeof tokenInfo.bundledBuysCount === 'number' ? tokenInfo.bundledBuysCount : (tokenInfo.bundledBuysCount != null ? Number(tokenInfo.bundledBuysCount) : null),
-      creator: tokenInfo.creator || 'UNKNOWN',
+      devPercent: rawDev,
+      bundlePercent: rawBundlePercent,
+      bundledBuysCount: rawBundleCount,
+      creator: typeof tokenInfo.creator === 'string' ? tokenInfo.creator.trim() : (tokenInfo.creator?.toBase58 ? tokenInfo.creator.toBase58() : 'UNKNOWN'),
       isKnownRugger: !!tokenInfo.isKnownRugger,
-      bundleDataStatus: tokenInfo.bundleDataStatus || (tokenInfo.bundlePercent != null || tokenInfo.bundledBuysCount != null ? 'VERIFIED' : 'INSUFFICIENT_DATA'),
+      bundleDataStatus: tokenInfo.bundleDataStatus || (rawBundlePercent != null || rawBundleCount != null ? 'VERIFIED' : 'INSUFFICIENT_DATA'),
       mintDisabled: tokenInfo.mintDisabled !== undefined ? tokenInfo.mintDisabled : true,
       freezeDisabled: tokenInfo.freezeDisabled !== undefined ? tokenInfo.freezeDisabled : true,
     };

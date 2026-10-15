@@ -17,7 +17,7 @@ export class PositionManager {
     }
     if (saved.positions && saved.positions.length > 0) {
       saved.positions.forEach(p => {
-        if (!p || !p.mint || p.status === 'SOLD' || p.name === 'ProfitCoin' || p.mint.startsWith('TakeProfitTestMint') || p.mint.startsWith('TestMint')) return;
+        if (TradeStorage.isTestOrSold(p)) return;
         // Restore BigInt values
         if (p.tokensHeldRaw) p.tokensHeldRaw = BigInt(p.tokensHeldRaw);
         if (p.initialTokensRaw) p.initialTokensRaw = BigInt(p.initialTokensRaw);
@@ -138,6 +138,7 @@ export class PositionManager {
       expectedTokensOut: buyFill.expectedTokensReceived,
       actualTokensReceived: buyFill.tokensReceived,
       txHash: buyFill.txHash,
+      buyTxHash: buyFill.txHash,
       route: buyFill.route || 'JITO:SENDTRANSACTION',
       openedAt: buyFill.timestamp,
       lastUpdated: buyFill.timestamp,
@@ -461,6 +462,9 @@ export class PositionManager {
       pnlPercent: finalPnlPercent,
       status: 'SOLD',
       reason,
+      txHash: pos.txHash || pos.buyTxHash || null,
+      sellTxHash: 'direct_close',
+      buyTxHash: pos.buyTxHash || pos.txHash || null,
       openedAt: pos.openedAt,
       closedAt: pos.closedAt,
     };
@@ -495,6 +499,15 @@ export class PositionManager {
   async closePosition(mint, virtualSolReserves, virtualTokenReserves, reason, sellPercent = 100, slippageBps = null) {
     const pos = this.positions.get(mint);
     if (!pos || pos.status === 'SOLD' || pos.isExiting) return;
+    if (pos.tokensHeldRaw <= 0n) {
+      pos.status = 'SOLD';
+      pos.executionState = 'CLOSED';
+      pos.closedAt = new Date().toISOString();
+      this.cleanupWatchers(mint);
+      this.positions.delete(mint);
+      TradeStorage.saveState(this.positions, this.tradeHistory);
+      return;
+    }
 
     // Fix 1: Graduation & Migration Routing Check
     const isGraduated = (pos.curveLifecycle === 'GRADUATED') || (this.curveWatcher && typeof this.curveWatcher.isGraduated === 'function' && this.curveWatcher.isGraduated(mint));
@@ -525,6 +538,9 @@ export class PositionManager {
 
     const effectiveSlippageBps = slippageBps !== null ? slippageBps : (this.execution?.defaultSlippageBps || 1500);
     let tokensToSellRaw = (pos.tokensHeldRaw * BigInt(sellPercent)) / 100n;
+    if (tokensToSellRaw === 0n && pos.tokensHeldRaw > 0n) {
+      tokensToSellRaw = pos.tokensHeldRaw;
+    }
     let sellFill = null;
     try {
       if (isGraduated && typeof this.execution?.executeRaydiumSell === 'function') {
@@ -633,7 +649,9 @@ export class PositionManager {
     pos.tokensHeldDisplay = Number(pos.tokensHeldRaw) / 1e6;
     pos.realizedSolGained += solEarned;
 
-    if (pos.tokensHeldRaw === 0n || sellPercent === 100) {
+    if (sellPercent === 100 || pos.tokensHeldRaw <= 0n) {
+      pos.tokensHeldRaw = 0n;
+      pos.tokensHeldDisplay = 0;
       pos.status = 'SOLD';
       pos.executionState = 'CLOSED';
       pos.pendingEmergencyExit = null;
@@ -641,7 +659,7 @@ export class PositionManager {
       this.cleanupWatchers(mint);
 
       const netProfitSol = pos.realizedSolGained - pos.initialSolSpent;
-      const finalPnl = (netProfitSol / pos.initialSolSpent) * 100;
+      const finalPnl = pos.initialSolSpent > 0 ? (netProfitSol / pos.initialSolSpent) * 100 : 0;
 
       if (netProfitSol < 0) {
         this._syncDailyLoss();
@@ -689,7 +707,7 @@ export class PositionManager {
         curveLifecycle: pos.curveLifecycle || 'BONDING',
         txHash: sellFill.txHash,
         sellTxHash: sellFill.txHash,
-        buyTxHash: pos.buyTxHash || null,
+        buyTxHash: pos.buyTxHash || pos.txHash || null,
         route: sellFill.route,
         openedAt: pos.openedAt,
         closedAt: pos.closedAt,

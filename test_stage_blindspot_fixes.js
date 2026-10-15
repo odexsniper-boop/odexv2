@@ -78,6 +78,9 @@ async function runTests() {
     const mint3 = Keypair.generate().publicKey.toBase58();
 
     const rec1 = new TokenRecord(mint1); rec1.name = 'Token1';
+    rec1.stage1_narrative = { passed: true, score: 80 };
+    rec1.stage2_moneyFlow = { passed: true, score: 80 };
+    rec1.stage3_pattern = { patternTriggered: true, score: 95 };
     const rec2 = new TokenRecord(mint2); rec2.name = 'Token2';
     const rec3 = new TokenRecord(mint3); rec3.name = 'Token3';
 

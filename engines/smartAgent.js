@@ -46,6 +46,7 @@ export class SmartAgent {
     try {
       if (fs.existsSync(LEARNING_STATE_FILE)) {
         const raw = fs.readFileSync(LEARNING_STATE_FILE, 'utf8');
+        if (!raw || !raw.trim()) return;
         const data = JSON.parse(raw);
         if (data) {
           if (data.learningEnabled !== undefined) this.learningEnabled = data.learningEnabled;
@@ -75,7 +76,7 @@ export class SmartAgent {
   }
 
   /**
-   * Persists learning state to storage
+   * Persists learning state to storage atomically
    */
   saveLearningState() {
     try {
@@ -92,7 +93,12 @@ export class SmartAgent {
         experiences: this.experiences.slice(-100),
         lastUpdated: new Date().toISOString(),
       };
-      fs.writeFileSync(LEARNING_STATE_FILE, JSON.stringify(data, null, 2), 'utf8');
+      const dir = path.dirname(LEARNING_STATE_FILE);
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      const payload = JSON.stringify(data, null, 2);
+      const tmpFile = `${LEARNING_STATE_FILE}.tmp.${Date.now()}`;
+      fs.writeFileSync(tmpFile, payload, 'utf8');
+      fs.renameSync(tmpFile, LEARNING_STATE_FILE);
     } catch (e) {
       log(`[AI LEARNER ERR] Failed to save state: ${e.message}`);
     }

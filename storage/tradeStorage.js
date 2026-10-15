@@ -11,7 +11,23 @@ const STORAGE_FILE = path.join(__dirname, 'trades_state.json');
 export class TradeStorage {
   static isTestOrSold(p) {
     if (!p || !p.mint || p.status === 'SOLD') return true;
-    if (p.name === 'ProfitCoin' || p.mint.startsWith('TakeProfitTestMint') || p.mint.startsWith('TestMint')) return true;
+    if (
+      p.name === 'ProfitCoin' ||
+      p.name === 'Token1' ||
+      p.name === 'Token2' ||
+      p.name === 'TokenPos1' ||
+      p.name === 'QueuedCandidate' ||
+      p.name === 'ScaledToken' ||
+      p.name === 'OrganicToken' ||
+      p.name === 'BundledToken' ||
+      p.name === 'BlockingPos' ||
+      p.name === 'TrailingToken' ||
+      p.mint.startsWith('TakeProfitTestMint') ||
+      p.mint.startsWith('TestMint') ||
+      p.mint === 'Adz7ZwC4hRhYZ3NcexAUDUoqtPM38XLv5Ew2aES4qFDL' ||
+      (typeof p.txHash === 'string' && (p.txHash.includes('test') || p.txHash.includes('sim'))) ||
+      (typeof p.buyTxHash === 'string' && (p.buyTxHash.includes('test') || p.buyTxHash.includes('sim')))
+    ) return true;
     return false;
   }
 
@@ -60,8 +76,10 @@ export class TradeStorage {
         lastSaved: new Date().toISOString(),
       };
 
-      // 1. Persist to JSON file (preserving complete backward compatibility)
-      fs.writeFileSync(STORAGE_FILE, JSON.stringify(state, null, 2), 'utf8');
+      // 1. Persist to JSON file asynchronously to avoid event loop blocking
+      fs.writeFile(STORAGE_FILE, JSON.stringify(state, null, 2), 'utf8', (err) => {
+        if (err) log(`[STORAGE WARN] Async file write: ${err.message}`);
+      });
 
       // 2. Persist to connected SQLite database
       dbManager.savePositions(positions);

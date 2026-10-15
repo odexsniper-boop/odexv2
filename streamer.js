@@ -72,7 +72,7 @@ export class SolanaStreamer {
 
   handleInstantToken(d) {
     const mint = d.mint;
-    if (!mint || !mint.endsWith('pump') || this.processedMints.has(mint)) return;
+    if (!mint || this.processedMints.has(mint)) return;
     this.processedMints.add(mint);
 
     if (this.processedMints.size > 5000) {
@@ -151,16 +151,25 @@ export class SolanaStreamer {
 
     if (isCreate) {
       // Fix 2: Do not skip RPC parse when instant portal is open so bundle analysis is always verified
-      try {
-        const tx = await this.connection.getParsedTransaction(sig, {
-          maxSupportedTransactionVersion: 0,
-          commitment: 'confirmed',
-        });
+      const fetchWithRetry = async () => {
+        const delays = [0, 400, 800, 1500];
+        for (const delay of delays) {
+          if (!this.isRunning) return;
+          if (delay > 0) await new Promise(r => setTimeout(r, delay));
+          try {
+            const tx = await this.connection.getParsedTransaction(sig, {
+              maxSupportedTransactionVersion: 0,
+              commitment: 'confirmed',
+            });
 
-        if (tx && tx.meta && !tx.meta.err) {
-          this.processCreateTx(tx, sig, ctx.slot);
+            if (tx && tx.meta && !tx.meta.err) {
+              this.processCreateTx(tx, sig, ctx.slot);
+              return;
+            }
+          } catch (e) {}
         }
-      } catch (e) {}
+      };
+      fetchWithRetry().catch(() => {});
     }
   }
 
@@ -182,7 +191,7 @@ export class SolanaStreamer {
     // Account 0 is ALWAYS the token mint pubkey!
     const mintPubkey = pumpCreateIx.accounts[0]?.pubkey || pumpCreateIx.accounts[0];
     const mint = mintPubkey?.toBase58 ? mintPubkey.toBase58() : mintPubkey?.toString();
-    if (!mint || !mint.endsWith('pump')) return;
+    if (!mint) return;
 
     // Fix 2: If already captured by instant stream, still proceed to compute authoritative bundle metrics
     const isUpdate = this.processedMints.has(mint);
@@ -309,6 +318,10 @@ export class SolanaStreamer {
 
   stop() {
     this.isRunning = false;
+    if (this.watchdogInterval) {
+      clearInterval(this.watchdogInterval);
+      this.watchdogInterval = null;
+    }
     if (this.portalWs) {
       try { this.portalWs.close(); } catch (e) {}
       this.portalWs = null;

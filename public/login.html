@@ -3,12 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>ODEX Sniper - Autonomous Solana Memecoin Sniper & MEV Execution</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="ODEX Sniper: autonomous Solana memecoin sniper with 3-stage anti-rug validation and private Jito MEV execution.">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <script>document.documentElement.classList.add("js")</script>
   <link rel="icon" type="image/png" href="/icons/Fav.png">
   <link rel="shortcut icon" href="/icons/Fav.png">
+  <link rel="preconnect" href="https://i.ytimg.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"></noscript>
   <style>
     :root {
       --primary: #657FFE;
@@ -66,7 +72,6 @@
       height: 450px;
       overflow: hidden;
       background: radial-gradient(ellipse at center, rgba(101, 127, 254, 0.18) 0%, rgba(101, 127, 254, 0.02) 60%, transparent 80%);
-      filter: blur(60px);
       pointer-events: none;
       z-index: 0;
     }
@@ -83,15 +88,15 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      background: rgba(12, 14, 22, 0.72);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(12, 14, 22, 0.86);
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 9999px;
       box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.8),
                   inset 0 1px 0 rgba(255, 255, 255, 0.16),
                   0 0 25px rgba(101, 127, 254, 0.12);
-      transition: all 0.25s ease;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
     .navbar:hover {
@@ -582,7 +587,7 @@
       position: relative;
       width: 100%;
       max-width: 860px;
-      height: 380px;
+      height: 460px;
       margin: 0 auto 24px;
       border-radius: 16px;
       overflow: hidden;
@@ -592,51 +597,15 @@
       background: radial-gradient(circle at center, rgba(101, 127, 254, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
     }
 
-    .map-svg {
+    .globe-canvas {
+      display: block;
       width: 100%;
       height: 100%;
-      opacity: 0.65;
+      cursor: grab;
+      touch-action: pan-y;
+      -webkit-tap-highlight-color: transparent;
     }
-
-    /* Glowing Node Pings */
-    .map-node {
-      position: absolute;
-      transform: translate(-50%, -50%);
-    }
-
-    .map-node .core {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #ffffff;
-      box-shadow: 0 0 10px #ffffff;
-    }
-
-    .map-node .ring {
-      position: absolute;
-      top: -6px;
-      left: -6px;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      border: 1.5px solid var(--primary);
-      animation: mapPing 2.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-    }
-
-    @keyframes mapPing {
-      0% { transform: scale(0.6); opacity: 1; }
-      100% { transform: scale(2.4); opacity: 0; }
-    }
-
-    /* Map Node Coordinates */
-    .node-us-west { top: 38%; left: 18%; }
-    .node-us-east { top: 40%; left: 26%; }
-    .node-sao-paulo { top: 72%; left: 34%; }
-    .node-london { top: 32%; left: 47%; }
-    .node-frankfurt { top: 34%; left: 52%; }
-    .node-singapore { top: 62%; left: 74%; }
-    .node-tokyo { top: 42%; left: 84%; }
-    .node-sydney { top: 78%; left: 88%; }
+    .globe-canvas.dragging { cursor: grabbing; }
 
     /* Section: Build Scalable dApps (Image 1 Style) */
     .section-scalable {
@@ -985,13 +954,16 @@
       -webkit-overflow-scrolling: touch;
       box-sizing: border-box;
       opacity: 0;
+      visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.22s;
     }
 
     .modal-overlay.open {
       opacity: 1;
+      visibility: visible;
       pointer-events: auto;
+      transition-delay: 0s;
     }
 
     .modal-dialog {
@@ -1349,7 +1321,6 @@
         max-width: 100% !important;
         left: 0 !important;
         transform: none !important;
-        filter: blur(35px) !important;
         overflow: hidden !important;
       }
       .navbar {
@@ -1601,7 +1572,7 @@
         line-height: 1.55;
       }
       .world-map-container {
-        height: 240px;
+        height: 320px;
         border-radius: 18px;
         margin-bottom: 20px;
         width: 100%;
@@ -1958,7 +1929,7 @@
         padding: 3px 10px !important;
       }
       .world-map-container {
-        height: 200px;
+        height: 280px;
       }
       .modal-overlay {
         padding: 12px 8px !important;
@@ -1996,6 +1967,150 @@
         font-size: 13.5px !important;
       }
     }
+
+    /* ===== Optimisation layer ===== */
+    html { scrollbar-gutter: stable; }
+    body.modal-open { overflow: hidden; }
+
+    /* Skip layout/paint of below-the-fold sections until near viewport */
+    @media (min-width: 901px) {
+      .section-worldwide, .section-scalable, .section-pricing, .section-questions, .footer {
+        content-visibility: auto;
+        contain-intrinsic-size: auto 600px;
+      }
+    }
+
+    /* Stop all infinite animations while the modal covers the page */
+    body.modal-open .pulse-dot,
+    body.modal-open .video-play-btn { animation-play-state: paused; }
+
+    [hidden] { display: none !important; }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+
+    :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .auth-input-pill:focus-visible { outline-offset: 0; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ===== Section animations ===== */
+    html { scroll-padding-top: 96px; }
+    .nav-links a.active { color: #ffffff; }
+
+    @media (prefers-reduced-motion: no-preference) {
+      /* hidden until the reveal script marks it .in, then animates back to its natural style */
+      .js [data-reveal]:not(.in) { opacity: 0; translate: 0 26px; }
+      .js [data-reveal="scale"]:not(.in) { scale: 0.94; }
+      .js [data-reveal].in {
+        animation: revealUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms) backwards;
+      }
+      .js [data-reveal="scale"].in {
+        animation-name: revealScale;
+      }
+      @keyframes revealUp { from { opacity: 0; translate: 0 26px; } }
+      @keyframes revealScale { from { opacity: 0; translate: 0 26px; scale: 0.94; } }
+
+      /* gentle ambient motion */
+      .scalable-visual-sphere { animation: floatY 6s ease-in-out infinite alternate; }
+      @keyframes floatY { from { translate: 0 -8px; } to { translate: 0 8px; } }
+      .radar-arch { animation: archPulse 3.6s ease-in-out infinite; }
+      .radar-arch-1 { animation-delay: 0s; }
+      .radar-arch-2 { animation-delay: 0.45s; }
+      .radar-arch-3 { animation-delay: 0.9s; }
+      .radar-arch-4 { animation-delay: 1.35s; }
+      @keyframes archPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+      body.modal-open .scalable-visual-sphere,
+      body.modal-open .radar-arch { animation-play-state: paused; }
+    }
+    /* ===== Mobile layer ===== */
+    a, button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+    body { min-height: 100svh; }
+    .nav-toggle { display: none; }
+
+    @supports (padding: max(0px)) {
+      body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+      .navbar { top: max(18px, env(safe-area-inset-top)); }
+      .toast-msg { bottom: max(28px, calc(env(safe-area-inset-bottom) + 16px)); }
+      .modal-overlay { padding-bottom: max(24px, env(safe-area-inset-bottom)) !important; }
+    }
+
+    /* touch devices: no sticky hover lift after a tap */
+    @media (hover: none) {
+      .feature-box-card:hover, .pricing-card:hover, .hero-video-card:hover, .metric-card:hover,
+      .btn-hero-cta:hover, .btn-nav-getstarted:hover { transform: none !important; }
+    }
+
+    @media (max-width: 900px) {
+      /* inputs under 16px make iOS zoom the page on focus */
+      input, .auth-input-pill, .newsletter-form input { font-size: 16px !important; }
+
+      .nav-toggle {
+        display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+        width: 40px; height: 40px; border-radius: 50%; cursor: pointer; color: #fff;
+        background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+      .nav-toggle .i-close, .navbar.menu-open .nav-toggle .i-menu { display: none; }
+      .navbar.menu-open .nav-toggle .i-close { display: block; }
+      .nav-actions { gap: 8px !important; }
+      .btn-nav-signin, .btn-nav-getstarted { min-height: 40px !important; }
+      .newsletter-form button { min-height: 40px; padding-left: 18px; padding-right: 18px; }
+      .newsletter-form input { min-height: 40px; }
+      .footer-col ul li a { display: inline-block; padding: 10px 0; line-height: 1.35 !important; }
+      .btn-modal-close { width: 40px !important; height: 40px !important; }
+      .btn-pricing-cta { min-height: 44px; }
+
+      .navbar.menu-open .nav-links {
+        display: flex !important; flex-direction: column; align-items: stretch; gap: 2px;
+        position: absolute; top: calc(100% + 10px); left: 0; right: 0; padding: 10px;
+        background: rgba(12, 14, 22, 0.97); border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 22px; box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.85);
+        animation: menuIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .navbar.menu-open .nav-links a { display: block; padding: 14px 16px; border-radius: 14px; font-size: 15px; color: #e4e4e7; }
+      .navbar.menu-open .nav-links a.active, .navbar.menu-open .nav-links a:active { background: rgba(101, 127, 254, 0.16); color: #fff; }
+      @keyframes menuIn { from { opacity: 0; transform: translateY(-8px); } }
+    }
+
+    @media (max-width: 640px) {
+      .section-worldwide, .section-scalable, .section-pricing { padding-top: 40px !important; padding-bottom: 44px !important; }
+      .metric-card { padding: 18px 20px !important; }
+      .metric-card .stat-num { font-size: 24px !important; line-height: 1.25 !important; }
+      .metric-card .stat-desc { font-size: 14px !important; }
+
+      /* footer: two link columns instead of one long list; minmax(0) stops the newsletter form forcing overflow */
+      .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 26px 18px !important; }
+      .footer-brand, .footer-col:nth-child(4), .footer-col:last-child { grid-column: 1 / -1; }
+      .footer-col:nth-child(4) ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 18px; }
+      .newsletter-form input { min-width: 0; }
+      .footer-bottom { flex-direction: column; gap: 14px; text-align: center; }
+      .footer-socials { justify-content: center; gap: 10px; }
+      .footer-socials a { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); }
+    }
+
+    /* Get started opens the same modal as Sign in, so drop the duplicate on narrow phones */
+    @media (max-width: 420px) { .btn-nav-signin { display: none !important; } }
+
+    /* Video poster: real YouTube thumbnail behind the play button */
+    .hero-video-placeholder { position: relative; }
+    .hero-video-thumb {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; filter: brightness(0.72) saturate(1.05);
+      transition: filter 0.3s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: thumbIn 0.5s ease both;
+    }
+    .hero-video-placeholder:hover .hero-video-thumb { filter: brightness(0.85) saturate(1.1); transform: scale(1.02); }
+    .hero-video-placeholder .video-play-btn { position: relative; z-index: 2; }
+    @keyframes thumbIn { from { opacity: 0; } }
   </style>
 </head>
 <body>
@@ -2006,11 +2121,11 @@
   <!-- Top Sticky Navigation: Floating Pill Glossy Header -->
   <header class="navbar">
     <a href="/" class="nav-brand" aria-label="ODEX Sniper">
-      <img src="/icons/Odex.png" alt="ODEX Sniper" />
+      <img src="/icons/Odex.png" alt="ODEX Sniper" decoding="async" fetchpriority="high" />
     </a>
 
     <nav>
-      <ul class="nav-links">
+      <ul class="nav-links" id="nav-menu">
         <li><a href="#features">Features</a></li>
         <li><a href="#coverage">Coverage</a></li>
         <li><a href="#architecture">Engine</a></li>
@@ -2022,6 +2137,10 @@
     <div class="nav-actions">
       <button type="button" class="btn-nav-signin" onclick="openAuthModal('signin')">Sign in</button>
       <button type="button" class="btn-nav-getstarted" onclick="openAuthModal('signup')">Get started</button>
+      <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+        <svg class="i-menu" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+        <svg class="i-close" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+      </button>
     </div>
   </header>
 
@@ -2060,21 +2179,12 @@
       <div class="hero-video-wrapper">
         <div class="hero-video-card">
           <div class="hero-video-inner" id="hero-video-inner">
-            <div class="hero-video-placeholder" id="hero-video-placeholder" onclick="playHeroVideo(event)" title="Click to Play Video">
-              <button type="button" class="video-play-btn" id="hero-play-btn" onclick="playHeroVideo(event)" aria-label="Play video">
+            <div class="hero-video-placeholder" id="hero-video-placeholder">
+              <button type="button" class="video-play-btn" id="hero-play-btn" aria-label="Play video">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="pointer-events: none;">
                   <polygon points="5 3 19 12 5 21 5 3"></polygon>
                 </svg>
               </button>
-              <div class="video-placeholder-title">ODEX Sniper Overview &amp; Live Demo</div>
-              <div class="video-placeholder-sub">Watch the autonomous 3-stage validation pipeline &amp; private Jito MEV execution in action</div>
-              <div class="video-placeholder-badge" onclick="setCustomVideo(event)" title="Click to set YouTube video link">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                </svg>
-                <span>YouTube Video Ready &bull; 16:9 HD</span>
-              </div>
             </div>
           </div>
         </div>
@@ -2088,7 +2198,7 @@
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
             </svg>
           </div>
-          <h4 class="feature-box-title">Sub-Second Mempool Ingestion</h4>
+          <h3 class="feature-box-title">Sub-Second Mempool Ingestion</h3>
           <p class="feature-box-desc">
             Deterministic 0ms delay token detection directly from Pump.fun and Raydium liquidity contracts before retail mempool exposure.
           </p>
@@ -2101,7 +2211,7 @@
               <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
           </div>
-          <h4 class="feature-box-title">Deterministic 3-Stage Pipeline</h4>
+          <h3 class="feature-box-title">Deterministic 3-Stage Pipeline</h3>
           <p class="feature-box-desc">
             Autonomous multi-stage defense: Stage 1 narrative mindshare, Stage 2 money flow HHI cluster risk, and Stage 3 3-candle breakout trigger.
           </p>
@@ -2134,39 +2244,7 @@
 
       <!-- Dotted World Map with Pinging Nodes -->
       <div class="world-map-container">
-        <!-- Minimalist Dotted World Vector Outline -->
-        <svg class="map-svg" viewBox="0 0 1000 450" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Continents Dotted Simplified Representation -->
-          <g fill="rgba(255, 255, 255, 0.18)">
-            <!-- North America -->
-            <circle cx="180" cy="140" r="2.5"/><circle cx="195" cy="145" r="2.5"/><circle cx="210" cy="135" r="2.5"/><circle cx="225" cy="150" r="2.5"/><circle cx="240" cy="160" r="2.5"/><circle cx="255" cy="165" r="2.5"/><circle cx="270" cy="170" r="2.5"/>
-            <circle cx="170" cy="160" r="2.5"/><circle cx="185" cy="165" r="2.5"/><circle cx="200" cy="160" r="2.5"/><circle cx="215" cy="175" r="2.5"/><circle cx="230" cy="180" r="2.5"/><circle cx="245" cy="190" r="2.5"/>
-            <circle cx="160" cy="180" r="2.5"/><circle cx="175" cy="185" r="2.5"/><circle cx="190" cy="180" r="2.5"/><circle cx="205" cy="195" r="2.5"/><circle cx="220" cy="200" r="2.5"/><circle cx="235" cy="210" r="2.5"/>
-            <circle cx="200" cy="215" r="2.5"/><circle cx="215" cy="225" r="2.5"/><circle cx="230" cy="235" r="2.5"/>
-            <!-- South America -->
-            <circle cx="320" cy="270" r="2.5"/><circle cx="335" cy="285" r="2.5"/><circle cx="350" cy="300" r="2.5"/><circle cx="335" cy="315" r="2.5"/><circle cx="345" cy="330" r="2.5"/><circle cx="340" cy="350" r="2.5"/>
-            <!-- Europe -->
-            <circle cx="480" cy="130" r="2.5"/><circle cx="495" cy="135" r="2.5"/><circle cx="510" cy="140" r="2.5"/><circle cx="525" cy="145" r="2.5"/><circle cx="540" cy="140" r="2.5"/>
-            <circle cx="475" cy="150" r="2.5"/><circle cx="490" cy="155" r="2.5"/><circle cx="505" cy="160" r="2.5"/><circle cx="520" cy="165" r="2.5"/><circle cx="535" cy="160" r="2.5"/>
-            <!-- Asia -->
-            <circle cx="620" cy="140" r="2.5"/><circle cx="640" cy="145" r="2.5"/><circle cx="660" cy="140" r="2.5"/><circle cx="680" cy="150" r="2.5"/><circle cx="700" cy="155" r="2.5"/><circle cx="720" cy="150" r="2.5"/><circle cx="740" cy="160" r="2.5"/>
-            <circle cx="630" cy="165" r="2.5"/><circle cx="650" cy="170" r="2.5"/><circle cx="670" cy="175" r="2.5"/><circle cx="690" cy="180" r="2.5"/><circle cx="710" cy="185" r="2.5"/><circle cx="730" cy="190" r="2.5"/>
-            <circle cx="750" cy="180" r="2.5"/><circle cx="770" cy="185" r="2.5"/><circle cx="790" cy="190" r="2.5"/><circle cx="810" cy="185" r="2.5"/><circle cx="830" cy="190" r="2.5"/>
-            <circle cx="720" cy="240" r="2.5"/><circle cx="735" cy="255" r="2.5"/><circle cx="750" cy="265" r="2.5"/><circle cx="765" cy="275" r="2.5"/>
-            <!-- Australia -->
-            <circle cx="840" cy="330" r="2.5"/><circle cx="860" cy="340" r="2.5"/><circle cx="875" cy="350" r="2.5"/><circle cx="850" cy="360" r="2.5"/>
-          </g>
-        </svg>
-
-        <!-- Live Node Markers with CSS Pulsing Animation -->
-        <div class="map-node node-us-west" title="San Francisco RPC"><div class="core"></div><div class="ring"></div></div>
-        <div class="map-node node-us-east" title="New York Financial Relay"><div class="core"></div><div class="ring"></div></div>
-        <div class="map-node node-sao-paulo" title="São Paulo Node"><div class="core"></div><div class="ring"></div></div>
-        <div class="map-node node-london" title="London LD4 Colocation"><div class="core"></div><div class="ring"></div></div>
-        <div class="map-node node-frankfurt" title="Frankfurt Validator"><div class="core"></div><div class="ring"></div></div>
-        <div class="map-node node-singapore" title="Singapore Low-Latency Hub"><div class="core"></div><div class="ring"></div></div>
-        <div class="map-node node-tokyo" title="Tokyo Equinix Gateway"><div class="core"></div><div class="ring"></div></div>
-        <div class="map-node node-sydney" title="Sydney Relay"><div class="core"></div><div class="ring"></div></div>
+        <canvas id="globe-canvas" class="globe-canvas" role="img" aria-label="Interactive 3D globe showing ODEX relay locations worldwide. Drag to rotate."></canvas>
       </div>
 
       <div style="margin-top: 16px;">
@@ -2211,7 +2289,7 @@
 
         <div class="scalable-visual">
           <div class="scalable-visual-sphere">
-            <img src="/icons/Odex.png" alt="ODEX Sniper" style="width: 130px; height: auto; object-fit: contain;" />
+            <img src="/icons/Odex.png" alt="" loading="lazy" decoding="async" style="width: 130px; height: auto; object-fit: contain;" />
           </div>
         </div>
       </div>
@@ -2291,7 +2369,7 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="/" class="nav-brand" aria-label="ODEX Sniper">
-            <img src="/icons/Odex.png" alt="ODEX Sniper" style="height: 32px; width: auto;" />
+            <img src="/icons/Odex.png" alt="ODEX Sniper" loading="lazy" decoding="async" style="height: 32px; width: auto;" />
           </a>
           <p>
             High-frequency autonomous Solana memecoin sniper engineered for ultra-low latency execution and MEV protection.
@@ -2334,7 +2412,7 @@
             Subscribe to engineering releases.
           </p>
           <div class="newsletter-form">
-            <input type="email" placeholder="Enter your email" id="newsletter-email" />
+            <input type="email" placeholder="Enter your email" id="newsletter-email" aria-label="Email address" autocomplete="email" />
             <button type="button" onclick="subscribeNewsletter()">Join</button>
           </div>
         </div>
@@ -2345,13 +2423,13 @@
           &copy; 2026 ODEX Sniper. All rights reserved. Built for Solana Mainnet.
         </div>
         <div class="footer-socials">
-          <a href="https://twitter.com" target="_blank" title="Twitter / X">
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a>
-          <a href="https://telegram.org" target="_blank" title="Telegram">
+          <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.06-.49-.83-.27-1.49-.42-1.43-.88.03-.24.38-.49 1.03-.75 4.04-1.76 6.74-2.92 8.09-3.49 3.85-1.6 4.65-1.88 5.17-1.89.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.16-.03.26z"/></svg>
           </a>
-          <a href="https://github.com" target="_blank" title="GitHub">
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
           </a>
         </div>
@@ -2362,10 +2440,10 @@
   <!-- =========================================================
        MODAL: SIGN IN / SIGN UP (EXACT IMAGE 2 STYLE)
        ========================================================= -->
-  <div class="modal-overlay" id="auth-modal" onclick="onModalOverlayClick(event)">
-    <div class="modal-dialog" role="dialog" aria-modal="true">
+  <div class="modal-overlay" id="auth-modal">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="auth-title">
       <!-- Close Button -->
-      <button type="button" class="btn-modal-close" onclick="closeAuthModal()" aria-label="Close modal">
+      <button type="button" class="btn-modal-close" aria-label="Close modal">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -2374,7 +2452,7 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h2 class="modal-title">Log in or sign up</h2>
+        <h2 class="modal-title" id="auth-title">Log in or sign up</h2>
         <p class="modal-subtitle">
           You'll get smarter responses and can execute lightning-fast trades on Solana.
         </p>
@@ -2383,7 +2461,7 @@
       <!-- 3 Social / Auth Action Buttons (Image 2 Style) -->
       <div class="auth-social-buttons">
         <!-- 1. Continue with Google -->
-        <button type="button" class="btn-social-auth" onclick="handleGoogleAuth()">
+        <button type="button" class="btn-social-auth">
           <svg viewBox="0 0 24 24" width="18" height="18">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -2394,7 +2472,7 @@
         </button>
 
         <!-- 2. Continue with Apple -->
-        <button type="button" class="btn-social-auth" onclick="handleAppleAuth()">
+        <button type="button" class="btn-social-auth">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
             <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.84c.64-.78 1.08-1.86.96-2.94-.93.04-2.05.62-2.71 1.4-.58.67-1.09 1.77-.96 2.83 1.04.08 2.07-.51 2.71-1.29"/>
           </svg>
@@ -2402,7 +2480,7 @@
         </button>
 
         <!-- 3. Continue with 10-Digit PIN (or Phone) -->
-        <button type="button" class="btn-social-auth" onclick="togglePinMode()">
+        <button type="button" class="btn-social-auth">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
             <line x1="12" y1="18" x2="12.01" y2="18"></line>
@@ -2415,13 +2493,18 @@
       <div class="auth-divider">OR</div>
 
       <!-- Form (Image 2 Style) -->
-      <form class="auth-form" onsubmit="handleAuthSubmit(event)">
+      <form class="auth-form">
+        <label class="sr-only" for="auth-input-main">Email address or 10-digit PIN</label>
         <input
           type="text"
           id="auth-input-main"
+          name="username"
           class="auth-input-pill"
           placeholder="Email address or 10-digit PIN"
-          autocomplete="off"
+          autocomplete="username"
+          autocapitalize="none"
+          spellcheck="false"
+          enterkeyhint="go"
           required
         />
 
@@ -2433,365 +2516,519 @@
       <!-- PIN Quick Status Indicator (Revealed when entering 10-digit PIN) -->
       <div class="pin-keypad-panel" id="pin-keypad-panel">
         <div style="font-size: 11.5px; font-weight: 600; color: #a1a1aa;">10-Digit Security PIN</div>
-        <div class="pin-circles-row" id="pin-circles-row">
+        <div class="pin-circles-row" id="pin-circles-row" aria-hidden="true">
           <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
           <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
         </div>
-        <div class="pin-hint">Default PIN: <code>1234567890</code></div>
+        <div class="pin-hint">Enter your 10 digits to sign in automatically</div>
       </div>
     </div>
   </div>
 
   <!-- Status Toast -->
-  <div class="toast-msg" id="toast-msg"></div>
+  <div class="toast-msg" id="toast-msg" role="status" aria-live="polite"></div>
 
   <script>
-    const modal = document.getElementById('auth-modal');
-    const mainInput = document.getElementById('auth-input-main');
-    const btnSubmit = document.getElementById('btn-auth-submit');
-    const pinPanel = document.getElementById('pin-keypad-panel');
-    const pinDots = Array.from(document.querySelectorAll('.pin-dot'));
-    let isSubmitting = false;
+    (() => {
+      'use strict';
 
-    // Open Modal
-    function openAuthModal(mode = 'signin') {
-      if (modal) {
-        window.scrollTo({ left: 0, behavior: 'instant' });
+      const $ = (id) => document.getElementById(id);
+      const modal = $('auth-modal');
+      const dialog = modal.querySelector('.modal-dialog');
+      const mainInput = $('auth-input-main');
+      const btnSubmit = $('btn-auth-submit');
+      const pinPanel = $('pin-keypad-panel');
+      const pinDots = [...document.querySelectorAll('.pin-dot')];
+      const toast = $('toast-msg');
+      const PAGE_REGIONS = ['header.navbar', 'main', 'footer.footer'];
+      const VIDEO_ID = 'aSte18D2_YE';
+
+      let isSubmitting = false;
+      let lastFocus = null;
+      let toastTimer = 0;
+
+      // ---------- helpers ----------
+      const setPageInert = (on) =>
+        PAGE_REGIONS.forEach((sel) => { const el = document.querySelector(sel); if (el) el.inert = on; });
+
+      const saveUser = (user) => {
+        try { localStorage.setItem('odex_user', JSON.stringify(user)); } catch (_) { /* storage blocked */ }
+      };
+
+      function showToast(msg, duration = 3000) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), duration);
+      }
+
+      async function postJSON(url, body, timeout = 10000) {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), timeout);
+        try {
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+            credentials: 'same-origin',
+            signal: ctrl.signal
+          });
+          const data = await res.json().catch(() => ({}));
+          return { ok: res.ok && data.success === true, data };
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+
+      function setBusy(busy, label) {
+        isSubmitting = busy;
+        btnSubmit.disabled = busy;
+        btnSubmit.textContent = busy ? label : 'Continue';
+      }
+
+      const updatePinDots = (len) => pinDots.forEach((d, i) => d.classList.toggle('filled', i < len));
+
+      // ---------- modal ----------
+      function openAuthModal() {
+        if (modal.classList.contains('open')) return;
+        lastFocus = document.activeElement;
         modal.classList.add('open');
-        document.body.style.overflow = 'hidden';
-        setTimeout(() => {
-          if (mainInput) mainInput.focus();
-        }, 120);
+        document.body.classList.add('modal-open');
+        setPageInert(true);
+        mainInput.focus({ preventScroll: true });
       }
-    }
 
-    // Close Modal
-    function closeAuthModal() {
-      if (modal) {
+      function closeAuthModal() {
+        if (!modal.classList.contains('open')) return;
         modal.classList.remove('open');
-        document.body.style.overflow = '';
+        document.body.classList.remove('modal-open');
+        setPageInert(false);
+        if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
       }
-    }
 
-    function onModalOverlayClick(e) {
-      if (e.target === modal) {
-        closeAuthModal();
-      }
-    }
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('open')) {
-        closeAuthModal();
-      }
-    });
-
-    // Toggle PIN Panel
-    function togglePinMode() {
-      if (pinPanel) {
-        pinPanel.classList.toggle('active');
-        if (pinPanel.classList.contains('active')) {
-          mainInput.placeholder = 'Enter 10-digit PIN (e.g. 1234567890)';
-          mainInput.inputMode = 'numeric';
-          mainInput.value = '1234567890';
-          updatePinDots('1234567890');
-          mainInput.focus();
-        } else {
-          mainInput.placeholder = 'Email address or 10-digit PIN';
-          mainInput.inputMode = 'text';
-          mainInput.value = '';
-          updatePinDots('');
-        }
-      }
-    }
-
-    function updatePinDots(val) {
-      pinDots.forEach((dot, idx) => {
-        if (idx < val.length) dot.classList.add('filled');
-        else dot.classList.remove('filled');
+      document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('open')) return;
+        if (e.key === 'Escape') { closeAuthModal(); return; }
+        if (e.key !== 'Tab') return;
+        // Focus trap
+        const f = [...dialog.querySelectorAll('button:not([disabled]), input, [href]')].filter((el) => el.offsetParent !== null);
+        if (!f.length) return;
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       });
-    }
 
-    // Real-time Input Validation for 10-Digit PIN detection
-    mainInput.addEventListener('input', () => {
-      const val = mainInput.value.trim();
-      const isDigitsOnly = /^\d+$/.test(val);
-      if (isDigitsOnly) {
-        pinPanel.classList.add('active');
-        mainInput.inputMode = 'numeric';
-        updatePinDots(val);
-        if (val.length === 10 && !isSubmitting) {
-          submitWithPin(val);
-        }
-      } else {
-        if (val.length === 0) {
-          updatePinDots('');
+      // ---------- PIN ----------
+      function togglePinMode() {
+        const active = pinPanel.classList.toggle('active');
+        mainInput.value = '';
+        mainInput.placeholder = active ? 'Enter 10-digit PIN' : 'Email address or 10-digit PIN';
+        mainInput.inputMode = active ? 'numeric' : 'text';
+        updatePinDots(0);
+        mainInput.focus();
+      }
+
+      mainInput.addEventListener('input', () => {
+        const val = mainInput.value.trim();
+        if (/^\d+$/.test(val)) {
+          pinPanel.classList.add('active');
+          mainInput.inputMode = 'numeric';
+          updatePinDots(val.length);
+          if (val.length === 10 && !isSubmitting) submitWithPin(val);
+        } else if (!val) {
+          updatePinDots(0);
           mainInput.inputMode = 'text';
         }
-      }
-    });
+      });
 
-    // Main Form Submit Handler
-    async function handleAuthSubmit(e) {
-      if (e) e.preventDefault();
-      const val = (mainInput.value || '').trim();
-      if (!val) {
-        showToast('⚠️ Please enter an email address or 10-digit PIN');
-        return;
+      // ---------- auth ----------
+      function onSuccess(user, msg) {
+        saveUser(user);
+        showToast(msg);
+        setTimeout(() => location.assign('/dashboard'), 450);
       }
 
-      // Check if 10-digit PIN
-      if (/^\d{10}$/.test(val)) {
-        await submitWithPin(val);
-        return;
-      }
-
-      // Check if general email
-      if (val.includes('@')) {
-        await submitWithEmail(val);
-        return;
-      }
-
-      // Fallback: If 10 digits without leading/trailing spaces
-      if (/^\d+$/.test(val) && val.length !== 10) {
-        showToast('⚠️ Security PIN must be exactly 10 digits');
-        return;
-      }
-
-      await submitWithEmail(val);
-    }
-
-    // 1. PIN Authentication
-    async function submitWithPin(pin) {
-      if (isSubmitting) return;
-      isSubmitting = true;
-      btnSubmit.disabled = true;
-      btnSubmit.innerText = 'Verifying...';
-
-      try {
-        const res = await fetch('/api/auth/pin', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ pin })
-        });
-        const data = await res.json().catch(() => ({}));
-
-        if (res.ok && data.success) {
-          pinDots.forEach(d => d.classList.add('success'));
-          const userObj = data.user || { username: 'Odex', email: 'odexsniper@gmail.com' };
-          localStorage.setItem('odex_user', JSON.stringify(userObj));
-          showToast(`✅ Welcome back, ${userObj.username || 'Trader'}!`);
-          setTimeout(() => {
-            window.location.href = '/dashboard';
-          }, 450);
-        } else {
+      async function submitWithPin(pin) {
+        if (isSubmitting) return;
+        setBusy(true, 'Verifying...');
+        try {
+          const { ok, data } = await postJSON('/api/auth/pin', { pin });
+          if (ok) {
+            pinDots.forEach((d) => d.classList.add('success'));
+            const user = data.user || { username: 'Trader' };
+            onSuccess(user, `✅ Welcome back, ${user.username || 'Trader'}!`);
+            return; // keep button locked while redirecting
+          }
           showToast(`❌ ${data.error || 'Incorrect 10-digit PIN'}`);
-          pinDots.forEach(d => d.classList.remove('filled'));
+          mainInput.value = '';
+          updatePinDots(0);
+          mainInput.focus();
+        } catch (err) {
+          showToast(err.name === 'AbortError' ? '❌ Request timed out. Try again.' : '❌ Connection error. Try again.');
         }
-      } catch (err) {
-        showToast(`❌ Connection error: ${err.message}`);
-      } finally {
-        isSubmitting = false;
-        btnSubmit.disabled = false;
-        btnSubmit.innerText = 'Continue';
+        setBusy(false);
       }
-    }
 
-    // 2. Email Authentication
-    async function submitWithEmail(email) {
-      if (isSubmitting) return;
-      isSubmitting = true;
-      btnSubmit.disabled = true;
-      btnSubmit.innerText = 'Signing in...';
-
-      try {
-        const res = await fetch('/api/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email })
-        });
-        const data = await res.json().catch(() => ({}));
-
-        if (res.ok && data.success) {
-          const userObj = data.user || { username: email.split('@')[0], email };
-          localStorage.setItem('odex_user', JSON.stringify(userObj));
-          showToast(`✅ Signed in as ${userObj.username}`);
-          setTimeout(() => {
-            window.location.href = '/dashboard';
-          }, 450);
-        } else {
-          // If local guest account login
-          const guestUser = { username: email.split('@')[0] || 'Trader', email: email };
-          localStorage.setItem('odex_user', JSON.stringify(guestUser));
-          showToast(`✅ Welcome, ${guestUser.username}! Entering dashboard...`);
-          setTimeout(() => {
-            window.location.href = '/dashboard';
-          }, 500);
+      async function submitWithEmail(email) {
+        if (isSubmitting) return;
+        setBusy(true, 'Signing in...');
+        try {
+          const { ok, data } = await postJSON('/api/login', { email });
+          if (ok) {
+            const user = data.user || { username: email.split('@')[0], email };
+            onSuccess(user, `✅ Signed in as ${user.username}`);
+            return;
+          }
+          showToast(`❌ ${data.error || 'Sign-in failed'}`);
+        } catch (err) {
+          showToast(err.name === 'AbortError' ? '❌ Request timed out. Try again.' : '❌ Connection error. Try again.');
         }
-      } catch (err) {
-        // Fallback for offline local dev mode
-        const localUser = { username: email.split('@')[0] || 'Trader', email: email };
-        localStorage.setItem('odex_user', JSON.stringify(localUser));
-        window.location.href = '/dashboard';
-      } finally {
-        isSubmitting = false;
-        btnSubmit.disabled = false;
-        btnSubmit.innerText = 'Continue';
+        setBusy(false);
       }
-    }
 
-    // 3. Google Single-Sign-On
-    async function handleGoogleAuth() {
-      showToast('⚡ Connecting with Google...');
-      try {
-        const res = await fetch('/api/google-login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: 'trader@gmail.com', name: 'Google Trader' })
-        });
-        const data = await res.json().catch(() => ({}));
-        if (data && data.success) {
-          localStorage.setItem('odex_user', JSON.stringify(data.user || { username: 'Google Trader', email: 'trader@gmail.com' }));
-          showToast('✅ Google Authentication verified!');
-          setTimeout(() => { window.location.href = '/dashboard'; }, 400);
-        } else {
-          localStorage.setItem('odex_user', JSON.stringify({ username: 'Google Trader', email: 'trader@gmail.com' }));
-          window.location.href = '/dashboard';
-        }
-      } catch (e) {
-        localStorage.setItem('odex_user', JSON.stringify({ username: 'Google Trader', email: 'trader@gmail.com' }));
-        window.location.href = '/dashboard';
-      }
-    }
-
-    // 4. Apple Authentication
-    function handleAppleAuth() {
-      showToast('⚡ Apple ID authenticated!');
-      localStorage.setItem('odex_user', JSON.stringify({ username: 'Apple User', email: 'apple.trader@icloud.com' }));
-      setTimeout(() => { window.location.href = '/dashboard'; }, 400);
-    }
-
-    // Toast Utility
-    function showToast(msg, duration = 3000) {
-      const toast = document.getElementById('toast-msg');
-      if (!toast) return;
-      toast.innerText = msg;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), duration);
-    }
-
-    function subscribeNewsletter() {
-      const input = document.getElementById('newsletter-email');
-      if (input && input.value.includes('@')) {
-        showToast('✅ Subscribed to ODEX engineering updates!');
-        input.value = '';
-      } else {
-        showToast('⚠️ Please enter a valid email address');
-      }
-    }
-
-    // ==========================================
-    // HERO VIDEO CONTROLLER (16:9 Responsive & Mobile)
-    // ==========================================
-    let heroVideoId = localStorage.getItem('odex_demo_video_id') || 'M7lc1UVf-VE';
-
-    function playHeroVideo(e) {
-      if (e) {
-        e.stopPropagation();
-      }
-      const inner = document.getElementById('hero-video-inner');
-      if (!inner) return;
-
-      inner.innerHTML = `
-        <iframe 
-          id="hero-video-iframe"
-          src="https://www.youtube.com/embed/${heroVideoId}?autoplay=1&mute=1&playsinline=1&enablejsapi=1&rel=0" 
-          title="ODEX Sniper Overview & Live Demo" 
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-          allowfullscreen
-          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 16px; z-index: 5;"
-        ></iframe>
-        <button type="button" class="btn-close-video" onclick="closeHeroVideo(event)" title="Close video" aria-label="Close Video">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-      `;
-    }
-
-    function closeHeroVideo(e) {
-      if (e) {
-        e.stopPropagation();
-      }
-      const inner = document.getElementById('hero-video-inner');
-      if (!inner) return;
-
-      inner.innerHTML = `
-        <div class="hero-video-placeholder" id="hero-video-placeholder" onclick="playHeroVideo(event)" title="Click to Play Video">
-          <button type="button" class="video-play-btn" id="hero-play-btn" onclick="playHeroVideo(event)" aria-label="Play video">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="pointer-events: none;">
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-          </button>
-          <div class="video-placeholder-title">ODEX Sniper Overview &amp; Live Demo</div>
-          <div class="video-placeholder-sub">Watch the autonomous 3-stage validation pipeline &amp; private Jito MEV execution in action</div>
-          <div class="video-placeholder-badge" onclick="setCustomVideo(event)" title="Click to set YouTube video link">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="23 7 16 12 23 17 23 7"></polygon>
-              <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-            </svg>
-            <span>YouTube Video Ready &bull; 16:9 HD</span>
-          </div>
-        </div>
-      `;
-      attachVideoListeners();
-    }
-
-    function attachVideoListeners() {
-      const placeholder = document.getElementById('hero-video-placeholder');
-      const playBtn = document.getElementById('hero-play-btn');
-      if (placeholder) {
-        placeholder.onclick = playHeroVideo;
-      }
-      if (playBtn) {
-        playBtn.onclick = playHeroVideo;
-      }
-    }
-
-    function setCustomVideo(e) {
-      if (e) {
-        e.stopPropagation();
+      async function handleAuthSubmit(e) {
         e.preventDefault();
-      }
-      const customInput = prompt('Enter YouTube Video URL or Video ID (e.g. https://youtu.be/...):', heroVideoId);
-      if (customInput) {
-        let cleanId = customInput.trim();
-        if (cleanId.includes('v=')) {
-          cleanId = cleanId.split('v=')[1].split('&')[0];
-        } else if (cleanId.includes('youtu.be/')) {
-          cleanId = cleanId.split('youtu.be/')[1].split('?')[0];
-        } else if (cleanId.includes('embed/')) {
-          cleanId = cleanId.split('embed/')[1].split('?')[0];
+        const val = mainInput.value.trim();
+        if (!val) return showToast('⚠️ Please enter an email address or 10-digit PIN');
+        if (/^\d+$/.test(val)) {
+          return val.length === 10 ? submitWithPin(val) : showToast('⚠️ Security PIN must be exactly 10 digits');
         }
-        if (cleanId) {
-          heroVideoId = cleanId;
-          localStorage.setItem('odex_demo_video_id', cleanId);
-          showToast('✅ Demo video updated!');
-          playHeroVideo();
-        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) return showToast('⚠️ Please enter a valid email address');
+        return submitWithEmail(val);
       }
-    }
 
-    // Check URL parameters for direct modal trigger (e.g. /login or ?open=1)
-    window.addEventListener('DOMContentLoaded', () => {
-      attachVideoListeners();
-      const params = new URLSearchParams(window.location.search);
-      const isLoginRoute = window.location.pathname === '/login' || window.location.pathname.endsWith('login.html');
-      if (isLoginRoute || params.get('open') === '1' || params.get('modal') === '1' || window.location.hash === '#login') {
+      // Google / Apple: no real OAuth is wired up yet. The old handlers fabricated a
+      // logged-in user client-side, so they are disabled until a server flow exists.
+      const providerUnavailable = (name) => showToast(`${name} sign-in isn't available yet. Use email or PIN.`);
+
+      // ---------- newsletter ----------
+      function subscribeNewsletter() {
+        const input = $('newsletter-email');
+        if (input && input.value && input.checkValidity()) {
+          showToast('✅ Subscribed to ODEX engineering updates!');
+          input.value = '';
+        } else {
+          showToast('⚠️ Please enter a valid email address');
+        }
+      }
+
+      // ---------- hero video (iframe only created on demand) ----------
+      const videoInner = $('hero-video-inner');
+      const placeholder = $('hero-video-placeholder');
+
+      function playHeroVideo(e) {
+        if (e) e.stopPropagation();
+        if (videoInner.querySelector('iframe')) return;
+        placeholder.hidden = true;
+        const frame = document.createElement('iframe');
+        frame.src = `https://www.youtube-nocookie.com/embed/${VIDEO_ID}?autoplay=1&playsinline=1&rel=0`;
+        frame.title = 'ODEX Sniper Overview & Live Demo';
+        frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        frame.allowFullscreen = true;
+        const close = document.createElement('button');
+        close.type = 'button';
+        close.className = 'btn-close-video';
+        close.setAttribute('aria-label', 'Close video');
+        close.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+        close.addEventListener('click', closeHeroVideo);
+        videoInner.append(frame, close);
+      }
+
+      function closeHeroVideo(e) {
+        if (e) e.stopPropagation();
+        videoInner.querySelectorAll('iframe, .btn-close-video').forEach((el) => el.remove());
+        placeholder.hidden = false;
+      }
+
+      placeholder.addEventListener('click', playHeroVideo);
+
+      // poster image: try max resolution first, fall back to the always-available hq version
+      const posterUrls = ['maxresdefault', 'hqdefault'].map((n) => `https://i.ytimg.com/vi/${VIDEO_ID}/${n}.jpg`);
+      const poster = new Image();
+      let pi = 0;
+      poster.alt = ''; poster.decoding = 'async'; poster.className = 'hero-video-thumb';
+      const nextPoster = () => { if (pi < posterUrls.length - 1) poster.src = posterUrls[++pi]; };
+      poster.onload = () => { if (poster.naturalWidth <= 120) nextPoster(); else placeholder.prepend(poster); };
+      poster.onerror = nextPoster;
+      poster.src = posterUrls[0];
+
+      // ---------- wiring ----------
+      modal.addEventListener('click', (e) => { if (e.target === modal) closeAuthModal(); });
+      modal.querySelector('.btn-modal-close').addEventListener('click', closeAuthModal);
+      modal.querySelector('.auth-form').addEventListener('submit', handleAuthSubmit);
+      const socials = modal.querySelectorAll('.btn-social-auth');
+      socials[0].addEventListener('click', () => providerUnavailable('Google'));
+      socials[1].addEventListener('click', () => providerUnavailable('Apple'));
+      socials[2].addEventListener('click', togglePinMode);
+
+      // Still used by inline onclick="" attributes in the markup
+      window.openAuthModal = openAuthModal;
+      window.subscribeNewsletter = subscribeNewsletter;
+
+      // Direct open (/login, ?open=1, ?modal=1, #login)
+      const params = new URLSearchParams(location.search);
+      if (location.pathname === '/login' || location.pathname.endsWith('login.html') ||
+          params.get('open') === '1' || params.get('modal') === '1' || location.hash === '#login') {
         openAuthModal();
       }
-    });
+    })();
+  </script>
+  <script>
+    /* Interactive 3D globe: dependency-free canvas orthographic projection */
+    (() => {
+      'use strict';
+      const canvas = document.getElementById('globe-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const D = Math.PI / 180, AUTO = -0.14, TAU = Math.PI * 2;
+
+      // Simplified continent outlines as flat [lon,lat,...] lists
+      const LAND = [
+        [-168,65,-156,71,-125,70,-95,72,-80,73,-62,60,-56,52,-66,45,-70,42,-76,35,-81,31,-80,25,-83,29,-90,30,-97,26,-97,22,-91,19,-87,21,-88,16,-83,10,-77,8,-80,7,-85,10,-92,14,-97,16,-105,20,-110,24,-112,29,-115,30,-117,33,-121,35,-124,40,-124,48,-130,55,-140,59,-152,59,-165,55,-158,58,-166,62],
+        [-55,60,-45,60,-20,70,-20,82,-40,83,-65,80,-72,76,-55,68],
+        [-77,8,-72,12,-62,10,-52,5,-50,0,-40,-3,-35,-6,-38,-14,-40,-22,-48,-26,-54,-34,-58,-38,-65,-41,-66,-47,-69,-52,-72,-54,-74,-50,-73,-40,-71,-30,-70,-18,-76,-14,-81,-5,-80,0,-77,4],
+        [-9,37,-9,43,-1,46,-4,48,2,51,5,53,9,55,8,57,11,58,6,59,5,62,12,66,18,70,28,71,40,68,44,67,60,69,70,73,80,73,100,77,112,74,130,72,142,72,160,70,170,69,180,66,178,64,165,60,160,54,156,51,155,58,142,59,135,55,141,52,140,47,132,43,130,42,127,35,122,37,121,31,119,25,110,21,106,20,108,15,109,11,105,9,100,13,100,8,103,1,98,8,97,16,94,17,92,21,88,22,80,15,77,8,73,17,70,21,67,24,57,25,56,27,50,30,48,29,52,25,56,24,59,22,52,16,43,13,39,21,35,28,34,31,35,36,28,36,26,40,23,38,22,36,19,41,13,45,16,41,18,40,16,38,12,42,9,44,3,43,-1,38,-5,36],
+        [-17,21,-13,28,-9,32,-6,36,10,37,11,33,20,31,32,31,34,28,38,21,43,12,51,12,48,5,40,-3,40,-15,35,-24,32,-29,27,-34,20,-35,18,-30,12,-17,14,-8,9,-1,9,4,5,6,-4,5,-8,4,-13,8,-17,14],
+        [114,-22,122,-18,130,-12,136,-12,142,-11,146,-19,153,-26,150,-37,141,-38,135,-34,129,-32,115,-34,114,-26],
+        [-5,50,1,51,-2,56,-5,58,-6,55],
+        [130,31,136,34,141,38,142,43,140,41,135,36],
+        [109,1,117,7,119,1,116,-4,110,-3],
+        [95,5,104,-2,106,-6,100,-1],
+        [44,-25,50,-15,49,-12,44,-17]
+      ];
+      const inPoly = (x, y, p) => {
+        let c = false;
+        for (let i = 0, j = p.length - 2; i < p.length; j = i, i += 2) {
+          const xi = p[i], yi = p[i + 1], xj = p[j], yj = p[j + 1];
+          if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c;
+        }
+        return c;
+      };
+      const vec = (lat, lon) => [Math.cos(lat * D) * Math.sin(lon * D), Math.sin(lat * D), Math.cos(lat * D) * Math.cos(lon * D)];
+
+      // Land dots, evenly spaced on the sphere
+      const pts = [];
+      for (let lat = -58; lat <= 82; lat += 2.4) {
+        const step = 2.4 / Math.max(Math.cos(lat * D), 0.2);
+        for (let lon = -180; lon < 180; lon += step) {
+          if (LAND.some((p) => inPoly(lon, lat, p))) pts.push(vec(lat, lon));
+        }
+      }
+
+      const NODES = [
+        ['San Francisco RPC', 37.8, -122.4], ['New York Financial Relay', 40.7, -74],
+        ['São Paulo Node', -23.5, -46.6], ['London LD4 Colocation', 51.5, -0.1],
+        ['Frankfurt Validator', 50.1, 8.7], ['Singapore Low-Latency Hub', 1.35, 103.8],
+        ['Tokyo Equinix Gateway', 35.7, 139.7], ['Sydney Relay', -33.9, 151.2]
+      ].map(([name, lat, lon]) => ({ name, v: vec(lat, lon) }));
+
+      // Great-circle arcs lifted above the surface
+      const LINKS = [[0,1],[1,3],[3,4],[4,5],[5,6],[6,0],[1,2],[5,7],[3,2]];
+      const SEG = 40;
+      const arcs = LINKS.map(([i, j]) => {
+        const a = NODES[i].v, b = NODES[j].v;
+        const w = Math.acos(Math.min(1, a[0]*b[0] + a[1]*b[1] + a[2]*b[2]));
+        const out = [];
+        for (let k = 0; k <= SEG; k++) {
+          const t = k / SEG, s1 = Math.sin((1 - t) * w) / Math.sin(w), s2 = Math.sin(t * w) / Math.sin(w);
+          const lift = 1 + 0.32 * Math.sin(Math.PI * t) * (w / Math.PI);
+          out.push([(a[0]*s1 + b[0]*s2) * lift, (a[1]*s1 + b[1]*s2) * lift, (a[2]*s1 + b[2]*s2) * lift]);
+        }
+        return out;
+      });
+
+      let W = 0, H = 0, R = 0, cx = 0, cy = 0, dpr = 1;
+      let yaw = -20 * D, tilt = 0.38, vel = AUTO;
+      let dragging = false, lastX = 0, lastY = 0, lastT = 0;
+      let mouse = null, visible = false, running = false, prev = 0, clock = 0;
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = canvas.clientWidth; H = canvas.clientHeight;
+        canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        R = Math.min(W, H) * (W < 500 ? 0.46 : 0.42); cx = W / 2; cy = H / 2;
+        if (!running) draw();
+      }
+
+      function project(v) {
+        const cY = Math.cos(yaw), sY = Math.sin(yaw), cT = Math.cos(tilt), sT = Math.sin(tilt);
+        const x = v[0] * cY - v[2] * sY, z1 = v[0] * sY + v[2] * cY;
+        const y = v[1] * cT - z1 * sT, z = v[1] * sT + z1 * cT;
+        return [cx + x * R, cy - y * R, z];
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        // atmosphere glow
+        let g = ctx.createRadialGradient(cx, cy, R * 0.92, cx, cy, R * 1.3);
+        g.addColorStop(0, 'rgba(101,127,254,0.30)'); g.addColorStop(1, 'rgba(101,127,254,0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R * 1.3, 0, TAU); ctx.fill();
+        // sphere body
+        g = ctx.createRadialGradient(cx - R * 0.35, cy - R * 0.4, R * 0.1, cx, cy, R);
+        g.addColorStop(0, '#1b2246'); g.addColorStop(0.6, '#0b0e1f'); g.addColorStop(1, '#04050b');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R, 0, TAU); ctx.fill();
+        ctx.strokeStyle = 'rgba(130,150,255,0.35)'; ctx.lineWidth = 1; ctx.stroke();
+
+        // land dots, batched by depth for few draw calls
+        const size = Math.max(1.3, R / 150), buckets = [[], [], []];
+        for (let i = 0; i < pts.length; i++) {
+          const p = project(pts[i]);
+          if (p[2] > 0) buckets[p[2] < 0.3 ? 0 : p[2] < 0.65 ? 1 : 2].push(p);
+        }
+        const alphas = [0.22, 0.5, 0.9];
+        for (let b = 0; b < 3; b++) {
+          ctx.fillStyle = 'rgba(190,205,255,' + alphas[b] + ')'; ctx.beginPath();
+          for (const p of buckets[b]) ctx.rect(p[0] - size / 2, p[1] - size / 2, size, size);
+          ctx.fill();
+        }
+
+        // arcs with travelling pulse
+        ctx.lineWidth = 1; ctx.lineCap = 'round';
+        arcs.forEach((arc, n) => {
+          const P = arc.map(project), head = Math.floor((((clock / 2800) + n * 0.173) % 1) * SEG);
+          for (let k = 0; k < SEG; k++) {
+            if (P[k][2] <= 0 || P[k + 1][2] <= 0) continue;
+            const d = (head - k + SEG) % SEG, hot = d < 7;
+            ctx.strokeStyle = hot ? 'rgba(160,178,255,' + (0.95 - d * 0.1) + ')' : 'rgba(101,127,254,0.28)';
+            ctx.lineWidth = hot ? 1.6 : 1;
+            ctx.beginPath(); ctx.moveTo(P[k][0], P[k][1]); ctx.lineTo(P[k + 1][0], P[k + 1][1]); ctx.stroke();
+          }
+          const h = P[head];
+          if (h[2] > 0) { ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(h[0], h[1], 1.8, 0, TAU); ctx.fill(); }
+        });
+
+        // relay nodes with pinging rings
+        let hover = null;
+        NODES.forEach((nd, i) => {
+          const p = project(nd.v);
+          if (p[2] < 0.05) return;
+          const ph = ((clock / 2000) + i * 0.13) % 1;
+          ctx.strokeStyle = 'rgba(101,127,254,' + ((1 - ph) * 0.8) + ')'; ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.arc(p[0], p[1], 3 + ph * 15, 0, TAU); ctx.stroke();
+          ctx.fillStyle = 'rgba(101,127,254,0.35)'; ctx.beginPath(); ctx.arc(p[0], p[1], 7, 0, TAU); ctx.fill();
+          ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(p[0], p[1], 3, 0, TAU); ctx.fill();
+          if (mouse && Math.hypot(mouse[0] - p[0], mouse[1] - p[1]) < 14) hover = [nd.name, p];
+        });
+        if (hover) {
+          ctx.font = '600 11px "Plus Jakarta Sans", sans-serif';
+          const tw = ctx.measureText(hover[0]).width + 16, bx = Math.min(Math.max(hover[1][0] - tw / 2, 4), W - tw - 4), by = hover[1][1] - 34;
+          ctx.fillStyle = 'rgba(12,14,22,0.92)'; ctx.strokeStyle = 'rgba(101,127,254,0.5)';
+          ctx.beginPath(); ctx.roundRect(bx, by, tw, 22, 11); ctx.fill(); ctx.stroke();
+          ctx.fillStyle = '#fff'; ctx.textBaseline = 'middle'; ctx.fillText(hover[0], bx + 8, by + 11);
+        }
+      }
+
+      function frame(t) {
+        if (!running) return;
+        const dt = Math.min((t - prev) / 1000 || 0, 0.05); prev = t; clock += dt * 1000;
+        if (!dragging) vel += (AUTO - vel) * (1 - Math.exp(-dt * 1.8));
+        yaw += vel * dt;
+        draw();
+        requestAnimationFrame(frame);
+      }
+
+      function sync() {
+        const should = visible && !document.hidden && !document.body.classList.contains('modal-open') && !reduce;
+        if (should && !running) { running = true; prev = performance.now(); requestAnimationFrame(frame); }
+        else if (!should) running = false;
+      }
+
+      // pointer interaction (horizontal drag rotates; vertical drag tilts)
+      canvas.addEventListener('pointerdown', (e) => {
+        dragging = true; lastX = e.clientX; lastY = e.clientY; lastT = performance.now();
+        canvas.setPointerCapture(e.pointerId); canvas.classList.add('dragging');
+      });
+      canvas.addEventListener('pointermove', (e) => {
+        const r = canvas.getBoundingClientRect(); mouse = [e.clientX - r.left, e.clientY - r.top];
+        if (dragging) {
+          const now = performance.now(), dt = Math.max((now - lastT) / 1000, 0.001);
+          const dx = e.clientX - lastX, dy = e.clientY - lastY;
+          yaw -= dx / R; tilt = Math.min(0.85, Math.max(-0.1, tilt + dy / R * 0.6));
+          vel = Math.max(-4, Math.min(4, -dx / R / dt)) * 0.6 + vel * 0.4;
+          lastX = e.clientX; lastY = e.clientY; lastT = now;
+        }
+        if (!running) draw();
+      });
+      const end = () => { dragging = false; canvas.classList.remove('dragging'); };
+      canvas.addEventListener('pointerup', end);
+      canvas.addEventListener('pointercancel', end);
+      canvas.addEventListener('pointerleave', () => { mouse = null; if (!running) draw(); });
+
+      new ResizeObserver(resize).observe(canvas);
+      new IntersectionObserver((en) => { visible = en[0].isIntersecting; sync(); }, { rootMargin: '100px' }).observe(canvas);
+      document.addEventListener('visibilitychange', sync);
+      new MutationObserver(sync).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+      resize();
+    })();
+  </script>
+  <script>
+    /* Scroll-reveal + active nav link */
+    (() => {
+      'use strict';
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const GROUPS = [
+        ['.hero-section > :not(.feature-cards-row)', 90, ''],
+        ['.feature-box-card', 110, ''],
+        ['.section-heading, .section-subheading', 80, ''],
+        ['.metric-card', 110, ''],
+        ['.world-map-container', 0, 'scale'],
+        ['.scalable-info > h3, .scalable-info > p, .feature-check-list li', 70, ''],
+        ['.scalable-visual', 0, 'scale'],
+        ['.pricing-card', 120, ''],
+        ['.questions-content', 0, ''],
+        ['.footer-grid > *', 90, ''],
+        ['.footer-bottom', 0, '']
+      ];
+      const targets = [];
+      GROUPS.forEach(([sel, step, kind]) => {
+        const seen = new Map();
+        document.querySelectorAll(sel).forEach((el) => {
+          const n = seen.get(el.parentNode) || 0; seen.set(el.parentNode, n + 1);
+          el.dataset.reveal = kind || 'up';
+          el.style.setProperty('--d', Math.min(n * step, 600) + 'ms');
+          targets.push(el);
+        });
+      });
+
+      if (reduce || !('IntersectionObserver' in window)) {
+        targets.forEach((el) => el.classList.add('in'));
+      } else {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+        }, { threshold: 0.08 });
+        targets.forEach((el) => io.observe(el));
+        setTimeout(() => targets.forEach((el) => el.classList.add('in')), 6000); // failsafe
+      }
+
+      // highlight the nav link of the section in view
+      const links = [...document.querySelectorAll('.nav-links a[href^="#"]')];
+      if (!('IntersectionObserver' in window) || !links.length) return;
+      const spy = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          links.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      links.forEach((a) => { const t = document.querySelector(a.getAttribute('href')); if (t) spy.observe(t); });
+    })();
+    /* Mobile menu */
+    (() => {
+      const nav = document.querySelector('header.navbar'), btn = nav.querySelector('.nav-toggle');
+      const set = (open) => {
+        nav.classList.toggle('menu-open', open);
+        btn.setAttribute('aria-expanded', open);
+        btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      };
+      btn.addEventListener('click', () => set(!nav.classList.contains('menu-open')));
+      nav.querySelectorAll('.nav-links a').forEach((a) => a.addEventListener('click', () => set(false)));
+      document.addEventListener('click', (e) => { if (!nav.contains(e.target)) set(false); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+      matchMedia('(min-width: 901px)').addEventListener('change', () => set(false));
+      new MutationObserver(() => { if (document.body.classList.contains('modal-open')) set(false); })
+        .observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    })();
   </script>
 </body>
 </html>

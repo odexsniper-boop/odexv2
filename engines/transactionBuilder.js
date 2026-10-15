@@ -161,9 +161,21 @@ export class TransactionBuilder {
     if (this.blockhashManager) {
       blockhashInfo = await this.blockhashManager.getOrRefreshBlockhash();
     }
-    if (blockhashInfo) {
+    if (blockhashInfo && blockhashInfo.blockhash) {
       tx.recentBlockhash = blockhashInfo.blockhash;
       tx.lastValidBlockHeight = blockhashInfo.lastValidBlockHeight;
+    } else if (this.cache?.connection && typeof this.cache.connection.getLatestBlockhash === 'function') {
+      try {
+        const direct = await this.cache.connection.getLatestBlockhash('confirmed');
+        if (direct && direct.blockhash) {
+          tx.recentBlockhash = direct.blockhash;
+          tx.lastValidBlockHeight = direct.lastValidBlockHeight;
+        }
+      } catch (_) {}
+    }
+
+    if (!tx.recentBlockhash) {
+      throw new Error('BLOCKHASH_UNAVAILABLE: Failed to obtain valid recentBlockhash for buy transaction');
     }
     tx.feePayer = wallet.publicKey;
 
@@ -306,9 +318,21 @@ export class TransactionBuilder {
     if (this.blockhashManager) {
       blockhashInfo = await this.blockhashManager.getOrRefreshBlockhash();
     }
-    if (blockhashInfo) {
+    if (blockhashInfo && blockhashInfo.blockhash) {
       tx.recentBlockhash = blockhashInfo.blockhash;
       tx.lastValidBlockHeight = blockhashInfo.lastValidBlockHeight;
+    } else if (this.cache?.connection && typeof this.cache.connection.getLatestBlockhash === 'function') {
+      try {
+        const direct = await this.cache.connection.getLatestBlockhash('confirmed');
+        if (direct && direct.blockhash) {
+          tx.recentBlockhash = direct.blockhash;
+          tx.lastValidBlockHeight = direct.lastValidBlockHeight;
+        }
+      } catch (_) {}
+    }
+
+    if (!tx.recentBlockhash) {
+      throw new Error('BLOCKHASH_UNAVAILABLE: Failed to obtain valid recentBlockhash for sell transaction');
     }
     tx.feePayer = wallet.publicKey;
 

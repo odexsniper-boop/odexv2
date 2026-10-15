@@ -251,34 +251,56 @@ class DatabaseManager {
     if (positionsList) {
       supabaseManager.savePositions(positionsList).catch((e) => { log(`[SUPABASE WARN] savePositions: ${e.message}`); });
     }
-    if (!this.connected || !this.db) return;
+    if (!this.connected || !this.db || !Array.isArray(positionsList)) return;
     try {
       this.db.exec('BEGIN TRANSACTION;');
-      this.db.exec('DELETE FROM positions;');
-      const stmt = this.db.prepare(`
-        INSERT INTO positions (
-          mint, symbol, name, creator, entry_price_sol, current_price_sol,
-          peak_price_sol, initial_sol_spent, unrealized_pnl_percent,
-          status, tokens_held_raw, hit_tiers, updated_at, raw_data
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `);
-      for (const p of positionsList) {
-        stmt.run(
-          p.mint,
-          p.symbol || '',
-          p.name || '',
-          p.creator || '',
-          Number(p.entryPriceSol || 0),
-          Number(p.currentPriceSol || 0),
-          Number(p.peakPriceSol || 0),
-          Number(p.initialSolSpent || 0),
-          Number(p.unrealizedPnlPercent || 0),
-          p.status || 'ACTIVE',
-          p.tokensHeldRaw || '0',
-          JSON.stringify(p.hitTiers || []),
-          new Date().toISOString(),
-          JSON.stringify(p)
-        );
+      if (positionsList.length === 0) {
+        this.db.exec('DELETE FROM positions;');
+      } else {
+        const activeMints = positionsList.map(p => p.mint).filter(Boolean);
+        if (activeMints.length > 0) {
+          const placeholders = activeMints.map(() => '?').join(',');
+          this.db.prepare(`DELETE FROM positions WHERE mint NOT IN (${placeholders})`).run(...activeMints);
+        }
+        const stmt = this.db.prepare(`
+          INSERT INTO positions (
+            mint, symbol, name, creator, entry_price_sol, current_price_sol,
+            peak_price_sol, initial_sol_spent, unrealized_pnl_percent,
+            status, tokens_held_raw, hit_tiers, updated_at, raw_data
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          ON CONFLICT(mint) DO UPDATE SET
+            symbol = excluded.symbol,
+            name = excluded.name,
+            creator = excluded.creator,
+            entry_price_sol = excluded.entry_price_sol,
+            current_price_sol = excluded.current_price_sol,
+            peak_price_sol = excluded.peak_price_sol,
+            initial_sol_spent = excluded.initial_sol_spent,
+            unrealized_pnl_percent = excluded.unrealized_pnl_percent,
+            status = excluded.status,
+            tokens_held_raw = excluded.tokens_held_raw,
+            hit_tiers = excluded.hit_tiers,
+            updated_at = excluded.updated_at,
+            raw_data = excluded.raw_data
+        `);
+        for (const p of positionsList) {
+          stmt.run(
+            p.mint,
+            p.symbol || '',
+            p.name || '',
+            p.creator || '',
+            Number(p.entryPriceSol || 0),
+            Number(p.currentPriceSol || 0),
+            Number(p.peakPriceSol || 0),
+            Number(p.initialSolSpent || 0),
+            Number(p.unrealizedPnlPercent || 0),
+            p.status || 'ACTIVE',
+            p.tokensHeldRaw || '0',
+            JSON.stringify(p.hitTiers || []),
+            new Date().toISOString(),
+            JSON.stringify(p)
+          );
+        }
       }
       this.db.exec('COMMIT;');
     } catch (e) {
